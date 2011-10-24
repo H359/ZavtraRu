@@ -1,0 +1,7 @@
+<form class="comment-form" method="post" action="{% url comments.add %}">
+    {{ form.as_p }}
+    <div>
+        <button type="submit" class="button action green"><span class="label">Оставить комментарий</span></button>
+        <button type="reset" class="button action red"><span class="label">Я передумал</span></button>
+    </div>
+</form>

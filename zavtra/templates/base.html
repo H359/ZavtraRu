@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}Газета &laquo;Завтра&raquo; {% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/css3-buttons.css">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tiptip.css">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/prettyPhoto.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <!--<script src="{{ STATIC_URL }}js/jquery.tiptip.js"></script>-->
+        <script src="{{ STATIC_URL }}js/jquery.prettyPhoto.js"></script>
+        <script src="{{ STATIC_URL }}js/mustache.js"></script>
+        {% block extrahead %}{% endblock %}
+    </head>
+    <body>
+        <div class="wrapper">
+            <header class="header" role="banner">
+                <a class="logo" href="/"><img src="{{ STATIC_URL }}img/logo.gif"></a>
+                <div class="navigation">
+                    <ul class="navigation" role="navigation">
+                        <li><a class="button" href="#"><span class="icon icon97"></span><span class="label">Авторы</span></a></li>
+                        <li><a class="button" href="#"><span class="icon icon40"></span><span class="label">Газета</span></a></li>
+                        <li><a class="button" href="#"><span class="icon icon147"></span><span class="label">Видео</span></a></li>
+                        <li><a class="button" href="#"><span class="icon icon148"></span><span class="label">Фото</span></a></li>
+                    <ul>
+                    <ul class="userpanel">
+                        {% if request.user.is_authenticated %}
+                        <li><a class="button" href="#"><span class="icon icon4"></span><span class="label">Личный кабинет</span></a></li>
+                        <li><a class="button" href="{% url logout %}"><span class="icon icon4"></span><span class="label">Выход</span></a></li>
+                        {% else %}
+                        <li><a title="" class="button" rel="prettyPhoto" href="#inline-1">
+                            <span class="icon icon4"></span><span class="label">Вход / Регистрация</span>
+                        </a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </header>
+            <div class="live-content">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="issue-content">
+                {% block sidebar %}{% endblock %}
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="inline-1" class="hidden">
+        {% if request.user.is_authenticated %}
+        {% else %}
+            {% include 'login_box.html' %}
+        {% endif %}
+	    </div>
+        <script>
+        $(document).ajaxSend(function(event, xhr, settings) {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            function sameOrigin(url) {
+                // url could be relative or scheme relative or absolute
+                var host = document.location.host; // host + port
+                var protocol = document.location.protocol;
+                var sr_origin = '//' + host;
+                var origin = protocol + sr_origin;
+                // Allow absolute or scheme relative URLs to same origin
+                return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+                    (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+                    // or any other URL that isn't scheme relative or absolute i.e relative.
+                    !(/^(\/\/|http:|https:).*/.test(url));
+            }
+            function safeMethod(method) {
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        });        
+        $(document).ready(function(){
+            //$('.tiptip a.button, .tiptip button').tipTip();
+            $("a[rel^='prettyPhoto']").prettyPhoto({social_tools: ''});
+        });</script>
+    </body>
+</html>

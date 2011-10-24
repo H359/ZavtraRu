@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% spaceless %}{% load pytils_dt %}{% endspaceless %}
+{% block content %}
+    {% for item in object_list %}
+    <article class="article">
+        <header>
+            <span class="authors">
+                {% for author in item.authors.all %}
+                <a href="{{ author.get_absolute_url }}">{{ author }}</a>{% if not forloop.last %},{% endif %}&nbsp;
+                {% endfor %}
+                <time pubdate datetime="{{ item.date_pub.isoformat }}" class="time">{{ item.date_pub|ru_strftime }}</time>
+            </span>
+            <h2>
+                <a href="{{ item.get_absolute_url }}" rel="bookmark">{{ item.title }}</a>
+            </h2>
+        </header>
+        {% if item.kind == 'video' %}
+        <a href="http://{{ item.video.content }}" title="{{ item.title }}" rel="prettyPhoto">
+            <img src="{{ item.thumbnail }}" alt="{{ item.subtitle }}">
+        </a>
+        {% endif %}
+        {% if item.kind == 'image' %}
+        [image]
+        {% endif %}
+        <div class="text">{{ item.description }}</div>
+    </article>
+    {% endfor %}
+{% endblock %}
+
+{% block sidebar %}
+    <h2>Свежий номер</h2>
+    <div class="issue-thumbnail">
+        <div><h3><a href="{{ issue.get_absolute_url }}">{{ latest_issue }}</a></h3></div>
+        {% if latest_issue.pdf_thumbnail %}
+        <div>
+            <a href="{{ issue.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ latest_issue.pdf_thumbnail }}"></a>
+        </div>
+        {% endif %}
+    </div>
+    <ul class="pages">
+        {% for article in latest_issue.get_articles %}
+        {% ifchanged article.page_id %}
+            {% if not forloop.first %}</ul></li>{% endif %}
+            <li>{{ article.page.title }}<ul>
+        {% endifchanged %}
+        <li><a href="{{ article.get_absolute_url }}">{{ article.article.title }}</a></li>
+        {% endfor %}
+        </ul></li>
+    </ul>
+{% endblock %}

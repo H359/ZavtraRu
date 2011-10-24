@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load pytils_dt %}
+
+{% block title %}{{ block.super }} &laquo; {{ item.title }}{% endblock %}
+
+{% block content %}
+<article class="article">
+    <header>
+        <span class="authors">
+            {% for author in item.authors.all %}
+            <a href="{{ author.get_absolute_url }}">{{ author }}</a>{% if not forloop.last %},{% endif %}&nbsp;
+            {% endfor %}
+            <time pubdate datetime="{{ item.date_pub.isoformat }}" class="time">{{ item.date_pub|ru_strftime }}</time>
+        </span>
+        <h2>
+            <a href="{{ item.get_absolute_url }}" rel="bookmark">{{ item.title }}</a>
+        </h2>
+    </header>
+    {% if item.kind == 'video' %}
+    <a href="http://{{ item.video.content }}" title="{{ item.title }}" rel="prettyPhoto">
+        <img src="{{ item.thumbnail }}" alt="{{ item.subtitle }}">
+    </a>
+    <div class="text">{{ item.description }}</div>
+    {% endif %}
+    {% if item.kind == 'text' %}
+    <div class="text">{{ item.article.content|linebreaks }}</div>
+    {% endif %}
+
+    {% with comments=item.get_comments %}
+        {% include 'comments_tree.html' with comments=comments%}
+    {% endwith %}
+</article>
+{% endblock %}

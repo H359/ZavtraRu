@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, Helvetica, Garuda, sans-serif;
+    line-height: 1.4;
+    color: #0C0101;
+}
+
+.wrapper {
+    margin: 0 auto;
+    padding: 0 35px;
+    min-width: 960px;
+}
+
+.header {
+    position: relative;
+    padding-bottom: 30px;
+}
+
+    .header ul {
+        list-style-type: none;
+        margin: 0;
+    }
+
+    .header .logo {
+        width: 278px;
+        /*
+        position: absolute;
+        left: 0;
+        top: 10px;
+        */
+    }
+    
+    .header .navigation {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        width: 70%;
+        min-width: 682px;
+    }
+
+.article {
+    margin-bottom: 35px;
+}
+
+        .article .time {
+            font-size: 0.8em;
+            color: #1F1D1A;
+        }
+
+        .article h2 {
+            margin: 0;
+        }
+
+            .article h2 a {
+                color: #8E0100;
+            }
+            
+                .article h2 a:hover {
+                    color: #C72610;
+                }    
+
+        .article .authors a {
+            font-style: italic;
+            font-weight: normal;
+            color: #635959;
+        }
+        
+            .article .authors a:hover {
+                color: #D1CDCD;
+            }
+    
+.live-content {
+    float: left;
+    width: 65.5%;
+}
+
+.issue-content {
+    float: left;
+    width: 32.5%;
+}
+
+    .issue-content .issue-thumbnail {
+        text-align: center;
+        margin: 10px;
+    }
+
+    .issue-content .pages, 
+    .issue-content .pages ul {
+        list-style-type: none;
+    }
+    
+    .issue-content .pages li {
+        font-style: italic;
+    }
+    
+    .issue-content .pages li li {
+        font-style: normal;
+    }
+ 
+.comment-form {}
+
+    .comment-form textarea {
+        width: 99%;
+        outline: none;
+        resize: none;
+    }
+
+.comment {
+    list-style-type: none;
+    margin-bottom: 15px;
+    /*
+    position: relative;
+    overflow: hidden;
+    */
+}
+
+    .comment .user {
+        float: left;
+    }
+
+    .comment .date {
+        float: left;
+        margin-left: 5px;
+    }
+    
+    .comment .text {
+        clear: left;
+    }
+
+.clear {
+    clear: both;
+}
+
+.hidden {
+    display: none;
+}
+
+.ajax-link {
+    text-decoration: none;
+    border-bottom: 1px dashed #55f;
+    color: #55f;
+}

@@ -30,7 +30,5 @@ try:
         for model in models:
             klass = getattr(klasses, model)
             Tag.register(klass)
-            print klass.tags
 except AttributeError, e:
-    print e
-#Tag.register(ContentItem)
+    pass

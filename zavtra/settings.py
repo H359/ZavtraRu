@@ -1,5 +1,6 @@
 # Django settings for zavtra project.
 import os
+import pytils.translit
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
@@ -58,7 +59,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(SITE_DIR, 'static')
+STATIC_ROOT = os.path.join(SITE_DIR, 'collected_static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -71,6 +72,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(SITE_DIR, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -94,17 +96,55 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+SOCIAL_AUTH_ENABLED_BACKENDS = ('google', 'openid', 'livejournal')
+AUTHENTICATION_BACKENDS = (
+    #'social_auth.backends.twitter.TwitterBackend',
+    #'social_auth.backends.facebook.FacebookBackend',
+    #'social_auth.backends.google.GoogleOAuthBackend',
+    #'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    #'social_auth.backends.yahoo.YahooBackend',
+    #'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    #'social_auth.backends.contrib.orkut.OrkutBackend',
+    #'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    #'social_auth.backends.contrib.github.GithubBackend',
+    #'social_auth.backends.contrib.dropbox.DropboxBackend',
+    #'social_auth.backends.contrib.flickr.FlickrBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+LOGIN_URL          = '/login/'
+LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_ERROR_URL    = '/login-error/'
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+SOCIAL_AUTH_USERNAME_FIXER = lambda u: pytils.translit.slugify(u)
+SOCIAL_AUTH_UUID_LENGTH = 16
+SOCIAL_AUTH_SESSION_EXPIRATION = False
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    #"socialauth.context_processors.facebook_api_key",
+    'django.core.context_processors.static',
+    'django.core.context_processors.media',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'social_auth.context_processors.social_auth_by_type_backends',
 )
 
 ROOT_URLCONF = 'zavtra.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(SITE_DIR, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -118,12 +158,18 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'view_shortcuts',
+    'annoying',
     'pytils',
     'autoslug',
     'corecontent',
-    'tags'
+    'tags',
+    'users',
+    'mptt',
+    'social_auth',
+    'comments',
+    'debug_toolbar'
 )
+
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'pytils.translit.slugify'
 
@@ -152,4 +198,8 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False
 }
