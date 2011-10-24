@@ -8,6 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'zavtra.views.home', name='home'),
+    url(r'^kind/(\w+)/$', 'zavtra.views.home', name='home-by-kind'),
+    url(r'^archive/', 'zavtra.views.archive', name='home-archive'),
     url(r'^logout/', 'zavtra.views.logout', name='logout'),
     url(r'^logged-in/', 'zavtra.views.logged_in'),
     url(r'^content/', include('zavtra.corecontent.urls')),

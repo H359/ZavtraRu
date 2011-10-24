@@ -12,6 +12,7 @@ class Issue(models.Model):
     class Meta:
         verbose_name=u'Выпуск'
         verbose_name_plural=u'Выпуски'
+        ordering = ('-date',)
     # TODO: absolute_number & relative_number should be populated automatically
     absolute_number = models.PositiveIntegerField(verbose_name=u'Номер выпуска (сквозной)', unique=True)
     relative_number = models.PositiveIntegerField(verbose_name=u'Номер выпуска (в году)')
