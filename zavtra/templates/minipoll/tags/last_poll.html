@@ -1,0 +1,45 @@
+{% load utils %}
+{% load minipoll_tags %}
+{% if poll %}
+<div class="block">
+    <header><h1>Опрос</h1></header>
+    <div class="content">
+        <h3>{{ poll.title }}</h3>
+        {% if user_has_vote %}    
+        <ol>
+            {% for choice in poll.choice_set.all %}
+            <li>
+                {{ choice.title }}
+                {% with percs=choice.percent %}
+                <div style="width: {{ percs|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.percent|default:1|floatformat }}px solid #E6F0ED;">
+                    {{ percs }}%
+                </div>
+                {% endwith %}
+            </li>
+            {% endfor %}
+            <a href="{% url minipoll_poll_list %}">Другие опросы</a>
+        </ol>
+        {% else %}
+        <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
+          {% csrf_token %}
+          {% for choice in poll.choice_set.all %}
+          <ul>
+            <li>
+                <input type="radio"
+                       id="poll-{{ poll.id }}-{{ choice.pk }}" 
+                       name="choice"
+                       value="{{ choice.pk }}" {% if not choice.is_active%}disabled="disabled"{% endif %} />
+                <label for="poll-{{ poll.id }}-{{ choice.pk }}">
+                    {% if choice.is_active %}{{ choice.title }}{% else %}<s>{{ choice.title }}</s>{% endif %}
+                </label>
+            </li>
+          </ul>
+          {% endfor %}
+          <div class="buttons">
+        	  <button type="submit"><span class="label">Ответить</span></button>
+          </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

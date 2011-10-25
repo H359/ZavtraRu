@@ -1,7 +1,83 @@
-{% extends "skeleton.html" %}
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="ru" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="ru" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="ru" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="ru" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>{% block page_title %}Газета &laquo;Завтра&raquo;{% endblock %}</title>
+    
+    <meta name="description" content="{% block meta_description %}{% endblock %}" />
+    <meta name="author" content="{% block meta_author %}{% endblock %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    
+    {# TODO: <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" /> #}
+    {# TODO: <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
+    {% block css %}{% endblock %}
+    <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
+</head>
 
-{% block layout %}
-<div class="live-content">{% block content %}{% endblock %}</div>
-<div class="issue-content">{% block sidebar %}{% endblock %}</div>
-<div class="clear"></div>
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}
+    <header class="clearfix container_12"">
+        <figure class="grid_9 alpha">
+           <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
+        </figure>
+        </div>
+        <aside class="grid_3 omega">
+            <input type="search" class="search" name="search" placeholder="поиск...">
+        </div>
+    </header>
+    <nav class="clearfix sep-bar container_12">
+        <div class="grid_9">
+            <div class="buttons">
+               <a class="button" href="#"><span class="label">Блоги</span></a>
+               <a class="button" href="#"><span class="label">Опросы</span></a>
+               <a class="button" href="#"><span class="label">Лучшее</span></a>
+               <a class="button" href="#"><span class="label">Видео</span></a>
+               <a class="button" href="#"><span class="label">Еще что-нибудь</span></a>
+            </div>
+        </div>
+        <div class="grid_3">
+            <div class="buttons">
+               <a class="button" href="#"><span class="label">Вход / Регистрация</span></a>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div id="main" role="main">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        [footer]
+    </footer>
+    
+    {% block javascript_library %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.6.4.min.js"%3E%3C/script%3E'))</script>
+    {% endblock %}
+    {% block javascript %}{% endblock %}
+    <!--[if lt IE 7 ]>
+    <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
+    <script> DD_belatedPNG.fix('img, .png_bg');</script>
+    <![endif]-->
 {% endblock %}
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
+    <script type="text/javascript">
+    VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"}, 20003922);
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "minipoll/base.html" %}
+{% load i18n minipoll_tags %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block description %}{{ object.description|striptags }}{% endblock %}
+
+{% block content %}
+<h2 class="poll_title">
+  <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+</h2>
+<div class="poll">
+  <div class="poll_description">
+    {{ object.description|safe }}
+    {% if user_has_vote %}
+    <p>
+      {% trans "You have already vote to this poll." %}
+    </p>
+    {% display_poll_result object %}
+    {% else %}
+    {% display_poll_form object %}
+    <p>
+      {{ object.votes }} {% trans "votes" %}.
+      <a href="{% url minipoll_poll_result object.slug %}">{% trans "View the results." %}</a>
+    </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

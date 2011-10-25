@@ -1,50 +1,87 @@
 {% extends "base.html" %}
-{% spaceless %}{% load pytils_dt %}{% endspaceless %}
-{% block content %}
-    {% for item in object_list %}
-    <article class="article">
-        <header>
-            <span class="authors">
-                {% for author in item.authors.all %}
-                <a href="{{ author.get_absolute_url }}">{{ author }}</a>{% if not forloop.last %},{% endif %}&nbsp;
-                {% endfor %}
-                <time pubdate datetime="{{ item.date_pub.isoformat }}" class="time">{{ item.date_pub|ru_strftime }}</time>
-            </span>
-            <h2>
-                <a href="{{ item.get_absolute_url }}" rel="bookmark">{{ item.title }}</a>
-            </h2>
-        </header>
-        {% if item.kind == 'video' %}
-        <a href="http://{{ item.video.content }}" title="{{ item.title }}" rel="prettyPhoto">
-            <img src="{{ item.thumbnail }}" alt="{{ item.subtitle }}">
-        </a>
-        {% endif %}
-        {% if item.kind == 'image' %}
-        [image]
-        {% endif %}
-        <div class="text">{{ item.description }}</div>
-    </article>
-    {% endfor %}
-{% endblock %}
 
-{% block sidebar %}
-    <h2>Свежий номер</h2>
-    <div class="issue-thumbnail">
-        <div><h3><a href="{{ issue.get_absolute_url }}">{{ latest_issue }}</a></h3></div>
-        {% if latest_issue.pdf_thumbnail %}
-        <div>
-            <a href="{{ issue.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ latest_issue.pdf_thumbnail }}"></a>
-        </div>
-        {% endif %}
-    </div>
-    <ul class="pages">
-        {% for article in latest_issue.get_articles %}
-        {% ifchanged article.page_id %}
-            {% if not forloop.first %}</ul></li>{% endif %}
-            <li>{{ article.page.title }}<ul>
-        {% endifchanged %}
-        <li><a href="{{ article.article.get_absolute_url }}">{{ article.article.title }}</a></li>
+{% load pytils_numeral %}
+{% load minipoll_tags %}
+
+{% block content %}
+<div class="container_12 clearfix">
+    Тема дня, Линии событий, Новости
+</div>
+<div class="container_12 clearfix">
+    <div class="grid_6">
+        {% for rubric in rubrics %}
+        <section class="rubric block">
+            <header><h1><a href="{{ rubric.get_absolute_url }}">{{ rubric.title }}</a></h1></header>
+            <div class="content">
+            {% for item in rubric.get_content_items %}
+                {% if forloop.first %}
+                <h2><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
+                {% if item.kind == 'video' %}
+                <div class="text-center">
+                    <a href="{{ item.get_absolute_url }}">
+                        <img width="200" src="{{ item.thumbnail }}">
+                    </a>
+                </div>
+                {% endif %}
+                {{ item.tags.all }}
+                <div>
+                    <a href="{{ item.get_absolute_url }}">{{ item.description }}</a>
+                </div>
+                <ul>
+                {% else %}
+                    <li>
+                        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+                        <div><a href="{{ item.get_absolute_url }}">{{ item.subtitle }}</a></div>
+                    </li>
+                {% endif %}
+                {% if forloop.last %}
+                    <li><h3><a href="{{ rubric.get_absolute_url }}">Еще...</a></h3></li>
+                </ul>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </section>
         {% endfor %}
-        </ul></li>
-    </ul>
+    </div>
+    <aside class="grid_3">
+        <div class="block">
+            <header>
+                <h1>Свежий выпуск</h1>
+            </header>
+            <div class="content text-center">
+                <h3><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h3>
+                <a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a>
+            </div>
+        </div>
+        <div class="block">
+            <header>
+                <h1>Свежее в блогах</h1>
+            </header>
+            <div class="content">
+                {% for entry in blogs_stream|slice:":10" %}
+                <div>
+                    <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
+                    <div>{{ entry.description }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
+    <aside class="grid_3 omega">
+        <div class="fb-like-box"
+             data-href="http://www.facebook.com/platform"
+             data-width="220"
+             data-show-faces="true"
+             data-stream="false"
+             data-header="true">
+        </div>
+        <div id="vk_groups"></div>
+        <div>
+            {% display_last_poll %}
+        </div>
+        <div style="border:1px solid black; height: 500px; background: url({{ STATIC_URL }}img/adv.png);">
+            <h1 style="color: red; font-size: 2.5em; padding: 16px;">ТУТ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА</h1>
+        </div>
+    </aside>
+</div>
 {% endblock %}

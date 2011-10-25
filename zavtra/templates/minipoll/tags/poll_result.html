@@ -1,0 +1,15 @@
+<div id="poll_result_{{ poll.slug }}">
+  <table class="choices">
+  {% for choice in poll.choice_set.all %}
+  <tr>
+    <td>{{ choice.title }}</td>
+    <td>
+      <img src="/img/poll/result.gif" height="14" width="{{ choice.percent|default:1|floatformat }}" />
+    </td>
+    <td>
+      {{ choice.percent|floatformat:1 }}% ({{ choice.votes }})
+    </td>
+  </tr>
+  {% endfor %}
+  </table>
+</div>

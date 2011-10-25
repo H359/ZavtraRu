@@ -1,0 +1,30 @@
+{% extends "minipoll/base.html" %}
+{% load i18n %}
+
+{% block description %}{% trans "All the polls of the site." %}{% endblock %}
+
+{% block title %}{% trans "Poll list" %}{% endblock %}
+
+{% block content %}
+<h2 class="poll_list_title">{% trans "All the polls of the site." %}</h2>
+<div class="polls">
+  <ul>
+    {% for object in object_list %}
+    <li>
+      <div class="poll">
+	<div class="poll_detail">
+	  {{ object.publication_date|date:"d N Y" }}
+	</div>
+	<h3 class="poll_title">
+	  <a href="{{ object.get_absolute_url }}" alt="{{ object.title }}">{{ object.title }}</a>
+	</h3>
+	<div class="poll_description">
+	  {{ object.description|safe }}
+	  <p>{{ object.votes }} {% trans "votes" %}.</p>
+	</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

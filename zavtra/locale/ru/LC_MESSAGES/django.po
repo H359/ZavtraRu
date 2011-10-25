@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-25 10:06+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/django-taggit/taggit/forms.py:21
+msgid "Please provide a comma-separated list of tags."
+msgstr "Пожалуйста, впишите список меток через запятую"
+
+#: src/django-taggit/taggit/managers.py:39
+#: src/django-taggit/taggit/models.py:57
+msgid "Tags"
+msgstr "Теги"
+
+#: src/django-taggit/taggit/managers.py:40
+msgid "A comma-separated list of tags."
+msgstr "Список меток через запятую"
+
+#: src/django-taggit/taggit/models.py:10
+msgid "Name"
+msgstr "Имя"
+
+#: src/django-taggit/taggit/models.py:11
+msgid "Slug"
+msgstr "Slug"
+
+#: src/django-taggit/taggit/models.py:56
+msgid "Tag"
+msgstr "Тег"
+
+#: src/django-taggit/taggit/models.py:63
+#, python-format
+msgid "%(object)s tagged with %(tag)s"
+msgstr "%(object)s с тегами %(tag)s"
+
+#: src/django-taggit/taggit/models.py:113
+msgid "Object id"
+msgstr "Идентификатор объекта"
+
+#: src/django-taggit/taggit/models.py:117
+#: src/django-taggit/taggit/models.py:123
+msgid "Content type"
+msgstr "Тип сущности"
+
+#: src/django-taggit/taggit/models.py:159
+msgid "Tagged Item"
+msgstr "Тегированная сущность"
+
+#: src/django-taggit/taggit/models.py:160
+msgid "Tagged Items"
+msgstr "Тегированные сущности"
+
+#: templates/minipoll/poll_detail.html:17
+msgid "You have already vote to this poll."
+msgstr "Вы уже принимали участие в этом опросе"
+
+#: templates/minipoll/poll_detail.html:23
+#: templates/minipoll/poll_detail_result.html:17
+#: templates/minipoll/poll_list.html:23
+#: templates/minipoll/tags/last_poll.html:40
+msgid "votes"
+msgstr ""
+
+#: templates/minipoll/poll_detail.html:24
+msgid "View the results."
+msgstr "Посмотреть результаты"
+
+#: templates/minipoll/poll_detail_result.html:4
+msgid "Results"
+msgstr "Результаты"
+
+#: templates/minipoll/poll_detail_result.html:6
+msgid "results"
+msgstr "результаты"
+
+#: templates/minipoll/poll_detail_result.html:19
+msgid "Vote to this poll."
+msgstr "Ответить на этот опрос"
+
+#: templates/minipoll/poll_list.html:4 templates/minipoll/poll_list.html:9
+msgid "All the polls of the site."
+msgstr "Все опросы"
+
+#: templates/minipoll/poll_list.html:6
+#: templates/minipoll/tags/last_poll.html:22
+msgid "Poll list"
+msgstr "Список опросов"
+
+#: templates/minipoll/tags/last_poll.html:39
+#: templates/minipoll/tags/poll_form.html:12
+msgid "Vote"
+msgstr "Ответить"

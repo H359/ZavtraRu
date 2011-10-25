@@ -1,8 +1,13 @@
 #-*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
+from djangoratings.fields import RatingField
+from taggit.managers import TaggableManager
+from taggit.models import Tag
 from autoslug import AutoSlugField
 from pytils import dt
 
@@ -14,7 +19,7 @@ class Issue(models.Model):
         verbose_name_plural=u'Выпуски'
         ordering = ('-date',)
     # TODO: absolute_number & relative_number should be populated automatically
-    absolute_number = models.PositiveIntegerField(verbose_name=u'Номер выпуска (сквозной)', unique=True)
+    absolute_number = models.PositiveIntegerField(verbose_name=u'Номер выпуска (сквозной)')
     relative_number = models.PositiveIntegerField(verbose_name=u'Номер выпуска (в году)')
     date            = models.DateField(verbose_name=u'Дата выхода выпуска в печать', unique=True)
     pdf             = models.FileField(upload_to='issues/pdf', verbose_name=u'PDF', editable=False, blank=True)
@@ -44,18 +49,39 @@ class IssueTypePage(models.Model):
     def __unicode__(self):
         return u'"%s" в выпуске %s' % (self.title, self.issue)
 
+class Rubric(models.Model):
+    class Meta:
+        verbose_name=u'Рубрика'
+        verbose_name_plural=u'Рубрики'
+    title   = models.CharField(max_length=250, verbose_name=u'Заголовок')
+    slug    = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
+    on_main = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
+    
+    def __unicode__(self):
+        return self.title
+
+    #TODO: Should be cached
+    def get_content_items(self):
+        return ContentItem.objects.filter(enabled=True).filter(rubric=self)[0:3]
+
 class ContentItem(models.Model):
     class Meta:
         ordering = ['-date_pub']
     title        = models.CharField(max_length=250, verbose_name=u'Заголовок')
-    slug         = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
+    slug         = AutoSlugField(populate_from=lambda instance: '-'.join([datetime.now().date().isoformat(), instance.title]), unique=True)
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)
     description  = models.TextField(verbose_name=u'Описание', blank=True)
     date_pub     = models.DateField(verbose_name=u'Дата публикации')
     authors      = models.ManyToManyField(User, verbose_name=u'Авторы')
     enabled      = models.BooleanField(verbose_name=u'Допущено к публикации')
-    thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
+    #thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
+    thumbnail    = models.CharField(max_length=200, verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
     kind         = models.CharField(max_length=200, editable=False)
+    rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
+    _comments_count = models.IntegerField(default=0, editable=False)
+    _views_count    = models.IntegerField(default=0, editable=False) # fuzzy views-counter
+
+    tags = TaggableManager()
 
     @models.permalink
     def get_absolute_url(self):
@@ -64,18 +90,27 @@ class ContentItem(models.Model):
     def __unicode__(self):
         return u'%s от %s' % (self.title, dt.ru_strftime(date=self.date_pub)) 
 
+    def get_views_count(self):
+        return self._views_count
+
     def get_comments(self):
         return Comment.objects.select_related().filter(
             object_id=self.id,
             content_type=ContentType.objects.get_for_model(self)
         )
 
+    def get_comments_count(self):
+        return self._comments_count
+
+    def recalculate_comments_count(self):
+        ContentItem.objects.filter(id=self.id).update(_comments_count = self.get_comments().count())
+
 class Article(ContentItem):
     class Meta:
         verbose_name=u'Статья'
         verbose_name_plural='Статьи'
     media = 'text'
-    content = models.TextField(verbose_name=u'Текст статьи')
+    content         = models.TextField(verbose_name=u'Текст статьи')
 
     def save(self, *args, **kwargs):
         super(Article, self).save(*args, **kwargs)
@@ -89,7 +124,7 @@ class Video(ContentItem):
     content = models.CharField(max_length=250, verbose_name=u'URL')
 
     def save(self, *args, **kwargs):
-        if self.thumbnail is None:
+        if self.thumbnail is None or len(self.thumbnail) == 0:
             import gdata.youtube.service, urlparse
             video_id = urlparse.parse_qs(self.content).values()[0][0]
             yt_service = gdata.youtube.service.YouTubeService()

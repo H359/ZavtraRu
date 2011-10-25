@@ -40,7 +40,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -162,20 +162,18 @@ INSTALLED_APPS = (
     'pytils',
     'autoslug',
     'corecontent',
-    'tags',
+    'taggit',
+    'voting',
     'users',
     'mptt',
     'social_auth',
     'comments',
+    'minipoll',
     'debug_toolbar'
 )
 
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'pytils.translit.slugify'
-
-TAGGED_MODELS = (
-    ('corecontent.models', ('ContentItem', ), ),
-)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
