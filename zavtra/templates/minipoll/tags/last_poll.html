@@ -1,9 +1,6 @@
 {% load utils %}
 {% load minipoll_tags %}
 {% if poll %}
-<div class="block">
-    <header><h1>Опрос</h1></header>
-    <div class="content">
         <h3>{{ poll.title }}</h3>
         {% if user_has_vote %}    
         <ol>
@@ -40,6 +37,4 @@
           </div>
         </form>
         {% endif %}
-    </div>
-</div>
 {% endif %}

@@ -1,34 +1,72 @@
 {% extends "base.html" %}
 
-{% load pytils_dt %}
-
-{% block title %}{{ block.super }} &laquo; {{ item.title }}{% endblock %}
+{% load comments %}
 
 {% block content %}
-<article class="article">
-    <header>
-        <span class="authors">
-            {% for author in item.authors.all %}
-            <a href="{{ author.get_absolute_url }}">{{ author }}</a>{% if not forloop.last %},{% endif %}&nbsp;
-            {% endfor %}
-            <time pubdate datetime="{{ item.date_pub.isoformat }}" class="time">{{ item.date_pub|ru_strftime }}</time>
-        </span>
-        <h2>
-            <a href="{{ item.get_absolute_url }}" rel="bookmark">{{ item.title }}</a>
-        </h2>
-    </header>
-    {% if item.kind == 'video' %}
-    <a href="http://{{ item.video.content }}" title="{{ item.title }}" rel="prettyPhoto">
-        <img src="{{ item.thumbnail }}" alt="{{ item.subtitle }}">
-    </a>
-    <div class="text">{{ item.description }}</div>
-    {% endif %}
-    {% if item.kind == 'text' %}
-    <div class="text">{{ item.article.content|linebreaks }}</div>
-    {% endif %}
-
-    {% with comments=item.get_comments %}
-        {% include 'comments_tree.html' with comments=comments%}
-    {% endwith %}
-</article>
+<div class="ez-wr">
+    <section class="ez-fl ez-negml ez-75">
+        <article class="ez-box block">
+            <header>
+                <h1>{{ item.title }}</h1>
+            </header>
+            <div class="content">
+                <div>
+                    метки:
+                    {% for tag in item.get_tags %}
+                        {{ tag }}{% if not forloop.last %},&nbsp;{% endif %}
+                    {% endfor %}
+                </div>
+                {% if item.kind == 'video' %}
+                <div class="text-center">
+                    <object width="425" height="344">
+                    <param name="movie" value="http://youtube.com/v/{{ item.video.get_video_id }}&version=3"</param>
+                    <param name="allowFullScreen" value="true"></param>
+                    <param name="allowScriptAccess" value="always"></param>
+                    <embed src="http://youtube.com/v/{{ item.video.get_video_id }}&version=3"
+                      type="application/x-shockwave-flash"
+                      allowfullscreen="true"
+                      allowscriptaccess="always"
+                      width="425" height="344">
+                    </embed>
+                    </object>
+                </div>
+                {% endif %}
+                {% if item.kind == 'image' %}
+                    IMAGE
+                {% endif %}
+                {% if item.kind == 'text' %}
+                    {{ item.article.content|linebreaks }}
+                {% endif %}
+                
+                {% comment %}
+                
+                <!-- AddThis Button BEGIN -->
+                <div class="addthis_toolbox addthis_default_style ">
+                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                    <a class="addthis_button_tweet"></a>
+                    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                    <a class="addthis_counter addthis_pill_style"></a>
+                </div>
+                {% block javascript %}
+                {{ block.super }}
+                <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ea7f2783f632476"></script>
+                {% endblock %}
+                
+                {% endcomment %}
+                
+                <div>{% get_comments_for item %}</div>
+            </div>
+        </article>
+    </section>
+    <aside class="ez-fl ez-last ez-25 ez-oh">
+        <div class="ez-box block">
+            <header><h1>Реклама</h1></header>
+            <div class="content">
+                <div style="background: url({{ STATIC_URL }}img/adv.png); height: 300px; font-weight: bold; font-size: 2em; color: red;">
+                ЗДЕСЬ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
 {% endblock %}

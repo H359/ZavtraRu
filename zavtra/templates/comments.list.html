@@ -1,0 +1,17 @@
+<div class="comments block">
+    <header><h1>Комментарии</h1></header>
+    <div class="content">
+        <dl>
+            {% for comment in comments %}
+            {% include 'comments/item.html' %}
+            {% endfor %}
+        </dl>
+        <form method="post" action="{% url comments.add %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p class="buttons">
+                <button type="submit" class="button"><span class="label">Отправить</span></button>
+            </p>
+        </form>
+    </div>
+</div>

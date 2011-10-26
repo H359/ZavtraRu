@@ -4,84 +4,84 @@
 {% load minipoll_tags %}
 
 {% block content %}
-<div class="container_12 clearfix">
-    Тема дня, Линии событий, Новости
-</div>
-<div class="container_12 clearfix">
-    <div class="grid_6">
-        {% for rubric in rubrics %}
-        <section class="rubric block">
-            <header><h1><a href="{{ rubric.get_absolute_url }}">{{ rubric.title }}</a></h1></header>
-            <div class="content">
-            {% for item in rubric.get_content_items %}
-                {% if forloop.first %}
-                <h2><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
-                {% if item.kind == 'video' %}
-                <div class="text-center">
-                    <a href="{{ item.get_absolute_url }}">
-                        <img width="200" src="{{ item.thumbnail }}">
-                    </a>
-                </div>
-                {% endif %}
-                {{ item.tags.all }}
-                <div>
-                    <a href="{{ item.get_absolute_url }}">{{ item.description }}</a>
-                </div>
-                <ul>
-                {% else %}
-                    <li>
-                        <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
-                        <div><a href="{{ item.get_absolute_url }}">{{ item.subtitle }}</a></div>
-                    </li>
-                {% endif %}
-                {% if forloop.last %}
-                    <li><h3><a href="{{ rubric.get_absolute_url }}">Еще...</a></h3></li>
-                </ul>
-                {% endif %}
-            {% endfor %}
-            </div>
-        </section>
-        {% endfor %}
-    </div>
-    <aside class="grid_3">
-        <div class="block">
-            <header>
-                <h1>Свежий выпуск</h1>
-            </header>
+<div class="ez-wr">
+    <aside class="ez-fl ez-negml ez-75">
+        <div class="ez-box block">
+            <header><h1>Геннадий Животнов</h1></header>
             <div class="content text-center">
-                <h3><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h3>
-                <a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a>
+                <figure>
+                    <img src="{{ STATIC_URL }}img/givot_sra.jpg" width="746" height="300">
+                </figure>
             </div>
         </div>
-        <div class="block">
-            <header>
-                <h1>Свежее в блогах</h1>
-            </header>
+    </aside>
+    <aside class="ez-fl ez-last ez-25 ez-oh">
+        <div class="ez-box block">
+            <header><h1>Свежий номер</h1></header>
             <div class="content">
-                {% for entry in blogs_stream|slice:":10" %}
-                <div>
-                    <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
-                    <div>{{ entry.description }}</div>
-                </div>
-                {% endfor %}
+                <h2 class="text-center"><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h2>
+                <div class="text-center"><a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a></div>
             </div>
         </div>
     </aside>
-    <aside class="grid_3 omega">
-        <div class="fb-like-box"
-             data-href="http://www.facebook.com/platform"
-             data-width="220"
-             data-show-faces="true"
-             data-stream="false"
-             data-header="true">
+</div>
+<div class="ez-wr">
+    <section class="ez-fl ez-negmx ez-25">
+        {% for rubric in rubrics|slice:"0::2" %}
+        {% include 'partials/rubric.block.html' %}
+        {% endfor %}
+    </section> 
+    <section class="ez-fl ez-negmx ez-25">
+        {% for rubric in rubrics|slice:"1::2" %}
+        {% include 'partials/rubric.block.html' %}
+        {% endfor %}
+    </section>
+    <section class="ez-fl ez-negmr ez-25">
+        <div class="ez-box block">
+            <header><h1>Блоги</h1></header>
+            <dl class="content">
+                {% for item in blogs_stream|slice:":5" %}
+                <dt>
+                    <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                    <div class="details">{{ item.get_views_count }} :: {{ item.get_comments_count }} :: [rating]</div>
+                </dt>
+                {% endfor %}
+                {% if forloop.first %}
+                <dd>
+                    {% if item.kind == 'video' %}
+                    <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail }}" width="200"></a></div>
+                    {% endif %}
+                    <div><a href="{{ item.get_absolute_url }}">{{ item.description|truncatewords:30 }}</a></div>
+                </dd>
+                {% endif %}
+            </dl>
         </div>
-        <div id="vk_groups"></div>
-        <div>
-            {% display_last_poll %}
+        <div class="ez-box block">
+            <header><h1>Опрос</h1></header>
+            <div class="content">{% display_last_poll %}</div>
+    </section> 
+    <section class="ez-last ez-oh">
+        <div class="ez-box block">
+            <header><h1>Социальные сети</h1></header>
+            <div class="content">
+                <div class="fb-like-box"
+                     data-href="http://www.facebook.com/platform"
+                     data-width="220"
+                     data-show-faces="true"
+                     data-stream="false"
+                     data-header="true">
+                </div>
+                <div id="vk_groups"></div>
+            </div>
         </div>
-        <div style="border:1px solid black; height: 500px; background: url({{ STATIC_URL }}img/adv.png);">
-            <h1 style="color: red; font-size: 2.5em; padding: 16px;">ТУТ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА</h1>
+        <div class="ez-box block">
+            <header><h1>Реклама</h1></header>
+            <div class="content">
+                <div style="background: url({{ STATIC_URL }}img/adv.png); height: 300px; font-weight: bold; font-size: 2em; color: red;">
+                ЗДЕСЬ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА
+                </div>
+            </div>
         </div>
-    </aside>
+    </section> 
 </div>
 {% endblock %}

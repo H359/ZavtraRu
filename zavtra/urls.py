@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^logged-in/', 'zavtra.views.logged_in'),
     url(r'^content/', include('zavtra.corecontent.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^comments/', include('zavtra.comments.urls')),
+    url(r'^comments/', include('zavtra.comments.urls')),
     url(r'^polls/', include('minipoll.urls')),
 
     url(r'', include('social_auth.urls')),

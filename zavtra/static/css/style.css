@@ -87,6 +87,7 @@ a:hover { color: #036; }
 
 ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 
+/*
 .block header {
     box-shadow: 0 1px 0 0 #ccc;
     border-left: 1px solid #ccc;
@@ -97,13 +98,25 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 }
 
 .block header h1 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: white;
     padding: 4px;
-    padding-left: 16px;
+    padding-left: 8px;
+}
+*/
+
+.block header {
+    padding: 10px 5px;
+    margin-bottom: 5px;
 }
 
-.block .content { padding: 8px; }
+.block header h1 {
+    border-bottom: 1px solid #CF3A2D;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.block .content { padding: 0 5px; }
 .block .content h2 { margin-bottom: 8px; font-size: 1.25em; }
 .block .content h3 { margin-bottom: 8px; font-size: 1.1em; }
 .block h2 a, .block h3 a { color: #444; text-decoration: underline; }
@@ -112,10 +125,22 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 .block header a { color: white; text-decoration: none; }
 .block header a:hover { color: #E6F0ED; }
 
-.rubric .content li { margin-top: 10px; }
-.rubric .content li h3 { margin: 0; }
-.rubric a { color: #444; text-decoration: none; }
-.rubric a:hover { color: #444; text-decoration: underline; }
+.block .content dt { font-weight: bold; margin: 5px 0; }
+    .block .content dt a { color: #A4342F; }
+
+.block .content dd { margin-bottom: 5px; }
+    .block .content dd a { text-decoration: none; color: #444; }
+
+
+.comments {}
+.comments dt {}
+.comments dd {}
+
+.comments form textarea {
+    width: 95%;
+    height: 80px;
+    resize: none;
+}
 
 .fb-like-box { width: 220px; height: 290px; }
 #vk-groups { width: 220px; height: 117px; }

@@ -1,4 +1,6 @@
 #-*- coding: utf-8 -*-
+import urlparse
+import random
 from datetime import datetime
 
 from django.db import models
@@ -91,6 +93,7 @@ class ContentItem(models.Model):
         return u'%s от %s' % (self.title, dt.ru_strftime(date=self.date_pub)) 
 
     def get_views_count(self):
+        return random.randint(1,100)
         return self._views_count
 
     def get_comments(self):
@@ -100,17 +103,27 @@ class ContentItem(models.Model):
         )
 
     def get_comments_count(self):
+        return random.randint(1,100)
         return self._comments_count
 
     def recalculate_comments_count(self):
         ContentItem.objects.filter(id=self.id).update(_comments_count = self.get_comments().count())
 
+    def get_tags(self):
+        if self.kind == 'video':
+            return self.video.tags.all()
+        elif self.kind == 'image':
+            return self.image.tags.all()
+        elif self.kind == 'text':
+            return self.article.tags.all()
+        return self.tags.all()
+
 class Article(ContentItem):
     class Meta:
         verbose_name=u'Статья'
         verbose_name_plural='Статьи'
-    media = 'text'
-    content         = models.TextField(verbose_name=u'Текст статьи')
+    media   = 'text'
+    content = models.TextField(verbose_name=u'Текст статьи')
 
     def save(self, *args, **kwargs):
         super(Article, self).save(*args, **kwargs)
@@ -123,10 +136,14 @@ class Video(ContentItem):
     media = 'video'
     content = models.CharField(max_length=250, verbose_name=u'URL')
 
+    def get_video_id(self):
+        return urlparse.parse_qs(self.content).values()[0][0]
+
     def save(self, *args, **kwargs):
         if self.thumbnail is None or len(self.thumbnail) == 0:
-            import gdata.youtube.service, urlparse
-            video_id = urlparse.parse_qs(self.content).values()[0][0]
+            import gdata.youtube.service
+            #video_id = urlparse.parse_qs(self.content).values()[0][0]
+            video_id = self.get_video_id()
             yt_service = gdata.youtube.service.YouTubeService()
             entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
             thumbnail = entry.media.thumbnail[0].url

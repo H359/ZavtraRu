@@ -1,0 +1,3 @@
+{% load pytils_dt %}
+<dt>{{ comment.author }}, {{ comment.created_at|distance_of_time }}</dt>
+<dd>{{ comment.comment }}</dd>

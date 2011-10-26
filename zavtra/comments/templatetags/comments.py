@@ -2,14 +2,19 @@ from django import template
 
 from django.contrib.contenttypes.models import ContentType
 from zavtra.comments.forms import CommentForm
+from zavtra.comments.models import Comment
 
 register = template.Library()
 
-@register.inclusion_tag('comment_form.html')
-def comment_form_for(obj):
+@register.inclusion_tag('comments.list.html')
+def get_comments_for(obj):
+    ctype = ContentType.objects.get_for_model(obj.__class__)
     initial_data = {
         'parent': None,
-        'content_type': ContentType.objects.get_for_model(obj.__class__),
+        'content_type': ctype,
         'object_id': obj.id
     }
-    return {'form': CommentForm(initial=initial_data)}
+    return {
+        'comments': Comment.objects.filter(content_type=ctype, object_id=obj.id, enabled=True),
+        'form': CommentForm(initial=initial_data)
+    }
