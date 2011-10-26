@@ -38,8 +38,6 @@
                     {{ item.article.content|linebreaks }}
                 {% endif %}
                 
-                {% comment %}
-                
                 <!-- AddThis Button BEGIN -->
                 <div class="addthis_toolbox addthis_default_style ">
                     <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
@@ -51,9 +49,7 @@
                 {{ block.super }}
                 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ea7f2783f632476"></script>
                 {% endblock %}
-                
-                {% endcomment %}
-                
+               
                 <div>{% get_comments_for item %}</div>
             </div>
         </article>
