@@ -157,6 +157,15 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
     color: #666;
 }
 
+.block .content dd .info a {
+    text-decoration: underline;
+}
+
+.block .content .rating .icon {
+    margin: 0;
+    background-image: url(../img/google+-ui-sprite-colour.png) !important;
+}
+
 .comments {}
 .comments dt {}
 .comments dd {}

@@ -22,9 +22,15 @@
                 {% endif %}
                 <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
                 <div class="info">
-                    <span class="views-count">{{ item.views_count|get_plural:"просмотр,просмотра,просмотров" }}</span>
-                    <span class="comments-count">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</span>
-                    <span class="rating">[rating]</span>
+                    <span class="rating ddm">
+                        {% with rating=item.rating %}
+                        <span class="icon icon{% if rating.score > 0 %}101{% endif %}{% if rating.score < 0 %}100{% endif %}{% if rating.score == 0 %}106{% endif %}"></span>
+                        <span class="label">{{ rating.score }}</span>
+                        {% endwith %}
+                    </span>
+                    <span class="comments-count">
+                        <a href="{{ item.get_absolute_url }}#comments_block">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+                    </span>
                 </div>
             </dd>
         {% endfor %}

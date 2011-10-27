@@ -9,6 +9,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
+from voting.models import Vote
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 from autoslug import AutoSlugField
@@ -48,12 +49,16 @@ class ContentItem(models.Model):
     thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
     kind         = models.CharField(max_length=200, editable=False)
     content      = models.TextField(verbose_name=u'Текст статьи')
-    old_url      = models.URLField(verify_exists=True, blank=True, verbose_name=u'URL на старом сайте')
+    old_url      = models.URLField(verify_exists=True, null=True, blank=True, verbose_name=u'URL на старом сайте')
     
     _comments_count = models.IntegerField(default=0, editable=False)
-    _views_count    = models.IntegerField(default=0, editable=False)
 
     tags = TaggableManager(blank=True)
+
+    @property
+    def rating(self):
+        # TODO: denormalize ||/&& cache
+        return Vote.objects.get_score(self)
 
     @property
     def comments_count(self):
@@ -67,14 +72,6 @@ class ContentItem(models.Model):
                 enabled=True
             ).count()
         )
-    
-    @property
-    def views_count(self):
-        return self._views_count
-
-    @views_count.setter
-    def views_count(self, value):
-        self._views_count = value
     
     @models.permalink
     def get_absolute_url(self):
