@@ -138,18 +138,19 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 .top-image figcaption { text-align: right; padding-right: 8px; }
 
 .top-nav ul {
-    width: 100%;
+    /*width: 100%;*/
     min-width: 960px;
     overflow: hidden;
     height: 40px;
-    margin-top: 4px;
-    background: black;
+    margin: 12px 5px 0 5px;
+    background: #2A281F;
 }
 
 .top-nav ul li {
     float: left;
     height: 40px;
-    border-right: 1px solid #444;
+    /*border-right: 1px solid #6B6B50;*/
+    /*border-right: 1px solid white;*/
 }
 
 .top-nav ul li a {
@@ -157,15 +158,16 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
     font-size: 1.2em;
     padding: 6px 12px;
     line-height: 25px;
+    height: 40px;
     float: left;
-    /*height: 40px;*/
     color: white;
     text-align: center;
 }
 
 .top-nav ul li a:hover {
-    background: #999;
+    background: #eee;
     color: black;
+    text-decoration: none;
 }
 
 .top-nav ul li.last {
