@@ -6,7 +6,6 @@
             {% include 'comments/item.html' %}
             {% endfor %}
         </dl>
-        {{ request.user }}
         {% if request.user.is_authenticated %}
         <form method="post" action="{% url comments.add %}">
             {% csrf_token %}

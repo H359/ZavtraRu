@@ -1,19 +1,32 @@
+{% load pytils_dt %}
+{% load pytils_numeral %}
 <div class="block ez-box">
     <header><h1>{{ rubric.title|safe }}<span class="small ez-fr"><a href="{{ rubric.get_absolute_url }}">еще</a>&nbsp;&nbsp;&nbsp;</span></h1></header>
     <dl class="content">
         {% for item in rubric.get_content_items %}
             <dt>
                 <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>
-                <div class="details">{{ item.get_views_count }} :: {{ item.get_comments_count }} :: [rating]</div>
+                <div class="details">
+                    {{ item.pub_date|ru_strftime }}
+                    {% for author in item.authors.all %}
+                    <a class="author"
+                       href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
             </dt>
-            {% if forloop.first %}
             <dd>
+                {% if forloop.first %}
                 {% if item.kind == 'video' %}
                 <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail }}" width="200"></a></div>
                 {% endif %}
+                {% endif %}
                 <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
+                <div class="info">
+                    <span class="views-count">{{ item.views_count|get_plural:"просмотр,просмотра,просмотров" }}</span>
+                    <span class="comments-count">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</span>
+                    <span class="rating">[rating]</span>
+                </div>
             </dd>
-            {% endif %}
         {% endfor %}
     </dl>
 </div>

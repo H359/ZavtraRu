@@ -137,9 +137,24 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 .top-image figure { display: block; margin: 0 auto; }
 .top-image figcaption { text-align: right; padding-right: 8px; }
 
+.top-nav { margin: 10px auto; width: 95%; }
+
+.search input { border-radius: 15px; padding: 3px; border: 1px solid #444; }
+
 .content p {
     margin-bottom: 1em;
     font-size: 16px;
+}
+
+.content .details {
+    font-weight: normal;
+    font-size: 0.9em;
+    margin: 2px 0 4px 0;
+}
+
+.content .info {
+    font-size: 0.9em;
+    color: #666;
 }
 
 .comments {}

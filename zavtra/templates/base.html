@@ -22,6 +22,7 @@
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
+{% load utils %}
 {% block body %}
     <header class="ez-wr">
         <div class="ez-fl ez-negmr ez-50">
@@ -31,28 +32,30 @@
         </div>
         <aside class="ez-fl ez-50">
             <div class="ez-fr"><a href="#">войти</a></div>
-            <div class="clear"></div>
-            <form class="ez-fr search">
-                <fieldset>
-                    <input type="search" name="search" placeholder="поиск...">
-                </fieldset>
-            </form>
         </div>
-        
-        <nav>
-            {% comment %}
-            <div class="buttons">
-               <a class="button" href="#"><span class="label">Блоги</span></a>
-               <a class="button" href="#"><span class="label">Опросы</span></a>
-               <a class="button" href="#"><span class="label">Лучшее</span></a>
-               <a class="button" href="#"><span class="label">Видео</span></a>
-               <a class="button" href="#"><span class="label">Еще что-нибудь</span></a>
-            </div>
-            {% endcomment %}
-        </nav>
     </header>
-
-    <div>Тема дня, Линии событий, Новости</div>
+    <nav class="ez-wr top-nav">
+        <div class="ez-fl ez-negml ez-75">
+            <div class="buttons">
+               {% for rubric in rubrics|filter_by_field:"on_top" %}
+               <a class="button" href="{{ rubric.get_absolute_url }}"><span class="label">{{ rubric.title|safe }}</span></a>
+               {% endfor %}
+            </div>
+            <!--<div>Тема дня, Линии событий, Новости</div>-->
+        </div>
+        <form class="ez-fl ez-25 search">
+            <fieldset class="ez-fr">
+                <input type="search" name="search" placeholder="поиск...">
+            </fieldset>
+        </form>
+        <div class="clear"></div>
+        <div>
+            <a href="#">Тема дня</a>
+            <a href="#">Дело Магницкого</a>
+            <a href="#">Путин ест детей</a>
+        </div>
+    </nav>
+    
     <div id="main" role="main">{% block content %}{% endblock %}</div>
     
     <footer>[footer]</footer>

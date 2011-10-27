@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load utils %}
 {% load pytils_numeral %}
 {% load minipoll_tags %}
 
@@ -27,16 +28,18 @@
     </aside>
 </div>
 <div class="ez-wr">
+    {% with main_rubrics=rubrics|filter_by_field:"on_main" %}
     <section class="ez-fl ez-negmx ez-25">
-        {% for rubric in rubrics|slice:"0::2" %}
+        {% for rubric in main_rubrics|slice:"0::2" %}
         {% include 'partials/rubric.block.html' %}
         {% endfor %}
     </section> 
     <section class="ez-fl ez-negmx ez-25">
-        {% for rubric in rubrics|slice:"1::2" %}
+        {% for rubric in main_rubrics|slice:"1::2" %}
         {% include 'partials/rubric.block.html' %}
         {% endfor %}
     </section>
+    {% endwith %}
     <section class="ez-fl ez-negmr ez-25">
         <div class="ez-box block">
             <header><h1>Блоги</h1></header>

@@ -6,13 +6,11 @@ from django.contrib.auth import logout as auth_logout
 
 from annoying.decorators import render_to
 
-from corecontent.models import ContentItem, Rubric
+from corecontent.models import ContentItem
 
 @render_to('home.html')
 def home(request):
-    rubrics = Rubric.objects.filter(on_main=True)
     return {
-        'rubrics': rubrics,
         'blogs_stream': ContentItem.objects.filter(rubric=None, enabled=True)
     }
 

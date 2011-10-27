@@ -1,18 +1,25 @@
 var ThouMakethCommentsShine = function(num, box) {
     var box = $(box), form = $('form', box), sbmt = $('button[type=submit]', box);
+
+    var state = true;
+    var toggle = function(){
+        sbmt.attr('disabled', state);
+        $('textarea', box).attr('disabled', state);
+        state = !state;
+    }
     
     var handleFormSubmission = function(data){
         if (!data['status']) {
             // make errors shine
         } else {
             $('dl', box).append(data['html']);
-            sbmt.attr('disabled', false);
+            toggle();
         }
     }
     
     var submitForm = function(){
         $.post(form.attr('action'), form.serialize(), handleFormSubmission);
-        sbmt.attr('disabled', true);
+        toggle();
         return false;
     }
     

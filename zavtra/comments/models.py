@@ -17,3 +17,10 @@ class Comment(MPTTModel):
     comment        = models.TextField(verbose_name=u'Текст')
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        super(Comment, self).save(*args, **kwargs)
+        try:
+            self.content_object.update_comments_count()
+        except AttributeError:
+            pass

@@ -138,6 +138,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
+    'zavtra.corecontent.context_processors.common_pieces',
     'social_auth.context_processors.social_auth_by_type_backends',
 )
 
@@ -173,7 +174,7 @@ INSTALLED_APPS = (
 )
 
 
-AUTOSLUG_SLUGIFY_FUNCTION = 'pytils.translit.slugify'
+AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

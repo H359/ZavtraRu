@@ -23,6 +23,7 @@ class Rubric(models.Model):
     title    = models.CharField(max_length=250, verbose_name=u'Заголовок')
     slug     = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
     on_main  = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
+    on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
     position = models.PositiveIntegerField(verbose_name=u'Положение', default=1)
     
     def __unicode__(self):
@@ -54,6 +55,27 @@ class ContentItem(models.Model):
 
     tags = TaggableManager(blank=True)
 
+    @property
+    def comments_count(self):
+        return self._comments_count
+    
+    def update_comments_count(self):
+        ContentItem.objects.filter(id=self.id).update(_comments_count = 
+            Comment.objects.filter(
+                content_type= ContentType.objects.get_for_model(ContentItem),
+                object_id=self.id,
+                enabled=True
+            ).count()
+        )
+    
+    @property
+    def views_count(self):
+        return self._views_count
+
+    @views_count.setter
+    def views_count(self, value):
+        self._views_count = value
+    
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.item', (), {'slug': self.slug})
@@ -72,6 +94,7 @@ class ContentItem(models.Model):
             rt.nobr(3)
             for field in ['title', 'subtitle', 'description', 'content']:
                 field_val = getattr(self, field)
+                field_val = field_val.strip()
                 if len(field_val) < 32000:
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
         super(ContentItem, self).save(*args, **kwargs)        
