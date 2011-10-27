@@ -33,7 +33,10 @@ class VideoAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     form = ImageAdminForm
 
+class RubricAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'on_main', 'on_top')
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
-admin.site.register(Rubric)
+admin.site.register(Rubric, RubricAdmin)

@@ -24,36 +24,18 @@
 <body class="{% block body_class %}{% endblock %}">
 {% load utils %}
 {% block body %}
-    <header class="ez-wr">
-        <div class="ez-fl ez-negmr ez-50">
-            <figure>
-                <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
-            </figure>
-        </div>
-        <aside class="ez-fl ez-50">
-            <div class="ez-fr"><a href="#">войти</a></div>
-        </div>
+    <header>
+        <figure>
+            <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
+        </figure>
     </header>
-    <nav class="ez-wr top-nav">
-        <div class="ez-fl ez-negml ez-75">
-            <div class="buttons">
-               {% for rubric in rubrics|filter_by_field:"on_top" %}
-               <a class="button" href="{{ rubric.get_absolute_url }}"><span class="label">{{ rubric.title|safe }}</span></a>
-               {% endfor %}
-            </div>
-            <!--<div>Тема дня, Линии событий, Новости</div>-->
-        </div>
-        <form class="ez-fl ez-25 search">
-            <fieldset class="ez-fr">
-                <input type="search" name="search" placeholder="поиск...">
-            </fieldset>
-        </form>
-        <div class="clear"></div>
-        <div>
-            <a href="#">Тема дня</a>
-            <a href="#">Дело Магницкого</a>
-            <a href="#">Путин ест детей</a>
-        </div>
+    <nav class="top-nav">
+        <ul class="primary">
+           {% for rubric in rubrics|filter_by_field:"on_top" %}
+           <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
+           {% endfor %}
+           <li class="search last"><input type="search" name="q" placeholder="поиск..."></li>
+        </ul>
     </nav>
     
     <div id="main" role="main">{% block content %}{% endblock %}</div>
