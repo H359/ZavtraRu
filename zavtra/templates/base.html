@@ -23,17 +23,23 @@
 
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-    <div class="ez-wr">
-        <header class="ez-box"">
+    <header class="ez-wr">
+        <div class="ez-fl ez-negmr ez-50">
             <figure>
                 <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
             </figure>
-            <aside>
-                <input type="search" class="search" name="search" placeholder="поиск...">
-            </aside>
-        </header>
+        </div>
+        <aside class="ez-fl ez-50">
+            <div class="ez-fr"><a href="#">войти</a></div>
+            <div class="clear"></div>
+            <form class="ez-fr search">
+                <fieldset>
+                    <input type="search" name="search" placeholder="поиск...">
+                </fieldset>
+            </form>
+        </div>
         
-        <nav class="ez-box">
+        <nav>
             {% comment %}
             <div class="buttons">
                <a class="button" href="#"><span class="label">Блоги</span></a>
@@ -44,11 +50,12 @@
             </div>
             {% endcomment %}
         </nav>
+    </header>
 
-        <div class="ez-box">Тема дня, Линии событий, Новости</div>
-        <div class="ez-box" id="main" role="main">{% block content %}{% endblock %}</div>
+    <div>Тема дня, Линии событий, Новости</div>
+    <div id="main" role="main">{% block content %}{% endblock %}</div>
     
-        <footer class="ez-box">[footer]</footer>
+    <footer>[footer]</footer>
 {% endblock %}
     
 {% block javascript_library %}

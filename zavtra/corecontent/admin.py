@@ -1,16 +1,39 @@
+#-*- coding: utf-8 -*-
 from django.contrib import admin
+from django import forms
 
-from models import Issue, IssueTypePage, Article, Video, Image, ArticleOnIssueTypePage, Rubric
+from models import Article, Video, Image, Rubric
 
-class ArticleOnIssueTypePageAdmin(admin.TabularInline):
-    model = ArticleOnIssueTypePage
+class ArticleAdminForm(forms.ModelForm):
+    class Meta:
+        model = Article
+    def __init__(self, *args, **kwargs):
+        super(ArticleAdminForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs['class'] = 'wymeditor'
 
-class IssueTypePageAdmin(admin.ModelAdmin):
-    inlines = [ArticleOnIssueTypePageAdmin]
+class VideoAdminForm(forms.ModelForm):
+    class Meta:
+        model = Video
+    content = forms.URLField(verify_exists=True, label=u'Ссылка на страницу с видео на YouTube')
 
-admin.site.register(Issue)
-admin.site.register(IssueTypePage, IssueTypePageAdmin)
-admin.site.register(Article)
-admin.site.register(Video)
-admin.site.register(Image)
+class ImageAdminForm(forms.ModelForm):
+    class Meta:
+        model = Image
+    content = forms.ImageField(label=u'Изображение')
+
+class ArticleAdmin(admin.ModelAdmin):
+    class Media:
+        js = ('js/wymeditor/wymeditor.fixer.js', 'js/wymeditor/jquery.wymeditor.min.js',)
+    form = ArticleAdminForm
+    list_display = ('__unicode__', 'published', 'enabled')
+
+class VideoAdmin(admin.ModelAdmin):
+    form = VideoAdminForm
+
+class ImageAdmin(admin.ModelAdmin):
+    form = ImageAdminForm
+
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(Video, VideoAdmin)
+admin.site.register(Image, ImageAdmin)
 admin.site.register(Rubric)

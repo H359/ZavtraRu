@@ -7,17 +7,18 @@
 <div class="ez-wr">
     <aside class="ez-fl ez-negml ez-75">
         <div class="ez-box block">
-            <header><h1>Геннадий Животнов</h1></header>
-            <div class="content text-center">
-                <figure>
+            <header><h1>&nbsp;</h1></header>
+            <div class="content top-image">
+                <figure style="width: 746px;">
                     <img src="{{ STATIC_URL }}img/givot_sra.jpg" width="746" height="300">
+                    <figcaption>Геннадий Животов&nbsp;<a href="#">Другие иллюстрации Геннадия Животова.</a></figcaption>
                 </figure>
             </div>
         </div>
     </aside>
     <aside class="ez-fl ez-last ez-25 ez-oh">
         <div class="ez-box block">
-            <header><h1>Свежий номер</h1></header>
+            <header><h1>Свежий номер<span class="ez-fr"><a href="#">Архив</a></span></h1></header>
             <div class="content">
                 <h2 class="text-center"><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h2>
                 <div class="text-center"><a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a></div>
@@ -56,14 +57,11 @@
                 {% endif %}
             </dl>
         </div>
-        <div class="ez-box block">
-            <header><h1>Опрос</h1></header>
-            <div class="content">{% display_last_poll %}</div>
     </section> 
     <section class="ez-last ez-oh">
         <div class="ez-box block">
-            <header><h1>Социальные сети</h1></header>
-            <div class="content">
+            <header><h1>Присоединяйся</h1></header>
+            <div class="content text-center">
                 <div class="fb-like-box"
                      data-href="http://www.facebook.com/platform"
                      data-width="220"
@@ -73,6 +71,10 @@
                 </div>
                 <div id="vk_groups"></div>
             </div>
+        </div>
+        <div class="ez-box block">
+            <header><h1>Опрос</h1></header>
+            <div class="content">{% display_last_poll %}</div>
         </div>
         <div class="ez-box block">
             <header><h1>Реклама</h1></header>

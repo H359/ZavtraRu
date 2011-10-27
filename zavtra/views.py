@@ -6,15 +6,13 @@ from django.contrib.auth import logout as auth_logout
 
 from annoying.decorators import render_to
 
-from corecontent.models import ContentItem, Issue, Rubric
+from corecontent.models import ContentItem, Rubric
 
 @render_to('home.html')
 def home(request):
     rubrics = Rubric.objects.filter(on_main=True)
-    last_issue = Issue.objects.filter(date__lte = datetime.now()).latest('date')
     return {
         'rubrics': rubrics,
-        'last_issue': last_issue,
         'blogs_stream': ContentItem.objects.filter(rubric=None, enabled=True)
     }
 

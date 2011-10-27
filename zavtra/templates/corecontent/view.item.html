@@ -7,7 +7,7 @@
     <section class="ez-fl ez-negml ez-75">
         <article class="ez-box block">
             <header>
-                <h1>{{ item.title }}</h1>
+                <h1>{{ item.title|safe }}</h1>
             </header>
             <div class="content">
                 <div>
@@ -19,10 +19,10 @@
                 {% if item.kind == 'video' %}
                 <div class="text-center">
                     <object width="425" height="344">
-                    <param name="movie" value="http://youtube.com/v/{{ item.video.get_video_id }}&version=3"</param>
+                    <param name="movie" value="http://youtube.com/v/{{ item.get_video_id }}&version=3"</param>
                     <param name="allowFullScreen" value="true"></param>
                     <param name="allowScriptAccess" value="always"></param>
-                    <embed src="http://youtube.com/v/{{ item.video.get_video_id }}&version=3"
+                    <embed src="http://youtube.com/v/{{ item.get_video_id }}&version=3"
                       type="application/x-shockwave-flash"
                       allowfullscreen="true"
                       allowscriptaccess="always"
@@ -35,7 +35,7 @@
                     IMAGE
                 {% endif %}
                 {% if item.kind == 'text' %}
-                    {{ item.article.content|linebreaks }}
+                    {{ item.content|safe }}
                 {% endif %}
                 
                 <!-- AddThis Button BEGIN -->
