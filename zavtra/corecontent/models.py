@@ -4,11 +4,13 @@ import random
 from datetime import datetime
 
 from django.utils.encoding import smart_str, force_unicode
+from django.core.cache import cache
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
+from batch_select.models import BatchManager
 from voting.models import Vote
 from taggit.managers import TaggableManager
 from taggit.models import Tag
@@ -21,6 +23,7 @@ class Rubric(models.Model):
     class Meta:
         verbose_name=u'Рубрика'
         verbose_name_plural=u'Рубрики'
+        ordering = ['position', '-id']
     title    = models.CharField(max_length=250, verbose_name=u'Заголовок')
     slug     = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
     on_main  = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
@@ -30,20 +33,28 @@ class Rubric(models.Model):
     def __unicode__(self):
         return self.title
 
-    #TODO: Should be cached
     def get_content_items(self):
-        return ContentItem.objects.filter(enabled=True).filter(rubric=self)[0:3]
+        key = 'rubric-%d-content-items' % self.id
+        res = cache.get(key)
+        if res is None:
+            res = list( ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3] )
+            cache.set(key, res, 60*60*24)
+        return res
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('corecontent.view.rubric', (), {'slug': self.slug})
 
 class ContentItem(models.Model):
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ['-pub_date', '-id']
     title        = models.CharField(max_length=250, verbose_name=u'Заголовок')
     slug         = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)
     rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
     description  = models.TextField(verbose_name=u'Анонс', blank=True)
     pub_date     = models.DateField(verbose_name=u'Дата публикации')
-    authors      = models.ManyToManyField(User, verbose_name=u'Авторы')
+    authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems')
     published    = models.BooleanField(verbose_name=u'Опубликовано')
     enabled      = models.BooleanField(verbose_name=u'Допущено к публикации на сайте')
     thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
@@ -53,13 +64,26 @@ class ContentItem(models.Model):
     
     _comments_count = models.IntegerField(default=0, editable=False)
 
-    tags = TaggableManager(blank=True)
+    tags    = TaggableManager(blank=True)
+    objects = BatchManager()
 
+    rating_cache_key = lambda w: 'contentitem-rating-%d' % w.id
+   
     @property
     def rating(self):
-        # TODO: denormalize ||/&& cache
-        return Vote.objects.get_score(self)
-
+        key = self.rating_cache_key()
+        rating = cache.get(key)
+        if rating is None:
+            rating = Vote.objects.get_score(self)['score']
+            cache.set(key, rating)
+        return rating
+    
+    @rating.setter
+    def rating(self, value):
+        key = self.rating_cache_key()
+        rating = value
+        cache.set(key, rating)
+    
     @property
     def comments_count(self):
         return self._comments_count
@@ -67,7 +91,7 @@ class ContentItem(models.Model):
     def update_comments_count(self):
         ContentItem.objects.filter(id=self.id).update(_comments_count = 
             Comment.objects.filter(
-                content_type= ContentType.objects.get_for_model(ContentItem),
+                content_type = contentitem_ctype_id,
                 object_id=self.id,
                 enabled=True
             ).count()
@@ -156,3 +180,6 @@ class Image(ContentItem):
     def save(self, *args, **kwargs):
         super(Image, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
+
+contentitem_ctype_id = ContentType.objects.get_for_model(ContentItem).id
+import signals

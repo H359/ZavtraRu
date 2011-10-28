@@ -113,7 +113,15 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
     border-bottom: 1px solid #CF3A2D;
     padding-bottom: 5px;
     text-transform: uppercase;
+    font-size: 1.15em;
 }
+
+.block footer div.separator {
+    margin: 5px;
+    border-bottom: 1px solid #CF3A2D;
+}
+
+h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; margin: 5px 0 5px 4px; }
 
 .block .content { padding: 0 5px; }
 .block .content h2 { margin-bottom: 8px; font-size: 1.25em; }
@@ -125,14 +133,14 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 .block header a:hover { color: #666; }
 .block header span.small a { text-transform: none; }
 
-.block .content dt:first-child { margin-top: 0px; }
-.block .content dt:last-child { margin-bottom: 15px; }
-
 .block .content dt { font-weight: bold; margin: 15px 0 0 0; font-size: 1.1em; }
     .block .content dt a { color: #A4342F; }
 
-.block .content dd { margin-bottom: 5px; }
+.block .content dd { margin-bottom: 24px; }
     .block .content dd a { text-decoration: none; color: #444; }
+
+.block .content dt:first-child { margin-top: 0px; }
+.block .content dt:last-child { margin-bottom: 15px; }
 
 .top-image figure { display: block; margin: 0 auto; }
 .top-image figcaption { text-align: right; padding-right: 8px; }
@@ -188,7 +196,13 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 }
 .search input:focus { width: 250px; }
 
-.content p {
+article header time {
+    margin-right: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+article p {
     margin-bottom: 1em;
     font-size: 16px;
 }
@@ -200,12 +214,18 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
 }
 
 .content .info {
-    font-size: 0.9em;
+    /*font-size: 0.9em;*/
+    margin-top: 4px;
     color: #666;
+    text-align: right;
 }
 
 .block .content dd .info a {
     text-decoration: underline;
+}
+
+.block .content .rating {
+    font-size: 1.1em;
 }
 
 .block .content .rating .icon {
@@ -221,6 +241,11 @@ ul, ul li { list-style-type: none; margin: 0; padding: 0; }
     width: 95%;
     height: 80px;
     resize: none;
+}
+
+.footer {
+    margin: 16px;
+    font-size: 1.1em;
 }
 
 .clear { clear: both; }

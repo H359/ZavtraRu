@@ -40,7 +40,10 @@
     
     <div id="main" role="main">{% block content %}{% endblock %}</div>
     
-    <footer>[footer]</footer>
+    <footer class="footer">
+        <p>&copy;1996&mdash;{% now "Y" %} газета &laquo;Завтра&raquo;</p>
+        <p><a href="mailto:zavtra@zavtra.ru">Электронная почта</a>. Адрес редакции: 119146, Москва, Фрунзенская наб., 18—60. Телефон: (495) 726-54-83.</p>
+    </footer>
 {% endblock %}
     
 {% block javascript_library %}

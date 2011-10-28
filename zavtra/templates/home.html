@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% load utils %}
-{% load pytils_dt %}
-{% load pytils_numeral %}
 {% load minipoll_tags %}
 
 {% block content %}
@@ -45,36 +43,8 @@
         <div class="ez-box block">
             <header><h1>Блоги</h1></header>
             <dl class="content">
-                {% for item in blogs_stream|slice:":5" %}
-                <dt>
-                    <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>
-                    <div class="details">
-                        {{ item.pub_date|ru_strftime }}
-                        {% for author in item.authors.all %}
-                        <a class="author"
-                           href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                </dt>
-                <dd>
-                    {% if forloop.first %}
-                    {% if item.kind == 'video' %}
-                    <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail }}" width="200"></a></div>
-                    {% endif %}
-                    {% endif %}
-                    <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
-                    <div class="info">
-                        <span class="rating ddm">
-                            {% with rating=item.rating %}
-                            <span class="icon icon{% if rating.score > 0 %}101{% endif %}{% if rating.score < 0 %}100{% endif %}{% if rating.score == 0 %}106{% endif %}"></span>
-                            <span class="label">{{ rating.score }}</span>
-                            {% endwith %}
-                        </span>
-                        <span class="comments-count">
-                            <a href="{{ item.get_absolute_url }}#comments_block">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
-                        </span>
-                    </div>
-                </dd>
+                {% for item in blogs_stream %}
+                {% include 'corecontent/list.item.announce.html' %}
                 {% endfor %}
             </dl>
         </div>

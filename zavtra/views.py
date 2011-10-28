@@ -11,7 +11,7 @@ from corecontent.models import ContentItem
 @render_to('home.html')
 def home(request):
     return {
-        'blogs_stream': ContentItem.objects.filter(rubric=None, enabled=True)
+        'blogs_stream': ContentItem.objects.batch_select('authors').filter(rubric=None, enabled=True)[0:3]
     }
 
 @render_to('archive.html')
