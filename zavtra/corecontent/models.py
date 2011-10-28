@@ -89,13 +89,12 @@ class ContentItem(models.Model):
         return self._comments_count
     
     def update_comments_count(self):
-        ContentItem.objects.filter(id=self.id).update(_comments_count = 
-            Comment.objects.filter(
+        self._comments_count = Comment.objects.filter(
                 content_type = contentitem_ctype_id,
                 object_id=self.id,
                 enabled=True
-            ).count()
-        )
+        ).count()
+        self.save()
     
     @models.permalink
     def get_absolute_url(self):
