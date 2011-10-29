@@ -35,11 +35,8 @@ class Rubric(models.Model):
     def __unicode__(self):
         return self.title
 
-    # TODO: refactor this!!1
     def reset_content_items(self):
-        key = self.content_items_cache_key()
-        res = list( ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3] )
-        cache.set(key, res, 60*60*24)
+        cache.set('rubrics-index', Rubric.objects.all())
 
     def get_content_items(self):
         key = self.content_items_cache_key()
