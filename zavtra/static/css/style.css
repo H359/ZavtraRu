@@ -248,6 +248,10 @@ article p {
     font-size: 1.1em;
 }
 
+.auth-box {
+    margin: 30px;
+}
+
 .clear { clear: both; }
 
 .fb-like-box { width: 220px; height: 290px; }

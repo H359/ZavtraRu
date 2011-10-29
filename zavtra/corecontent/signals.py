@@ -4,7 +4,11 @@ from django.dispatch import receiver
 
 from voting.models import Vote
 
-from models import ContentItem, contentitem_ctype_id
+from models import ContentItem, Rubric, contentitem_ctype_id
+
+@receiver(post_save, sender=Rubric, dispatch_uid='zavtra.corecontent.signals')
+def update_rubrics(sender, **kwargs):
+    kwargs['instance'].reset_content_items()
 
 @receiver(post_save, sender=ContentItem, dispatch_uid='zavtra.corecontent.signals')
 def update_cache(sender, **kwargs):

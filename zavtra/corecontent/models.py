@@ -30,11 +30,19 @@ class Rubric(models.Model):
     on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
     position = models.PositiveIntegerField(verbose_name=u'Положение', default=1)
     
+    content_items_cache_key = lambda w: 'rubric-%d-content-items' % w.id
+    
     def __unicode__(self):
         return self.title
 
+    # TODO: refactor this!!1
+    def reset_content_items(self):
+        key = self.content_items_cache_key()
+        res = list( ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3] )
+        cache.set(key, res, 60*60*24)
+
     def get_content_items(self):
-        key = 'rubric-%d-content-items' % self.id
+        key = self.content_items_cache_key()
         res = cache.get(key)
         if res is None:
             res = list( ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3] )

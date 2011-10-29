@@ -14,6 +14,10 @@ def home(request):
         'blogs_stream': ContentItem.objects.batch_select('authors').filter(rubric=None, enabled=True)[0:3]
     }
 
+@render_to('login.html')
+def login(request):
+    return {}
+
 @render_to('archive.html')
 def archive(request):
     issues = sorted(Issue.objects.order_by('date'), key=lambda issue: issue.date.year, reverse=True)

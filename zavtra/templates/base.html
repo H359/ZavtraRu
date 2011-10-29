@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
     <link rel="stylesheet" media="screen,projection" href="{{ STATIC_URL }}css/ez-min.css">
+    <link rel="stylesheet" media="screen,projection" href="{{ STATIC_URL }}css/colorbox.css">
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
 </head>
@@ -25,9 +26,15 @@
 {% load utils %}
 {% block body %}
     <header>
-        <figure>
+        <figure class="ez-fl">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
         </figure>
+        <div class="ez-fr">
+            <div class="auth-box">
+                <a rel="inline" href="{% url login %}">Войти</a>
+            </div>
+        </div>
+        <div class="clear"></div>
     </header>
     <nav class="top-nav">
         <ul class="primary">
@@ -50,6 +57,12 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.6.4.min.js"%3E%3C/script%3E'))</script>
 <script src="{{ STATIC_URL }}js/comments.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.colorbox-min.js"></script>
+<script>
+$(document).ready(function(){
+    $('a[rel=inline]').colorbox();
+});
+</script>
 {% endblock %}
 {% block javascript %}{% endblock %}
 <!--[if lt IE 7 ]>
