@@ -9,7 +9,7 @@ from models import ContentItem
 @receiver(post_save, sender=ContentItem, dispatch_uid='zavtra.corecontent.signals')
 def update_cache(sender, **kwargs):
     if kwargs['instance'].rubric is not None:
-        cache.delete('rubric-%d-items')
+        cache.delete('rubric-%d-items' % kwargs['instance'].id)
 
 """
 from voting.models import Vote
