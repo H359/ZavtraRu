@@ -1,8 +1,17 @@
-"""
 from django.db.models.signals import post_save
 from django.core.cache import cache
 from django.dispatch import receiver
 
+from django.core.cache import cache
+
+from models import ContentItem
+
+@receiver(post_save, sender=ContentItem, dispatch_uid='zavtra.corecontent.signals')
+def update_cache(sender, **kwargs):
+    if kwargs['instance'].rubric is not None:
+        cache.delete('rubric-%d-items')
+
+"""
 from voting.models import Vote
 
 from models import ContentItem, Rubric, contentitem_ctype_id
