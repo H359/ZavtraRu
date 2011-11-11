@@ -1,8 +1,10 @@
 {% load utils %}
+{% load cache %}
 {% load minipoll_tags %}
 {% if poll %}
         <h3>{{ poll.title }}</h3>
-        {% if user_has_vote %}    
+        {% if user_has_vote %}
+        {% cache 60 latest_poll %}
         <ol>
             {% for choice in poll.choice_set.all %}
             <li>
@@ -16,6 +18,7 @@
             {% endfor %}
             <a href="{% url minipoll_poll_list %}">Другие опросы</a>
         </ol>
+        {% endcache %}
         {% else %}
         <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
           {% csrf_token %}

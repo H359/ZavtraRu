@@ -13,7 +13,7 @@
 <dd>
     {% if forloop.first %}
     {% if item.kind == 'video' %}
-    <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ item.thumbnail }}" width="200"></a></div>
+    <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200"></a></div>
     {% endif %}
     {% endif %}
     <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>

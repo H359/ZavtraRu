@@ -1,10 +1,12 @@
 #-*- coding: utf-8 -*-
 import urlparse
+import urllib2
 import random
 from datetime import datetime
 
 from django.utils.encoding import smart_str, force_unicode
-from django.core.cache import cache
+from django.core.files import File
+from django.core.files.base import ContentFile
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -12,14 +14,17 @@ from django.contrib.contenttypes.models import ContentType
 
 from batch_select.models import BatchManager
 from voting.models import Vote
-from taggit.managers import TaggableManager
+#from taggit.managers import TaggableManager
+from taggit_autosuggest.managers import TaggableManager
 from taggit.models import Tag
 from autoslug import AutoSlugField
 from pytils import dt
 
+import caching.base
+
 from comments.models import Comment
 
-class Rubric(models.Model):
+class Rubric(caching.base.CachingMixin, models.Model):
     class Meta:
         verbose_name=u'Рубрика'
         verbose_name_plural=u'Рубрики'
@@ -30,25 +35,38 @@ class Rubric(models.Model):
     on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
     position = models.PositiveIntegerField(verbose_name=u'Положение', default=1)
     
-    content_items_cache_key = lambda w: 'rubric-%d-content-items' % w.id
+    objects  = caching.base.CachingManager()
     
     def __unicode__(self):
         return self.title
 
-    def reset_content_items(self):
-        cache.set('rubrics-index', Rubric.objects.all())
-
     def get_content_items(self):
-        key = self.content_items_cache_key()
-        res = cache.get(key)
-        if res is None:
-            res = list( ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3] )
-            cache.set(key, res, 60*60*24)
-        return res
+        return caching.base.cached(
+            lambda: ContentItem.batched.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3], 'rubric-%d-items' % self.pk, 0
+        )
 
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
+
+class FeaturedItems(caching.base.CachingMixin, models.Model):
+    class Meta:
+        verbose_name=u'Горячая тема'
+        verbose_name_plural=u'Горячие темы'
+
+    title     = models.CharField(max_length=200, verbose_name=u'Заголовок')
+    slug      = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
+    is_active = models.BooleanField(verbose_name=u'Включено', default=True)
+    tags      = models.ManyToManyField(Tag, verbose_name=u'Теги', blank=True)
+
+    objects   = caching.base.CachingManager()
+    
+    def __unicode__(self):
+        return self.title
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('corecontent.view.featured', (), {'slug': self.slug})
 
 class ContentItem(models.Model):
     class Meta:
@@ -70,24 +88,18 @@ class ContentItem(models.Model):
     _comments_count = models.IntegerField(default=0, editable=False)
 
     tags    = TaggableManager(blank=True)
-    objects = BatchManager()
+    batched = BatchManager()
+    objects = models.Manager()
 
-    rating_cache_key = lambda w: 'contentitem-rating-%d' % w.id
-   
     @property
     def rating(self):
-        key = self.rating_cache_key()
-        rating = cache.get(key)
-        if rating is None:
-            rating = Vote.objects.get_score(self)['score']
-            cache.set(key, rating)
-        return rating
+        return caching.base.cached(
+            lambda: Vote.objects.get_score(self)['score'], 'contentitem-%d-rating' % self.pk, 0
+        )
     
     @rating.setter
     def rating(self, value):
-        key = self.rating_cache_key()
-        rating = value
-        cache.set(key, rating)
+        pass
     
     @property
     def comments_count(self):
@@ -117,7 +129,7 @@ class ContentItem(models.Model):
             rt.br(0)
             rt.p(0)
             rt.nobr(3)
-            for field in ['title', 'subtitle', 'description', 'content']:
+            for field in ['description', 'content']:
                 field_val = getattr(self, field)
                 field_val = field_val.strip()
                 if len(field_val) < 32000:
@@ -158,20 +170,15 @@ class Video(ContentItem):
         return urlparse.parse_qs(self.content).values()[0][0]
 
     def save(self, *args, **kwargs):
-        if self.thumbnail is None or len(self.thumbnail) == 0:
-            import gdata.youtube.service
-            #video_id = urlparse.parse_qs(self.content).values()[0][0]
-            video_id = self.get_video_id()
-            yt_service = gdata.youtube.service.YouTubeService()
-            entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
-            thumbnail = entry.media.thumbnail[0].url
-        else:
-            thumbnail = self.thumbnail
+        import gdata.youtube.service
+        video_id = self.get_video_id()
+        yt_service = gdata.youtube.service.YouTubeService()
+        entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
+        name = urlparse.urlparse(entry.media.thumbnail[0].url).path.split('/')[-1]
+        content = ContentFile(urllib2.urlopen(entry.media.thumbnail[0].url).read())
+        self.thumbnail.save(name, content, save=True)
         super(Video, self).save(*args, **kwargs)
-        ContentItem.objects.filter(id=self.id).update(
-            kind=self.media,
-            thumbnail=thumbnail
-        )
+        ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
 class Image(ContentItem):
     class Meta:

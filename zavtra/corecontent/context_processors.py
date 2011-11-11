@@ -1,13 +1,9 @@
-from django.core.cache import cache
-
-from corecontent.models import Rubric
+from corecontent.models import Rubric, FeaturedItems
 
 def common_pieces(request):
-    key = 'rubrics-index'
-    rubrics = cache.get(key)
-    if rubrics is None:
-        rubrics = Rubric.objects.all()
-        cache.set(key, rubrics)
+    rubrics  = Rubric.objects.all()
+    featured = FeaturedItems.objects.filter(is_active=True)
     return {
-        'rubrics': rubrics
+        'rubrics': rubrics,
+        'featured': featured
     }

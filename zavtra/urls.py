@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('zavtra.comments.urls')),
     url(r'^polls/', include('minipoll.urls')),
+    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
 
     url(r'', include('social_auth.urls')),
 )

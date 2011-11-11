@@ -1,6 +1,8 @@
 from datetime import datetime
 from itertools import groupby
 
+import caching.base
+
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 
@@ -11,7 +13,11 @@ from corecontent.models import ContentItem
 @render_to('home.html')
 def home(request):
     return {
-        'blogs_stream': ContentItem.objects.batch_select('authors').filter(rubric=None, enabled=True)[0:3]
+        'blogs_stream': caching.base.cached(
+            lambda: ContentItem.batched.batch_select('authors').filter(rubric=None, enabled=True)[0:3],
+            'blogs-stream',
+            60*60*24
+        )
     }
 
 @render_to('login.html')

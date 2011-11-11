@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django import forms
 
-from models import Article, Video, Image, Rubric
+from models import Article, Video, Image, Rubric, FeaturedItems
 
 class ArticleAdminForm(forms.ModelForm):
     class Meta:
@@ -40,3 +40,4 @@ admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Rubric, RubricAdmin)
+admin.site.register(FeaturedItems)

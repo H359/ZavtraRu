@@ -59,7 +59,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(SITE_DIR, 'collected_static')
+STATIC_ROOT = os.path.join(SITE_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -72,7 +72,6 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(SITE_DIR, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -159,9 +158,10 @@ TEMPLATE_DIRS = (
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'caching.backends.locmem.CacheClass',
     }
 }
+CACHE_COUNT_TIMEOUT = 60
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'autoslug',
     'corecontent',
     'taggit',
+    'taggit_autosuggest',
     'voting',
     'users',
     'mptt',

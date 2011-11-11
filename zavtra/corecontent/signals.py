@@ -1,3 +1,4 @@
+"""
 from django.db.models.signals import post_save
 from django.core.cache import cache
 from django.dispatch import receiver
@@ -20,3 +21,4 @@ def update_cache(sender, **kwargs):
 def update_rating(sender, **kwargs):
     if kwargs['instance'].content_type_id == contentitem_ctype_id:
         kwargs['instance'].object.rating = Vote.objects.get_score(kwargs['instance'])['score']
+"""
