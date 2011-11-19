@@ -1,17 +1,39 @@
-from django.db.models.signals import post_save
+import urllib2
+import urlparse
+
+from django.db.models.signals import post_save, pre_delete
 from django.core.cache import cache
 from django.dispatch import receiver
 
-from django.core.cache import cache
+from social_auth.signals import socialauth_registered
 
-from models import ContentItem
+from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems
 
-@receiver(post_save, sender=ContentItem, dispatch_uid='zavtra.corecontent.signals')
 def update_cache(sender, **kwargs):
     if kwargs['instance'].rubric is not None:
-        cache.delete('rubric-%d-items' % kwargs['instance'].id)
+        cache.delete('rubric-%d-items' % kwargs['instance'].rubric_id)
+
+for klass in [Article, Video, Image]:
+    receiver(post_save, sender=klass, dispatch_uid='corecontent_updatecache')(update_cache)
+    receiver(pre_delete, sender=klass, dispatch_uid='corecontent_updatecaches')(update_cache)
+
+@receiver(post_save, sender=Rubric, dispatch_uid='rubrics_updatecache')
+def update_rubrics(sender, **kwargs):
+    cache.delete('rubrics')
+
+@receiver(post_save, sender=FeaturedItems, dispatch_uid='featureditems_updatecache')
+def update_featured(sender, **kwargs):
+    cache.delete('featured')
 
 """
+@receiver(socialauth_registered, sender=None, dispatch_uid='zavtra.corecontent.signals')
+def auth_registered(sender, user, response, details, **kwargs):
+    #sender = TwitterBackend | ...
+    print sender
+    #twitter -- avatar : profile_image_url_https, description
+    
+    print response, details
+
 from voting.models import Vote
 
 from models import ContentItem, Rubric, contentitem_ctype_id

@@ -1,14 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="ez-wr">
-    <div class="block">
+{{ social_auth }}
+<section class="container container_16 clearfix">
+    <article class="alpha omega grid_16 block last">
         <header><h1>Авторизация</h1></header>
         <div class="content">
-            <table>
-                
-            </table>
+          <h2>Войдите с помощью социальных сетей:</h2>
+          {% for name in social_auth.backends.oauth %}
+            <a rel="nofollow" href="{% url socialauth_begin name %}" class="auth-icon {{ name }}"></a>
+          {% endfor %}
+          {% for name in social_auth.backends.oauth2 %}
+            <a rel="nofollow" href="{% url socialauth_begin name %}" class="auth-icon {{ name }}"></a>
+          {% endfor %}
+          <h2>Или воспользуйтесь логином на сайте газеты</h2>
+          {% for name in social_auth.backends.openid %}
+            {% if name == "livejournal" %}
+            <form action="{% url socialauth_begin "livejournal" %}" method="post">{% csrf_token %}
+              <div>
+                <label for="openid_lj_user">LiveJournal user:</label>
+                <input id="openid_lj_user" type="text" value="" name="openid_lj_user" />
+                <input type="submit" value="Login"/>
+              </div>
+            </form>
+            {% endif %}
+            {% if name == "openid" %}
+              <form action="{% url socialauth_begin "openid" %}" method="post">{% csrf_token %}
+                <div>
+                  <label for="openid_identifier">Other provider</label>
+                  <input id="openid_identifier" type="text" value="" name="openid_identifier" />
+                  <input type="submit" value="Login" />
+                </div>
+                <p class="helptext">Like your personal <a href="https://www.myopenid.com/" title="My OpenId">myopenid</a></p>
+              </form>
+            {% endif %}
+              {% comment %}
+            <form method-"post" action="{% url internal-login %}">
+              <input type="text" name="login" />
+              <input type="password" name="password" />
+            </form>
+            {% endcomment %}
+          {% endfor %}
         </div>
-    </div>
-</div>
+    </article>
+</section>
 {% endblock %}

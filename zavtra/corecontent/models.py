@@ -6,11 +6,11 @@ from datetime import datetime
 
 from django.utils.encoding import smart_str, force_unicode
 from django.core.files import File
-from django.core.files.base import ContentFile
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.core.files.base import ContentFile
 
 from batch_select.models import BatchManager
 from voting.models import Vote
@@ -20,11 +20,11 @@ from taggit.models import Tag
 from autoslug import AutoSlugField
 from pytils import dt
 
-import caching.base
+from utils import cached, cached_method
 
 from comments.models import Comment
 
-class Rubric(caching.base.CachingMixin, models.Model):
+class Rubric(models.Model):
     class Meta:
         verbose_name=u'Рубрика'
         verbose_name_plural=u'Рубрики'
@@ -35,21 +35,18 @@ class Rubric(caching.base.CachingMixin, models.Model):
     on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
     position = models.PositiveIntegerField(verbose_name=u'Положение', default=1)
     
-    objects  = caching.base.CachingManager()
-    
     def __unicode__(self):
         return self.title
 
+    @cached_method('rubric-{id}-items', duration=60)
     def get_content_items(self):
-        return caching.base.cached(
-            lambda: ContentItem.batched.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3], 'rubric-%d-items' % self.pk, 0
-        )
+        return ContentItem.batched.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3]
 
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
 
-class FeaturedItems(caching.base.CachingMixin, models.Model):
+class FeaturedItems(models.Model):
     class Meta:
         verbose_name=u'Горячая тема'
         verbose_name_plural=u'Горячие темы'
@@ -59,8 +56,6 @@ class FeaturedItems(caching.base.CachingMixin, models.Model):
     is_active = models.BooleanField(verbose_name=u'Включено', default=True)
     tags      = models.ManyToManyField(Tag, verbose_name=u'Теги', blank=True)
 
-    objects   = caching.base.CachingManager()
-    
     def __unicode__(self):
         return self.title
 
@@ -92,10 +87,9 @@ class ContentItem(models.Model):
     objects = models.Manager()
 
     @property
+    @cached_method('contentitem-{id}-votes')
     def rating(self):
-        return caching.base.cached(
-            lambda: Vote.objects.get_score(self)['score'], 'contentitem-%d-rating' % self.pk, 0
-        )
+        return Vote.objects.get_score(self)['score']
     
     @rating.setter
     def rating(self, value):
@@ -176,7 +170,7 @@ class Video(ContentItem):
         entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
         name = urlparse.urlparse(entry.media.thumbnail[0].url).path.split('/')[-1]
         content = ContentFile(urllib2.urlopen(entry.media.thumbnail[0].url).read())
-        self.thumbnail.save(name, content, save=True)
+        self.thumbnail.save(name, content, save=False)
         super(Video, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 

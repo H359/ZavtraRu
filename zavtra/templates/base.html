@@ -7,17 +7,21 @@
 <head>
     <meta charset="utf-8" />
     <title>{% block page_title %}Газета &laquo;Завтра&raquo;{% endblock %}</title>
-    
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
     <meta name="author" content="{% block meta_author %}{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    
-    {# TODO: <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" /> #}
-    {# TODO: <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #}
+    {% comment %}
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" />
+    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" />
+    {% endcomment %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/colorbox.css" />
+    {% comment %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
     <link rel="stylesheet" media="screen,projection" href="{{ STATIC_URL }}css/ez-min.css">
     <link rel="stylesheet" media="screen,projection" href="{{ STATIC_URL }}css/colorbox.css">
+    {% endcomment %}
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
 </head>
@@ -25,36 +29,36 @@
 <body class="{% block body_class %}{% endblock %}">
 {% load utils %}
 {% block body %}
-    <header>
-        <figure class="ez-fl">
+    <header class="container container_16 clearfix">
+        <figure class="grid_12 alpha">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
         </figure>
-        <div class="ez-fr">
-            <div class="auth-box">
-                <a rel="inline" href="{% url login %}">Войти</a>
-            </div>
+        <div class="grid_4 omega">
+            <a rel="inline" href="{% url login %}">Войти</a>
         </div>
-        <div class="clear"></div>
     </header>
-    <nav class="top-nav">
-        <ul class="primary">
-           {% for rubric in rubrics|filter_by_field:"on_top" %}
-           <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
-           {% endfor %}
-           <li class="search last"><input type="search" name="q" placeholder="поиск..."></li>
-        </ul>
-        <ul class="secondary">
-            {% for item in featured %}
-            <li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </nav>
-    
+    <nav class="container container_16 clearfix top-nav">
+        <div class="grid_16 alpha omega">
+            <ul class="primary">
+               {% for rubric in rubrics|filter_by_field:"on_top" %}
+               <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
+               {% endfor %}
+               <li class="search last"><input type="search" name="q" placeholder="поиск..."></li>
+            </ul>
+            <ul class="secondary">
+                {% for item in featured %}
+                <li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>    
     <div id="main" role="main">{% block content %}{% endblock %}</div>
-    
-    <footer class="footer">
-        <p>&copy;1996&mdash;{% now "Y" %} газета &laquo;Завтра&raquo;</p>
-        <p><a href="mailto:zavtra@zavtra.ru">Электронная почта</a>. Адрес редакции: 119146, Москва, Фрунзенская наб., 18—60. Телефон: (495) 726-54-83.</p>
+    <footer class="container container_16 clearfix">
+        <div class="grid_16 alpha omega">
+            &copy;&nbsp;1996&ndash;{% now "Y" %} газета &laquo;Завтра&raquo;<br/>
+            <a href="mailto:zavtra@zavtra.ru">Электронная почта</a>.
+            Адрес редакции: 119146, Москва, Фрунзенская наб., 18&ndash;60. Телефон: (495) 726-54-83.
+        </div>
     </footer>
 {% endblock %}
     

@@ -2,16 +2,12 @@
 import os
 import pytils.translit
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
-
 MANAGERS = ADMINS
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', 
@@ -22,7 +18,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 TIME_ZONE = 'Europe/Moscow'
 LANGUAGE_CODE = 'ru-RU'
 SITE_ID = 1
@@ -51,13 +46,12 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-SOCIAL_AUTH_ENABLED_BACKENDS = ('google', 'openid', 'livejournal')
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.twitter.TwitterBackend',
-    #'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
     #'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
+    #'social_auth.backends.google.GoogleBackend',
     #'social_auth.backends.yahoo.YahooBackend',
     #'social_auth.backends.contrib.linkedin.LinkedinBackend',
     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
@@ -69,15 +63,16 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+SOCIAL_AUTH_ENABLED_BACKENDS = ('google-oauth', 'openid', 'livejournal', 'twitter', 'facebook')
 LOGIN_URL          = '/login/'
 LOGIN_REDIRECT_URL = '/logged-in/'
 LOGIN_ERROR_URL    = '/login-error/'
-SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
-SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+#SOCIAL_AUTH_COMPLETE_URL_NAME  = 'complete'
+#SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'associate_complete'
 SOCIAL_AUTH_USERNAME_FIXER = lambda u: pytils.translit.slugify(u)
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_SESSION_EXPIRATION = False
-
+SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -131,25 +126,40 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'handlers': {
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+     },    
+     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+     },
+     'loggers': {
+        'social_auth.views': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
-    }
+     }
 }
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 try:
-    import local_settings
+    from local_settings import *
 except ImportError:
     pass

@@ -1,10 +1,13 @@
 #-*- coding: utf-8 -*-
+from django.conf import settings
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
 from mptt.models import MPTTModel
+
+AUTH_BACKENDS = ('zavtra',) +settings.SOCIAL_AUTH_ENABLED_BACKENDS
 
 class Comment(MPTTModel):
     class Meta:
@@ -17,8 +20,15 @@ class Comment(MPTTModel):
     comment        = models.TextField(verbose_name=u'Текст')
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(auto_now_add=True)
+    provider       = models.IntegerField(choices=enumerate(AUTH_BACKENDS), editable=False, default=0)
     
     def save(self, *args, **kwargs):
+        try:
+            assoc = self.author.social_auth.all()[0]
+            print assoc.extra_data
+            #self.provider = assoc.provider
+        except IndexError:
+            pass
         super(Comment, self).save(*args, **kwargs)
         try:
             self.content_object.update_comments_count()

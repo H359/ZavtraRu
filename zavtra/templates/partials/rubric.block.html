@@ -1,8 +1,8 @@
-<div class="block ez-box">
-    <header><h1>{{ rubric.title|safe }}<span class="small ez-fr"><a href="{{ rubric.get_absolute_url }}">еще</a>&nbsp;&nbsp;&nbsp;</span></h1></header>
+<article class="block">
+    <header><h1>{{ rubric.title|safe }}<span class="small"><a href="{{ rubric.get_absolute_url }}">еще</a></span></h1></header>
     <dl class="content">
         {% for item in rubric.get_content_items %}
         {% include 'corecontent/list.item.announce.html' %}
         {% endfor %}
     </dl>
-</div>
+</article>

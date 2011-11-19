@@ -35,6 +35,7 @@ class ImageAdmin(admin.ModelAdmin):
 
 class RubricAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'on_main', 'on_top')
+    list_editable = ('on_main', 'on_top')
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)

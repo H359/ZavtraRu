@@ -1,8 +1,6 @@
 from datetime import datetime
 from itertools import groupby
 
-import caching.base
-
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
 
@@ -10,13 +8,14 @@ from annoying.decorators import render_to
 
 from corecontent.models import ContentItem
 
+from utils import cached
+
 @render_to('home.html')
 def home(request):
     return {
-        'blogs_stream': caching.base.cached(
+        'blogs_stream': cached(
             lambda: ContentItem.batched.batch_select('authors').filter(rubric=None, enabled=True)[0:3],
-            'blogs-stream',
-            60*60*24
+            'blogs-stream'
         )
     }
 
