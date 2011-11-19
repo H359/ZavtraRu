@@ -1,0 +1,13 @@
+{% load minipoll_tags %}
+<article class="block">
+  <header><h1>Опрос</h1></header>
+  <div class="content">{% display_last_poll %}</div>
+</article>
+<aside class="block">
+  <header><h1>Реклама</h1></header>
+  <div class="content">
+    <div style="background: url({{ STATIC_URL }}img/adv.png); height: 300px; font-weight: bold; font-size: 2em; color: red;">
+    ЗДЕСЬ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА
+    </div>
+  </div>
+</aside>

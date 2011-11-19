@@ -6,12 +6,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from taggit.models import TagBase
 from pytils.translit import slugify
 
-def custom_slugify(tag, i):
-    slug = slugify(tag.name)
+def custom_slugify(self, tag, i=None):
+    slug = slugify(tag)
     if i is not None:
         slug += u'_%s' % i
     return slug
-setattr(TagBase, 'slugify', custom_slugify)
+#setattr(TagBase, 'slugify', custom_slugify)
+TagBase.slugify = custom_slugify
 
 admin.autodiscover()
 

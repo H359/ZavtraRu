@@ -24,6 +24,11 @@ from utils import cached, cached_method
 
 from comments.models import Comment
 
+@models.permalink
+def tag_url(tag):
+    return ('corecontent.view.items_by_tag', (), {'slug': tag.slug})
+Tag.get_absolute_url = tag_url
+
 class Rubric(models.Model):
     class Meta:
         verbose_name=u'Рубрика'
