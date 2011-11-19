@@ -4,7 +4,7 @@ var ThouMakethCommentsShine = function(num, box) {
     var state = true;
     var toggle = function(){
         sbmt.attr('disabled', state);
-        $('textarea', box).attr('disabled', state);
+        $('textarea', box).attr('disabled', state).val('');
         state = !state;
     }
     
@@ -25,7 +25,6 @@ var ThouMakethCommentsShine = function(num, box) {
     
     form.submit(submitForm);
 }
-
 $(document).ready(function(){
-    $('div.comments').each(ThouMakethCommentsShine);
+  $('div.comments').each(ThouMakethCommentsShine);
 });
