@@ -107,7 +107,7 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
         .block header a { color: #444; }
         .block header a:hover { color: #666; }
         .block header span { float: right; margin-right: 5px; text-transform: lowercase; }
-            .block header span.small a { text-transform: none; }
+            .block header span.small a { text-transform: none; font-size: 0.85em; }
 
     .block .content {}
         .block .content dt { font-weight: bold; margin: 15px 0 0 0; font-size: 1.1em; }

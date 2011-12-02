@@ -59,6 +59,10 @@
     </article>
     {% endwith %}
     <article class="grid_4 omega block">
+        <article class="block">
+            <header><h1>Рейтинг слухов</h1></header>
+            {% display_last_poll %}
+        </article>
         <article>
             <header><h1>Присоединяйся</h1></header>
             <div class="content text-center">
@@ -71,10 +75,6 @@
                 </div>
                 <div id="vk_groups"></div>
             </div>
-        </article>
-        <article class="block">
-            <header><h1>Опрос</h1></header>
-            {% display_last_poll %}
         </article>
         <aside class="block">
             <header><h1>Реклама</h1></header>
