@@ -121,7 +121,7 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
         .block .content .rating { font-size: 1.1em; }
             .block .content .rating .icon { margin: 0; background-image: url(../img/google+-ui-sprite-colour.png) !important; }
 
-.top-image { margin-top: 54px; }
+.top-image { margin-top: 10px; }
     .top-image figure { display: block; margin: 0 auto; }
     .top-image figcaption { text-align: right; padding-right: 8px; }
 
@@ -130,6 +130,8 @@ article {}
     article p { margin-bottom: 1em; font-size: 16px; }
     article header {}
         article header time { margin-right: 5px; font-size: 0.9em; color: #666; }
+
+aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
 .content {}
     .content .details { font-weight: normal; font-size: 0.9em; margin: 2px 0 4px 0; }

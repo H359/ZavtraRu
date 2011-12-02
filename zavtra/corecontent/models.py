@@ -157,6 +157,18 @@ class Article(ContentItem):
         super(Article, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
+class NewsManager(models.Manager):
+    def get_query_set(self):
+	return super(NewsManager, self).get_query_set().filter(rubric__title=u'Новости')
+
+class NewsItem(ContentItem):
+    class Meta:
+	verbose_name=u'Новость'
+	verbose_name_plural=u'Новости'
+	proxy=True
+
+    objects = NewsManager()
+
 class Video(ContentItem):
     class Meta:
         verbose_name=u'Видео'

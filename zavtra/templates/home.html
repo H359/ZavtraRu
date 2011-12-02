@@ -12,11 +12,28 @@
         </figure>
     </article>
     <article class="grid_4 omega block">
+        <aside class="supp">
+	    <a href="#" title="Архив газеты">Архив</a>&nbsp;
+	    &laquo;<a href="#" title="Архив газеты">День литературы</a>&raquo;
+        </aside>
+	<header><h1>Новости</h1></header>
+	<dl class="content">
+	    {% for item in news %}
+	    <dt>
+		<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a>
+	    </dt>
+	    <dd>
+		{{ item.description|safe }}
+	    </dd>
+	    {% endfor %}
+	</dl>
+	{% comment %}
         <header><h1>Свежий номер<span class="small"><a href="#">Архив</a></span></h1></header>
         <div class="content">
             <h2 class="text-center"><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h2>
             <div class="text-center"><a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a></div>
         </div>
+        {% endcomment %}
     </div>
 </section>
 

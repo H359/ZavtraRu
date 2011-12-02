@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from datetime import datetime
 from itertools import groupby
 
@@ -13,6 +14,7 @@ from utils import cached
 @render_to('home.html')
 def home(request):
     return {
+	'news': cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости', enabled=True)[0:5], 'news'),
         'blogs_stream': cached(
             lambda: ContentItem.batched.batch_select('authors').filter(rubric=None, enabled=True)[0:3],
             'blogs-stream'

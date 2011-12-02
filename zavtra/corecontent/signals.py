@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import urllib2
 import urlparse
 
@@ -7,13 +8,16 @@ from django.dispatch import receiver
 
 from social_auth.signals import socialauth_registered
 
-from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems
+from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems, NewsItem
 
 def update_cache(sender, **kwargs):
     if kwargs['instance'].rubric is not None:
-        cache.delete('rubric-%d-items' % kwargs['instance'].rubric_id)
+	if kwargs['instance'].rubric.title == u'Новости':
+	    cache.delete('news')
+	else:
+	    cache.delete('rubric-%d-items' % kwargs['instance'].rubric_id)
 
-for klass in [Article, Video, Image]:
+for klass in [Article, Video, NewsItem, Image]:
     receiver(post_save, sender=klass, dispatch_uid='corecontent_updatecache')(update_cache)
     receiver(pre_delete, sender=klass, dispatch_uid='corecontent_updatecaches')(update_cache)
 
