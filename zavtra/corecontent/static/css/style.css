@@ -121,7 +121,7 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
         .block .content .rating { font-size: 1.1em; }
             .block .content .rating .icon { margin: 0; background-image: url(../img/google+-ui-sprite-colour.png) !important; }
 
-.top-image { margin-top: 10px; }
+.top-image { margin-top: 10px; min-width: 760px; }
     .top-image figure { display: block; margin: 0 auto; }
     .top-image figcaption { text-align: right; padding-right: 8px; }
 
@@ -147,12 +147,14 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .top-nav ul { position: relative; height: 2.5em; width: 100%; }
         .top-nav ul li { position: relative; left: 0; top: 0; float: left; text-align: center; }
             .top-nav ul li a { height: 2.5em; line-height: 2.5em; display: block; float: left; margin: 0 1em; color: white; }
+            .top-nav ul li span { height: 2.5em; line-height: 2.5em; display: block; float: left; margin: 0 1em; color: white; }
             .top-nav ul li a:hover { color: #CF3A2D; }
         .top-nav ul li.search { float: right; line-height: 2.25em; }
             .top-nav ul li.search input { height: 1.5em; padding: 0 0.5em; margin: 0 1em; border-radius: 30px; -webkit-border-radius: 30px; -moz-border-radius: 30px; -o-border-radius: 30px;}
     .top-nav ul.primary { background: #2A281F; font-size: 1.25em; }
     .top-nav ul.secondary { background: #ccc; font-size: 1em; }
         .top-nav ul.secondary a { color: #444; }
+        .top-nav ul.secondary span { color: #444; margin-right: 0.1em; }
 
 .auth-icon { width: 32px; height: 32px; display: block; }
 .auth-icon.facebook { background-image: url(../img/social/facebook.png);  }
