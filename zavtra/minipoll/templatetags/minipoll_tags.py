@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from minipoll.models import Poll
 
-import caching.base
+#import caching.base
 
 register = Library()
 
