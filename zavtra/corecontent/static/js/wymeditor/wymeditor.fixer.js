@@ -22,7 +22,7 @@ wymeditor_filebrowser = function(wym, wdw) {
 }
 
 $(document).ready(function(){
-    $('.wymeditor').wymeditor({
+    $('textarea').wymeditor({
         //'updateSelector': 'input:submit',
         'updateSelector': '.submit-row input[type=submit]',
         'updateEvent': 'click',

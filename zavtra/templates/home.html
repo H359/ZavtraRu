@@ -6,16 +6,12 @@
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="top-image grid_12 alpha">
-        <figure style="width: 746px;">
-            <img src="{{ STATIC_URL }}img/givot_sra.jpg" width="746" height="300">
+        <figure>
+            <img src="{{ STATIC_URL }}img/givot_sra.jpg">
             <figcaption><a href="#">Геннадий Животов</a></figcaption>
         </figure>
     </article>
     <article class="grid_4 omega block">
-        <aside class="supp">
-	    <a href="#" title="Архив газеты">Архив ЗАВТРА</a>&nbsp;
-	    &laquo;<a href="#" title="Архив газеты">День литературы</a>&raquo;
-        </aside>
 	<header><h1>Новости</h1></header>
 	<dl class="content">
 	    {% for item in news %}

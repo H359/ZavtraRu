@@ -35,10 +35,10 @@ class Rubric(models.Model):
         verbose_name_plural=u'Рубрики'
         ordering = ['position', '-id']
     title    = models.CharField(max_length=250, verbose_name=u'Заголовок')
-    slug     = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
+    slug     = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False)
     on_main  = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
     on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
-    position = models.PositiveIntegerField(verbose_name=u'Положение', default=1)
+    position = models.PositiveIntegerField(verbose_name=u'Положение', default=lambda: Rubric.objects.count()+1)
     
     def __unicode__(self):
         return self.title
@@ -57,8 +57,8 @@ class FeaturedItems(models.Model):
         verbose_name_plural=u'Горячие темы'
 
     title     = models.CharField(max_length=200, verbose_name=u'Заголовок')
-    slug      = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
-    is_active = models.BooleanField(verbose_name=u'Включено', default=True)
+    slug      = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False)
+    is_active = models.BooleanField(verbose_name=u'Выводить на главной / актуально', default=True)
     tags      = models.ManyToManyField(Tag, verbose_name=u'Теги', blank=True)
 
     def __unicode__(self):
@@ -72,17 +72,17 @@ class ContentItem(models.Model):
     class Meta:
         ordering = ['-pub_date', '-id']
     title        = models.CharField(max_length=250, verbose_name=u'Заголовок')
-    slug         = AutoSlugField(populate_from=lambda instance: instance.title, unique=True)
+    slug         = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False)
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)
     rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
     description  = models.TextField(verbose_name=u'Анонс', blank=True)
-    pub_date     = models.DateField(verbose_name=u'Дата публикации')
-    authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems')
-    published    = models.BooleanField(verbose_name=u'Опубликовано')
-    enabled      = models.BooleanField(verbose_name=u'Допущено к публикации на сайте')
-    thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True, null=True)
+    pub_date     = models.DateField(verbose_name=u'Дата публикации', default=datetime.now)
+    authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems', blank=True)
+    published    = models.BooleanField(verbose_name=u'Опубликовано в газете')
+    enabled      = models.BooleanField(verbose_name=u'Допущено к публикации на сайте', default=True)
+    thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True)
     kind         = models.CharField(max_length=200, editable=False)
-    content      = models.TextField(verbose_name=u'Текст статьи')
+    content      = models.TextField(verbose_name=u'Содержимое', blank=True)
     old_url      = models.URLField(verify_exists=True, null=True, blank=True, verbose_name=u'URL на старом сайте')
     
     _comments_count = models.IntegerField(default=0, editable=False)
@@ -90,6 +90,17 @@ class ContentItem(models.Model):
     tags    = TaggableManager(blank=True)
     batched = BatchManager()
     objects = models.Manager()
+
+    def by_kind(self):
+	res = {}
+	for k in self._meta.fields:
+	    res[k.name] = getattr(self, k.name)
+	if self.kind == 'video':
+	    return Video(**res)
+	elif self.kind == 'image':
+	    return Image(**res)
+	else:
+	    return Article(**res)
 
     @property
     @cached_method('contentitem-{id}-votes')
@@ -135,11 +146,22 @@ class ContentItem(models.Model):
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
         super(ContentItem, self).save(*args, **kwargs)        
 
+class DailyQuote(models.Model):
+    class Meta:
+	verbose_name=u'Цитата дня'
+	verbose_name_plural=u'Цитаты дня'
+    quote  = models.TextField(verbose_name=u'Цитата')
+    source = models.ForeignKey(ContentItem, verbose_name=u'Источник цитаты')
+    day    = models.DateField(verbose_name=u'День', unique=True)
+
+""" Specific content items """
+
 def content_manager_for(kind):
     class ContentItemManager(models.Manager):
         def get_query_set(self):
             return super(ContentItemManager, self).get_query_set().filter(kind=kind)
     return ContentItemManager
+
 
 article_manager = content_manager_for('text')
 video_manager = content_manager_for('video')
@@ -168,6 +190,10 @@ class NewsItem(ContentItem):
 	proxy=True
 
     objects = NewsManager()
+
+    def save(self, *args, **kwargs):
+	self.rubric = Rubric.objects.get(title=u'Новости')
+	super(NewsItem, self).save(*args, **kwargs)
 
 class Video(ContentItem):
     class Meta:
@@ -203,5 +229,5 @@ class Image(ContentItem):
         super(Image, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
-contentitem_ctype_id = ContentType.objects.get_for_model(ContentItem).id
+#contentitem_ctype_id = ContentType.objects.get_for_model(ContentItem).id
 import signals

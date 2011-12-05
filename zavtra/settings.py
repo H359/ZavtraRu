@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'pytils',
     'autoslug',
     'corecontent',
+    'sorl.thumbnail',
     'taggit',
     'taggit_autosuggest',
     'voting',

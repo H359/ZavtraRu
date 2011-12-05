@@ -121,9 +121,10 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
         .block .content .rating { font-size: 1.1em; }
             .block .content .rating .icon { margin: 0; background-image: url(../img/google+-ui-sprite-colour.png) !important; }
 
-.top-image { margin-top: 10px; min-width: 760px; }
-    .top-image figure { display: block; margin: 0 auto; }
-    .top-image figcaption { text-align: right; padding-right: 8px; }
+.top-image { margin-top: 10px; min-width: 720px; }
+    .top-image figure { display: block; margin: 0 auto; text-align: center; }
+	.top-image figure img { width: 95%; }
+	.top-image figure figcaption { text-align: right; width: 98%; }
 
 
 article {}
@@ -173,6 +174,7 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 /*.search { margin: 5px; padding: 5px 6px 4px 6px; width: 220px; }*/
 .sep-bar { background-color: #F7F2ED; padding: 5px 0; margin: 5px 0; }
 .text-center { text-align: center; }
+.text-right { text-align: right; }
 
 .ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
 .hidden { display: none; visibility: hidden; }
