@@ -8,8 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from minipoll.managers import PollPublishedManager
 from minipoll.managers import DRAFT, PUBLISHED, ARCHIVED
 
-import caching.base
-
 STATUS_CHOICES = ((DRAFT, _('draft')),
                   (PUBLISHED, _('published')),
                   (ARCHIVED, _('archived')),
@@ -48,7 +46,7 @@ class Poll(models.Model):
     votes.short_description = _('votes')
 
 
-class Choice(caching.base.CachingMixin, models.Model):
+class Choice(models.Model):
     """A choice for a poll"""
     poll = models.ForeignKey(Poll, verbose_name=_('poll'))
     
@@ -60,8 +58,6 @@ class Choice(caching.base.CachingMixin, models.Model):
                                     help_text=_('If you want to disable this choice.'))
     display_priority = models.IntegerField(_('display priority'), default=100,
                                            help_text=_('Used to ordonnate the choices.'))
-
-    objects = caching.base.CachingManager()
 
     class Meta:
         ordering = ('-display_priority', 'creation_date',)
