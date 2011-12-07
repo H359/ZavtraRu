@@ -1,4 +1,7 @@
 *.py[co]
+*.pdf
+*.log
+*.aux
 *.mo
 *.log
 *.pot
@@ -12,6 +15,7 @@ bin
 var
 sdist
 media
+static
 develop-eggs
 .installed.cfg
 pip-log.txt

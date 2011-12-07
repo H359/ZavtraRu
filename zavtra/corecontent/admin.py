@@ -65,11 +65,14 @@ class RubricAdmin(admin.ModelAdmin):
 	if obj is not None:
 	    return obj.title != u'Новости'
 	return True
-    
+
+class DailyQuoteAdmin(admin.ModelAdmin):
+    list_display = ('quote', 'day')
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(NewsItem, NewsItemAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(FeaturedItems)
-admin.site.register(DailyQuote)
+admin.site.register(DailyQuote, DailyQuoteAdmin)

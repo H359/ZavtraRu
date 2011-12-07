@@ -154,6 +154,12 @@ class DailyQuote(models.Model):
     source = models.ForeignKey(ContentItem, verbose_name=u'Источник цитаты')
     day    = models.DateField(verbose_name=u'День', unique=True)
 
+    def __unicode__(self):
+	return u'%s' % (self.quote)
+
+    def get_absolute_url(self):
+	return self.source.get_absolute_url()
+
 """ Specific content items """
 
 def content_manager_for(kind):

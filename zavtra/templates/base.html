@@ -34,11 +34,11 @@
     	    <blockquote><a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a></blockquote>
     	    {% endif %}
         </div>
-        <div class="grid_4 omega">
-    	    <aside class="text-right supp">
+        <div class="grid_4 omega text-right">
+    	    <aside class="supp">
     		<a href="#">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">&laquo;День литературы&raquo;</a>
     	    </aside>
-            {% comment %}<a rel="inline" href="{% url login %}">Войти</a>{% endcomment %}
+    	    <div><a rel="inline" href="{% url login %}">Войти</a></div>
         </div>
     </header>
     <nav class="container container_16 clearfix top-nav">
