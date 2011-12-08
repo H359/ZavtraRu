@@ -23,6 +23,17 @@
     </div>
     <div class="grid_4 omega">
 	{% include 'partials/rightside.html' %}
+	{% if title.id == 2 %}
+	<article class="block">
+	    <header><h1>Наши друзья</h1></header>
+	    <div class="content text-center">
+		<div><a title="Интернет-магазин Делократ.Ру - Суди власть по делам!" rel="nofollow" href="http://www.delocrat.ru"><img src="{{ STATIC_URL }}img/banners/delokrat.gif" /></a></div>
+		<div><a title="Курсы Сергея Переслегина" rel="nofollow" href="http://www.psychotechnology.ru/cgi-bin/courses.pl?t=15"><img src="{{ STATIC_URL }}img/banners/pereslegin.jpg" /></a></div>
+		<div><a title="Политкнига" rel="nofollow" href="http://www.politkniga.ru/index.php?productID=3403"><img src="{{ STATIC_URL }}img/banners/politkniga.gif" /></a></div>
+		<div><a title="Им нужна помощь" rel="nofollow" href="http://1mpf.ru"><img src="{{ STATIC_URL }}img/banners/ucanhelp.gif" /></a></div>
+	    </div>
+	</article>
+	{% endif %}
     </div>
 </section>
 {% endblock %}

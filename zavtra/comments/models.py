@@ -23,14 +23,23 @@ class Comment(MPTTModel):
     provider       = models.IntegerField(choices=enumerate(AUTH_BACKENDS), editable=False, default=0)
     
     def save(self, *args, **kwargs):
+	"""
         try:
             assoc = self.author.social_auth.all()[0]
             print assoc.extra_data
             #self.provider = assoc.provider
         except IndexError:
             pass
+        """
         super(Comment, self).save(*args, **kwargs)
         try:
             self.content_object.update_comments_count()
         except AttributeError:
             pass
+
+    def get_author(self):
+	author = self.author
+	username = u' '.join([author.first_name.strip(), author.last_name.strip()])
+	if username != u' ':
+	    return username
+	return author.username

@@ -43,10 +43,6 @@ class Rubric(models.Model):
     def __unicode__(self):
         return self.title
 
-    @cached_method('rubric-{id}-items', duration=60)
-    def get_content_items(self):
-        return ContentItem.batched.batch_select('authors').filter(enabled=True).filter(rubric=self)[0:3]
-
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
@@ -235,5 +231,5 @@ class Image(ContentItem):
         super(Image, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
-#contentitem_ctype_id = ContentType.objects.get_for_model(ContentItem).id
+contentitem_ctype_id = ContentType.objects.get_for_model(ContentItem).id
 import signals

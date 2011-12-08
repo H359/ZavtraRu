@@ -29,14 +29,14 @@
         <figure class="grid_5 alpha">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
         </figure>
-        <div class="grid_7">&nbsp;
+        <div class="grid_6">&nbsp;
     	    {% if quote %}
     	    <blockquote><a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a></blockquote>
     	    {% endif %}
         </div>
-        <div class="grid_4 omega text-right">
+        <div class="grid_5 omega text-right">
     	    <aside class="supp">
-    		<a href="#">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">&laquo;День литературы&raquo;</a>
+    		<a href="#">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
     	    </aside>
     	    <div><a rel="inline" href="{% url login %}">Войти</a></div>
         </div>
@@ -44,7 +44,7 @@
     <nav class="container container_16 clearfix top-nav">
         <div class="grid_16 alpha omega">
             <ul class="primary">
-               {% for rubric in rubrics|filter_by_field:"on_top" %}
+               {% for rubric in top_rubrics %}
                <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
                {% endfor %}
                <li class="search last"><input type="search" name="q" placeholder="поиск..."></li>

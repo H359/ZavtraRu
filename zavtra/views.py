@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from itertools import groupby
 
 from django.http import HttpResponseRedirect
@@ -11,14 +11,37 @@ from corecontent.models import ContentItem
 
 from utils import cached
 
+oneday = timedelta(days=1)
+
 @render_to('home.html')
 def home(request):
+    now = datetime.now().date()
+    wstart = now - oneday*(now.weekday() - 2)
+    wend = wstart + 7*oneday
+    """ Cache by wstart, wend? """
+    def get_content():
+        qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
+	    enabled=True, pub_date__range = (wstart, wend), rubric__on_main=True
+	)
+	newsletter = {}
+	for item in list(qs):
+	    newsletter.setdefault(item.rubric_id, {'rubric': None, 'items': []})
+	    if newsletter[item.rubric_id]['rubric'] is None:
+		newsletter[item.rubric_id]['rubric'] = item.rubric
+	    newsletter[item.rubric_id]['items'].append(item)
+	return sorted(newsletter.values(), key=lambda p: p['rubric'].position)
+    newsletter = cached(
+	get_content,
+	'newsletter'
+    )
+    blogs = cached(
+	lambda: ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)[0:6],
+	'blogs',
+	duration = (wend - now).seconds
+    )
     return {
-	'news': cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости', enabled=True)[0:5], 'news'),
-        'blogs_stream': cached(
-            lambda: ContentItem.batched.batch_select('authors').filter(rubric=None, enabled=True)[0:3],
-            'blogs-stream'
-        )
+	'newsletter': newsletter,
+	'blogs': blogs
     }
 
 @render_to('login.html')

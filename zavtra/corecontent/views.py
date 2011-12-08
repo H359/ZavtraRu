@@ -54,7 +54,22 @@ class TaggedItemsView(ListView):
         context['title'] = self.tag
         return context
 
+class BlogView(ListView):
+    paginate_by         = 2
+    template_name       = 'corecontent/view.collection.html'
+    context_object_name = 'items'
+    def get_queryset(self):
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)
+    
+    def get_context_data(self, **kwargs):
+        context = super(RubricView, self).get_context_data(**kwargs)
+        context['type']  = u'Рубрика'
+        context['title'] = u'Блоги'
+        return context
+
+
 view_item = ContentItemView.as_view()
 view_rubric = RubricView.as_view()
 view_featured = FeaturedView.as_view()
+view_blog = BlogView.as_view()
 view_items_by_tag = TaggedItemsView.as_view()

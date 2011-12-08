@@ -11,7 +11,7 @@
             <figcaption><a href="#">Геннадий Животов</a></figcaption>
         </figure>
     </article>
-    <article class="grid_4 omega block">
+    <article class="grid_4 omega block rubric-info">
 	<header><h1>Новости</h1></header>
 	<dl class="content">
 	    {% for item in news %}
@@ -23,38 +23,39 @@
 	    </dd>
 	    {% endfor %}
 	</dl>
-	{% comment %}
-        <header><h1>Свежий номер<span class="small"><a href="#">Архив</a></span></h1></header>
-        <div class="content">
-            <h2 class="text-center"><a href="{{ last_issue.get_absolute_url }}">{{ last_issue }}</a></h2>
-            <div class="text-center"><a href="{{ last_issue.get_absolute_url }}"><img src="{{ STATIC_URL }}img/pdf.jpg"></a></div>
-        </div>
-        {% endcomment %}
-    </div>
+    </article>
 </section>
 
 <section class="container container_16 clearfix">
-    {% with main_rubrics=rubrics|filter_by_field:"on_main" %}
-    <article class="grid_4 alpha">
-        {% for rubric in main_rubrics|slice:"0::2" %}
-        {% include 'partials/rubric.block.html' %}
+    <article class="grid_4 alpha rubric-info">
+        {% for group in newsletter|slice:"0::2" %}
+        {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
         {% endfor %}
     </article>
-    <article class="grid_4">
-        {% for rubric in main_rubrics|slice:"1::2" %}
-        {% include 'partials/rubric.block.html' %}
+    <article class="grid_4 rubric-info">
+        {% for group in newsletter|slice:"1::2" %}
+        {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
         {% endfor %}
     </article>
-    <article class="grid_4 block">
-        <header><h1>Блоги</h1></header>
+    
+    <article class="grid_4 block rubric-info">
+        <header><h1>Блоги<span class="small"><a href="{% url corecontent.view.blog %}" title="Блоги">ещё</a></span></h1></header>
         <dl class="content">
-            {% for item in blogs_stream %}
+            {% for item in blogs %}
             {% include 'corecontent/list.item.announce.html' %}
             {% endfor %}
         </dl>
     </article>
-    {% endwith %}
+
     <article class="grid_4 omega block">
+	<aside class="content">
+	    <p class="text-center">
+	        <a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова"><img src="{{ STATIC_URL }}img/banners/kupon1.gif" alt="Купон на Проханова" /></a>
+		<br />
+		<a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова">Купон на Проханова</a>
+	    </p>
+	</aside>
+
         <article class="block">
             <header><h1>Рейтинг слухов</h1></header>
             {% display_last_poll %}
@@ -72,15 +73,12 @@
                 <div id="vk_groups"></div>
             </div>
         </article>
-        {% comment %}
         <aside class="block">
-            <header><h1>Реклама</h1></header>
-            <div class="content">
-                <div style="background: url({{ STATIC_URL }}img/adv.png); height: 300px; font-weight: bold; font-size: 2em; color: red;">
-                ЗДЕСЬ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА
+            <header><h1>Наши друзья</h1></header>
+            <div class="content text-center">
+        	<a rel="nofollow" href="http://id-dostoinstvo.ru/page/51.html"><img src="{{ STATIC_URL }}img/banners/calendar.gif" /></a>
             </div>
         </aside>
-        {% endcomment %}
     </article>
 </section>
 {% endblock %}

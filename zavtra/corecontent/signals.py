@@ -10,6 +10,7 @@ from social_auth.signals import socialauth_registered
 
 from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems, NewsItem
 
+"""
 def update_cache(sender, **kwargs):
     if kwargs['instance'].rubric is not None:
 	if kwargs['instance'].rubric.title == u'Новости':
@@ -30,6 +31,16 @@ def update_rubrics(sender, **kwargs):
 @receiver(post_save, sender=FeaturedItems, dispatch_uid='featureditems_updatecache')
 def update_featured(sender, **kwargs):
     cache.delete('featured')
+"""
+"""
+@receiver(socialauth_registered, sender=None, dispatch_uid='zavtra.corecontent.signals')
+def auth_registered(sender, user, response, details, **kwargs):
+    #sender = TwitterBackend | FacebookBackend ...
+    print sender
+    #twitter -- response.profile_image_url_url, response.description, 
+    #facebook -- response.username, response.first_name, response.last_name, response.link, response.id
+    print response, details
+"""
 
 """
 @receiver(socialauth_registered, sender=None, dispatch_uid='zavtra.corecontent.signals')
