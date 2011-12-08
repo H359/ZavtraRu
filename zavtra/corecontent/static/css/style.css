@@ -138,6 +138,10 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .content .details { font-weight: normal; font-size: 0.9em; margin: 2px 0 4px 0; }
     .content .info { margin-top: 4px; color: #666; text-align: right; }
 
+    .content form.form div { margin: 0.5em 0; }
+    .content form.form label { width: 4em; float: left; text-align: right; margin-right: 0.5em; display: block; }
+    .content form.form button { margin-left: 5.5em; }
+
 .comments {}
     .comments dt {}
     .comments dd {}
@@ -157,7 +161,11 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
         .top-nav ul.secondary a { color: #444; }
         .top-nav ul.secondary span { color: #444; margin-right: 0.1em; }
 
-.auth-icon { width: 32px; height: 32px; display: block; }
+
+table.auth-form td { vertical-align: middle; }
+table.auth-form label { margin-right: 0.5em; }
+
+.auth-icon { width: 32px; height: 32px; display: block; float: left; margin: 8px; background-repeat: no-repeat; }
 .auth-icon.facebook { background-image: url(../img/social/facebook.png);  }
 .auth-icon.google-oauth { background-image: url(../img/social/google.png); }
 .auth-icon.livejournal { background-image: url(../img/social/livejournal.png); }

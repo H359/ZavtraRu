@@ -16,6 +16,8 @@ def update_cache(sender, **kwargs):
 	    cache.delete('news')
 	else:
 	    cache.delete('rubric-%d-items' % kwargs['instance'].rubric_id)
+    else:
+	cache.delete('blogs-stream')
 
 for klass in [Article, Video, NewsItem, Image]:
     receiver(post_save, sender=klass, dispatch_uid='corecontent_updatecache')(update_cache)

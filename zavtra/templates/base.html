@@ -10,8 +10,8 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
     <meta name="author" content="{% block meta_author %}{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
     {% comment %}
-    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" />
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" />
     {% endcomment %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
@@ -76,7 +76,7 @@
 <script src="{{ STATIC_URL }}js/jquery.colorbox-min.js"></script>
 <script>
 $(document).ready(function(){
-    $('a[rel=inline]').colorbox();
+    $('a[rel=inline]').colorbox({close:'Закрыть'});
 });
 </script>
 {% endblock %}
