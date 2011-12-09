@@ -4,11 +4,12 @@ from itertools import groupby
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout, login as user_login, authenticate
-from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, get_object_or_404
 
 from annoying.decorators import render_to
 
-from corecontent.models import ContentItem
+from corecontent.models import ContentItem, ZhivotovIllustration
 
 from utils import cached
 
@@ -20,6 +21,12 @@ def home(request):
     wstart = now - oneday*(now.weekday() - 2)
     wend = wstart + 7*oneday
     """ Cache by wstart, wend? """
+    def get_illustration():
+	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
+	try:
+	    return p[0]
+	except IndexError:
+	    return None
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
 	    enabled=True, pub_date__range = (wstart, wend), rubric__on_main=True
@@ -40,10 +47,21 @@ def home(request):
 	'blogs',
 	duration = (wend - now).seconds
     )
+    illustration = cached(
+	get_illustration,
+	'illustration',
+	duration=600
+    )
     return {
 	'newsletter': newsletter,
-	'blogs': blogs
+	'blogs': blogs,
+	'illustration': illustration
     }
+
+@render_to('user.html')
+def user(request, username):
+    user = get_object_or_404(User, username=username)
+    return {'user': user}
 
 @render_to('login.html')
 def login(request):

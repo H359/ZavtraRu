@@ -5,6 +5,7 @@ urlpatterns = patterns('',
     url(r'^featured/(?P<slug>[-\w]+)/$', 'corecontent.views.view_featured', name='corecontent.view.featured'),
     url(r'^blogs/$', 'corecontent.views.view_blog', name='corecontent.view.blog'),
     url(r'^view/(?P<slug>[-\w]+)/$', 'corecontent.views.view_item', name='corecontent.view.item'),
-    url(r'^tag/(?P<slug>[-\w]+)/$', 'corecontent.views.view_items_by_tag', name = 'corecontent.view.items_by_tag')
+    url(r'^tag/(?P<slug>[-\w]+)/$', 'corecontent.views.view_items_by_tag', name='corecontent.view.items_by_tag'),
+    url(r'^zhivotov/$', 'corecontent.views.zhivotov_gallery', name='corecontent.view.zhivotov_gallery'),
 )
 

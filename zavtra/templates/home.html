@@ -7,8 +7,12 @@
 <section class="container container_16 clearfix">
     <article class="top-image grid_12 alpha">
         <figure>
-            <img src="{{ STATIC_URL }}img/givot_sra.jpg">
-            <figcaption><a href="#">Геннадий Животов</a></figcaption>
+    	    {% if illustration %}
+    	    <a title="{{ illustration.title }}" rel="inline" href="{{ MEDIA_URL }}{{ illustration.original }}"><img src="{{ MEDIA_URL }}{{ illustration.thumbnail }}"></a>
+	    {% else %}
+            <a rel="inline" href="{{ STATIC_URL }}img/givot_big.jpg"><img src="{{ STATIC_URL }}img/givot_sra.jpg"></a>
+            {% endif %}
+            <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
         </figure>
     </article>
     <article class="grid_4 omega block rubric-info">

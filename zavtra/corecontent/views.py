@@ -1,7 +1,10 @@
 #-*- coding: utf-8 -*-
-from django.views.generic import ListView, DetailView
+from datetime import datetime
 
-from corecontent.models import Rubric, FeaturedItems, ContentItem
+from django.views.generic import ListView, DetailView, YearArchiveView
+from django.shortcuts import Http404
+
+from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
 from taggit.models import Tag
 
@@ -67,9 +70,20 @@ class BlogView(ListView):
         context['title'] = u'Блоги'
         return context
 
+class GalleryView(YearArchiveView):
+    date_field = 'pub_date'
+    model      = ZhivotovIllustration
+    make_object_list = True
+    def get_year(self):
+	try:
+	    year = super(GalleryView, self).get_year()
+	except Http404:
+	    year = datetime.now().year
+	return year
 
 view_item = ContentItemView.as_view()
 view_rubric = RubricView.as_view()
 view_featured = FeaturedView.as_view()
 view_blog = BlogView.as_view()
 view_items_by_tag = TaggedItemsView.as_view()
+zhivotov_gallery = GalleryView.as_view()

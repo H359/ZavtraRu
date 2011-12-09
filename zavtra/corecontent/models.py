@@ -161,6 +161,19 @@ class DailyQuote(models.Model):
     def get_absolute_url(self):
 	return self.source.get_absolute_url()
 
+class ZhivotovIllustration(models.Model):
+    class Meta:
+	verbose_name=u'Иллюстрация Животова'
+	verbose_name_plural=u'Иллюстрации Животова'
+	ordering = ['-pub_date', '-id']
+    pub_date  = models.DateField(verbose_name=u'Дата публикации', default=datetime.now)
+    title     = models.CharField(max_length=250, verbose_name=u'Название')
+    thumbnail = models.ImageField(upload_to='zhivot/thumb/', verbose_name=u'Изображение для главной')
+    original  = models.ImageField(upload_to='zhivot/big/', verbose_name=u'Оригинальное Изображение')
+
+    def __unicode__(self):
+	return u'%s %s' % (self.title, self.pub_date)
+
 """ Specific content items """
 
 def content_manager_for(kind):

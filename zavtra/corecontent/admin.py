@@ -6,7 +6,7 @@ from django.contrib import admin
 from django import forms
 from django.conf import settings
 
-from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote
+from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote, ZhivotovIllustration
 
 class ContentItemMediaMixin(object):
     class Media:
@@ -76,3 +76,4 @@ admin.site.register(NewsItem, NewsItemAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(FeaturedItems)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
+admin.site.register(ZhivotovIllustration)
