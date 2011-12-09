@@ -1,0 +1,17 @@
+{% extends base_template %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="grid_12 alpha block">
+	<header><h1>Пользователь {{ user }}</h1></header>
+	<dl class="content">
+	    {% for item in user.contentitems.all %}
+	    {% include 'corecontent/list.item.announce.html' %}
+	    {% endfor %}
+	</dl>
+    </article>
+    <article class="grid_4 omega">
+    {% include 'partials/rightside.html' %}
+    </article>
+</section>
+{% endblock %}

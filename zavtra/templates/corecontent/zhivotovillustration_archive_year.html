@@ -1,0 +1,11 @@
+{% extends base_template %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <div class="grid_16 alpha omega text-center">
+    {% for item in object_list %}
+	<a class="gallery" href="{{ MEDIA_URL }}{{ item.original }}" title="{{ img.title }}"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}
