@@ -164,6 +164,8 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
         .top-nav ul.secondary span { color: #444; margin-right: 0.1em; }
 
 
+blockquote.topquote { font-size: 1.2em; font-weight: bold; font-style: italic; }
+
 /*table.auth-form { width: 100%; }*/
 table.auth-form th { text-align: right; width: 20%; }
 table.auth-form th, table.auth-form td { vertical-align: middle; }
