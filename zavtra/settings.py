@@ -76,7 +76,7 @@ SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 ACCOUNT_ACTIVATION_DAYS = 7
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
 EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+EMAIL_PORT = 25
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

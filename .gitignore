@@ -15,7 +15,6 @@ bin
 var
 sdist
 media
-static
 develop-eggs
 .installed.cfg
 pip-log.txt
