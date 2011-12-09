@@ -1,0 +1,24 @@
+{% extends base_template %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="grid_16 alpha omega">
+	<form action="" method="post">
+	    <fieldset>
+	    {% for field in form %}
+	    <div {% if field.errors %}class="error"{% endif %}>
+	        {{ field.label_tag }}
+	        {{ field.errors }}
+	        {{ field }}
+	    </div>
+	    {% endfor %}
+	    {% csrf_token %}
+	    {% if form.non_field_errors %}<div class="error">{{ form.non_field_errors }}</div>{% endif %}
+	    <div class="buttons">
+		<button class="button" type="submit">Продолжить</button>
+	    </div>
+	    </fieldset>
+	</form>
+    </article>
+</section>
+{% endblock %}

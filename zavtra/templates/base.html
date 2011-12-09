@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/colorbox.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/forms.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
@@ -38,7 +39,13 @@
     	    <aside class="supp">
     		<a href="#">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
     	    </aside>
-    	    <div><a rel="inline" href="{% url login %}">Войти</a></div>
+    	    <div>
+    		{% if request.user.is_authenticated %}
+    		Приветствуем, {{ request.user }}!
+    		{% else %}
+    		<a rel="inline" href="{% url login %}">Войти</a>
+    		{% endif %}
+    	    </div>
         </div>
     </header>
     <nav class="container container_16 clearfix top-nav">

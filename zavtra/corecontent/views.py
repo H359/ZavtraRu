@@ -11,7 +11,7 @@ class ContentItemView(DetailView):
     context_object_name = 'item'
 
 class RubricView(ListView):
-    paginate_by         = 2
+    paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -25,7 +25,7 @@ class RubricView(ListView):
         return context
 
 class FeaturedView(ListView):
-    paginate_by         = 2
+    paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -41,7 +41,7 @@ class FeaturedView(ListView):
         return context
 
 class TaggedItemsView(ListView):
-    paginate_by        = 2
+    paginate_by        = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -55,7 +55,7 @@ class TaggedItemsView(ListView):
         return context
 
 class BlogView(ListView):
-    paginate_by         = 2
+    paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):

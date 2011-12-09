@@ -65,14 +65,18 @@ AUTHENTICATION_BACKENDS = (
 )
 SOCIAL_AUTH_ENABLED_BACKENDS = ('google-oauth', 'openid', 'livejournal', 'twitter', 'facebook')
 LOGIN_URL          = '/login/'
-LOGIN_REDIRECT_URL = '/logged-in/'
-LOGIN_ERROR_URL    = '/login-error/'
+LOGIN_REDIRECT_URL = '/' #logged-in/'
+LOGIN_ERROR_URL    = '/' #login-error/'
 #SOCIAL_AUTH_COMPLETE_URL_NAME  = 'complete'
 #SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'associate_complete'
 SOCIAL_AUTH_USERNAME_FIXER = lambda u: pytils.translit.slugify(u)
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
+ACCOUNT_ACTIVATION_DAYS = 7
+DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,9 +85,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
-
 TEMPLATE_CONTEXT_PROCESSORS = (
-    #"socialauth.context_processors.facebook_api_key",
     'django.core.context_processors.static',
     'django.core.context_processors.media',
     'django.contrib.auth.context_processors.auth',
@@ -108,6 +110,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'registration',
     'filebrowser',
     'annoying',
     'pytils',

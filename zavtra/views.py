@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 from itertools import groupby
 
 from django.http import HttpResponseRedirect
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import logout as auth_logout, login as user_login, authenticate
+from django.shortcuts import redirect
 
 from annoying.decorators import render_to
 
@@ -46,6 +47,20 @@ def home(request):
 
 @render_to('login.html')
 def login(request):
+    if request.user.is_authenticated():
+	return redirect('/')
+    if request.method == 'POST':
+	username = request.POST.get('username')
+	password = request.POST.get('password')
+	user = authenticate(username=username, password=password)
+	if user is not None:
+	    if user.is_active:
+		user_login(request, user)
+		return redirect('/')
+	    else:
+		return {'login_fail': True}
+	else:
+	    return {'login_fail': True}
     return {}
 
 @render_to('archive.html')

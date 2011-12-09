@@ -82,6 +82,8 @@ class ContentItem(models.Model):
     old_url      = models.URLField(verify_exists=True, null=True, blank=True, verbose_name=u'URL на старом сайте')
     
     _comments_count = models.IntegerField(default=0, editable=False)
+    _base_rating = models.IntegerField(default=0, verbose_name=u'Базовый рейтинг')
+    _rating = models.IntegerField(default=0, editable=False)
 
     tags    = TaggableManager(blank=True)
     batched = BatchManager()
@@ -99,13 +101,16 @@ class ContentItem(models.Model):
 	    return Article(**res)
 
     @property
-    @cached_method('contentitem-{id}-votes')
+    #@cached_method('contentitem-{id}-votes')
     def rating(self):
-        return Vote.objects.get_score(self)['score']
+	return self._rating
     
     @rating.setter
     def rating(self, value):
-        pass
+        self._rating = self._base_rating + value
+    
+    def recalculate_rating(self):
+	self._rating = self._base_rating + Vote.objects.get_score(self)['score']
     
     @property
     def comments_count(self):

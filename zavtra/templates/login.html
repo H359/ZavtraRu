@@ -1,7 +1,12 @@
-{% extends "base.html" %}
+{% extends base_template %}
 
 {% block content %}
 <section class="container container_16 clearfix">
+    {% if login_fail %}
+    <article class="alpha omega grid_16">
+	<div class="error">Ошибка!</div>
+    </article>
+    {% endif %}
     <article class="alpha grid_8 block">
 	<header><h1>Войдите с помощью учётной записи в социальной сети:</h1></header>
 	<div class="content">
@@ -46,18 +51,27 @@
     <article class="omega grid_8 block">
 	<header><h1>...или воспользуйтесь учётной записью на сайте газеты</h1></header>
 	<div class="content">
-    	    <form class="form" method="post" action="{% comment %}{% url internal-login %}{% endcomment %}">
-    		<div>
-    		    <label for="login_username">Логин:</label>
-            	    <input id="login_username" type="text" name="login" />
-        	</div>
-                <div>
-            	    <label for="login_passwrod">Пароль</label>
-            	    <input id="login_password" type="password" name="password" />
-            	</div>
-            	<div class="buttons">
-            	    <button type="submit" class="button"><span class="label">Войти</span></button>
-            	</div>
+    	    <form method="post" action="{% url login %}">
+    		<table class="auth-form">
+    		    <tr>
+    			<th><label for="login_username">Логин:</label></th>
+            		<td><input id="login_username" type="text" name="username" /></td>
+        	    </tr>
+            	    <tr>
+            		<th><label for="login_passwrod">Пароль</label></th>
+            		<td><input id="login_password" type="password" name="password" /></td>
+            	    </tr>
+            	    <tr>
+            		<th></th>
+            		<td>
+            		    {% csrf_token %}
+            		    <div class="buttons">
+            			<button type="submit" class="button">Войти</button>
+            			<a href="/accounts/register/" class="button">Регистрация</a>
+            		    </div>
+            		</td>
+            	    </tr>
+            	</table>
     	    </form>
 	</div>
     </article>
