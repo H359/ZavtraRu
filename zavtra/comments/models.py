@@ -32,10 +32,7 @@ class Comment(MPTTModel):
             pass
         """
         super(Comment, self).save(*args, **kwargs)
-        try:
-            self.content_object.update_comments_count()
-        except AttributeError:
-            pass
+        self.content_object.update_comments_count()
 
     def get_author(self):
 	author = self.author

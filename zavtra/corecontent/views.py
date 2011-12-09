@@ -62,7 +62,7 @@ class BlogView(ListView):
         return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)
     
     def get_context_data(self, **kwargs):
-        context = super(RubricView, self).get_context_data(**kwargs)
+        context = super(BlogView, self).get_context_data(**kwargs)
         context['type']  = u'Рубрика'
         context['title'] = u'Блоги'
         return context

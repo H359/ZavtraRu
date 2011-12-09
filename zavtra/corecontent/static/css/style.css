@@ -145,7 +145,8 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .content form.form button { margin-left: 5.5em; }
 
 .comments {}
-    .comments dt {}
+    .comments dt { font-size: 0.9em !important; margin: 0 0 0.5em 0 !important; }
+	.comments dt time { font-weight: normal; }
     .comments dd {}
     .comments form {}
         .comments form textarea { width: 95%; height: 80px; resize: none; }
