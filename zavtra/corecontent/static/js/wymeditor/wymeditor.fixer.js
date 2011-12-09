@@ -28,6 +28,12 @@ $(document).ready(function(){
         'updateEvent': 'click',
         'skin': 'default',
         'lang': 'ru',
-        'postInitDialog': wymeditor_filebrowser
+        'postInitDialog': wymeditor_filebrowser,
+        'editorStyles': [
+    	    {'name': '.text-center', 'css': 'text-align:center;'}
+	],
+        'classesItems': [
+    	    {'name': 'text-center', 'title': 'По центру', 'expr': 'p'}
+        ]
     });
 });
