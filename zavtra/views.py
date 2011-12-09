@@ -52,10 +52,12 @@ def home(request):
 	'illustration',
 	duration=600
     )
+    news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=30)
     return {
 	'newsletter': newsletter,
 	'blogs': blogs,
-	'illustration': illustration
+	'illustration': illustration,
+	'news': news
     }
 
 @render_to('user.html')

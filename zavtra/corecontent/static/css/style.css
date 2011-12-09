@@ -162,7 +162,7 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .top-nav ul.primary { background: #2A281F; font-size: 1.25em; }
     .top-nav ul.secondary { background: #ccc; font-size: 1em; }
         .top-nav ul.secondary a { color: #444; }
-        .top-nav ul.secondary span { color: #444; margin-right: 0.1em; }
+        .top-nav ul.secondary span { color: #444; margin-right: 0.1em; font-weight: bold; }
 
 
 blockquote.topquote { font-size: 1.2em; font-weight: bold; font-style: italic; }

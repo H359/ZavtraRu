@@ -37,7 +37,7 @@
         </div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
-    		<a href="#">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
+    		<a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
     	    </aside>
     	    <div>
     		{% if request.user.is_authenticated %}
@@ -54,7 +54,7 @@
                {% for rubric in top_rubrics %}
                <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
                {% endfor %}
-               <li class="search last"><input type="search" name="q" placeholder="поиск..."></li>
+               {% comment %}<li class="search last"><input type="search" name="q" placeholder="поиск..."></li>{% endcomment %}
             </ul>
             {% if featured|length %}
             <ul class="secondary">
