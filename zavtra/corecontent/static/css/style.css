@@ -133,6 +133,8 @@ article {}
         article header time { margin-right: 5px; font-size: 0.9em; color: #666; }
 
 article.rubric-info p { font-size: 100%; }
+article.rubric-info dl.content dt a { text-decoration: none; }
+article.rubric-info dl.content dd { text-align: justify; }
 
 aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
@@ -174,6 +176,8 @@ table.auth-form label { margin-right: 0.5em; }
 table.auth-form td.field { width: 30%; }
 table.auth-form td.errors { width: 50%; }
 
+form.regform { margin: 1em 0; }
+form.regform label { display: block; }
 
 .auth-icon { width: 32px; height: 32px; display: block; float: left; margin: 8px; background-repeat: no-repeat; }
 .auth-icon.facebook { background-image: url(../img/social/facebook.png);  }
