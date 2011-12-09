@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-25 10:06+0400\n"
+"POT-Creation-Date: 2011-12-09 18:14+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,148 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/django-taggit/taggit/forms.py:21
-msgid "Please provide a comma-separated list of tags."
-msgstr "Пожалуйста, впишите список меток через запятую"
+#: captcha/fields.py:14
+msgid "Incorrect, please try again."
+msgstr "Что-то не сходится..Попробуйте еще раз."
 
-#: src/django-taggit/taggit/managers.py:39
-#: src/django-taggit/taggit/models.py:57
+#: minipoll/admin.py:17
+msgid "Status"
+msgstr "Статус"
+
+#: minipoll/models.py:11
+msgid "draft"
+msgstr "черновик"
+
+#: minipoll/models.py:12
+msgid "published"
+msgstr "опубликован"
+
+#: minipoll/models.py:13
+msgid "archived"
+msgstr "в архиве"
+
+#: minipoll/models.py:18 minipoll/models.py:53
+msgid "title"
+msgstr "заголовок"
+
+#: minipoll/models.py:19 minipoll/models.py:54
+msgid "description"
+msgstr "описание"
+
+#: minipoll/models.py:22
+msgid "slug"
+msgstr "URI"
+
+#: minipoll/models.py:23
+msgid "creator"
+msgstr "Автор"
+
+#: minipoll/models.py:24
+msgid "status"
+msgstr "Статус"
+
+#: minipoll/models.py:25 minipoll/models.py:55 minipoll/models.py:90
+msgid "creation date"
+msgstr "дата создания"
+
+#: minipoll/models.py:26
+msgid "modification date"
+msgstr "дата изменения"
+
+#: minipoll/models.py:27
+msgid "publication date"
+msgstr "дата публикации"
+
+#: minipoll/models.py:34
+#, fuzzy
+msgid "Poll"
+msgstr "Список опросов"
+
+#: minipoll/models.py:35
+#, fuzzy
+msgid "Polls"
+msgstr "Список опросов"
+
+#: minipoll/models.py:46 minipoll/models.py:72
+#: templates/minipoll/poll_detail.html:23
+#: templates/minipoll/poll_detail_result.html:17
+#: templates/minipoll/poll_list.html:23
+msgid "votes"
+msgstr "голосов"
+
+#: minipoll/models.py:51 minipoll/models.py:82
+msgid "poll"
+msgstr "опрос"
+
+#: minipoll/models.py:57
+msgid "is active"
+msgstr "активен"
+
+#: minipoll/models.py:58
+msgid "If you want to disable this choice."
+msgstr "если вы хотите выключить эту опцию."
+
+#: minipoll/models.py:59
+msgid "display priority"
+msgstr "приоритет / позиция"
+
+#: minipoll/models.py:60
+msgid "Used to ordonnate the choices."
+msgstr "Используется для упорядочивания опций."
+
+#: minipoll/models.py:64
+msgid "Choice"
+msgstr "Опция"
+
+#: minipoll/models.py:65
+msgid "Choices"
+msgstr "Опции"
+
+#: minipoll/models.py:83
+msgid "choice"
+msgstr "опция"
+
+#: minipoll/models.py:87
+msgid "voter"
+msgstr "проголосовавший"
+
+#: minipoll/models.py:89
+msgid "ip address"
+msgstr "ip-адрес"
+
+#: minipoll/models.py:94 templates/minipoll/tags/poll_form.html:12
+msgid "Vote"
+msgstr "Ответить"
+
+#: minipoll/models.py:95
+#, fuzzy
+msgid "Votes"
+msgstr "Ответить"
+
+#: taggit_autosuggest/managers.py:11
 msgid "Tags"
 msgstr "Теги"
 
-#: src/django-taggit/taggit/managers.py:40
+#: taggit_autosuggest/managers.py:12
 msgid "A comma-separated list of tags."
 msgstr "Список меток через запятую"
 
-#: src/django-taggit/taggit/models.py:10
-msgid "Name"
-msgstr "Имя"
+#: taggit_autosuggest/widgets.py:67
+msgid "Enter Tag Here"
+msgstr "Вводите теги здесь"
 
-#: src/django-taggit/taggit/models.py:11
-msgid "Slug"
-msgstr "Slug"
+#: taggit_autosuggest/widgets.py:68
+#, fuzzy
+msgid "No Results"
+msgstr "Результаты"
 
-#: src/django-taggit/taggit/models.py:56
-msgid "Tag"
-msgstr "Тег"
-
-#: src/django-taggit/taggit/models.py:63
-#, python-format
-msgid "%(object)s tagged with %(tag)s"
-msgstr "%(object)s с тегами %(tag)s"
-
-#: src/django-taggit/taggit/models.py:113
-msgid "Object id"
-msgstr "Идентификатор объекта"
-
-#: src/django-taggit/taggit/models.py:117
-#: src/django-taggit/taggit/models.py:123
-msgid "Content type"
-msgstr "Тип сущности"
-
-#: src/django-taggit/taggit/models.py:159
-msgid "Tagged Item"
-msgstr "Тегированная сущность"
-
-#: src/django-taggit/taggit/models.py:160
-msgid "Tagged Items"
-msgstr "Тегированные сущности"
+#: taggit_autosuggest/widgets.py:69
+msgid "No More Selections Are Allowed"
+msgstr "Дальнейший выбор запрещен"
 
 #: templates/minipoll/poll_detail.html:17
 msgid "You have already vote to this poll."
 msgstr "Вы уже принимали участие в этом опросе"
-
-#: templates/minipoll/poll_detail.html:23
-#: templates/minipoll/poll_detail_result.html:17
-#: templates/minipoll/poll_list.html:23
-#: templates/minipoll/tags/last_poll.html:40
-msgid "votes"
-msgstr ""
 
 #: templates/minipoll/poll_detail.html:24
 msgid "View the results."
@@ -96,11 +181,32 @@ msgid "All the polls of the site."
 msgstr "Все опросы"
 
 #: templates/minipoll/poll_list.html:6
-#: templates/minipoll/tags/last_poll.html:22
 msgid "Poll list"
 msgstr "Список опросов"
 
-#: templates/minipoll/tags/last_poll.html:39
-#: templates/minipoll/tags/poll_form.html:12
-msgid "Vote"
-msgstr "Ответить"
+#~ msgid "Please provide a comma-separated list of tags."
+#~ msgstr "Пожалуйста, впишите список меток через запятую"
+
+#~ msgid "Name"
+#~ msgstr "Имя"
+
+#~ msgid "Slug"
+#~ msgstr "Slug"
+
+#~ msgid "Tag"
+#~ msgstr "Тег"
+
+#~ msgid "%(object)s tagged with %(tag)s"
+#~ msgstr "%(object)s с тегами %(tag)s"
+
+#~ msgid "Object id"
+#~ msgstr "Идентификатор объекта"
+
+#~ msgid "Content type"
+#~ msgstr "Тип сущности"
+
+#~ msgid "Tagged Item"
+#~ msgstr "Тегированная сущность"
+
+#~ msgid "Tagged Items"
+#~ msgstr "Тегированные сущности"

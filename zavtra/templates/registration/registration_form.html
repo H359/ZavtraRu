@@ -3,13 +3,15 @@
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="grid_16 alpha omega">
-	<form action="" method="post">
+	<form action="" method="post" class="regform">
 	    <fieldset>
+	    <legend>Регистрация учетной записи</legend>
 	    {% for field in form %}
 	    <div {% if field.errors %}class="error"{% endif %}>
 	        {{ field.label_tag }}
 	        {{ field.errors }}
 	        {{ field }}
+	        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
 	    </div>
 	    {% endfor %}
 	    {% csrf_token %}

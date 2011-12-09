@@ -1,29 +1,4 @@
-# -*- encoding: windows-1251 -*-
-
-"""
-	remotetypograf.py
-	python-implementation of ArtLebedevStudio.RemoteTypograf class (web-service client)
-	
-	Copyright (c) Art. Lebedev Studio | http://www.artlebedev.ru/
-
-	Typograf homepage: http://typograf.artlebedev.ru/
-	Web-service address: http://typograf.artlebedev.ru/webservices/typograf.asmx
-	WSDL-description: http://typograf.artlebedev.ru/webservices/typograf.asmx?WSDL
-	
-	Default charset: UTF-8
-
-	Python version 
-	Author: Sergey Lavrinenko (s.lavrinenko@gmail.com)
-	Version: 1.0 (2007-05-18) based on script by Andrew Shitov (ash@design.ru)
-
-	Example:
-		from RemoteTypograf import RemoteTypograf
-	        rt = RemoteTypograf()
-		# rt = RemoteTypograf('windows-1251')
-		print rt.processText ('"Вы все еще кое-как верстаете в "Ворде"? - Тогда мы идем к вам!"');
-"""
-
-
+# -*- encoding: utf-8 -*-
 import socket
 
 class RemoteTypograf:
@@ -37,22 +12,17 @@ class RemoteTypograf:
 	def __init__(self, encoding='UTF-8'):
 		self._encoding = encoding
 
-
 	def htmlEntities(self):
 		self._entityType = 1
-
 
 	def xmlEntities(self):
 		self._entityType = 2
 
-
 	def mixedEntities(self):
 		self._entityType = 4
 
-
 	def noEntities(self):
 		self._entityType = 3
-
 
 	def br(self, value):
 		if value:
@@ -60,24 +30,19 @@ class RemoteTypograf:
 		else:
 			self._useBr = 0
 
-	
 	def p(self, value):
 		if value:
 			self._useP = 1
 		else:
 			self._useP = 0
 
-	
 	def nobr(self, value):
 		if value:
 			self._maxNobr = value
 		else:
 			self._maxNobr = 0
 
-
-
 	def processText(self, text):
-
 		text = text.replace('&', '&amp;')
 		text = text.replace('<', '&lt;')
 		text = text.replace ('>', '&gt;')
@@ -104,7 +69,6 @@ class RemoteTypograf:
 
 		SOAPRequest += SOAPBody
 
-
 		remoteTypograf = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		remoteTypograf.connect((host, 80))
 		remoteTypograf.sendall(SOAPRequest)
@@ -117,17 +81,12 @@ class RemoteTypograf:
 
 		remoteTypograf.close()
 
-		
 		startsAt = typografResponse.find('<ProcessTextResult>') + 19
 		endsAt = typografResponse.find('</ProcessTextResult>')
 		typografResponse = typografResponse[startsAt:endsAt]
 
-
 		typografResponse = typografResponse.replace('&amp;', '&' )
 		typografResponse = typografResponse.replace('&lt;', '<')
 		typografResponse = typografResponse.replace ('&gt;', '>')
-		
 
 		return  typografResponse
-
-

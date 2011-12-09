@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
+    {% block js_extra_head %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -39,6 +40,7 @@
     	    <aside class="supp">
     		<a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
     	    </aside>
+    	    {%comment%}
     	    <div>
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
@@ -46,6 +48,7 @@
     		<a rel="inline" href="{% url login %}">Войти</a>
     		{% endif %}
     	    </div>
+    	    {%endcomment%}
         </div>
     </header>
     <nav class="container container_16 clearfix top-nav">
@@ -93,7 +96,6 @@ $(document).ready(function(){
 <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg');</script>
 <![endif]-->
-{% comment %}
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -106,6 +108,5 @@ $(document).ready(function(){
 <script type="text/javascript">
 VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"}, 20003922);
 </script>
-{% endcomment %}
 </body>
 </html>

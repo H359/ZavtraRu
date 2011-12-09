@@ -41,20 +41,22 @@
                     <div class="text-center"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></div>
                 {% endif %}
                 {% if item.kind == 'text' %}
+                    <!-- AddThis Button BEGIN -->
+		    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+		        <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="130"></a>
+		        <a class="addthis_button_tweet"></a>
+		        <a class="addthis_button_google_plusone"></a>
+		    </div>
+		    <!-- AddThis Button END -->
                     {{ item.content|safe }}
                 {% endif %}
-
                 <!-- AddThis Button BEGIN -->
-                <div class="addthis_toolbox addthis_default_style ">
-                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-                    <a class="addthis_button_tweet"></a>
-                    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-                    <a class="addthis_counter addthis_pill_style"></a>
-                </div>
-                {% block javascript %}
-                {{ block.super }}
-                <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ea7f2783f632476"></script>
-                {% endblock %}
+		<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+		    <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="130"></a>
+		    <a class="addthis_button_tweet"></a>
+		    <a class="addthis_button_google_plusone"></a>
+		</div>
+		<!-- AddThis Button END -->
             </div>
 
             <footer>
@@ -69,11 +71,17 @@
                 </div>
                 {% endif %}
                 {% endwith %}
-                <div id="comments_block">{% get_comments_for item %}</div>
+                {%comment%}<div id="comments_block">{% get_comments_for item %}</div>{%endcomment%}
             </footer>
     </article>
     <article class="grid_4 omega">
 	{% include 'partials/rightside.html' %}
     </article>
 </section>
+{% endblock %}
+
+{% block js_extra_head %}
+{{ block.super }}
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ea7f2783f632476"></script>
 {% endblock %}

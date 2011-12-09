@@ -20,7 +20,6 @@ def home(request):
     now = datetime.now().date()
     wstart = now - oneday*(now.weekday() - 2)
     wend = wstart + 7*oneday
-    """ Cache by wstart, wend? """
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
@@ -42,11 +41,14 @@ def home(request):
 	get_content,
 	'newsletter'
     )
+    """
     blogs = cached(
 	lambda: ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)[0:6],
 	'blogs',
-	duration = (wend - now).seconds
+	duration = 60
+	#duration = (wend - now).seconds
     )
+    """
     illustration = cached(
 	get_illustration,
 	'illustration',
@@ -55,7 +57,6 @@ def home(request):
     news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=30)
     return {
 	'newsletter': newsletter,
-	'blogs': blogs,
 	'illustration': illustration,
 	'news': news
     }

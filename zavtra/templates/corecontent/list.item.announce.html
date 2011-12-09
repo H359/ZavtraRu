@@ -12,7 +12,6 @@
     </div>
 </dt>
 <dd>
-    {% if forloop.first %}
     {% if item.kind == 'video' %}
     <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200"></a></div>
     {% endif %}
@@ -21,8 +20,8 @@
     <div class="text-center"><img src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" alt="{{ item.title }}" style="margin: {{ im|margin:"200x200" }}" /></div>
     {% endthumbnail %}
     {% endif %}
-    {% endif %}
     <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
+    {%comment%}
     <div class="info">
         <span class="rating ddm">
             {% with rating=item.rating %}
@@ -36,5 +35,5 @@
             <a href="{{ item.get_absolute_url }}#comments_block">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
         </span>
     </div>
+    {%endcomment%}
 </dd>
-

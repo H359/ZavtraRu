@@ -10,8 +10,8 @@
             <li>
                 {{ choice.title }}
                 {% with percs=choice.percent %}
-                <div style="width: {{ percs|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.percent|default:1|floatformat }}px solid #E6F0ED;">
-                    {{ percs }}%
+                <div style="width: {{ percs|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.percent|default:1|floatformat:"0" }}px solid #E6F0ED;">
+                    {{ percs|floatformat:"0" }}%
                 </div>
                 {% endwith %}
             </li>
