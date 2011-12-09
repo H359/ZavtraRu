@@ -32,9 +32,12 @@
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
         </figure>
         <div class="grid_6">&nbsp;
+    	    {% comment %}
     	    {% if quote %}
     	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
     	    {% endif %}
+    	    {% endcomment %}
+    	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/00/320/41.html">Начиная с 1990 года нам представили так называемоую западную цивилизацию в качестве уже воплощенного коммунизма. Просто слово &laquo;коммунизм&raquo; заменили на &laquo;цивилизованный мир&raquo;... Вот, дескать, работй по способностям, а потом приходи в супермаркет, где все, что хочешь, для тебя приготовлено</a>&raquo;</blockquote>
         </div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
