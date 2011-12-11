@@ -32,6 +32,7 @@
         	</table>
     	    </form>
     	    {% endif %}
+    	    {% comment %}
     	    {% if name == "openid" %}
     	    <form action="{% url socialauth_begin "openid" %}" method="post">
     		{% csrf_token %}
@@ -45,6 +46,7 @@
         	</table>
     	    </form>
     	    {% endif %}
+    	    {% endcomment %}
     	    {% endfor %}
     	</div>
     </article>
