@@ -1,11 +1,13 @@
 {% extends base_template %}
 
+{% block page_title %}{{ block.super }} / Регистрация{% endblock %}
+
 {% block content %}
 <section class="container container_16 clearfix">
-    <article class="grid_16 alpha omega">
-	<form action="" method="post" class="regform">
-	    <fieldset>
-	    <legend>Регистрация учетной записи</legend>
+    <article class="grid_12 alpha block">
+	<header><h1>Регистрация</h1></header>
+	<form action="" method="post" class="regform" enctype="multipart/form-data">
+	    {% if form.non_field_errors %}<div class="error">{{ form.non_field_errors }}</div>{% endif %}
 	    {% for field in form %}
 	    <div {% if field.errors %}class="error"{% endif %}>
 	        {{ field.label_tag }}
@@ -15,12 +17,13 @@
 	    </div>
 	    {% endfor %}
 	    {% csrf_token %}
-	    {% if form.non_field_errors %}<div class="error">{{ form.non_field_errors }}</div>{% endif %}
 	    <div class="buttons">
 		<button class="button" type="submit">Продолжить</button>
 	    </div>
-	    </fieldset>
 	</form>
+    </article>
+    <article class="grid_4 omega">
+	{% include 'partials/rightside.html' %}
     </article>
 </section>
 {% endblock %}

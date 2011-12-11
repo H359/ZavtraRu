@@ -3,6 +3,26 @@
 {% load utils %}
 {% load minipoll_tags %}
 
+{% block javascript %}
+(function(){
+var t = $('div.news'), dl = $('dl', t), intrp = false, defint = 6000;
+dl.css({'position':'relative'});
+var lifo = function(){
+    if (!intrp) { 
+	var dt = $($('dt', dl)[0]), dd = $($('dd', dl)[0]);
+	var p = dt.outerHeight(true) + dd.outerHeight(true);
+	dl.animate({'top':-p + 'px'}, defint/6, function(){
+	    dl.append(dt); dl.append(dd);
+	    dl.css({'top': '0px'});
+	    setTimeout(lifo, defint);
+	});
+    } else setTimeout(lifo, defint);
+}
+t.mouseover(function(){intrp=true;}).mouseout(function(){intrp=false;});
+if (dl.height() > t.height()) setTimeout(lifo, defint);
+})();
+{% endblock %}
+
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="top-image grid_12 alpha">
@@ -16,20 +36,17 @@
         </figure>
     </article>
     <article class="grid_4 omega block rubric-info">
-	<header><h1>Новости</h1></header>
-	<dl class="content">
-	    {% for item in news %}
-	    <dt>
-		<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a>
-	    </dt>
-	    <dd>
-		{{ item.description|safe }}
-	    </dd>
-	    {% endfor %}
-	</dl>
+	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></small></h1></header>
+	<div class="news">
+	    <dl class="content">
+		{% for item in news %}
+		<dt><a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
+		<dd>{{ item.description|safe }}</dd>
+		{% endfor %}
+	    </dl>
+	</div>
     </article>
 </section>
-
 <section class="container container_16 clearfix">
     <article class="grid_4 alpha rubric-info">
         {% for group in newsletter|slice:"0::3" %}
@@ -54,11 +71,6 @@
 		<a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова">Купон на Проханова</a>
 	    </p>
 	</aside>
-	{% comment %}
-	<aside class="content text-center">
-	    <script src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/youtube.xml&amp;up_channel=neuromirtv&amp;synd=open&amp;w=280&amp;h=390&amp;title=&amp;border=%23ffffff%7C1px%2C1px+solid+%23999999&amp;output=js"></script>
-	</aside>
-	{% endcomment %}
         <article class="block">
             <header><h1>Рейтинг слухов</h1></header>
             {% display_last_poll %}

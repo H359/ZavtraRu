@@ -1,9 +1,15 @@
 {% extends base_template %}
 
+{% block page_title %}{{ block.super }} / Регистрация{% endblock %}
+
 {% block content %}
 <section class="container container_16 clearfix">
-    <article class="grid_16 alpha omega">
-	Регистрация прошла успешно. На указанную вами почту выслано письмо с дальнейшими инструкциями.
+    <article class="grid_12 alpha block of-kind-text">
+	<header><h1>Регистрация</h1></header>
+	<div class="content">Регистрация прошла успешно. На указанную вами почту в ближайшее время будет выслано письмо с дальнейшими инструкциями.</div>
+    </article>
+    <article class="grid_4 omega">
+	{% include 'partials/rightside.html' %}
     </article>
 </section>
 {% endblock %}

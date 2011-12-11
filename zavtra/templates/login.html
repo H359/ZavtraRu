@@ -67,7 +67,7 @@
             		    {% csrf_token %}
             		    <div class="buttons">
             			<button type="submit" class="button">Войти</button>
-            			<a href="/accounts/register/" class="button">Регистрация</a>
+            			<a href="{% url accounts.register %}" class="button">Регистрация</a>
             		    </div>
             		</td>
             	    </tr>

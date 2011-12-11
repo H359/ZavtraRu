@@ -1,27 +1,31 @@
 #-*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.conf import settings
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
-from mptt.models import MPTTModel
+from treebeard.mp_tree import MP_Node
 
-AUTH_BACKENDS = ('zavtra',) +settings.SOCIAL_AUTH_ENABLED_BACKENDS
-
-class Comment(MPTTModel):
+class Comment(MP_Node):
     class Meta:
-        ordering = ('tree_id', 'lft')
-    parent         = models.ForeignKey('self', null=True, blank=True, related_name='children')
+	ordering = ['path']
+	permissions = (
+	    ('moderate', u'Может модерировать комментарии'),
+	)
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     author         = models.ForeignKey(User)
-    comment        = models.TextField(verbose_name=u'Текст')
+    comment        = models.TextField(verbose_name=u'Текст комментария')
     enabled        = models.BooleanField(default=True)
-    created_at     = models.DateTimeField(auto_now_add=True)
-    provider       = models.IntegerField(choices=enumerate(AUTH_BACKENDS), editable=False, default=0)
-    
+    created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())
+    rating         = models.IntegerField(default=0)
+
+    node_order_by = ['created_at']
+
     def save(self, *args, **kwargs):
 	"""
         try:

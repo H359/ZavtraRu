@@ -3,13 +3,10 @@
   <header><h1>Рейтинг слухов</h1></header>
   <div class="content">{% display_last_poll %}</div>
 </article>
-{% comment %}
-<aside class="block">
-  <header><h1>Реклама</h1></header>
-  <div class="content">
-    <div style="background: url({{ STATIC_URL }}img/adv.png); height: 300px; font-weight: bold; font-size: 2em; color: red;">
-    ЗДЕСЬ МОГЛА БЫ БЫТЬ ВАША РЕКЛАМА
-    </div>
+<article class="block">
+  <header><h1>Присоединяйся</h1></header>
+  <div class="content text-center">
+    <div class="fb-like-box" data-href="www.facebook.com/zavtraru" data-width="220" data-show-faces="true" data-stream="false" data-header="true"></div>
+    <div id="vk_groups"></div>
   </div>
-</aside>
-{% endcomment %}
+</article>

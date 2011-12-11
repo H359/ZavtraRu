@@ -34,18 +34,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 SECRET_KEY = 'ppkh78v9p3s$+5_p3+u3bdm@js&2!i$r9uy5&hg-p4$b0(yr&s'
-"""
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
-"""
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
+if not DEBUG:
+    TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', TEMPLATE_LOADERS),)
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -74,6 +68,7 @@ SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 ACCOUNT_ACTIVATION_DAYS = 7
+AUTH_PROFILE_MODULE = 'siteuser.SiteProfile'
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
@@ -83,8 +78,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
+if DEBUG:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.media',
@@ -111,7 +107,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'captcha',
-    'registration',
     'filebrowser',
     'annoying',
     'pytils',
@@ -121,13 +116,16 @@ INSTALLED_APPS = (
     'taggit',
     'taggit_autosuggest',
     'voting',
-    'users',
-    'mptt',
+    #'mptt',
+    'treebeard',
+    'mail',
     'social_auth',
+    'siteuser',
     'comments',
     'minipoll',
-    'debug_toolbar'
 )
+if DEBUG:
+    INSTALLED_APPS += ('debug_toolbar',)
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 LOGGING = {
     'version': 1,
@@ -161,7 +159,7 @@ LOGGING = {
         },
      }
 }
-INTERNAL_IPS = ('127.0.0.1',)
+#INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }

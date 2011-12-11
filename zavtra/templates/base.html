@@ -7,8 +7,9 @@
 <head>
     <meta charset="utf-8" />
     <title>{% block page_title %}Газета &laquo;Завтра&raquo;{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{% endblock %}" />
-    <meta name="author" content="{% block meta_author %}{% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %}проханов,свежий номер{% endblock %}" />
+    <meta name="description" content="{% block meta_description %}Сетевое представительство газеты Завтра{% endblock %}" />
+    <meta name="author" content="{% block meta_author %}Редакция газеты Завтра{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
     {% comment %}
@@ -31,14 +32,14 @@
         <figure class="grid_5 alpha">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
         </figure>
-        <div class="grid_6">&nbsp;
+        <div class="grid_6">{% spaceless %}
     	    {% comment %}
     	    {% if quote %}
     	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
     	    {% endif %}
     	    {% endcomment %}
-    	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/00/320/41.html">Начиная с 1990 года нам представили так называемоую западную цивилизацию в качестве уже воплощенного коммунизма. Просто слово &laquo;коммунизм&raquo; заменили на &laquo;цивилизованный мир&raquo;... Вот, дескать, работй по способностям, а потом приходи в супермаркет, где все, что хочешь, для тебя приготовлено</a>&raquo;</blockquote>
-        </div>
+    	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/03/512/72.html">России нет. Тот спился, тот убит,<br/>Тот молится и дьяволу, и Богу.<br/>Юродивый на паперти вопит:<br/>&mdash;Тамбовский волк выходит на дорогу!..</a>&raquo;</blockquote>
+        {% endspaceless %}</div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
     		<a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
@@ -83,33 +84,30 @@
 {% endblock %}
     
 {% block javascript_library %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.6.4.min.js"%3E%3C/script%3E'))</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
 <script src="{{ STATIC_URL }}js/comments.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.colorbox-min.js"></script>
-<script>
-$(document).ready(function(){
-    $('a[rel=inline]').colorbox({close:'Закрыть'});
-    $('a.gallery').colorbox({close:'Закрыть'});
-});
-</script>
 {% endblock %}
-{% block javascript %}{% endblock %}
 <!--[if lt IE 7 ]>
 <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg');</script>
 <![endif]-->
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
+    {% block javascript %}{% endblock %}
+});
+VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
-<script type="text/javascript">
-VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"}, 32969466);
 </script>
 </body>
 </html>

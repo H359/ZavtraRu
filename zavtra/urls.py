@@ -6,7 +6,6 @@ from django.views.generic.simple import direct_to_template
 
 from taggit.models import TagBase
 from pytils.translit import slugify
-from forms import ReCaptchaForm
 
 def custom_slugify(self, tag, i=None):
     slug = slugify(tag)
@@ -29,13 +28,7 @@ urlpatterns = patterns('',
     url(r'^polls/', include('minipoll.urls')),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
 
-    #url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^accounts/activate/complete/$', direct_to_template, {'template': 'registration/activation_complete.html'}, name='registration_activation_complete'),
-    url(r'^accounts/activate/(?P<activation_key>\w+)/$', 'registration.views.activate', {'backend': 'registration.backends.default.DefaultBackend'}, name='registration_activate'),
-    url(r'^accounts/register/$', 'registration.views.register', {'form_class': ReCaptchaForm, 'backend': 'registration.backends.default.DefaultBackend'}, name='registration_register'),
-    url(r'^accounts/register/complete/$', direct_to_template, {'template': 'registration/registration_complete.html'}, name='registration_complete'),
-    url(r'^accounts/register/closed/$', direct_to_template, {'template': 'registration/registration_closed.html'}, name='registration_disallowed'),
-    (r'^accounts/', include('registration.auth_urls')),
+    url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),
     url(r'', include('social_auth.urls')),
 )

@@ -3,10 +3,12 @@
 {% load pytils_dt %}
 {% load comments %}
 
+{% block page_title %}{{ block.super }} / {% if item.rubric %}{{ item.rubric.title|safe }}{% else %}Блоги{% endif %} / {{ item.title|safe }}{% endblock %}
+
 {% block content %}
 <section class="container container_16 clearfix">
     <h1 class="article">{% if item.rubric %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}Блоги{% endif %}</h1>
-    <article class="grid_12 alpha block">
+    <article class="grid_12 alpha block of-kind-{{ item.kind }}">
         <header>
             <h1>
                 <time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time>
@@ -40,23 +42,9 @@
                 {% if item.kind == 'image' %}
                     <div class="text-center"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></div>
                 {% endif %}
-                {% if item.kind == 'text' %}
-                    <!-- AddThis Button BEGIN -->
-		    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-		        <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="130"></a>
-		        <a class="addthis_button_tweet"></a>
-		        <a class="addthis_button_google_plusone"></a>
-		    </div>
-		    <!-- AddThis Button END -->
+                {% if item.kind == 'text' or item.kind == '' %}
                     {{ item.content|safe }}
                 {% endif %}
-                <!-- AddThis Button BEGIN -->
-		<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-		    <a class="addthis_button_facebook_like" fb:like:layout="button_count" fb:like:width="130"></a>
-		    <a class="addthis_button_tweet"></a>
-		    <a class="addthis_button_google_plusone"></a>
-		</div>
-		<!-- AddThis Button END -->
             </div>
 
             <footer>
@@ -71,7 +59,7 @@
                 </div>
                 {% endif %}
                 {% endwith %}
-                {%comment%}<div id="comments_block">{% get_comments_for item %}</div>{%endcomment%}
+                <div id="comments_block">{% get_comments_for item %}</div>
             </footer>
     </article>
     <article class="grid_4 omega">
@@ -82,6 +70,4 @@
 
 {% block js_extra_head %}
 {{ block.super }}
-<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ea7f2783f632476"></script>
 {% endblock %}

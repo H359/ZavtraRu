@@ -1,5 +1,18 @@
 {% load pytils_dt %}
-<di>
-  <dt>{{ comment.get_author }}, <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time></dt>
-  <dd>{{ comment.comment }}</dd>
-</di>
+{% load utils %}
+<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|mul:"1.5" }}em;">
+    {% if comment.enabled %}
+    <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
+    <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
+    <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
+    <div class="clearfix msg">{{ comment.comment }}</div>
+    <div class="buttons">
+	<a class="button reply" href="#">ответить</a>
+	{% if perms.comments.moderate %}
+	<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
+	{% endif %}
+    </div>
+    {% else %}
+    <em>комментарий скрыт модератором</em>
+    {% endif %}
+</li>

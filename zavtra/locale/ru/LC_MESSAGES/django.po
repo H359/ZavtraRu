@@ -141,7 +141,7 @@ msgstr "Теги"
 
 #: taggit_autosuggest/managers.py:12
 msgid "A comma-separated list of tags."
-msgstr "Список меток через запятую"
+msgstr "Список меток через TAB"
 
 #: taggit_autosuggest/widgets.py:67
 msgid "Enter Tag Here"

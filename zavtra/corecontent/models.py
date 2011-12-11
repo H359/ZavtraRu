@@ -213,6 +213,7 @@ class NewsItem(ContentItem):
 
     def save(self, *args, **kwargs):
 	self.rubric = Rubric.objects.get(title=u'Новости')
+	self.kind = 'text'
 	super(NewsItem, self).save(*args, **kwargs)
 
 class Video(ContentItem):

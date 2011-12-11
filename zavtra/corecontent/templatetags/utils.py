@@ -3,6 +3,10 @@ from django.template import Library
 register = Library()
 
 @register.filter
+def mul(val, k):
+    return int(val*float(k))
+
+@register.filter
 def negate(val):
     return -val
 

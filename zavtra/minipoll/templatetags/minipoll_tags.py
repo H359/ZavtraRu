@@ -4,8 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from minipoll.models import Poll
 
-#import caching.base
-
 register = Library()
 
 @register.inclusion_tag('minipoll/tags/poll_form.html')

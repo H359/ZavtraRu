@@ -39,7 +39,8 @@ def home(request):
 	return sorted(newsletter.values(), key=lambda p: p['rubric'].position)
     newsletter = cached(
 	get_content,
-	'newsletter'
+	'newsletter',
+	duration=600
     )
     """
     blogs = cached(
@@ -75,6 +76,7 @@ def login(request):
 	password = request.POST.get('password')
 	user = authenticate(username=username, password=password)
 	if user is not None:
+	    print user, user.is_active
 	    if user.is_active:
 		user_login(request, user)
 		return redirect('/')

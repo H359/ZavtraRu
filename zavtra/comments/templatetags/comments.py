@@ -14,6 +14,6 @@ def get_comments_for(context, obj):
         'content_type': ctype,
         'object_id': obj.id
     }
-    context['comments'] = Comment.objects.select_related().filter(content_type=ctype, object_id=obj.id, enabled=True)
+    context['comments'] = Comment.objects.select_related().filter(content_type=ctype, object_id=obj.id)
     context['form'] = CommentForm(initial=initial_data)
     return context

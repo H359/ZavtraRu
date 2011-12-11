@@ -1,13 +1,11 @@
 {% load pytils_dt %}
 <div class="comments">
-    <!--<header><h1>Комментарии</h1></header>-->
     <div class="content">
-        <dl>
+        <ul>
             {% for comment in comments %}
-            <dt>{{ comment.author }}, {{ comment.created_at|distance_of_time }}</dt>
-            <dd>{{ comment.comment }}</dd>
+    	    {% include 'comments/item.html' %}
             {% endfor %}
-        </dl>
+        </ul>
         <form method="post" action="{% url comments.add %}">
             {% csrf_token %}
             {{ form.as_p }}

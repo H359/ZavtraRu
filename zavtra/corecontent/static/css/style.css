@@ -134,7 +134,12 @@ article {}
 
 article.rubric-info p { font-size: 100%; }
 article.rubric-info dl.content dt a { text-decoration: none; }
-article.rubric-info dl.content dd { text-align: justify; }
+/*article.rubric-info dl.content dd { text-align: justify; }*/
+
+article.of-kind-text .content { max-width: 36em; min-width: 25em; }
+article.of-kind-text p + p:first-letter { margin-left: 1em; }
+
+.news { overflow: hidden; height: 340px; margin-bottom: 15px; }
 
 aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
@@ -147,13 +152,14 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .content form.form button { margin-left: 5.5em; }
 
 .comments {}
-    .comments dt { font-size: 0.9em !important; margin: 0 0 0.5em 0 !important; }
-	.comments dt time { font-weight: normal; }
-    .comments dd {}
-    .comments form {}
+    .comments li { list-style-type: none; margin-bottom: 2em; }
+	.comments li a.gravatar { float: left; margin-right: 0.5em; }
+	.comments li div.msg { margin-top: 0.5em; }
+    /*.comments .info { text-align: left; }*/
+    .comments form { margin-top: 0.5em; }
         .comments form textarea { width: 95%; height: 80px; resize: none; }
 
-.top-nav {}
+.top-nav { margin-top: 1em; }
     .top-nav ul { position: relative; height: 2.5em; width: 100%; }
         .top-nav ul li { position: relative; left: 0; top: 0; float: left; text-align: center; }
             .top-nav ul li a { height: 2.5em; line-height: 2.5em; display: block; float: left; margin: 0 1em; color: white; }
@@ -167,7 +173,7 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
         .top-nav ul.secondary span { color: #444; margin-right: 0.1em; font-weight: bold; }
 
 
-blockquote.topquote { font-size: 1.2em; font-weight: bold; font-style: italic; }
+blockquote.topquote { font-size: 1.1em; font-style: italic; margin-top: 0.2em; }
 
 /*table.auth-form { width: 100%; }*/
 table.auth-form th { text-align: right; width: 20%; }

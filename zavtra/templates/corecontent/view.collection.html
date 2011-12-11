@@ -1,5 +1,7 @@
 {% extends base_template %}
 
+{% block page_title %}{{ block.super }} / {{ title|safe }}{% endblock %}
+
 {% block content %}
 <section class="container container_16 clearfix">
     <div class="alpha grid_12">

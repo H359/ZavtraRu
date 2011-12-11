@@ -11,15 +11,8 @@ from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, Daily
 class ContentItemMediaMixin(object):
     class Media:
 	js = ('js/wymeditor/wymeditor.fixer.js', 'js/wymeditor/jquery.wymeditor.min.js',)
-
-"""
-class ArticleAdminForm(forms.ModelForm):
-    class Meta:
-        model = Article
-    def __init__(self, *args, **kwargs):
-        super(ArticleAdminForm, self).__init__(*args, **kwargs)
-        self.fields['content'].widget.attrs['class'] = 'wymeditor'
-"""
+    search_fields = ('title',)
+    list_filter = ('rubric', 'published', 'enabled')
 
 class VideoAdminForm(forms.ModelForm):
     class Meta:
@@ -41,6 +34,7 @@ class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
 
 class NewsItemAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     exclude = ('thumbnail', 'old_url', 'authors', 'published', 'rubric')
+    list_filter = ()
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
 	formfield = super(NewsItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 	if db_field.name == 'rubric':
