@@ -6,6 +6,17 @@
 {% block description %}{{ object.description|striptags }}, {% trans "results" %}.{% endblock %}
 
 {% block content %}
+<section class="container container_16 clearfix">
+    <article class="grid_12 alpha block">
+	<header><h1>Опрос {{ object.title }}</h1></header>
+	<div class="content">
+	    {{ object.description|safe }}
+	    {% display_poll_result object %}
+	    <p>Всего {{ object.votes }} проголосовавших.</p>
+	</div>
+    </article>
+</section>
+	{% comment %}
 <h2 class="poll_title">
   <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
 </h2>
@@ -21,4 +32,5 @@
     </p>
   </div>
 </div>
+{% endcomment %}
 {% endblock %}
