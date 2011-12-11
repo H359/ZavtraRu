@@ -2,6 +2,7 @@
 
 {% load utils %}
 {% load minipoll_tags %}
+{% load pytils_dt %}
 
 {% block javascript %}
 (function(){
@@ -40,7 +41,7 @@ if (dl.height() > t.height()) setTimeout(lifo, defint);
 	<div class="news">
 	    <dl class="content">
 		{% for item in news %}
-		<dt><a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
+		<dt><small>{{ item.pub_date|ru_strftime }}</small>&nbsp;<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
 		<dd>{{ item.description|safe }}</dd>
 		{% endfor %}
 	    </dl>
