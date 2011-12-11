@@ -4,7 +4,7 @@ import urllib, md5
 from django.db import models
 from django.contrib.auth.models import User
 
-default_avatar = 'http://zavtra.com/static/img/anon.jpg'
+default_avatar = 'http://zavtra.ru/static/img/anon.jpg'
 
 def email2avatar(email):
     return u'http://www.gravatar.com/avatar/%s?%s' % (
