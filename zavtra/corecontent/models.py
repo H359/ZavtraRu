@@ -2,7 +2,7 @@
 import urlparse
 import urllib2
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.utils.encoding import smart_str, force_unicode
 from django.core.files import File
@@ -11,6 +11,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
+from django.core.cache import cache
 
 from batch_select.models import BatchManager
 from voting.models import Vote
@@ -122,8 +123,17 @@ class ContentItem(models.Model):
                 object_id=self.id,
                 enabled=True
         ).count()
+        if self.should_be_on_main():
+    	    cache.delete('newsletter')
         self.save()
-    
+
+    def should_be_on_main(self):
+	oneday = timedelta(days=1)
+	now = datetime.now().date()
+	wstart = now - oneday*(now.weekday()+5)
+	wend = wstart + oneday*7
+	return (self.rubric.on_main and (wstart <= self.pub_date <=  wend))
+
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.item', (), {'slug': self.slug})

@@ -21,7 +21,6 @@
     {% endthumbnail %}
     {% endif %}
     <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
-    {%comment%}
     <div class="info">
         <span class="rating ddm">
             {% with rating=item.rating %}
@@ -35,5 +34,4 @@
             <a href="{{ item.get_absolute_url }}#comments_block">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
         </span>
     </div>
-    {%endcomment%}
 </dd>

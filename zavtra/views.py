@@ -53,9 +53,9 @@ def home(request):
     illustration = cached(
 	get_illustration,
 	'illustration',
-	duration=600
+	duration=6000
     )
-    news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=30)
+    news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=60)
     return {
 	'newsletter': newsletter,
 	'illustration': illustration,

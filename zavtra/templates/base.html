@@ -44,7 +44,6 @@
     	    <aside class="supp">
     		<a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="#">Архив &laquo;День литературы&raquo;</a>
     	    </aside>
-    	    {%comment%}
     	    <div>
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
@@ -52,7 +51,6 @@
     		<a rel="inline" href="{% url login %}">Войти</a>
     		{% endif %}
     	    </div>
-    	    {%endcomment%}
         </div>
     </header>
     <nav class="container container_16 clearfix top-nav">
@@ -93,6 +91,19 @@
 <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg');</script>
 <![endif]-->
+<div style="display:none;"><script type="text/javascript"> 
+(function(w, c) { 
+    (w[c] = w[c] || []).push(function() { 
+        try { 
+            w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true}); 
+        } 
+        catch(e) { } 
+    }); 
+})(window, "yandex_metrika_callbacks"); 
+</script></div> 
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script> 
+<noscript><div><img src="//mc.yandex.ru/watch/11286280" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+<!-- /Yandex.Metrika counter --> 
 <div id="fb-root"></div>
 <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
 <script type="text/javascript">
@@ -107,7 +118,17 @@ VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
   js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27628875-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 </script>
 </body>
 </html>

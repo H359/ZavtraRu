@@ -15,10 +15,12 @@ class Comment(MP_Node):
 	permissions = (
 	    ('moderate', u'Может модерировать комментарии'),
 	)
+	verbose_name=u'Комментарий'
+	verbose_name_plural=u'Комментарии'
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    author         = models.ForeignKey(User)
+    author         = models.ForeignKey(User, verbose_name=u'Автор')
     comment        = models.TextField(verbose_name=u'Текст комментария')
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())
@@ -26,17 +28,9 @@ class Comment(MP_Node):
 
     node_order_by = ['created_at']
 
-    def save(self, *args, **kwargs):
-	"""
-        try:
-            assoc = self.author.social_auth.all()[0]
-            print assoc.extra_data
-            #self.provider = assoc.provider
-        except IndexError:
-            pass
-        """
-        super(Comment, self).save(*args, **kwargs)
-        self.content_object.update_comments_count()
+    def short_comment(self):
+	return ('-'*self.depth) + self.comment[0:50] + '...'
+    short_comment.short_description = u'Краткое содержание'
 
     def get_author(self):
 	author = self.author
@@ -44,3 +38,5 @@ class Comment(MP_Node):
 	if username != u' ':
 	    return username
 	return author.username
+
+import signals
