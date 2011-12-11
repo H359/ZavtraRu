@@ -10,11 +10,12 @@
     <article class="grid_12 alpha block">
 	<header><h1>Опрос {{ object.title }}</h1></header>
 	<div class="content">
-	    {{ object.description|safe }}
+	    <div>{{ object.description|safe }}</div>
 	    {% display_poll_result object %}
-	    <p>Всего {{ object.votes }} проголосовавших.</p>
+	    <div>Всего {{ object.votes }} проголосовавших.</div>
 	</div>
     </article>
+    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
 </section>
 	{% comment %}
 <h2 class="poll_title">
