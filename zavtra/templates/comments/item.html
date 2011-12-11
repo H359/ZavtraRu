@@ -6,12 +6,14 @@
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg">{{ comment.comment }}</div>
+    {% if request.user.is_authenticated %}
     <div class="buttons">
 	<a class="button reply" href="#">ответить</a>
 	{% if perms.comments.moderate %}
 	<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
 	{% endif %}
     </div>
+    {% endif %}
     {% else %}
     <em>комментарий скрыт модератором</em>
     {% endif %}
