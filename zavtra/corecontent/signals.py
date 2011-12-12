@@ -37,7 +37,7 @@ def maketh_status(instr):
 def tweet_article(sender, **kwargs):
     if kwargs['created'] and kwargs['instance'].enabled:
         api = maketh_twitter()
-        status = '%s http://zavtra.ru/%s' % (maketh_status(kwargs['instance'].title), kwargs['instance'].get_absolute_url())
+        status = '%s http://zavtra.ru%s' % (maketh_status(kwargs['instance'].title), kwargs['instance'].get_absolute_url())
         api.update_status(status)
 
 @receiver(post_save, sender=Vote, dispatch_uid='zavtra.corecontent.signals')

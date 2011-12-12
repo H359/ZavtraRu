@@ -140,6 +140,7 @@ article.of-kind-text .content { max-width: 36em; min-width: 25em; }
 article.of-kind-text p + p:first-letter { margin-left: 1em; }
 
 .news { overflow: hidden; height: 340px; margin-bottom: 15px; }
+html.no-js .news { overflow-y: scroll; }
 
 aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
@@ -155,6 +156,7 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .comments li { list-style-type: none; margin-bottom: 2em; }
 	.comments li a.gravatar { float: left; margin-right: 0.5em; }
 	.comments li div.msg { margin-top: 0.5em; }
+	    .comments li div.msg p { font-size: 15px; }
     /*.comments .info { text-align: left; }*/
     .comments form { margin-top: 0.5em; }
         .comments form textarea { width: 95%; height: 80px; resize: none; }

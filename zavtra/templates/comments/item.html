@@ -1,11 +1,11 @@
 {% load pytils_dt %}
 {% load utils %}
-<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|mul:"1.75"|floatformat:"2"|fix_commas }}em;">
+<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|add:"-1"|mul:"1.75"|floatformat:"2"|fix_commas }}em;">
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
-    <div class="clearfix msg">{{ comment.comment|linebreaksbr }}</div>
+    <div class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
     {% if request.user.is_authenticated %}
     <div class="buttons">
 	<a class="button reply" href="#">ответить</a>
