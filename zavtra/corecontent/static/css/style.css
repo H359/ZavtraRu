@@ -142,6 +142,8 @@ article.of-kind-text p + p:first-letter { margin-left: 1em; }
 .news { overflow: hidden; height: 340px; margin-bottom: 15px; }
 html.no-js .news { overflow-y: scroll; }
 
+.twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
+
 aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
 .content {}
