@@ -1,8 +1,12 @@
 <article class="block rubruc-info">
     <header><h1>{{ rubric.title|safe }}<span class="small"><a href="{{ rubric.get_absolute_url }}">ещё</a></span></h1></header>
     <dl class="content">
+	{% if rubric.id == 19 %}
+	    {% include 'corecontent/list.item.announce.html' with item=items.0 %}
+	{% else %}
         {% for item in items %}
-        {% include 'corecontent/list.item.announce.html' %}
+    	    {% include 'corecontent/list.item.announce.html' %}
         {% endfor %}
+        {% endif %}
     </dl>
 </article>
