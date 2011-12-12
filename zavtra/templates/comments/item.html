@@ -1,6 +1,6 @@
 {% load pytils_dt %}
 {% load utils %}
-<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|mul:"1.75"|floatformat:"2" }}em;">
+<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|mul:"1.75"|floatformat:"2"|fix_commas }}em;">
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
