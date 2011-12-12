@@ -1,6 +1,6 @@
 {% load pytils_dt %}
 {% load utils %}
-<li id="comment-{{ comment.id }}" style="padding-left: {{ comment.depth|add:"-1"|mul:"1.75"|floatformat:"2"|fix_commas }}em;">
+<li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth|add:"-1"|mul:"1.75"|floatformat:"2"|fix_commas }}em;"{% endif %}>
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
@@ -8,9 +8,9 @@
     <div class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
     {% if request.user.is_authenticated %}
     <div class="buttons">
-	<a class="button reply" href="#">ответить</a>
-	{% if perms.comments.moderate %}
-	<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
+	{% if not stream %}<a class="button reply" href="#">ответить</a>{% endif %}
+	{% if request.user.is_staff and perms.comments.moderate %}
+	&nbsp;&nbsp;&nbsp;&nbsp;<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
 	{% endif %}
     </div>
     {% endif %}

@@ -1,0 +1,46 @@
+{% extends base_template %}
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="grid_12 alpha block">
+	<header><h1>Живая лента</h1></header>
+	<div class="content">
+	    <div class="comments">
+		<ul id="comments-list">
+		    {% for comment in stream %}
+		    {% include 'comments/item.html' %}
+		    {% endfor %}
+		</ul>
+	    </div>
+	</div>
+    </article>
+    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
+</section>
+{% endblock %}
+
+{% block javascript %}
+(function(){
+    var root = $('#comments-list'), period=1*1000;
+    var updater = function(){
+        var last_seen = $('li:first-child', root);
+        var last_seen_id = last_seen.attr('id').split('-')[1];
+        $.post('{% url live.update %}', {last_seen: last_seen_id}, function(data){
+            var d = $(data['stream'].join(''));
+            d.hide();
+            d.insertBefore(last_seen);
+            d.fadeIn('slow', function(){
+        	setTimeout(updater, period);
+    	    });
+        });
+    };
+    setTimeout(updater, period);
+    var removeComment = function(){
+	var cmnt = $(this).parents('li');
+	var id = cmnt.attr('id').split('-')[1];
+	console.log(id);
+	$.post('{% url comments.delete %}', {id: id}, function(){
+	    cmnt.html('скрыт');
+	});
+    }
+    root.on('click', 'li a.delete', removeComment);
+})();
+{% endblock %}

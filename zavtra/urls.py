@@ -28,6 +28,9 @@ urlpatterns = patterns('',
     url(r'^polls/', include('minipoll.urls')),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
 
+    url(r'^live/$', 'views.live', name='live'),
+    url(r'^live/update/$', 'views.live_update', name='live.update'),
+
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),
     url(r'', include('social_auth.urls')),

@@ -6,10 +6,15 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout, login as user_login, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.template.loader import render_to_string
+from django.utils.functional import lazy
+from django.contrib.auth.context_processors import PermWrapper
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 
 from corecontent.models import ContentItem, ZhivotovIllustration
+from comments.models import Comment
 
 from utils import cached
 
@@ -106,3 +111,19 @@ def logout(request):
 
 def logged_in(request):
     raise Exception, "OLOLO!"
+
+@render_to('live.html')
+def live(request):
+    return {'stream': Comment.objects.filter(enabled=True).select_related().order_by('-id')[5:10]}
+
+@csrf_exempt
+@ajax_request
+def live_update(request):
+    last_seen = request.POST.get('last_seen')
+    qs = Comment.objects.filter(enabled=True).select_related().filter(pk__gt = last_seen).order_by('-id')[0:50]
+    if request.user.is_authenticated() and request.user.is_staff:
+	perms = lazy(lambda: PermWrapper(request.user), PermWrapper)()
+    else:
+	perms = None
+    rendered = [render_to_string('comments/item.html', {'comment': x, 'perms': perms, 'request': request, 'stream': True}) for x in qs]
+    return {'stream': rendered}

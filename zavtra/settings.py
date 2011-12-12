@@ -2,7 +2,7 @@
 import os
 import pytils.translit
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEBUG = False
+DEBUG = True #False
 TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('zw0rk', 'ostronom@gmail.com'),
