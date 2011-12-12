@@ -14,6 +14,8 @@
                 <button type="submit" class="button"><span class="label">Отправить</span></button>
             </p>
         </form>
+        {% else %}
+        <p>Чтобы иметь возможность оставлять комментарии, вам нужно <a rel="inline" href="{% url login %}">войти в свою учетную запись (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала)</a>  или <a href="{% url accounts.register %}">зарегистрировать её</a>, если у вас таковой еще нет.</p>
         {% endif %}
     </div>
 </div>

@@ -48,7 +48,7 @@
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
     		{% else %}
-    		<a rel="inline" href="{% url login %}">Войти</a>
+    		<div class="buttons"><a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a></div>
     		{% endif %}
     	    </div>
         </div>
