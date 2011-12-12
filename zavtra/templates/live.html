@@ -4,6 +4,7 @@
     <article class="grid_12 alpha block">
 	<header><h1>Живая лента</h1></header>
 	<div class="content">
+	    <p class="buttons"><a id="stream-refresh" class="button" href="#"><span class="icon icon157"></span><span class="label">Обновить</span></a></p>
 	    <div class="comments">
 		<ul id="comments-list">
 		    {% for comment in stream %}
@@ -19,17 +20,24 @@
 
 {% block javascript %}
 (function(){
-    var root = $('#comments-list'), period=1*1000;
+    var root = $('#comments-list'), period=15*1000;
     var updater = function(){
+	btn.addClass('on');
         var last_seen = $('li:first-child', root);
         var last_seen_id = last_seen.attr('id').split('-')[1];
         $.post('{% url live.update %}', {last_seen: last_seen_id}, function(data){
-            var d = $(data['stream'].join(''));
-            d.hide();
-            d.insertBefore(last_seen);
-            d.fadeIn('slow', function(){
+    	    if (data['stream'] && data['stream'].length > 0) {
+        	var d = $(data['stream'].join(''));
+        	d.hide();
+        	d.insertBefore(last_seen);
+        	d.fadeIn('slow', function(){
+        	    setTimeout(updater, period);
+        	    btn.removeClass('on');
+    		});
+    	    } else {
         	setTimeout(updater, period);
-    	    });
+        	btn.removeClass('on');
+    	    }
         });
     };
     setTimeout(updater, period);
@@ -42,5 +50,7 @@
 	});
     }
     root.on('click', 'li a.delete', removeComment);
+    var btn = $('#stream-refresh');
+    btn.click(function(){ updater(); return false; });
 })();
 {% endblock %}

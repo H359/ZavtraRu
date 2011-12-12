@@ -114,7 +114,7 @@ def logged_in(request):
 
 @render_to('live.html')
 def live(request):
-    return {'stream': Comment.objects.filter(enabled=True).select_related().order_by('-id')[5:10]}
+    return {'stream': Comment.objects.filter(enabled=True).select_related().order_by('-id')[0:10]}
 
 @csrf_exempt
 @ajax_request
