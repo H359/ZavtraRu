@@ -1,9 +1,11 @@
 #-*- coding: utf-8 -*-
 import urllib2
 import urlparse
+import tweepy
 
 from django.db.models.signals import post_save, pre_delete
 from django.core.cache import cache
+from django.conf import settings
 from django.dispatch import receiver
 
 from social_auth.signals import socialauth_registered
@@ -12,61 +14,32 @@ from voting.models import Vote
 
 from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems, NewsItem
 
-"""
-def update_cache(sender, **kwargs):
-    if kwargs['instance'].rubric is not None:
-	if kwargs['instance'].rubric.title == u'Новости':
-	    cache.delete('news')
+def maketh_twitter():
+    auth = tweepy.OAuthHandler(settings.TWEEPY_CK, settings.TWEEPY_CS)
+    auth.set_access_token(settings.TWEEPY_AT, settings.TWEEPY_ATS)
+    api = tweepy.API(auth)
+    return api
+
+def maketh_status(instr):
+    curlen = 0
+    res = []
+    parts = filter(lambda w: len(w) > 0, instr.strip().split(' '))
+    for part in parts:
+	if len(part) + curlen + len(res) > 120:
+	    break
 	else:
-	    cache.delete('rubric-%d-items' % kwargs['instance'].rubric_id)
-    else:
-	cache.delete('blogs-stream')
+	    res.append(part)
+	    curlen += len(part)
+    return ' '.join(res)
 
-for klass in [Article, Video, NewsItem, Image]:
-    receiver(post_save, sender=klass, dispatch_uid='corecontent_updatecache')(update_cache)
-    receiver(pre_delete, sender=klass, dispatch_uid='corecontent_updatecaches')(update_cache)
+# TODO: defer this
+@receiver(post_save, sender=Article, dispatch_uid='corecontent.signals.article.tweet')
+def tweet_article(sender, **kwargs):
+    if kwargs['created'] and kwargs['instance'].enabled:
+        api = maketh_twitter()
+        status = '%s http://zavtra.ru/%s' % (maketh_status(kwargs['instance'].title), kwargs['instance'].get_absolute_url())
+        api.update_status(status)
 
-@receiver(post_save, sender=Rubric, dispatch_uid='rubrics_updatecache')
-def update_rubrics(sender, **kwargs):
-    cache.delete('rubrics')
-
-@receiver(post_save, sender=FeaturedItems, dispatch_uid='featureditems_updatecache')
-def update_featured(sender, **kwargs):
-    cache.delete('featured')
-"""
-"""
-@receiver(socialauth_registered, sender=None, dispatch_uid='zavtra.corecontent.signals')
-def auth_registered(sender, user, response, details, **kwargs):
-    #sender = TwitterBackend | FacebookBackend ...
-    print sender
-    #twitter -- response.profile_image_url_url, response.description, 
-    #facebook -- response.username, response.first_name, response.last_name, response.link, response.id
-    print response, details
-"""
-
-"""
-@receiver(socialauth_registered, sender=None, dispatch_uid='zavtra.corecontent.signals')
-def auth_registered(sender, user, response, details, **kwargs):
-    #sender = TwitterBackend | ...
-    print sender
-    #twitter -- avatar : profile_image_url_https, description
-    
-    print response, details
-
-from voting.models import Vote
-
-from models import ContentItem, Rubric, contentitem_ctype_id
-
-@receiver(post_save, sender=Rubric, dispatch_uid='zavtra.corecontent.signals')
-def update_rubrics(sender, **kwargs):
-    kwargs['instance'].reset_content_items()
-
-@receiver(post_save, sender=ContentItem, dispatch_uid='zavtra.corecontent.signals')
-def update_cache(sender, **kwargs):
-    if kwargs['instance'].rubric is not None:
-        key = 'rubric-%d-content-items' % kwargs['instance'].rubric_id
-        cache.set(key, ContentItem.objects.batch_select('authors').filter(enabled=True).filter(rubric=kwargs['instance'].rubric)[0:3], 60*60*24)
-"""
 @receiver(post_save, sender=Vote, dispatch_uid='zavtra.corecontent.signals')
 def update_rating(sender, **kwargs):
     if kwargs['instance'].content_type_id == contentitem_ctype_id:

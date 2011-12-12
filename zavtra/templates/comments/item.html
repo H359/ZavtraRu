@@ -5,7 +5,7 @@
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
-    <div class="clearfix msg">{{ comment.comment }}</div>
+    <div class="clearfix msg">{{ comment.comment|linebreaks }}</div>
     {% if request.user.is_authenticated %}
     <div class="buttons">
 	<a class="button reply" href="#">ответить</a>
