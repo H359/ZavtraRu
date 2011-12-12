@@ -130,7 +130,11 @@ class ContentItem(models.Model):
     def should_be_on_main(self):
 	oneday = timedelta(days=1)
 	now = datetime.now().date()
-	wstart = now - oneday*(now.weekday()+5)
+	if now.weekday() < 3:
+	    shift = oneday*(now.weekday()+4)
+	else:
+	    shift = oneday*(now.weekday()-3)
+	wstart = now - shift
 	wend = wstart + oneday*7
 	return (self.rubric.on_main and (wstart <= self.pub_date <=  wend))
 
@@ -238,14 +242,20 @@ class Video(ContentItem):
         return urlparse.parse_qs(self.content).values()[0][0]
 
     def save(self, *args, **kwargs):
-        import gdata.youtube.service
-        video_id = self.get_video_id()
-        yt_service = gdata.youtube.service.YouTubeService()
-        entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
-        name = urlparse.urlparse(entry.media.thumbnail[0].url).path.split('/')[-1]
-        content = ContentFile(urllib2.urlopen(entry.media.thumbnail[0].url).read())
-        self.thumbnail.save(name, content, save=False)
-        super(Video, self).save(*args, **kwargs)
+	if self.id is None:
+    	    import gdata.youtube.service
+    	    video_id = self.get_video_id()
+    	    yt_service = gdata.youtube.service.YouTubeService()
+    	    entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
+    	    for i in range(len(entry.media.thumbnail)):
+    		try:
+    		    name = urlparse.urlparse(entry.media.thumbnail[i].url).path.split('/')[-1]
+    		    content = ContentFile(urllib2.urlopen(entry.media.thumbnail[i].url).read())
+    		    self.thumbnail.save(name, content, save=False)
+    		    break
+    		except urllib2.HTTPError:
+    		    pass
+    	super(Video, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
 class Image(ContentItem):

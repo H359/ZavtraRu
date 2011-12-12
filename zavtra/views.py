@@ -18,7 +18,13 @@ oneday = timedelta(days=1)
 @render_to('home.html')
 def home(request):
     now = datetime.now().date()
-    wstart = now - oneday*(now.weekday()+5)
+    if now.weekday() < 3:
+	# prev week
+	shift = oneday*(now.weekday()+4)
+    else:
+	# next week
+	shift = oneday*(now.weekday()-3)
+    wstart = now - shift
     wend = wstart + 7*oneday
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
