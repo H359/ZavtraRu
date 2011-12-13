@@ -28,6 +28,7 @@ $(document).ready(function(){
         'updateEvent': 'click',
         'skin': 'default',
         'lang': 'ru',
+        'plugins': ['embed'],
         'postInitDialog': wymeditor_filebrowser,
         'editorStyles': [
     	    {'name': '.text-center', 'css': 'text-align:center;'}

@@ -1,8 +1,8 @@
 # Django settings for zavtra project.
-import os
+import os, socket
 import pytils.translit
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEBUG = False
+DEBUG = socket.gethostname() == 'myhost'
 TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('zw0rk', 'ostronom@gmail.com'),

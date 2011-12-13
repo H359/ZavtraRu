@@ -36,7 +36,7 @@ class FeaturedView(ListView):
         return ContentItem.batched.batch_select('authors').filter(
             enabled=True, tags__id__in=self.featured.tags.all()
         ).distinct()
-    
+
     def get_context_data(self, **kwargs):
         context = super(FeaturedView, self).get_context_data(**kwargs)
         context['type']  = u'Рубрика'
@@ -80,6 +80,15 @@ class GalleryView(YearArchiveView):
 	except Http404:
 	    year = datetime.now().year
 	return year
+
+class FeaturedIndexView(ListView):
+    paginate_by         = 15
+    template_name       = 'corecontent/featured.index.html'
+    context_object_name = 'items'
+    def get_queryset(self):
+	return FeaturedItems.objects.all()
+
+view_featured_index = FeaturedIndexView.as_view()
 
 view_item = ContentItemView.as_view()
 view_rubric = RubricView.as_view()

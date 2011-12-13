@@ -10,7 +10,11 @@ from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, Daily
 
 class ContentItemMediaMixin(object):
     class Media:
-	js = ('js/wymeditor/wymeditor.fixer.js', 'js/wymeditor/jquery.wymeditor.min.js',)
+	js = (
+	    'js/wymeditor/wymeditor.fixer.js',
+	    'js/wymeditor/jquery.wymeditor.min.js',
+	    'js/wymeditor/jquery.wymeditor.embed.js',
+	)
     search_fields = ('title',)
     list_filter = ('rubric', 'published', 'enabled')
 
