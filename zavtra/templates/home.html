@@ -4,26 +4,6 @@
 {% load minipoll_tags %}
 {% load pytils_dt %}
 
-{% block javascript %}
-(function(){
-var t = $('div.news'), dl = $('dl', t), intrp = false, defint = 6000;
-dl.css({'position':'relative'});
-var lifo = function(){
-    if (!intrp) { 
-	var dt = $($('dt', dl)[0]), dd = $($('dd', dl)[0]);
-	var p = dt.outerHeight(true) + dd.outerHeight(true);
-	dl.animate({'top':-p + 'px'}, defint/6, function(){
-	    dl.append(dt); dl.append(dd);
-	    dl.css({'top': '0px'});
-	    setTimeout(lifo, defint);
-	});
-    } else setTimeout(lifo, defint);
-}
-t.mouseover(function(){intrp=true;}).mouseout(function(){intrp=false;});
-if (dl.height() > t.height()) setTimeout(lifo, defint);
-})();
-{% endblock %}
-
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="top-image grid_12 alpha">

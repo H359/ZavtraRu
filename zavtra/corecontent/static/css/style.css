@@ -139,8 +139,7 @@ article.rubric-info dl.content dt a { text-decoration: none; }
 article.of-kind-text .content { max-width: 36em; min-width: 25em; }
 article.of-kind-text p + p:first-letter { margin-left: 1em; }
 
-.news { overflow: hidden; height: 340px; margin-bottom: 15px; }
-html.no-js .news { overflow-y: scroll; }
+.news { overflow-y: scroll; overflow-x: hidden; height: 340px; margin-bottom: 15px; }
 
 .twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
 
