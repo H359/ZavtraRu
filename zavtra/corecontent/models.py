@@ -239,7 +239,7 @@ class Video(ContentItem):
     objects = video_manager()
 
     def get_video_id(self):
-        return urlparse.parse_qs(self.content).values()[0][0]
+	return urlparse.parse_qs(self.content).get('v')[0]
 
     def save(self, *args, **kwargs):
 	if self.id is None:
