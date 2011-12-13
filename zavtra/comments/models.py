@@ -25,6 +25,7 @@ class Comment(MP_Node):
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())
     rating         = models.IntegerField(default=0)
+    ip             = models.IPAddressField(verbose_name=u'IP отправителя', blank=True)
 
     node_order_by = ['created_at']
 

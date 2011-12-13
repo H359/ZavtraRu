@@ -20,6 +20,7 @@ def add_comment(request):
     	    parent = data.get('parent')
     	    del data['parent']
     	    data['author'] = request.user
+    	    data['ip'] = request.META.get('REMOTE_ADDR')
     	    if parent is None:
     		# new tree
     		comment = Comment.add_root(**data)
