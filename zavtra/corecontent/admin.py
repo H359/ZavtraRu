@@ -60,6 +60,9 @@ class RubricAdmin(admin.ModelAdmin):
 	    return obj.title != u'Новости'
 	return True
 
+class FeaturedItemsAdmin(admin.ModelAdmin):
+    filter_horizontal = ('tags',)
+
 class DailyQuoteAdmin(admin.ModelAdmin):
     list_display = ('quote', 'day')
 
@@ -68,6 +71,6 @@ admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(NewsItem, NewsItemAdmin)
 admin.site.register(Rubric, RubricAdmin)
-admin.site.register(FeaturedItems)
+admin.site.register(FeaturedItems, FeaturedItemsAdmin)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
 admin.site.register(ZhivotovIllustration)
