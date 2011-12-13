@@ -10,8 +10,8 @@ def common_pieces(request):
 	base_template = 'base_ajax.html'
     else:
 	base_template = 'base.html'
-    top_rubrics  = cached(lambda: list(Rubric.objects.filter(on_top=True).exclude(title=u'Новости')), 'top_rubrics')
-    featured = cached(lambda: list(FeaturedItems.objects.filter(is_active=True)), 'featured')
+    top_rubrics  = cached(lambda: list(Rubric.objects.filter(on_top=True).exclude(title=u'Новости')), 'top_rubrics', duration=600)
+    featured = cached(lambda: list(FeaturedItems.objects.filter(is_active=True)), 'featured', duration=60)
     try:
 	quote = cached(lambda: list(DailyQuote.objects.filter(day=datetime.now().date())), 'quote', duration=600)[0]
     except IndexError:
