@@ -9,9 +9,13 @@ from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllus
 from taggit.models import Tag
 
 class ContentItemView(DetailView):
-    queryset            = ContentItem.batched.batch_select('authors').filter(enabled=True)
+    #queryset            = ContentItem.batched.batch_select('authors').filter(enabled=True)
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
+    def get_object(self):
+	now = datetime.now().date()
+	qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now)
+	return super(ContentItemView, self).get_object(qs)
 
 class RubricView(ListView):
     paginate_by         = 15
@@ -19,7 +23,8 @@ class RubricView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.rubric = Rubric.objects.get(slug=self.kwargs['slug'])
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric)
+        now = datetime.now().date()
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lt = now)
     
     def get_context_data(self, **kwargs):
         context = super(RubricView, self).get_context_data(**kwargs)
@@ -33,8 +38,9 @@ class FeaturedView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.featured = FeaturedItems.objects.get(slug=self.kwargs['slug'])
+        now = datetime.now().date()
         return ContentItem.batched.batch_select('authors').filter(
-            enabled=True, tags__id__in=self.featured.tags.all()
+            enabled=True, pub_date__lt = now, tags__id__in=self.featured.tags.all()
         ).distinct()
 
     def get_context_data(self, **kwargs):
@@ -49,7 +55,8 @@ class TaggedItemsView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.tag = Tag.objects.get(slug=self.kwargs['slug'])
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, tags__id=self.tag.id)
+        now = datetime.now().date()
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now, tags__id=self.tag.id)
 
     def get_context_data(self, **kwargs):
         context = super(TaggedItemsView, self).get_context_data(**kwargs)
@@ -62,7 +69,8 @@ class BlogView(ListView):
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)
+	now = datetime.now().date()
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now, rubric=None)
     
     def get_context_data(self, **kwargs):
         context = super(BlogView, self).get_context_data(**kwargs)
