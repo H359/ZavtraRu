@@ -34,7 +34,8 @@ class ImageAdminForm(forms.ModelForm):
 
 class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     list_select_related = True
-    list_display = ('__unicode__', 'rubric', 'published', 'enabled')
+    list_display = ('title', 'pub_date', 'rubric', 'published', 'enabled')
+    filter_horizontal = ('authors',)
 
 class NewsItemAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     exclude = ('thumbnail', 'old_url', 'authors', 'published', 'rubric')

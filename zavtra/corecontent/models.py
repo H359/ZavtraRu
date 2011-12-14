@@ -74,7 +74,7 @@ class ContentItem(models.Model):
     rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
     description  = models.TextField(verbose_name=u'Анонс', blank=True)
     pub_date     = models.DateField(verbose_name=u'Дата публикации', default=datetime.now)
-    authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems', blank=True)
+    authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems', blank=True, limit_choices_to={'is_staff': True})
     published    = models.BooleanField(verbose_name=u'Опубликовано в газете')
     enabled      = models.BooleanField(verbose_name=u'Допущено к публикации на сайте', default=True)
     thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True)
