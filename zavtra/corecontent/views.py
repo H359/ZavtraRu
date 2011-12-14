@@ -14,7 +14,7 @@ class ContentItemView(DetailView):
     context_object_name = 'item'
     def get_object(self):
 	now = datetime.now().date()
-	qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now)
+	qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
 	return super(ContentItemView, self).get_object(qs)
 
 class RubricView(ListView):
@@ -24,7 +24,7 @@ class RubricView(ListView):
     def get_queryset(self):
         self.rubric = Rubric.objects.get(slug=self.kwargs['slug'])
         now = datetime.now().date()
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lt = now)
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lte = now)
     
     def get_context_data(self, **kwargs):
         context = super(RubricView, self).get_context_data(**kwargs)
@@ -40,7 +40,7 @@ class FeaturedView(ListView):
         self.featured = FeaturedItems.objects.get(slug=self.kwargs['slug'])
         now = datetime.now().date()
         return ContentItem.batched.batch_select('authors').filter(
-            enabled=True, pub_date__lt = now, tags__id__in=self.featured.tags.all()
+            enabled=True, pub_date__lte = now, tags__id__in=self.featured.tags.all()
         ).distinct()
 
     def get_context_data(self, **kwargs):
@@ -56,7 +56,7 @@ class TaggedItemsView(ListView):
     def get_queryset(self):
         self.tag = Tag.objects.get(slug=self.kwargs['slug'])
         now = datetime.now().date()
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now, tags__id=self.tag.id)
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, tags__id=self.tag.id)
 
     def get_context_data(self, **kwargs):
         context = super(TaggedItemsView, self).get_context_data(**kwargs)
@@ -70,7 +70,7 @@ class BlogView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
 	now = datetime.now().date()
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now, rubric=None)
+        return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, rubric=None)
     
     def get_context_data(self, **kwargs):
         context = super(BlogView, self).get_context_data(**kwargs)

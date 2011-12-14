@@ -35,10 +35,14 @@ def maketh_status(instr):
 # TODO: defer this
 @receiver(post_save, sender=Article, dispatch_uid='corecontent.signals.article.tweet')
 def tweet_article(sender, **kwargs):
-    if kwargs['created'] and kwargs['instance'].enabled and not settings.DEBUG:
-        api = maketh_twitter()
-        status = '%s http://zavtra.ru%s' % (maketh_status(kwargs['instance'].title), kwargs['instance'].get_absolute_url())
-        api.update_status(status)
+    try:
+	now = datetime.now().date()
+        if kwargs['created'] and kwargs['instance'].enabled and (kwargs['instance'].pub_date < date) and not settings.DEBUG:
+	    api = maketh_twitter()
+    	    status = '%s http://zavtra.ru%s' % (maketh_status(kwargs['instance'].title), kwargs['instance'].get_absolute_url())
+            api.update_status(status)
+    except:
+	pass
 
 @receiver(post_save, sender=Vote, dispatch_uid='zavtra.corecontent.signals')
 def update_rating(sender, **kwargs):
