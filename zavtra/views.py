@@ -22,6 +22,7 @@ oneday = timedelta(days=1)
 
 @render_to('home.html')
 def home(request):
+    no_cache = False
     now = datetime.now().date()
     if now.weekday() < 3:
 	# prev week
@@ -31,6 +32,10 @@ def home(request):
 	shift = oneday*(now.weekday()-3)
     wstart = now - shift
     wend = wstart + 7*oneday
+    if request.user.is_authenticated() and request.user.is_staff and request.GET.get('next_number'):
+	wstart += 7*oneday
+	wend += 7*oneday
+	no_cache = True
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
@@ -48,19 +53,14 @@ def home(request):
 		newsletter[item.rubric_id]['rubric'] = item.rubric
 	    newsletter[item.rubric_id]['items'].append(item)
 	return sorted(newsletter.values(), key=lambda p: p['rubric'].position)
-    newsletter = cached(
-	get_content,
-	'newsletter',
-	duration=600
-    )
-    """
-    blogs = cached(
-	lambda: ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=None)[0:6],
-	'blogs',
-	duration = 60
-	#duration = (wend - now).seconds
-    )
-    """
+    if not no_cache:
+	newsletter = cached(
+	    get_content,
+	    'newsletter',
+	    duration=600
+	)
+    else:
+	newsletter = get_content()
     illustration = cached(
 	get_illustration,
 	'illustration',

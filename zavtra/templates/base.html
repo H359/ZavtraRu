@@ -47,6 +47,7 @@
     	    <div style="font-size: 1.1em;">
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
+    		{% if request.user.is_staff %}<p><br><a href="/?next_number=1">Новый номер</a></p>{% endif %}
     		{% else %}
     		<div class="buttons"><a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a></div>
     		{% endif %}
@@ -110,7 +111,6 @@
 $(document).ready(function(){
     $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
     {% block javascript %}{% endblock %}
-});
 VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -119,7 +119,6 @@ VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
   js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-27628875-1']);
   _gaq.push(['_trackPageview']);
@@ -130,6 +129,7 @@ VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+});
 </script>
 </body>
 </html>
