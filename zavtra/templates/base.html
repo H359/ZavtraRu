@@ -36,11 +36,12 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
-{% load utils %}
+{% load utils %}{% load pytils_dt %}
 {% block body %}
     <header class="container container_16 clearfix">
         <figure class="grid_5 alpha">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
+            <figcaption style="font-size: 1.2em;padding: 0.2em 0.8em;"><em>Выпуск №{{ issue_number.num }} от {{ issue_number.date|ru_strftime:"%d %B %Y" }}</em></figcaption>
         </figure>
         <div class="grid_6">{% spaceless %}
     	    {% comment %}
