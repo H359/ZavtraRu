@@ -130,7 +130,7 @@ class ContentItem(models.Model):
     def should_be_on_main(self):
 	oneday = timedelta(days=1)
 	now = datetime.now().date()
-	wstart = now - oneday*(now.weekday()+4)
+	wstart = now - oneday*(now.weekday()+5)
 	if now.weekday() > 2:
 	    wstart += 7*oneday
 	wend = wstart + oneday*7

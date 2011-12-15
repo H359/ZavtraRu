@@ -24,10 +24,11 @@ oneday = timedelta(days=1)
 def home(request):
     no_cache = False
     now = datetime.now().date()
-    wstart = now - oneday*(now.weekday()+4)
+    wstart = now - oneday*(now.weekday()+5)
     if now.weekday() > 2:
 	wstart += 7*oneday
     wend = wstart + 7*oneday
+    print wstart, wend
     if request.user.is_authenticated() and request.user.is_staff and request.GET.get('next_number'):
 	wstart += 7*oneday
 	wend += 7*oneday
