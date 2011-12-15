@@ -23,6 +23,16 @@
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
     {% block js_extra_head %}{% endblock %}
+    <script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-27628875-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+    </script>
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -109,27 +119,18 @@
 <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
-    {% block javascript %}{% endblock %}
-VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-27628875-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+  $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
+  {% block javascript %}{% endblock %}
 });
+  VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
 </body>
 </html>
