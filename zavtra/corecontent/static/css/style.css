@@ -178,7 +178,7 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
         .top-nav ul.secondary span { color: #444; margin-right: 0.1em; font-weight: bold; }
 
 
-blockquote.topquote { font-size: 1.1em; font-style: italic; margin-top: 0.2em; }
+blockquote.topquote { font-size: 1.1em; font-style: italic; margin-top: 0.2em; font-weight: bold; }
 
 /*table.auth-form { width: 100%; }*/
 table.auth-form th { text-align: right; width: 20%; }
