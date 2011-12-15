@@ -24,18 +24,20 @@ oneday = timedelta(days=1)
 def home(request):
     no_cache = False
     now = datetime.now().date()
-    if now.weekday() < 3:
+    #if now.weekday() < 2:
 	# prev week
-	shift = oneday*(now.weekday()+4)
-    else:
-	# next week
-	shift = oneday*(now.weekday()-3)
+    shift = oneday*(now.weekday()+5)
+    #else:
+    # next week
+    #shift = oneday*(now.weekday()-2)
     wstart = now - shift
     wend = wstart + 7*oneday
+    """
     if request.user.is_authenticated() and request.user.is_staff and request.GET.get('next_number'):
 	wstart += 7*oneday
 	wend += 7*oneday
 	no_cache = True
+    """
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
