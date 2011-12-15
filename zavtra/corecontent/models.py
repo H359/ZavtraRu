@@ -118,23 +118,21 @@ class ContentItem(models.Model):
         return self._comments_count
     
     def update_comments_count(self):
-        self._comments_count = Comment.objects.filter(
+	if self.should_be_on_main():
+    	    self._comments_count = Comment.objects.filter(
                 content_type = contentitem_ctype_id,
                 object_id=self.id,
                 enabled=True
-        ).count()
-        if self.should_be_on_main():
+    	    ).count()
     	    cache.delete('newsletter')
         self.save()
 
     def should_be_on_main(self):
 	oneday = timedelta(days=1)
 	now = datetime.now().date()
-	if now.weekday() < 3:
-	    shift = oneday*(now.weekday()+4)
-	else:
-	    shift = oneday*(now.weekday()-3)
-	wstart = now - shift
+	wstart = now - oneday*(now.weekday()+4)
+	if now.weekday() > 2:
+	    wstart += 7*oneday
 	wend = wstart + oneday*7
 	return (self.rubric.on_main and (wstart <= self.pub_date <=  wend))
 
