@@ -58,6 +58,9 @@ class FeaturedItems(models.Model):
     is_active = models.BooleanField(verbose_name=u'Выводить на главной / актуально', default=True)
     tags      = models.ManyToManyField(Tag, verbose_name=u'Теги', blank=True)
 
+    batched = BatchManager()
+    objects = models.Manager()
+
     def __unicode__(self):
         return self.title
 

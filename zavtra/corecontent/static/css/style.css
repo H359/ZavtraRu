@@ -180,6 +180,8 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
 blockquote.topquote { font-size: 1.1em; font-style: italic; margin-top: 0.2em; font-weight: bold; }
 
+a.rss { padding-left: 18px; background: url(../img/rss.gif) no-repeat; }
+
 /*table.auth-form { width: 100%; }*/
 table.auth-form th { text-align: right; width: 20%; }
 table.auth-form th, table.auth-form td { vertical-align: middle; }

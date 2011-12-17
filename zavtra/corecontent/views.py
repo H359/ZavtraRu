@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.views.generic import ListView, DetailView, YearArchiveView
 from django.shortcuts import Http404
+from django.core.urlresolvers import reverse
 
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
@@ -30,6 +31,7 @@ class RubricView(ListView):
         context = super(RubricView, self).get_context_data(**kwargs)
         context['type']  = u'Рубрика'
         context['title'] = self.rubric
+        context['rss'] = reverse('corecontent.rss.rubric', kwargs={'slug': self.rubric.slug})
         return context
 
 class FeaturedView(ListView):
@@ -47,6 +49,7 @@ class FeaturedView(ListView):
         context = super(FeaturedView, self).get_context_data(**kwargs)
         context['type']  = u'Рубрика'
         context['title'] = self.featured
+        context['rss'] = reverse('corecontent.rss.featured', kwargs={'slug': self.featured.slug})
         return context
 
 class TaggedItemsView(ListView):
@@ -62,6 +65,7 @@ class TaggedItemsView(ListView):
         context = super(TaggedItemsView, self).get_context_data(**kwargs)
         context['type']  = u'Всё по тегу'
         context['title'] = self.tag
+        context['rss'] = reverse('corecontent.rss.tag', kwargs={'slug': self.tag.slug})
         return context
 
 class BlogView(ListView):

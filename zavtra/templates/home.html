@@ -30,7 +30,9 @@
 </section>
 <section class="container container_16 clearfix">
     <article class="grid_16 alpha omega block">
-	<div class="content"><h3><em>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</em></h3></div>
+	<div class="content">
+	    <h3><em>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</em></h3>
+	</div>
     </article>
     <article class="grid_4 alpha rubric-info">
         {% for group in newsletter|slice:"0::3" %}

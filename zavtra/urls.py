@@ -41,7 +41,7 @@ urlpatterns = patterns('',
     url(r'^live/$', 'views.live', name='live'),
     url(r'^live/update/$', 'views.live_update', name='live.update'),
 
-    (r'^search/', include('haystack.urls')),
+    #(r'^search/', include('haystack.urls')),
 
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),

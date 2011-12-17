@@ -6,7 +6,9 @@
 <section class="container container_16 clearfix">
     <div class="alpha grid_12">
         <article class="block rubric-info">
-    	    <header><h1>{{ type }} &laquo;{{ title|safe }}&raquo;</h1></header>
+    	    <header>
+    		<h1>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<span class="small"><a href="{{ rss }}" class="rss">RSS</a></span>{% endif %}</h1>
+    	    </header>
 	    <dl class="content">{% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</dl>
             {% if is_paginated %}
 	    <footer class="buttons">
