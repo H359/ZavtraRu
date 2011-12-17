@@ -14,14 +14,11 @@
             <h1>
                 <time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time>
                 {{ item.title|safe }}
-                <span class="small">
-                {% for author in item.authors_all %}
-                <a href="{{ author.get_absolute_url }}">{{ author.first_name }} {{author.last_name }}</a>
-                {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-                </span>
             </h1>
         </header>
+	<div>
+            {% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.first_name }} {{author.last_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+	</div>
             {% if item.kind == 'video' %}
             <div class="text-center">
 		{% with video=item.by_kind %}
