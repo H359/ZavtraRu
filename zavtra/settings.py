@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.sitemaps',
     'captcha',
     'filebrowser',
     'annoying',
@@ -124,7 +125,16 @@ INSTALLED_APPS = (
     'siteuser',
     'comments',
     'minipoll',
+    #'haystack',
 )
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://localhost:8080/solr',
+        'TIMEOUT': 60 * 5,
+        'INCLUDE_SPELLING': True,
+    }
+}
 if DEBUG:
     INSTALLED_APPS += ('debug_toolbar',)
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'

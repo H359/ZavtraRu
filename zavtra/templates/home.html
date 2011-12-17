@@ -29,6 +29,9 @@
     </article>
 </section>
 <section class="container container_16 clearfix">
+    <article class="grid_16 alpha omega block">
+	<div class="content"><h3><em>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</em></h3></div>
+    </article>
     <article class="grid_4 alpha rubric-info">
         {% for group in newsletter|slice:"0::3" %}
         {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
@@ -66,6 +69,8 @@
             <header><h1>Присоединяйся</h1></header>
             <div class="content text-center">
         	<div class="twy"><a href="https://twitter.com/ZavtraRu" class="twitter-follow-button" data-show-count="true" data-lang="ru" data-size="large">Следуй за @ZavtraRu</a></div>
+		<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fzavtraru&amp;width=220&amp;height=427&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=true&amp;header=false&amp;appId=175357809210274" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:220px; height:427px;" allowTransparency="true"></iframe>
+		{% comment %}
                 <div class="fb-like-box"
                      data-href="http://www.facebook.com/pages/%D0%93%D0%B0%D0%B7%D0%B5%D1%82%D0%B0-%D0%97%D0%B0%D0%B2%D1%82%D1%80%D0%B0/322470664449397"
                      data-width="220"
@@ -73,6 +78,7 @@
                      data-stream="false"
                      data-header="true">
                 </div>
+                {% endcomment %}
                 <div id="vk_groups"></div>
             </div>
         </article>

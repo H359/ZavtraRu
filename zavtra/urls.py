@@ -1,8 +1,11 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.shortcuts import redirect
 from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic.simple import direct_to_template
+
+from corecontent.sitemap import RubricsSitemap, FeaturedItemsSitemap
 
 from taggit.models import TagBase
 from pytils.translit import slugify
@@ -18,6 +21,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'zavtra.views.home', name='home'),
+    (r'^index.html$', lambda r: redirect('home', permanent=True)),
+
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {
+	'rubrics': RubricsSitemap,
+	'featured': FeaturedItemsSitemap
+    }}),
+
     url(r'^login/$', 'zavtra.views.login', name='login'),
     url(r'^logout/$', 'zavtra.views.logout', name='logout'),
     url(r'^logged-in/$', 'zavtra.views.logged_in', name='complete'),
@@ -30,6 +40,8 @@ urlpatterns = patterns('',
 
     url(r'^live/$', 'views.live', name='live'),
     url(r'^live/update/$', 'views.live_update', name='live.update'),
+
+    (r'^search/', include('haystack.urls')),
 
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),

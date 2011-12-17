@@ -32,6 +32,7 @@ def home(request):
 	wstart += 7*oneday
 	wend += 7*oneday
 	no_cache = True
+    num = 49 + (now - datetime(year=2011,month=12,day=7).date()).days / 7
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
@@ -64,6 +65,7 @@ def home(request):
     )
     news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=60)
     return {
+	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
 	'news': news

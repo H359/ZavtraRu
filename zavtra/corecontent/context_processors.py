@@ -10,7 +10,7 @@ def common_pieces(request):
 	now = datetime.now()
 	oneday = timedelta(days=1)
 	num = 49 + (datetime.now().date() - datetime(year=2011,month=12,day=7).date()).days / 7
-	date = now - oneday*(now.weekday()+4)
+	date = now - oneday*(now.weekday()+5)
 	if now.weekday() > 2:
 	    date += 7*oneday
 	return {'num': num, 'date': date}

@@ -41,7 +41,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     <header class="container container_16 clearfix">
         <figure class="grid_5 alpha">
             <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60"></a>
-            <figcaption style="font-size: 1.2em;padding: 0.2em 0.8em;"><em>Выпуск №{{ issue_number.num }} от {{ issue_number.date|ru_strftime:"%d %B %Y" }}</em></figcaption>
         </figure>
         <div class="grid_6">{% spaceless %}
     	    {% comment %}
@@ -49,7 +48,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
     	    {% endif %}
     	    {% endcomment %}
-	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/06/652/71.html">Единственный способ защищаться &mdash; это переходить в нападение, единственный способ быть заметными &mdash; это обращать на себя внимание как можно большего числа людей.</a>&raquo;</blockquote>
+	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/96/159/6_PUSHKI.html">Русские уважают национальные и религиозные чувства всех народов. Но уважайте же и вы наши национальные и религиозные чувства. Не доводите русский народ до точки кипения.</a>&raquo;</blockquote>
         {% endspaceless %}</div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
@@ -107,7 +106,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 (function(w, c) { 
     (w[c] = w[c] || []).push(function() { 
         try { 
-            w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true}); 
+            w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true, webvisor: true}); 
         } 
         catch(e) { } 
     }); 
@@ -124,6 +123,7 @@ $(document).ready(function(){
   {% block javascript %}{% endblock %}
 });
   VK.Widgets.Group("vk_groups", {mode: 1, width: "220", height: "290"},32969466);
+  {% comment %}
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -131,6 +131,7 @@ $(document).ready(function(){
     js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
+  {% endcomment %}
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
 </body>
