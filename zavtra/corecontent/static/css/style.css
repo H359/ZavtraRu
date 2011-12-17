@@ -130,7 +130,7 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
 
 
 article {}
-    article p { margin-bottom: 1em; font-size: 16px; }
+    article.of-kind-text p, article.of-kind-image p, article.of-kind-video p, article.of-kind- { margin-bottom: 1em; font-size: 16px; }
     article header {}
         article header time { margin-right: 5px; font-size: 0.9em; color: #666; }
 
@@ -139,7 +139,7 @@ article.rubric-info dl.content dt a { text-decoration: none; }
 /*article.rubric-info dl.content dd { text-align: justify; }*/
 
 article.of-kind-text .content { max-width: 36em; min-width: 25em; }
-article.of-kind-text p + p:first-letter { margin-left: 1em; }
+/*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
 .news { overflow-y: scroll; overflow-x: hidden; height: 340px; margin-bottom: 15px; }
 
@@ -155,11 +155,11 @@ aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
     .content form.form label { width: 4em; float: left; text-align: right; margin-right: 0.5em; display: block; }
     .content form.form button { margin-left: 5.5em; }
 
-.comments {}
+article .comments p, .comments .content { font-size: 15px !important; }
     .comments li { list-style-type: none; margin-bottom: 2em; }
 	.comments li a.gravatar { float: left; margin-right: 0.5em; }
 	.comments li div.msg { margin-top: 0.5em; }
-	    .comments li div.msg p { font-size: 15px; }
+	    /*.comments li div.msg p { font-size: 15px; }*/
     /*.comments .info { text-align: left; }*/
     .comments form { margin-top: 0.5em; }
         .comments form textarea { width: 95%; height: 80px; resize: none; }
