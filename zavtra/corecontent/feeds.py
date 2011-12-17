@@ -17,7 +17,7 @@ class LatestContentFeed(Feed):
 
     def items(self):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lt = now)[0:10]
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)[0:10]
 
     def item_author_name(self, item):
 	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
@@ -35,7 +35,7 @@ class RubricContentFeed(Feed):
 
     def items(self, obj):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(rubric=obj, enabled=True, pub_date__lt = now)[0:10]
+	return ContentItem.batched.batch_select('authors').filter(rubric=obj, enabled=True, pub_date__lte = now)[0:10]
 
     def link(self, obj):
 	return obj.get_absolute_url()
@@ -59,7 +59,7 @@ class TagContentFeed(Feed):
 
     def items(self, obj):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(tags=obj, enabled=True, pub_date__lt = now)[0:10]
+	return ContentItem.batched.batch_select('authors').filter(tags=obj, enabled=True, pub_date__lte = now)[0:10]
 
     def link(self, obj):
 	return obj.get_absolute_url()
@@ -83,7 +83,7 @@ class FeaturedItemsContentFeed(Feed):
 
     def items(self, obj):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(tags__in=obj.tags_all, enabled=True, pub_date__lt = now)[0:10]
+	return ContentItem.batched.batch_select('authors').filter(tags__in=obj.tags_all, enabled=True, pub_date__lte = now)[0:10]
 
     def link(self, obj):
 	return obj.get_absolute_url()
