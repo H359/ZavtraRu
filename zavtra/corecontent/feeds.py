@@ -9,6 +9,7 @@ from models import ContentItem, Rubric, Tag, FeaturedItems
 
 class LatestContentFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
+    ttl = 600
     title =u'Газета Завтра - новые материалы'
     link = u'/'
     description = u'Сводная лента обновлений'
@@ -26,6 +27,7 @@ class RubricContentFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
+    ttl = 600
 
     def description(self, obj):
 	return u'Лента обновлений рубрики %s' % obj.title
@@ -50,6 +52,7 @@ class TagContentFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
+    ttl = 600
 
     def description(self, obj):
 	return u'Лента обновлений тега %s' % obj.name
@@ -74,6 +77,7 @@ class FeaturedItemsContentFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
+    ttl = 600
 
     def description(self, obj):
 	return u'Лента обновлений горячей темы %s' % obj.title
