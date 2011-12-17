@@ -39,7 +39,7 @@ class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
 
 class NewsItemAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     exclude = ('thumbnail', 'old_url', 'authors', 'published', 'rubric')
-    ordering = ('-pub_date', '-id')
+    ordering = ('-pub_date', 'id')
     list_filter = ()
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
 	formfield = super(NewsItemAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)

@@ -138,7 +138,7 @@ article.rubric-info p { font-size: 100%; }
 article.rubric-info dl.content dt a { text-decoration: none; }
 /*article.rubric-info dl.content dd { text-align: justify; }*/
 
-article.of-kind-text .content { max-width: 36em; min-width: 25em; }
+article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%; }
 /*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
 .news { overflow-y: scroll; overflow-x: hidden; height: 340px; margin-bottom: 15px; }
