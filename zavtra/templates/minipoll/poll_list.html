@@ -1,14 +1,12 @@
 {% extends "minipoll/base.html" %}
-{% load i18n %}
+{% load pytils_numeral %}
 
-{% block description %}{% trans "All the polls of the site." %}{% endblock %}
-
-{% block title %}{% trans "Poll list" %}{% endblock %}
+{% block page_title %}{{ block.super }} / Рейтинг слухов{% endblock %}
 
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="grid_12 alpha block">
-	<header><h1>{% trans "All the polls of the site." %}</h1></header>
+	<header><h1>Рейтинг слухов</h1></header>
 	<div class="content">
 	    <ul>
 	    {% for object in object_list %}
@@ -17,11 +15,8 @@
 			<div class="poll_detail">{{ object.publication_date|date:"d N Y" }}</div>
 			<h3 class="poll_title">
 			    <a href="{{ object.get_absolute_url }}" alt="{{ object.title }}">{{ object.title }}</a>
+			    {{ object.description|safe }} ({{ object.votes|get_plural:"голос,голоса,голосов" }})
 			</h3>
-			<div class="poll_description">
-			    {{ object.description|safe }}
-			    <p>{{ object.votes }} {% trans "votes" %}.</p>
-			</div>
 		    </div>
 		</li>
 	    {% endfor %}

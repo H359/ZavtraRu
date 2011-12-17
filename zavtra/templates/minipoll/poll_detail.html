@@ -1,13 +1,12 @@
 {% extends "minipoll/base.html" %}
 {% load i18n minipoll_tags %}
+{% load comments %}
 
-{% block title %}{{ object.title }}{% endblock %}
-
-{% block description %}{{ object.description|striptags }}{% endblock %}
+{% block page_title %}{{ block.super }} / {{ object.title }}{% endblock %}
 
 {% block content %}
 <section class="container container_16 clearfix">
-    <article class="grid_12 alpha block">
+    <article class="grid_8 alpha block">
 	<header><h1>{{ object.title }}</h1></header>
 	<div class="content">
 	    {{ object.description|safe }}
@@ -21,7 +20,9 @@
 	    </p>
 	    {% endif %}
 	</div>
+	<div id="comments_block">{% get_comments_for object %}</div>
     </article>
+    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
     <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
 </section>
 {% endblock %}

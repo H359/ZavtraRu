@@ -9,7 +9,7 @@
 {% block content %}
 <section class="container container_16 clearfix">
     <h1 class="article">{% if item.rubric %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}Блоги{% endif %}</h1>
-    <article class="grid_12 alpha block of-kind-{{ item.kind }}">
+    <article class="grid_8 alpha block of-kind-{{ item.kind }}">
         <header>
             <h1>
                 <time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time>
@@ -66,6 +66,9 @@
                 {% endwith %}
                 <div id="comments_block">{% get_comments_for item %}</div>
             </footer>
+    </article>
+    <article class="grid_4">
+	{% include 'partials/centerside.html' %}
     </article>
     <article class="grid_4 omega">
 	{% include 'partials/rightside.html' %}

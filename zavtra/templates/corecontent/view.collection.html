@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="container container_16 clearfix">
-    <div class="alpha grid_12">
+    <div class="alpha {% if title.id == 1 %}grid_12{% else %}grid_8{% endif %}">
         <article class="block rubric-info">
     	    <header>
     		<h1>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<span class="small"><a href="{{ rss }}" class="rss">RSS</a></span>{% endif %}</h1>
@@ -25,6 +25,10 @@
             {% endif %}
         </article>
     </div>
+    {% if title.id == 1 %}
+    <div class="grid_4 omega">{% include 'partials/rightside.html' %}</div>
+    {% else %}
+    <div class="grid_4">{% include 'partials/centerside.html' %}</div>
     <div class="grid_4 omega">
 	{% include 'partials/rightside.html' %}
 	{% if title.id == 2 %}
@@ -39,5 +43,6 @@
 	</article>
 	{% endif %}
     </div>
+    {% endif %}
 </section>
 {% endblock %}

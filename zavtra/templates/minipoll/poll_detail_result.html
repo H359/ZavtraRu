@@ -1,5 +1,7 @@
 {% extends "minipoll/base.html" %}
 {% load i18n minipoll_tags %}
+{% load pytils_numeral %}
+{% load comments %}
 
 {% block title %}{{ object.title }} - {% trans "Results" %}{% endblock %}
 
@@ -7,14 +9,16 @@
 
 {% block content %}
 <section class="container container_16 clearfix">
-    <article class="grid_12 alpha block">
-	<header><h1>Опрос {{ object.title }}</h1></header>
+    <article class="grid_8 alpha block">
+	<header><h1>{{ object.title }}</h1></header>
 	<div class="content">
 	    <div>{{ object.description|safe }}</div>
-	    {% display_poll_result object %}
-	    <div>Всего {{ object.votes }} проголосовавших.</div>
+	    <div>{% display_poll_result object %}</div>
+	    <div>Всего {{ object.votes|get_plural:"проголосовавший,проголосовавших,проголосовавших" }}.</div>
 	</div>
+	<div id="comments_block">{% get_comments_for object %}</div>
     </article>
+    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
     <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
 </section>
 	{% comment %}
