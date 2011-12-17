@@ -16,6 +16,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
+        'OPTIONS': { 'autocommit': True },
     }
 }
 TIME_ZONE = 'Europe/Moscow'
