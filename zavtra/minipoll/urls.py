@@ -1,14 +1,17 @@
 """Urls for minipoll"""
 from django.conf.urls.defaults import *
+from django.views.generic.list_detail import object_list
 
 from minipoll.models import Poll
 
 poll_conf = {'queryset': Poll.published.all(),}
 
-urlpatterns = patterns('django.views.generic.list_detail',
-                       url(r'^$', 'object_list',
-                           poll_conf, 'minipoll_poll_list'),
-                       )
+def show_polls(request):
+    return object_list(request, queryset=Poll.published.all())
+
+urlpatterns = patterns('',
+                       url(r'^$', show_polls, name='minipoll_poll_list'),
+                      )
 
 urlpatterns += patterns('minipoll.views',
                         url(r'^(?P<slug>[-\w]+)/$', 'poll_detail',                            
