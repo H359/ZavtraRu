@@ -87,9 +87,11 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     <div id="main" role="main">{% block content %}{% endblock %}</div>
     <footer class="container container_16 clearfix">
         <div class="grid_16 alpha omega">
-            &copy;&nbsp;1996&ndash;{% now "Y" %} газета &laquo;Завтра&raquo;<br/>
-            <a href="mailto:zavtra@zavtra.ru">Электронная почта</a>, twitter<a href="https://twitter.com/ZavtraRu">@ZavtraRu</a>.
-            Адрес редакции: 119146, Москва, Фрунзенская наб., 18&ndash;60. Телефон: (495) 726-54-83.
+            <p>
+        	&copy;&nbsp;1996&ndash;{% now "Y" %} газета &laquo;Завтра&raquo;<br/>
+        	Электронная почта<a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a>, twitter: <a href="https://twitter.com/ZavtraRu">@ZavtraRu</a>, rss: <a class="rss" href="http://zavtra.ru{% url corecontent.rss.latest %}">общая</a>.<br/>
+        	Адрес редакции: 119146, Москва, Фрунзенская наб., 18&ndash;60. Телефон: (495) 726-54-83.
+            </P>
         </div>
     </footer>
 {% endblock %}
