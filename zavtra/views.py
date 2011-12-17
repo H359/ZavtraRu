@@ -63,7 +63,7 @@ def home(request):
 	'illustration',
 	duration=6000
     )
-    news = cached(lambda: ContentItem.objects.filter(rubric__title=u'Новости')[0:5], 'news', duration=60)
+    news = cached(lambda: ContentItem.objects.filter(enabled=True, pub_date__lt = now,rubric__title=u'Новости')[0:5], 'news', duration=60)
     return {
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,

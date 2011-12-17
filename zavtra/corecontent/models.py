@@ -121,14 +121,14 @@ class ContentItem(models.Model):
         return self._comments_count
     
     def update_comments_count(self):
-	if self.should_be_on_main():
-    	    self._comments_count = Comment.objects.filter(
-                content_type = contentitem_ctype_id,
-                object_id=self.id,
-                enabled=True
-    	    ).count()
+    	self._comments_count = Comment.objects.filter(
+            content_type = contentitem_ctype_id,
+            object_id=self.id,
+            enabled=True
+    	).count()
+    	self.save()
+    	if self.should_be_on_main():
     	    cache.delete('newsletter')
-        self.save()
 
     def should_be_on_main(self):
 	oneday = timedelta(days=1)
@@ -141,6 +141,8 @@ class ContentItem(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
+	if self.rubric_id == 1:
+	    return ('corecontent.view.news', (), {'year': self.pub_date.year, 'month': self.pub_date.month, 'day': self.pub_date.day, 'slug': self.slug})
         return ('corecontent.view.item', (), {'slug': self.slug})
 
     def __unicode__(self):

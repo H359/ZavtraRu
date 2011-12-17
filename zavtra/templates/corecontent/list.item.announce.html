@@ -6,8 +6,7 @@
     <div class="details">
         {{ item.pub_date|ru_strftime }}
         {% for author in item.authors_all %}
-        <a class="author"
-           href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}
+        <a class="author"href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}
         {% endfor %}
     </div>
 </dt>

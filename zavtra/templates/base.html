@@ -69,6 +69,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     <nav class="container container_16 clearfix top-nav">
         <div class="grid_16 alpha omega">
             <ul class="primary">
+               <li><a href="/content/rubric/novosti/">Новости</a></li>
                {% for rubric in top_rubrics %}
                <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
                {% endfor %}

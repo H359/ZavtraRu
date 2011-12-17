@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from django.views.generic import ListView, DetailView, YearArchiveView
-from django.shortcuts import Http404
+from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
@@ -23,7 +23,7 @@ class RubricView(ListView):
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
-        self.rubric = Rubric.objects.get(slug=self.kwargs['slug'])
+        self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
         now = datetime.now().date()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lte = now)
     
@@ -34,12 +34,28 @@ class RubricView(ListView):
         context['rss'] = reverse('corecontent.rss.rubric', kwargs={'slug': self.rubric.slug})
         return context
 
+class NewsView(DetailView):
+    template_name       = 'corecontent/view.item.html'
+    context_object_name = 'item'
+    def get_object(self):
+	now = datetime.now().date()
+	date = datetime(year=int(self.kwargs.get('year')), month=int(self.kwargs.get('month')), day=int(self.kwargs.get('day'))).date()
+	if date > now:
+	    raise Http404
+	qs = ContentItem.batched.batch_select('authors').filter(
+	    enabled=True,
+	    pub_date=date,
+	    rubric=1,
+	)
+	print qs
+	return super(NewsView, self).get_object(qs)
+
 class FeaturedView(ListView):
     paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
-        self.featured = FeaturedItems.objects.get(slug=self.kwargs['slug'])
+        self.featured = get_object_or_404(FeaturedItems, slug=self.kwargs['slug'])
         now = datetime.now().date()
         return ContentItem.batched.batch_select('authors').filter(
             enabled=True, pub_date__lte = now, tags__id__in=self.featured.tags.all()
@@ -57,7 +73,7 @@ class TaggedItemsView(ListView):
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
-        self.tag = Tag.objects.get(slug=self.kwargs['slug'])
+        self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
         now = datetime.now().date()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, tags__id=self.tag.id)
 
@@ -104,6 +120,7 @@ view_featured_index = FeaturedIndexView.as_view()
 
 view_item = ContentItemView.as_view()
 view_rubric = RubricView.as_view()
+view_news = NewsView.as_view()
 view_featured = FeaturedView.as_view()
 view_blog = BlogView.as_view()
 view_items_by_tag = TaggedItemsView.as_view()
