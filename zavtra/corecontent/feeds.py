@@ -3,10 +3,12 @@ from datetime import datetime
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404, Http404
 from django.conf import settings
+from django.utils import feedgenerator
 
 from models import ContentItem, Rubric, Tag, FeaturedItems
 
 class LatestContentFeed(Feed):
+    feed_type = feedgenerator.Rss201rev2Feed
     title =u'Газета Завтра - новые материалы'
     link = u'/'
     description = u'Сводная лента обновлений'
@@ -21,6 +23,7 @@ class LatestContentFeed(Feed):
 	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
 
 class RubricContentFeed(Feed):
+    feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
 
@@ -44,6 +47,7 @@ class RubricContentFeed(Feed):
 	return get_object_or_404(Rubric, slug=slug)
 
 class TagContentFeed(Feed):
+    feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
 
@@ -67,6 +71,7 @@ class TagContentFeed(Feed):
 	return get_object_or_404(Tag, slug=slug)
 
 class FeaturedItemsContentFeed(Feed):
+    feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'
     title_template = 'corecontent/feeds/feed.title.html'
 
