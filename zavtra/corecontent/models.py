@@ -137,7 +137,7 @@ class ContentItem(models.Model):
 	if now.weekday() > 2:
 	    wstart += 7*oneday
 	wend = wstart + oneday*7
-	return (self.rubric.on_main and (wstart <= self.pub_date <=  wend))
+	return (self.rubric is not None and self.rubric.on_main and (wstart <= self.pub_date <=  wend))
 
     @models.permalink
     def get_absolute_url(self):
