@@ -1,19 +1,31 @@
 #!/usr/bin/runghc
+{-# LANGUAGE OverloadedStrings #-}
+module Main where
 import Codec.Archive.Zip
-import Data.List.Utils (join)
+-- import Data.List.Utils (join)
 import System.Directory
 import qualified Data.ByteString.Lazy as B
+import qualified Data.ByteString.Lazy.Char8 as C
 import Control.Applicative
+import Gazeta
 
-analyze :: Archive -> FilePath -> IO ()
-analyze archive filepath = do
+processArticle :: Archive -> FilePath -> IO ()
+processArticle archive filepath = do
     case findEntryByPath filepath archive of
         Nothing -> putStr "oops\n"
-        Just f  -> putStr $ (eRelativePath f) ++ " " ++ (show $ eCompressedSize f) ++ " " ++ (show $ eUncompressedSize f) ++ "\n"
+        Just f  -> do 
+    	    let article = constructArticle $ fromEntry f
+    	    showArticle article
+
+isHtml :: FilePath -> Bool
+isHtml filename = ".html" `B.isSuffixOf` (C.pack filename)
+
+-- processIssue :: String -> Issue
+processIssue :: String -> IO ()
+processIssue archiveFile = do
+    archive <- toArchive <$> B.readFile archiveFile
+    let files = filter isHtml $ filesInArchive archive
+    mapM_ (processArticle archive) files
 
 main :: IO ()
-main = do
-    archive <- toArchive <$> B.readFile "/home/zw0rk/Work/zavtra_archive/data/zavtra/00/318.zip"
-    let files = filesInArchive archive
-    mapM_ (analyze archive) files
-    putStr "done :-D"
+main = processIssue "/home/zw0rk/Work/zavtra_archive/data/zavtra/00/318.zip"
