@@ -4,6 +4,7 @@ module Gazeta where
 --import Data.Encoding
 --import Data.Encoding.CP1251
 --import Data.Encoding.UTF8
+import Data.Char (chr)
 import Codec.Text.IConv as IConv
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
@@ -42,11 +43,14 @@ rtrim s = C.reverse $ ltrim $ C.reverse s
 eol :: Parser Char
 eol = char '\r' <|> char '\n'
 
+--ndash = chr 8211
+--mdash = chr 8212
+
 authorParser :: Parser Author
 --C.ByteString
 authorParser = do
-    name <- many1 (noneOf [',', ':', '\r', '\n', '—'])
-    many (char ',' <|> char ':' <|> char '—')
+    name <- many1 (noneOf [',', ':', '\r', '\n', '-'])
+    many (char ',' <|> char ':' <|> char '-')
     return Author{firstname=trim $ C.pack name,lastname="",username=""}
 
 authorsParser :: Parser [Author]

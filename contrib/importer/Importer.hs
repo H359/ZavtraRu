@@ -70,5 +70,5 @@ main :: IO ()
 main = do
     let root = "/home/zw0rk/Work/zavtra_archive/data/zavtra"
     years <- S.getDirectoryContents root
-    let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
+    let yearsDirectories = take 1 $ map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
     mapM_ processYearDirectory yearsDirectories
