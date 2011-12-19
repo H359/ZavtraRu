@@ -28,4 +28,4 @@ processIssue archiveFile = do
     mapM_ (processArticle archive) files
 
 main :: IO ()
-main = processIssue "/home/zw0rk/Work/zavtra_archive/data/zavtra/00/318.zip"
+main = processIssue "/home/zw0rk/Work/zavtra_archive/data/zavtra/10/842.zip"

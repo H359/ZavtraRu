@@ -30,33 +30,44 @@ data Author = Author {
     username  :: C.ByteString
 }
 
-authorParser :: Parser C.ByteString
-authorParser = do
-    name <- many1 (noneOf ",")
-    return (C.pack name)
+eol :: Parser Char
+eol = char '\r' <|> char '\n'
 
-authorsParser :: Parser C.ByteString
+authorParser :: Parser Author
+--C.ByteString
+authorParser = do
+    name <- many1 (noneOf [',', ':', '\r', '\n'])
+    many (char ',' <|> char ':')
+    return Author{firstname=(C.pack name),lastname="",username=""}
+
+authorsParser :: Parser [Author]
 authorsParser = do
     string "Author: "
-    authors <- many1 (noneOf "\n") --authorParser
-    string "\n"
-    return (C.pack authors)
+    authors <- many1 authorParser
+    return authors
+    --authors <- many1 (noneOf ['\r','\n']) --authorParser
+    --return (C.pack authors)
 
 titleParser :: Parser C.ByteString
 titleParser = do
     string "Title: "
-    title <- many (noneOf "\n")
-    string "\n"
+    title <- many (noneOf ['\n','\r'])
     return (C.pack title)
+
+mkAuthors a = case a of
+    Just s  -> s
+    Nothing -> []
 
 agaParser :: Parser Article
 --C.ByteString
 agaParser = do
-    manyTill anyChar (try (string "<agahidd\n"))
-    authors <- optional authorsParser
+    manyTill anyChar (try (string "<agahidd"))
+    many eol
+    authors <- optionMaybe authorsParser
+    many eol
     title <- titleParser
     manyTill anyChar (try (string "endhidd>"))
-    return Article { text="DONE", title=title, authors=[] }
+    return Article { text = "DONE", title = title, authors = mkAuthors authors }
 
 getMetaArticle :: C.ByteString -> Article
 getMetaArticle str = case parse agaParser "(unknown)" str of
@@ -75,4 +86,7 @@ constructArticle charmesh =  getMetaArticle charmesh8
     where charmesh8 = convert "CP1251" "UTF-8" charmesh
 
 showArticle :: Article -> IO ()
-showArticle article = C.putStrLn $ C.concat [title article, " - ", text article]
+showArticle article = C.putStrLn $ C.concat [title', " - ", text', " - ", authors']
+    where title'   = title article
+	  text'    = text article
+ 	  authors' = C.concat $ map (\p -> C.concat ["[", firstname p, "]"]) $ authors article
