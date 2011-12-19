@@ -30,15 +30,24 @@ data Author = Author {
     username  :: C.ByteString
 }
 
+trim :: C.ByteString -> C.ByteString
+trim s = (ltrim . rtrim)  s
+
+ltrim :: C.ByteString -> C.ByteString
+ltrim s = C.dropWhile (\c -> c == ' ') s
+
+rtrim :: C.ByteString -> C.ByteString
+rtrim s = C.reverse $ ltrim $ C.reverse s
+
 eol :: Parser Char
 eol = char '\r' <|> char '\n'
 
 authorParser :: Parser Author
 --C.ByteString
 authorParser = do
-    name <- many1 (noneOf [',', ':', '\r', '\n'])
-    many (char ',' <|> char ':')
-    return Author{firstname=(C.pack name),lastname="",username=""}
+    name <- many1 (noneOf [',', ':', '\r', '\n', '—'])
+    many (char ',' <|> char ':' <|> char '—')
+    return Author{firstname=trim $ C.pack name,lastname="",username=""}
 
 authorsParser :: Parser [Author]
 authorsParser = do
@@ -86,7 +95,7 @@ constructArticle charmesh =  getMetaArticle charmesh8
     where charmesh8 = convert "CP1251" "UTF-8" charmesh
 
 showArticle :: Article -> IO ()
-showArticle article = C.putStrLn $ C.concat [title', " - ", text', " - ", authors']
+showArticle article = C.putStrLn $ C.concat ["\t\t", title', " - ", text', " - ", authors']
     where title'   = title article
 	  text'    = text article
  	  authors' = C.concat $ map (\p -> C.concat ["[", firstname p, "]"]) $ authors article
