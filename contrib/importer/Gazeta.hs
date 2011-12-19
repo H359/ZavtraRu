@@ -49,8 +49,8 @@ eol = char '\r' <|> char '\n'
 authorParser :: Parser Author
 --C.ByteString
 authorParser = do
-    name <- many1 (noneOf [',', ':', '\r', '\n', '-'])
-    many (char ',' <|> char ':' <|> char '-')
+    name <- many1 (noneOf [',', ':', '\r', '\n'])
+    many (char ',' <|> char ':')
     return Author{firstname=trim $ C.pack name,lastname="",username=""}
 
 authorsParser :: Parser [Author]
@@ -58,8 +58,6 @@ authorsParser = do
     string "Author: "
     authors <- many1 authorParser
     return authors
-    --authors <- many1 (noneOf ['\r','\n']) --authorParser
-    --return (C.pack authors)
 
 titleParser :: Parser C.ByteString
 titleParser = do
@@ -72,7 +70,6 @@ mkAuthors a = case a of
     Nothing -> []
 
 agaParser :: Parser Article
---C.ByteString
 agaParser = do
     manyTill anyChar (try (string "<agahidd"))
     many eol
@@ -82,24 +79,10 @@ agaParser = do
     manyTill anyChar (try (string "endhidd>"))
     return Article { text = "DONE", title = title, authors = mkAuthors authors }
 
-getMetaArticle :: C.ByteString -> Article
-getMetaArticle str = case parse agaParser "(unknown)" str of
-    Left e  -> Article { title=errmsg , text="ERROR", authors=[] }
-	where errmsg = C.pack $ concat (map messageString (errorMessages e))
-    Right s -> s
+getMetaArticle :: C.ByteString -> Either ParseError Article
+getMetaArticle str = parse agaParser "(unknown)" str
+--Article { title=errmsg , text="ERROR", authors=[] }
+--where errmsg = C.pack $ concat (map messageString (errorMessages e))
 
-getAuthors :: String -> [Author]
-getAuthors str = []
-
-getText :: String -> String
-getText str = str
-
-constructArticle :: C.ByteString -> Article
-constructArticle charmesh =  getMetaArticle charmesh8
-    where charmesh8 = convert "CP1251" "UTF-8" charmesh
-
-showArticle :: Article -> IO ()
-showArticle article = C.putStrLn $ C.concat ["\t\t", title', " - ", text', " - ", authors']
-    where title'   = title article
-	  text'    = text article
- 	  authors' = C.concat $ map (\p -> C.concat ["[", firstname p, "]"]) $ authors article
+parseArticle :: C.ByteString -> Either ParseError Article
+parseArticle charmesh = getMetaArticle $ convert "CP1251" "UTF-8" charmesh
