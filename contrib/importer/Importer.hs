@@ -2,29 +2,29 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 import Codec.Archive.Zip
--- import Data.List.Utils (join)
-import System.Directory
+--import System.Directory (FilePath)
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
-import Control.Applicative
+import Control.Applicative ((<$>))
 import Gazeta
 
-processArticle :: Archive -> FilePath -> IO ()
+processArticle :: Archive -> C.ByteString -> IO ()
 processArticle archive filepath = do
-    case findEntryByPath filepath archive of
+    case findEntryByPath (C.unpack filepath) archive of
         Nothing -> putStr "oops\n"
         Just f  -> do 
     	    let article = constructArticle $ fromEntry f
     	    showArticle article
 
-isHtml :: FilePath -> Bool
-isHtml filename = ".html" `B.isSuffixOf` (C.pack filename)
+isHtml :: C.ByteString -> Bool
+isHtml filename = html `B.isSuffixOf` filename
+    where html = (".html"::C.ByteString)
 
 -- processIssue :: String -> Issue
-processIssue :: String -> IO ()
+processIssue :: C.ByteString -> IO ()
 processIssue archiveFile = do
-    archive <- toArchive <$> B.readFile archiveFile
-    let files = filter isHtml $ filesInArchive archive
+    archive <- toArchive <$> B.readFile (C.unpack archiveFile)
+    let files = filter isHtml $ map (C.pack) (filesInArchive archive)
     mapM_ (processArticle archive) files
 
 main :: IO ()

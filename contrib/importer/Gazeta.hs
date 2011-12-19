@@ -6,6 +6,12 @@ module Gazeta where
 --import Data.Encoding.UTF8
 import Codec.Text.IConv as IConv
 import qualified Data.ByteString.Lazy as B
+import qualified Data.ByteString.Lazy.Char8 as C
+import Text.Parsec.Combinator --(manyTill)
+import Text.Parsec.Char --(anyChar, string)
+import Text.Parsec.Prim --(try, parse)
+import Text.Parsec.Error
+import Text.Parsec.ByteString.Lazy (Parser)
 
 data Issue = Issue {
     pub_date :: Integer,
@@ -13,32 +19,60 @@ data Issue = Issue {
 }
 
 data Article = Article {
-    title   :: B.ByteString,
+    title   :: C.ByteString,
     authors :: [Author],
-    text    :: B.ByteString
+    text    :: C.ByteString
 }
 
 data Author = Author {
-    firstname :: B.ByteString,
-    lastname  :: B.ByteString,
-    username  :: B.ByteString
+    firstname :: C.ByteString,
+    lastname  :: C.ByteString,
+    username  :: C.ByteString
 }
 
-getTitle :: B.ByteString -> B.ByteString
-getTitle str = B.empty
+authorParser :: Parser C.ByteString
+authorParser = do
+    name <- many1 (noneOf ",")
+    return (C.pack name)
 
-getAuthors :: B.ByteString -> [Author]
+authorsParser :: Parser C.ByteString
+authorsParser = do
+    string "Author: "
+    authors <- many1 (noneOf "\n") --authorParser
+    string "\n"
+    return (C.pack authors)
+
+titleParser :: Parser C.ByteString
+titleParser = do
+    string "Title: "
+    title <- many (noneOf "\n")
+    string "\n"
+    return (C.pack title)
+
+agaParser :: Parser Article
+--C.ByteString
+agaParser = do
+    manyTill anyChar (try (string "<agahidd\n"))
+    authors <- optional authorsParser
+    title <- titleParser
+    manyTill anyChar (try (string "endhidd>"))
+    return Article { text="DONE", title=title, authors=[] }
+
+getMetaArticle :: C.ByteString -> Article
+getMetaArticle str = case parse agaParser "(unknown)" str of
+    Left e  -> Article { title=errmsg , text="ERROR", authors=[] }
+	where errmsg = C.pack $ concat (map messageString (errorMessages e))
+    Right s -> s
+
+getAuthors :: String -> [Author]
 getAuthors str = []
 
-getText :: B.ByteString -> B.ByteString
+getText :: String -> String
 getText str = str
 
-constructArticle :: B.ByteString -> Article
-constructArticle charmesh = Article { title = title', authors = authors', text = text' }
+constructArticle :: C.ByteString -> Article
+constructArticle charmesh =  getMetaArticle charmesh8
     where charmesh8 = convert "CP1251" "UTF-8" charmesh
-	  title' = getTitle charmesh8
-	  authors' = getAuthors charmesh8
-	  text' = getText charmesh8
 
 showArticle :: Article -> IO ()
-showArticle article = B.putStrLn (text article)
+showArticle article = C.putStrLn $ C.concat [title article, " - ", text article]
