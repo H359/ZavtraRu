@@ -1,18 +1,26 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
 module Gazeta where
 -- encoding hackage failed to install :-/
 --import Data.Encoding
 --import Data.Encoding.CP1251
 --import Data.Encoding.UTF8
-import Data.Char (chr)
-import Codec.Text.IConv as IConv
-import qualified Data.ByteString.Lazy as B
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
 import qualified Data.ByteString.Lazy.Char8 as C
-import Text.Parsec.Combinator --(manyTill)
-import Text.Parsec.Char --(anyChar, string)
-import Text.Parsec.Prim --(try, parse)
+import Data.ByteString.Lazy as BL
+import Data.ByteString as B
+import qualified Codec.Text.IConv as IConv
+--import Text.Parsec.String
+import Text.Parsec.Combinator
+import Text.Parsec.Char
+import Text.Parsec.Prim 
 import Text.Parsec.Error
-import Text.Parsec.ByteString.Lazy (Parser)
+
+instance (Monad m) => Stream T.Text m Char where
+    uncons = return . T.uncons
+
+type Parser = Parsec T.Text ()
+type GenParser t st = Parsec T.Text st
 
 data Issue = Issue {
     pub_date :: Integer,
@@ -20,38 +28,24 @@ data Issue = Issue {
 }
 
 data Article = Article {
-    title   :: C.ByteString,
+    title   :: T.Text,
     authors :: [Author],
-    text    :: C.ByteString
+    text    :: T.Text
 }
 
 data Author = Author {
-    firstname :: C.ByteString,
-    lastname  :: C.ByteString,
-    username  :: C.ByteString
+    firstname :: T.Text,
+    lastname  :: T.Text,
+    username  :: T.Text
 }
 
-trim :: C.ByteString -> C.ByteString
-trim s = (ltrim . rtrim)  s
-
-ltrim :: C.ByteString -> C.ByteString
-ltrim s = C.dropWhile (\c -> c == ' ') s
-
-rtrim :: C.ByteString -> C.ByteString
-rtrim s = C.reverse $ ltrim $ C.reverse s
-
-eol :: Parser Char
-eol = char '\r' <|> char '\n'
-
---ndash = chr 8211
---mdash = chr 8212
+eol = many (oneOf "\r\n")
 
 authorParser :: Parser Author
---C.ByteString
 authorParser = do
-    name <- many1 (noneOf [',', ':', '\r', '\n'])
-    many (char ',' <|> char ':')
-    return Author{firstname=trim $ C.pack name,lastname="",username=""}
+    name <- many1 (noneOf ",:\r\n\8212\8213")
+    many (oneOf ":,\8212\8213")
+    return Author{firstname = T.pack name,lastname = T.pack "", username = T.pack ""}
 
 authorsParser :: Parser [Author]
 authorsParser = do
@@ -59,11 +53,11 @@ authorsParser = do
     authors <- many1 authorParser
     return authors
 
-titleParser :: Parser C.ByteString
+titleParser :: Parser String
 titleParser = do
     string "Title: "
-    title <- many (noneOf ['\n','\r'])
-    return (C.pack title)
+    title <- many (noneOf "\r\n") 
+    return title
 
 mkAuthors a = case a of
     Just s  -> s
@@ -72,17 +66,15 @@ mkAuthors a = case a of
 agaParser :: Parser Article
 agaParser = do
     manyTill anyChar (try (string "<agahidd"))
-    many eol
+    eol
     authors <- optionMaybe authorsParser
-    many eol
+    eol
     title <- titleParser
     manyTill anyChar (try (string "endhidd>"))
-    return Article { text = "DONE", title = title, authors = mkAuthors authors }
+    return Article { text = T.pack "DONE", title = T.pack title, authors = mkAuthors authors }
 
-getMetaArticle :: C.ByteString -> Either ParseError Article
+getMetaArticle :: T.Text -> Either ParseError Article
 getMetaArticle str = parse agaParser "(unknown)" str
---Article { title=errmsg , text="ERROR", authors=[] }
---where errmsg = C.pack $ concat (map messageString (errorMessages e))
 
 parseArticle :: C.ByteString -> Either ParseError Article
-parseArticle charmesh = getMetaArticle $ convert "CP1251" "UTF-8" charmesh
+parseArticle charmesh = getMetaArticle $ TE.decodeUtf8 $ B.concat $ BL.toChunks $ IConv.convert "CP1251" "UTF-8" charmesh

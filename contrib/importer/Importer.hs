@@ -5,6 +5,8 @@ import Data.Either (lefts, rights)
 import Codec.Archive.Zip
 import qualified Data.List as L
 import qualified System.Directory as S
+import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
 import Control.Applicative ((<$>))
@@ -38,23 +40,19 @@ processIssue archiveFile = do
 
 meaningFulDirectory s = s /= "." && s /= ".."
 
-collectAuthors :: [Issue] -> [C.ByteString]
+collectAuthors :: [Issue] -> [T.Text]
 collectAuthors issues = L.sort $ L.nub issueAuthors
 	where
-	  issueAuthors = map (\s -> B.concat [firstname s, lastname s]) authorsList
+	  issueAuthors = map firstname authorsList
 	  authorsList = concatMap authors $ concatMap articles issues
 
-
-withEnt :: C.ByteString -> C.ByteString
-withEnt s = if C.count ' ' s > 3 then C.concat [s, " SUSPICIOUS"]
-	    else s
 
 processYearDirectory directory = do
     issues <- S.getDirectoryContents directory
     let issueDirectories = map (\s -> concat [directory, "/", s]) $ filter meaningFulDirectory issues
     issues <- mapM (\s -> processIssue (C.pack s)) issueDirectories
+    mapM_ TIO.putStrLn (collectAuthors issues)
     return issues
-    --mapM_ (\s -> C.putStrLn $ withEnt s) $ collectAuthors issues
 
 main :: IO ()
 main = do
