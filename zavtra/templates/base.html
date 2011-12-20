@@ -38,6 +38,15 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
+<!-- tns-counter.ru -->
+<script language="JavaScript" type="text/javascript">
+var img = new Image();
+img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);
+</script>
+<noscript>
+<img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt="">
+</noscript>
+<!--/ tns-counter.ru -->
 {% load utils %}{% load pytils_dt %}
 {% block body %}
     <header class="container container_16 clearfix">
