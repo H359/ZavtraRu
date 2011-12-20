@@ -28,6 +28,7 @@ def home(request):
     if now.weekday() > 2:
 	wstart += 7*oneday
     wend = wstart + 7*oneday
+    print wstart, wend
     if request.user.is_authenticated() and request.user.is_staff and request.GET.get('next_number'):
 	wstart += 7*oneday
 	wend += 7*oneday
@@ -41,7 +42,7 @@ def home(request):
 	    return None
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
-	    enabled=True, pub_date__range = (wstart, wend), rubric__on_main=True
+	    enabled=True, pub_date__gte = wstart, pub__date__lt = wend, rubric__on_main=True
 	)
 	newsletter = {}
 	for item in list(qs):
