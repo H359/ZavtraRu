@@ -1,6 +1,7 @@
 {% load i18n %}
 <div id="poll_form_{{ poll.slug }}">
   <form action="{% url minipoll_poll_vote poll.slug %}" method="post" id="poll">
+    {% csrf_token %}
     <table class="choices">
       {% for choice in poll.choice_set.all %}
       <tr>
