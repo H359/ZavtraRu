@@ -1,110 +1,59 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta where
--- encoding hackage failed to install :-/
---import Data.Encoding
---import Data.Encoding.CP1251
---import Data.Encoding.UTF8
+module Gazeta (parseIssue, parseArticle, Issue(..), Article(..), Author(..), Rubric(..)) where
+import Gazeta.Types
+import Gazeta.Utils
+import Gazeta.Parsers
 import qualified Data.Text as T
-import qualified Data.List as L
-import qualified Data.Text.Encoding as TE
-import qualified Data.ByteString.Lazy.Char8 as C
-import qualified Data.ByteString.Lazy as BL
-import qualified Data.ByteString as B
-import qualified Codec.Text.IConv as IConv
---import Text.Parsec.String
-import Text.Parsec.Combinator
-import Text.Parsec.Char
-import Text.Parsec.Prim 
 import Text.Parsec.Error
+import Text.Parsec.Prim
+--import qualified Data.List as L
+--import qualified Data.Text.Encoding as TE
+import qualified Data.ByteString.Lazy.Char8 as C
+--import qualified Data.ByteString.Lazy as BL
+--import qualified Data.ByteString as B
+--import qualified Codec.Text.IConv as IConv
+import qualified Text.Pandoc as PD
 
-instance (Monad m) => Stream T.Text m Char where
-    uncons = return . T.uncons
+extractURL :: PD.Inline -> [T.Text]
+extractURL (PD.Link h (u, _)) = [T.pack ((concatMap plain h) ++ " --> " ++ u)]
+    where plain (PD.Str x) = x
+	  plain (PD.Emph x) = concatMap plain x
+	  plain (PD.Strong x) = concatMap plain x
+	  plain (PD.Strikeout x) = concatMap plain x
+	  plain (PD.Superscript x) = concatMap plain x
+	  plain (PD.Subscript x) = concatMap plain x
+	  plain (PD.SmallCaps x) = concatMap plain x
+	  plain (PD.Quoted _ x) = concatMap plain x
+	  plain (PD.Cite _ x) = concatMap plain x
+	  plain (PD.Code _ x) = x
+	  plain (PD.Space) = " "
+	  plain (PD.EmDash) = " &mdash; "
+	  plain (PD.EnDash) = " &ndash; "
+	  plain (PD.Apostrophe) = "'"
+	  plain (PD.Ellipses) = ""
+	  plain (PD.LineBreak) = ""
+	  plain (PD.Math _ x) = x
+	  plain (PD.RawInline _ x) = x
+	  --plain (PD.Link _ x) = x
 
-type Parser = Parsec T.Text ()
-type GenParser t st = Parsec T.Text st
+extractURL _ = []
 
-data Issue = Issue {
-    pub_date :: Integer,
-    articles :: [Article]
-}
+extractURLs :: PD.Pandoc -> [T.Text]
+extractURLs = PD.queryWith extractURL
 
-data Article = Article {
-    title   :: T.Text,
-    authors :: [Author],
-    text    :: T.Text
-}
-
-data Author = Author {
-    firstname :: T.Text,
-    lastname  :: T.Text,
-    username  :: T.Text
-}
-
-commonFixer :: Char -> Char
-commonFixer '“' = '\"'
-commonFixer c = c
-
-knownFullExceptions :: [T.Text]
-knownFullExceptions = map T.pack exceptions
-    where exceptions = ["ii съезд нпср", "студент", "профессор", "журналист", "д.и.н.", "д.м.н", "д.ф.н.", "д.э.н.", "дед из сибири"] ++
-		       ["депутат госдумы", "депутат госдумы рф", "депутат госдумы россии", "депутат госдумы от фракции кпрф"] ++
-		       ["депутат государственной думы", "депутат государственной думы рф", "профессор мгу", "доктор исторических наук"] ++
-		       ["доктор медицинских наук", "доктор права", "доктор технических наук", "доктор философских наук", "доктор экономических наук"] ++
-		       ["доцент", "эурналист", "инженер-физик", "кандидит биологических наук", "кандидат наук", "кандидат философских наук"] ++
-		       ["капитан 1 ранга", "капитан i ранга", "адвокат", "актер", "юрист", "режиссер", "редакция", "сербский поэт", "старший эксперт"]
-
-knownInitialExceptions :: [T.Text]
-knownInitialExceptions = map T.pack exceptions
-    where exceptions = ["специальный корреспондент", "сопредседатель координационного совета", "собственный корреспондент", "собственные корреспонденты"] ++
-		       ["собкор", "председатель думской", "председатель коми", "председатель партии", "духовник"]
-
-knownAuthorExceptions :: Author -> Bool
-knownAuthorExceptions author = (authorName `L.notElem` knownFullExceptions) && (foldl (&&) True (map (\s -> not (s `T.isPrefixOf` authorName)) knownInitialExceptions))
-    where authorName = T.toLower $ firstname author
-
-fixAuthorName :: Author -> Author
-fixAuthorName a = Author{firstname=firstname', lastname=lastname', username=username'}
-    where fixName s  = T.map commonFixer s
-	  firstname' = fixName (firstname a)
-	  lastname'  = fixName (lastname a)
-	  username'  = fixName (username a)
-
-eol = many (oneOf "\r\n")
-
-authorParser :: Parser Author
-authorParser = do
-    name <- many1 (noneOf ",:\r\n\8212\8213")
-    many (oneOf ":,\8212\8213")
-    return Author{firstname = T.strip $ T.pack name,lastname = T.empty, username = T.empty}
-
-authorsParser :: Parser [Author]
-authorsParser = do
-    string "Author: "
-    authors <- many1 authorParser
-    return $ map fixAuthorName $ filter knownAuthorExceptions authors
-
-titleParser :: Parser String
-titleParser = do
-    string "Title: "
-    title <- many (noneOf "\r\n") 
-    return title
-
-mkAuthors a = case a of
-    Just s  -> s
-    Nothing -> []
-
-agaParser :: Parser Article
-agaParser = do
-    manyTill anyChar (try (string "<agahidd"))
-    eol
-    authors <- optionMaybe authorsParser
-    eol
-    title <- titleParser
-    manyTill anyChar (try (string "endhidd>"))
-    return Article { text = T.empty, title = T.pack title, authors = mkAuthors authors }
+extractIssueInfo :: PD.Pandoc -> Issue
+extractIssueInfo pandoc = Issue{pub_date=0, articles=[], rubrics=rubrics'}
+    where rubrics' = [Rubric{rtitle=T.pack "tydy", urls=extractURLs pandoc}]
 
 getMetaArticle :: T.Text -> Either ParseError Article
-getMetaArticle str = parse agaParser "(unknown)" str
+getMetaArticle str = parse agaParser "(agahidd)" str
+
+parseIssueIndex :: C.ByteString -> Issue
+parseIssueIndex charmesh = extractIssueInfo pandoc
+    where pandoc = PD.readHtml PD.defaultParserState $ T.unpack $ getCharMesh8 charmesh
+
+parseIssue :: C.ByteString -> [Article] -> Issue
+parseIssue charmesh newarticles = addArticles (parseIssueIndex charmesh) newarticles
 
 parseArticle :: C.ByteString -> Either ParseError Article
-parseArticle charmesh = getMetaArticle $ TE.decodeUtf8 $ B.concat $ BL.toChunks $ IConv.convert "CP1251" "UTF-8" charmesh
+parseArticle charmesh = getMetaArticle $ getCharMesh8 charmesh

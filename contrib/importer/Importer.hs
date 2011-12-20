@@ -2,6 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 import Data.Either (lefts, rights)
+import Data.Maybe (fromJust)
 import Codec.Archive.Zip
 import qualified Data.List as L
 import qualified System.Directory as S
@@ -26,19 +27,21 @@ isHtml :: C.ByteString -> Bool
 isHtml filename = html `B.isSuffixOf` filename
     where html = (".html"::C.ByteString)
 
-index :: C.ByteString -> Bool
-index filename = filename == indexFile
+isIndex :: C.ByteString -> Bool
+isIndex filename = filename == indexFile
     where indexFile = ("index.html"::C.ByteString)
 
 processIssue :: String -> IO Issue
 processIssue archiveFile = do
     archive <- toArchive <$> B.readFile archiveFile
-    let files     = filter (\f -> (not (index f)) && (isHtml f)) $ map (C.pack) (filesInArchive archive)
-    let processed = map (processArticle archive) files
+    let files     = L.partition isIndex $ filter isHtml $ map (C.pack) (filesInArchive archive)
+    let processed = map (processArticle archive) (snd files)
     let articles  = rights processed
     let errors    = lefts processed
     --mapM_ (\s -> putStrLn $ ("Parse error:" ++ (C.unpack s) ++ " in " ++ archiveFile)) errors
-    return Issue{pub_date=0, articles=articles}
+    --return $ parseIssue (head $ fst files) articles
+    let indexFile = fromEntry $ fromJust $ findEntryByPath (C.unpack (head $ fst files)) archive
+    return $ parseIssue indexFile []
 
 meaningFulDirectory s = s /= "." && s /= ".."
 
@@ -61,7 +64,13 @@ type GazetaObject = DO.Object T.Text T.Text
 issueToObject :: Issue -> GazetaObject
 issueToObject issue = DO.Mapping [
     (T.pack "pub_date", DO.Scalar $ T.pack $ show $ pub_date issue),
+    (T.pack "rubrics", DO.Sequence $ map rubricToObject $ rubrics issue),
     (T.pack "articles", DO.Sequence $ map articleToObject $ articles issue)]
+
+rubricToObject :: Rubric -> GazetaObject
+rubricToObject rubric = DO.Mapping [
+    (T.pack "title", DO.Scalar $ rtitle rubric),
+    (T.pack "urls", DO.Sequence $ map DO.Scalar $ urls rubric)]
 
 articleToObject :: Article -> GazetaObject
 articleToObject article = DO.Mapping [
@@ -76,7 +85,7 @@ main = do
     let root = "/home/zw0rk/Work/zavtra_archive/data/zavtra"
     years <- S.getDirectoryContents root
     let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
-    issues <- mapM processYearDirectory yearsDirectories
+    issues <- mapM processYearDirectory $ take 1 yearsDirectories
     --mapM_ TIO.putStrLn (L.sort $ L.nub  $ collectAuthors $ concat issues)
-    --TIO.putStrLn "OK"
+    TIO.putStrLn "OK"
     DOY.encodeFile "issues.yaml" $ DO.Sequence $ map issueToObject $ concat issues
