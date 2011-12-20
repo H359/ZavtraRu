@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+import math
 from datetime import datetime, timedelta
 from itertools import groupby
 
@@ -33,7 +34,7 @@ def home(request):
 	wstart += 7*oneday
 	wend += 7*oneday
 	no_cache = True
-    num = 49 + (now - datetime(year=2011,month=12,day=7).date()).days / 7
+    num = 49 + math.floor( (now - datetime(year=2011,month=12,day=7).date()).days / 7.0 )
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
