@@ -42,7 +42,7 @@ def home(request):
 	    return None
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
-	    enabled=True, pub_date__gte = wstart, pub__date__lt = wend, rubric__on_main=True
+	    enabled=True, pub_date__gte = wstart, pub_date__lt = wend, rubric__on_main=True
 	)
 	newsletter = {}
 	for item in list(qs):
