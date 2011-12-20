@@ -34,7 +34,7 @@ def home(request):
 	wend += 7*oneday
 	no_cache = True
     #num = 49 + math.floor( 1.0*(now - datetime(year=2011,month=12,day=7).date()).days / 7 )
-    num = (now.replace(day=1,month=1) - now).days / 7
+    num = (wstart - now.replace(day=1,month=1)).days / 7
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
