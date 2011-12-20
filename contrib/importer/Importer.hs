@@ -28,36 +28,36 @@ index :: C.ByteString -> Bool
 index filename = filename == indexFile
     where indexFile = ("index.html"::C.ByteString)
 
-processIssue :: C.ByteString -> IO Issue
+processIssue :: String -> IO Issue
 processIssue archiveFile = do
-    archive <- toArchive <$> B.readFile (C.unpack archiveFile)
+    archive <- toArchive <$> B.readFile archiveFile
     let files     = filter (\f -> (not (index f)) && (isHtml f)) $ map (C.pack) (filesInArchive archive)
     let processed = map (processArticle archive) files
     let articles  = rights processed
     let errors    = lefts processed
-    mapM_ (\s -> C.putStrLn $ B.concat ["Parse error:", s, " in ", archiveFile]) errors
+    --mapM_ (\s -> putStrLn $ ("Parse error:" ++ (C.unpack s) ++ " in " ++ archiveFile)) errors
     return Issue{pub_date=0, articles=articles}
 
 meaningFulDirectory s = s /= "." && s /= ".."
 
 collectAuthors :: [Issue] -> [T.Text]
-collectAuthors issues = L.sort $ L.nub issueAuthors
+collectAuthors issues = issueAuthors
 	where
 	  issueAuthors = map firstname authorsList
 	  authorsList = concatMap authors $ concatMap articles issues
 
-
 processYearDirectory directory = do
     issues <- S.getDirectoryContents directory
     let issueDirectories = map (\s -> concat [directory, "/", s]) $ filter meaningFulDirectory issues
-    issues <- mapM (\s -> processIssue (C.pack s)) issueDirectories
-    mapM_ TIO.putStrLn (collectAuthors issues)
+    issues <- mapM (\s -> processIssue s) issueDirectories
+    --mapM_ TIO.putStrLn (L.sort $ L.nub $ collectAuthors issues)
     return issues
 
 main :: IO ()
 main = do
     let root = "/home/zw0rk/Work/zavtra_archive/data/zavtra"
     years <- S.getDirectoryContents root
-    let yearsDirectories = take 1 $ map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
-    mapM_ processYearDirectory yearsDirectories
-    C.putStrLn "OK"
+    let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
+    issues <- mapM processYearDirectory yearsDirectories
+    mapM_ TIO.putStrLn (L.sort $ L.nub  $ collectAuthors $ concat issues)
+    TIO.putStrLn "OK"
