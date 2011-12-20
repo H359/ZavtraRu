@@ -9,6 +9,8 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
+import qualified Data.Object as DO
+import qualified Data.Object.Yaml as DOY
 import Control.Applicative ((<$>))
 import Gazeta
 
@@ -40,18 +42,34 @@ processIssue archiveFile = do
 
 meaningFulDirectory s = s /= "." && s /= ".."
 
+{-
 collectAuthors :: [Issue] -> [T.Text]
 collectAuthors issues = issueAuthors
 	where
 	  issueAuthors = map firstname authorsList
 	  authorsList = concatMap authors $ concatMap articles issues
+-}
 
 processYearDirectory directory = do
     issues <- S.getDirectoryContents directory
     let issueDirectories = map (\s -> concat [directory, "/", s]) $ filter meaningFulDirectory issues
     issues <- mapM (\s -> processIssue s) issueDirectories
-    --mapM_ TIO.putStrLn (L.sort $ L.nub $ collectAuthors issues)
     return issues
+
+type GazetaObject = DO.Object T.Text T.Text
+
+issueToObject :: Issue -> GazetaObject
+issueToObject issue = DO.Mapping [
+    (T.pack "pub_date", DO.Scalar $ T.pack $ show $ pub_date issue),
+    (T.pack "articles", DO.Sequence $ map articleToObject $ articles issue)]
+
+articleToObject :: Article -> GazetaObject
+articleToObject article = DO.Mapping [
+    (T.pack "title", DO.Scalar $ title article),
+    (T.pack "authors", DO.Sequence $ map authorToObject $ authors article)]
+
+authorToObject :: Author -> GazetaObject
+authorToObject author = DO.Mapping [(T.pack "firstname", DO.Scalar $ firstname author)]
 
 main :: IO ()
 main = do
@@ -59,5 +77,6 @@ main = do
     years <- S.getDirectoryContents root
     let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
     issues <- mapM processYearDirectory yearsDirectories
-    mapM_ TIO.putStrLn (L.sort $ L.nub  $ collectAuthors $ concat issues)
-    TIO.putStrLn "OK"
+    --mapM_ TIO.putStrLn (L.sort $ L.nub  $ collectAuthors $ concat issues)
+    --TIO.putStrLn "OK"
+    DOY.encodeFile "issues.yaml" $ DO.Sequence $ map issueToObject $ concat issues
