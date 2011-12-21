@@ -134,7 +134,7 @@ class ContentItem(models.Model):
 	oneday = timedelta(days=1)
 	now = datetime.now().date()
 	wstart = now - oneday*(now.weekday()+5)
-	if now.weekday() > 2:
+	if now.weekday() >= 2:
 	    wstart += 7*oneday
 	wend = wstart + oneday*7
 	return (self.rubric is not None and self.rubric.on_main and (wstart <= self.pub_date <  wend))
