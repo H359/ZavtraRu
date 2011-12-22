@@ -8,6 +8,7 @@
 	<header>
 	    <h1>{{ root.title }}</h1>
 	    <h2>{{ root.author }}</h2>
+	    <h3><a href="{% url editorial.view.index %}">&rarr;&nbsp;назад к списку тем</a></h3>
         </header>
         <div class="content" style="font-size: 1.2em; border: 1px dashed #999; margin-bottom: 1.5em;">
     	    {{ root.text }}
