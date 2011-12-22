@@ -72,7 +72,7 @@ class ContentItem(models.Model):
     class Meta:
         ordering = ['-pub_date', '-id']
     title        = models.CharField(max_length=250, verbose_name=u'Заголовок')
-    slug         = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False)
+    slug         = AutoSlugField(max_length=250, populate_from=lambda instance: instance.title, unique=True, db_index=False)
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)
     rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
     description  = models.TextField(verbose_name=u'Анонс', blank=True)
