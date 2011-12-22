@@ -173,7 +173,7 @@ article .comments p, .comments .content { font-size: 15px !important; }
             .top-nav ul li a:hover { color: #CF3A2D; }
         .top-nav ul li.search { float: right; line-height: 2.25em; }
             .top-nav ul li.search input { height: 1.5em; padding: 0 0.5em; margin: 0 1em; border-radius: 30px; -webkit-border-radius: 30px; -moz-border-radius: 30px; -o-border-radius: 30px;}
-    .top-nav ul.primary { background: #2A281F; font-size: 1.25em; }
+    .top-nav ul.primary { background: #2A281F; font-size: 1.25em; overflow: hidden; }
     .top-nav ul.secondary { background: #ccc; font-size: 1em; }
         .top-nav ul.secondary a { color: #444; margin: 0 0.5em; }
         .top-nav ul.secondary span { color: #444; margin-left: 0.1em; margin-right: 0.1em; font-weight: bold; }
