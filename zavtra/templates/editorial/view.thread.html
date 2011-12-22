@@ -11,7 +11,7 @@
 	    <div class="buttons"><a class="button red" href="{% url editorial.view.index %}"><span class="label">&larr;&nbsp;назад к списку тем</span></a></div>
         </header>
         <div class="content" style="font-size: 1.2em; border: 1px dashed #999; margin-bottom: 1.5em;">
-    	    {{ root.text|linebreaks }}
+    	    {{ root.text|linebreaksbr }}
         </div>
 	<dl class="content">
 	    <dt><h2>Ответы</h2></dt>
@@ -34,6 +34,6 @@
 	    </form>
 	</article>
     </article>
-    <article class="omega grid_8"><h1>Patria o muerte!</h1></article>
+    <article class="omega grid_8 block"><header><h1>Patria o muerte!</h1></header><div class="content">Viva la Fidel!</div></article>
 </section>
 {% endblock %}
