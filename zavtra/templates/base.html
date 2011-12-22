@@ -68,9 +68,17 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     	    <div style="font-size: 1.1em;">
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
-    		{% if request.user.is_staff %}<p><br><a href="/?next_number=1">Новый номер</a>&nbsp;&nbsp;&nbsp;<a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></p>{% endif %}
+    		{% if request.user.is_staff %}
+    		<div class="buttons">
+    		    <a class="button red"><span class="label"><strong>Редационный блог</strong></span></a>
+    		</div>
+    		<p><a href="/?next_number=1">Новый номер</a>&nbsp;&nbsp;&nbsp;<a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></p>
+    		{% endif %}
     		{% else %}
-    		<div class="buttons"><a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a></div>
+    		<div class="buttons">
+    		    <a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a>
+    		    <a style="float:right;font-size:1.2em;" class="button green" href="{% url accounts.register %}"><span class="label">Регистрация</span></a>
+    		</div>
     		{% endif %}
     	    </div>
         </div>
