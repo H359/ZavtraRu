@@ -13,8 +13,9 @@
 	width: 92%;
 	min-width: 920px;
 	max-width: 1280px;
-	margin-left: 4%;
-	margin-right: 4%;
+	/*margin-left: 4%;
+	margin-right: 4%;*/
+	margin: 0 auto;
 }
 
 /* Grid >> Global
