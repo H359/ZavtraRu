@@ -1,0 +1,37 @@
+{% extends base_template %}
+
+{% load pytils_dt %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="alpha omega grid_16 block">
+	<header>
+	    <h1>{{ root.title }}</h1>
+	    <h2>{{ root.author }}</h2>
+        </header>
+        <div class="content" style="font-size: 1.2em; border: 1px dashed #999; margin-bottom: 1.5em;">
+    	    {{ root.text }}
+        </div>
+	<dl class="content">
+	    <dt><h2>Ответы</h2></dt>
+	    {% for obj in object_list %}
+	    <dt><strong>{{ obj.author }} пишет {{ obj.created_at|ru_strftime:"%d %B %Y" }}:</strong></dt>
+	    <dd>{{ obj.text }}</dd>
+	    {% endfor %}
+	</dl>
+	<article>
+	    <form class="regform" method="post" action="{{ root.get_absolute_url }}">
+	        {% csrf_token %}
+	        <div>
+		    <label>Ответ:</label>
+		    <textarea name="text"></textarea>
+		</div>
+		<div class="buttons">
+		    <button type="submit" class="button green"><span class="label">Ответить</span></button>
+		    <button type="reset" class="button red"><span class="label">Сбросить</span></button>
+		</div>
+	    </form>
+	</article>
+    </article>
+</section>
+{% endblock %}

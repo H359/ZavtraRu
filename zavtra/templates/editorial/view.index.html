@@ -1,0 +1,22 @@
+{% extends base_template %}
+
+{% load pytils_dt %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="alpha omega grid_16 block">
+	<header><h1>Редакционный блог</h1></header>
+	<dl class="content">
+	    {% for obj in object_list %}
+	    <dt>
+		<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>&nbsp;{{ obj.author }}&nbsp;({{ obj.created_at|ru_strftime:"%d %B %Y" }})
+	    </dt>
+	    <dd>{{ obj.text }}</dd>
+	    {% endfor %}
+	</dl>
+	<div class="buttons">
+	    <a class="button green" href="{% url editorial.view.create_thread %}"><span class="label">Создать новую тему</span></a>
+	</div>
+    </article>
+</section>
+{% endblock %}

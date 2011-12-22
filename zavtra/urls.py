@@ -43,6 +43,8 @@ urlpatterns = patterns('',
 
     #(r'^search/', include('haystack.urls')),
 
+    url(r'^editorial/', include('editorial.urls')),
+
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),
     url(r'', include('social_auth.urls')),

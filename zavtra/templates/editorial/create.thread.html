@@ -1,0 +1,19 @@
+{% extends base_template %}
+
+{% load pytils_dt %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="alpha omega grid_16">
+	<div class="content">
+	    <form class="regform" method="post" action="">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<div class="buttons">
+		    <button type="submit" class="button green"><span class="label">Создать новую тему</span></button>
+		</div>
+	    </form>
+	</div>
+    </article>
+</section>
+{% endblock %}

@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'siteuser',
     'comments',
     'minipoll',
+    'editorial',
     #'haystack',
 )
 HAYSTACK_CONNECTIONS = {
