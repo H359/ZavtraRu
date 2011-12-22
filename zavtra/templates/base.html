@@ -68,7 +68,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     	    <div style="font-size: 1.1em;">
     		{% if request.user.is_authenticated %}
     		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
-    		{% if request.user.is_staff %}<p><br><a href="/?next_number=1">Новый номер</a></p>{% endif %}
+    		{% if request.user.is_staff %}<p><br><a href="/?next_number=1">Новый номер</a>&nbsp;&nbsp;&nbsp;<a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></p>{% endif %}
     		{% else %}
     		<div class="buttons"><a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a></div>
     		{% endif %}
