@@ -14,14 +14,16 @@
     <meta name="yandex-verification" content="79bffe9a083206fe" />
     <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru{% url corecontent.rss.latest %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
+    {% load compressed %}
+    {% compressed_css 'main' %}
     {% comment %}
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" />
-    {% endcomment %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1488" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/colorbox.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/forms.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
+    {% endcomment %}
     {% block css %}{% endblock %}
     <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
     {% block js_extra_head %}{% endblock %}

@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'comments',
     'minipoll',
     'editorial',
+    'pipeline',
     #'haystack',
 )
 HAYSTACK_CONNECTIONS = {
@@ -178,6 +179,19 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 CONVERT_FILENAME = True
 FILEBROWSER_EXCLUDE = []
+
+PIPELINE = True
+PIPELINE_AUTO = False
+PIPELINE_VERSION = True
+PIPELINE_VERSIONING = 'pipeline.versioning.git.GitHeadRevVersioning'
+PIPELINE_YUI_BINARY = '/usr/bin/yuicompressor'
+PIPELINE_CSS = {
+    'main': {
+	'source_filenames': ('css/*.css',),
+	'output_filename': 'css/compressed_css.r?.css',
+    }
+}
+
 try:
     from local_settings import *
 except ImportError:
