@@ -211,6 +211,8 @@ form.regform label { display: block; }
 .sep-bar { background-color: #F7F2ED; padding: 5px 0; margin: 5px 0; }
 .text-center { text-align: center; }
 .text-right { text-align: right; }
+.text-left { text-align: left; }
+.paddy { padding: 5px; }
 
 .ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
 .hidden { display: none; visibility: hidden; }
