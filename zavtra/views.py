@@ -23,7 +23,7 @@ oneday = timedelta(days=1)
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date()
+    now = datetime.now().replace(day=12).date()
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
@@ -42,7 +42,7 @@ def home(request):
 	    return None
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
-	    enabled=True, rubric__on_main=True, pub_date__gte = wstart, pub_date__lt = wend
+	    enabled=True, rubric__on_main=True, pub_date__gte = wstart, pub_date__lt = wend, published=True
 	)
 	newsletter = {}
 	for item in list(qs):
@@ -64,10 +64,16 @@ def home(request):
 	'illustration',
 	duration=6000
     )
+    current_items = cached(
+	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:3],
+	'current_items',
+	duration=60
+    )
     return {
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
+	'current': current_items
     }
 
 @render_to('user.html')

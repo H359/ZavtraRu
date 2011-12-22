@@ -142,9 +142,11 @@ article.rubric-info img { max-width: 95%; }
 article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%; }
 /*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
-.news { overflow-y: scroll; overflow-x: hidden; height: 340px; margin-bottom: 15px; }
+.news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 550px; margin-bottom: 15px; }
 
 .twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
+
+.issue-initiator { margin-top: 2em; }
 
 aside.supp { font-size: 1.1em; padding: 0.5em 0 0.2em 0.5em; }
 
@@ -192,6 +194,14 @@ table.auth-form td.errors { width: 50%; }
 
 form.regform { margin: 1em 0; }
 form.regform label { display: block; }
+
+.red-arrow { }
+    .red-arrow .content { }
+	.red-arrow .content a { text-decoration: none; }
+	.red-arrow .content .inner { text-align: center; padding: 5px 0; }
+	.red-arrow .content .inner img { max-width: 95%; }
+
+    .red-arrow .third { float: left; width: 33%; }
 
 .auth-icon { width: 32px; height: 32px; display: block; float: left; margin: 8px; background-repeat: no-repeat; }
 .auth-icon.facebook { background-image: url(../img/social/facebook.png);  }
