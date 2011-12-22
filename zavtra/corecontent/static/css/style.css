@@ -124,11 +124,10 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
         .block .content .rating { font-size: 1.1em; }
             .block .content .rating .icon { margin: 0; background-image: url(../img/google+-ui-sprite-colour.png) !important; }
 
-.top-image { margin-top: 10px; min-width: 720px; }
+.top-image { margin-top: 10px; /*min-width: 720px;*/ }
     .top-image figure { display: block; margin: 0 auto; text-align: center; }
 	.top-image figure img { width: 95%; }
 	.top-image figure figcaption { text-align: right; width: 98%; }
-
 
 article {}
     article.of-kind-text p, article.of-kind-image p, article.of-kind-video p, article.of-kind- { margin-bottom: 1em; font-size: 16px; }
@@ -137,6 +136,7 @@ article {}
 
 article.rubric-info p { font-size: 100%; }
 article.rubric-info dl.content dt a { text-decoration: none; }
+article.rubric-info img { max-width: 95%; }
 /*article.rubric-info dl.content dd { text-align: justify; }*/
 
 article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%; }
