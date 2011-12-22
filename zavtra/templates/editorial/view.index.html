@@ -18,5 +18,10 @@
 	    <a class="button green" href="{% url editorial.view.create_thread %}"><span class="label">Создать новую тему</span></a>
 	</div>
     </article>
+    {% if is_paginated %}
+    <footer class="buttons">
+	{% if page_obj.has_next %}<a class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
+    </footer>
+    {% endif %}
 </section>
 {% endblock %}
