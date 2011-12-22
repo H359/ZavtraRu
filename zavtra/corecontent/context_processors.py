@@ -17,7 +17,7 @@ def common_pieces(request):
 	quote = cached(lambda: list(DailyQuote.objects.filter(day=now)), 'quote', duration=600)[0]
     except IndexError:
 	quote = None
-    news = cached(lambda: ContentItem.objects.filter(enabled=True, pub_date__lte=now, rubric__title=u'Новости')[0:5], 'news', duration=30)
+    news = cached(lambda: ContentItem.objects.filter(enabled=True, pub_date__lte=now, rubric__title=u'Новости')[0:8], 'news', duration=30)
     return {
 	'news': news,
 	'base_template': base_template,
