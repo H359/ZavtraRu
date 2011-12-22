@@ -11,7 +11,7 @@
 	    <dt>
 		<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>&nbsp;{{ obj.author }}&nbsp;({{ obj.created_at|ru_strftime:"%d %B %Y" }})
 	    </dt>
-	    <dd>{{ obj.text }}</dd>
+	    <dd>{{ obj.text|linebreaksbr }}</dd>
 	    {% endfor %}
 	</dl>
 	<div class="buttons">
@@ -23,6 +23,6 @@
 	</footer>
 	{% endif %}
     </article>
-    <article class="grid_8 omega"><h1>Patria o muerte!</h1></article>
+    <article class="omega grid_8 block"><header><h1>Patria o muerte!</h1></header><div class="content">Viva la Fidel!</div></article>
 </section>
 {% endblock %}
