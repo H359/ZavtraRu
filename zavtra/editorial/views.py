@@ -35,7 +35,7 @@ class EditorialViewCreateThread(CreateView):
     form_class = ThreadForm
     template_name = 'editorial/create.thread.html'
     def get_queryset(self):
-	return Thread.object.order_by('-id').all()
+	return Thread.object.order_by('id').all()
     def form_valid(self, form):
 	data = form.cleaned_data
 	data['author'] = self.request.user
