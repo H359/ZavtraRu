@@ -11,7 +11,7 @@ class EditorialViewIndex(ListView):
     paginate_by = 15
     template_name = 'editorial/view.index.html'
     def get_queryset(self):
-	return Thread.get_root_nodes()
+	return Thread.get_root_nodes().order_by('-id')
 
 class EditorialViewThread(ListView):
     paginate_by = 15
@@ -35,7 +35,7 @@ class EditorialViewCreateThread(CreateView):
     form_class = ThreadForm
     template_name = 'editorial/create.thread.html'
     def get_queryset(self):
-	return Thread.object.order_by('id').all()
+	return Thread.object.all()
     def form_valid(self, form):
 	data = form.cleaned_data
 	data['author'] = self.request.user
