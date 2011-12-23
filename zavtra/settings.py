@@ -191,7 +191,14 @@ PIPELINE_CSS = {
 	'output_filename': 'css/compressed_css.r?.css',
     }
 }
-
+"""
+PIPELINE_JS = {
+    'main': {
+	'source_filenames': ('js/comments.js', 'jquery.colorbox-min.js',),
+	'output_filename': 'js/compressed_js.r?.js',
+    }
+}
+"""
 try:
     from local_settings import *
 except ImportError:

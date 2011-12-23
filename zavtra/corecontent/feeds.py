@@ -23,6 +23,23 @@ class LatestContentFeed(Feed):
     def item_author_name(self, item):
 	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
 
+class UnpublishedContentFeed(Feed):
+    feed_type = feedgenerator.Rss201rev2Feed
+    ttl = 600
+    title =u'Газета Завтра - чего нет в гаезете'
+    link = u'/'
+    description = u'Сводная лента обновлений, не вошедших в бумажный выпуск'
+    description_template = 'corecontent/feeds/feed.item.html'
+    title_template = 'corecontent/feeds/feed.title.html'
+
+    def items(self):
+	now = datetime.now().date()
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, published=False, pub_date__lte = now)[0:10]
+
+    def item_author_name(self, item):
+	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
+
+
 class RubricContentFeed(Feed):
     feed_type = feedgenerator.Rss201rev2Feed
     description_template = 'corecontent/feeds/feed.item.html'

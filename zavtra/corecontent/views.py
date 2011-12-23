@@ -116,6 +116,21 @@ class FeaturedIndexView(ListView):
     def get_queryset(self):
 	return FeaturedItems.objects.all()
 
+class UnpublishedItemsView(ListView):
+    paginate_by   = 15
+    template_name = 'corecontent/view.collection.html'
+    context_object_name = 'items'
+    def get_queryset(self):
+	now = datetime.now().date()
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, published=False)
+
+    def get_context_data(self, **kwargs):
+        context = super(UnpublishedItemsView, self).get_context_data(**kwargs)
+        context['rss']  = reverse('corecontent.rss.unpublished')
+        context['title'] = u'Чего нет в газете'
+        return context
+
+
 view_featured_index = FeaturedIndexView.as_view()
 
 view_item = ContentItemView.as_view()
@@ -124,4 +139,5 @@ view_news = NewsView.as_view()
 view_featured = FeaturedView.as_view()
 view_blog = BlogView.as_view()
 view_items_by_tag = TaggedItemsView.as_view()
+view_unpublished = UnpublishedItemsView.as_view()
 zhivotov_gallery = GalleryView.as_view()

@@ -30,7 +30,7 @@
         </figure>
         {% if request.user.is_authenticated and request.user.is_staff %}
 	<article class="red-arrow block clearfix">
-	    <header><h1>Чего нет в газете...<span class="small"><a href="#">еще</a></span></h1></header>
+	    <header><h1>Чего нет в газете...<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1></header>
 	    {% for item in current %}
 	    <article class="third">
 		<div class="content">
