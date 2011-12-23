@@ -1,6 +1,7 @@
 {% extends base_template %}
 
 {% load pytils_dt %}
+{% load pytils_numeral %}
 
 {% block content %}
 <section class="container container_16 clearfix">
@@ -9,7 +10,7 @@
 	<dl class="content">
 	    {% for obj in object_list %}
 	    <dt>
-		<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>&nbsp;{{ obj.author }}&nbsp;({{ obj.created_at|ru_strftime:"%d %B %Y" }})
+		<a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>&nbsp;{{ obj.author }}&nbsp;({{ obj.created_at|ru_strftime:"%d %B %Y" }})&nbsp;[{{ obj.numchild|get_plural:"комментарий,комментария,комментариев" }}]
 	    </dt>
 	    <dd>{{ obj.text|linebreaksbr }}</dd>
 	    {% endfor %}
