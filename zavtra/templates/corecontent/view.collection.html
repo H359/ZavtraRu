@@ -12,15 +12,15 @@
 	    <dl class="content">{% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</dl>
             {% if is_paginated %}
 	    <footer class="buttons">
-                {% if page_obj.has_previous %}<a class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
+                {% if page_obj.has_previous %}<a rel="page" class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
                 {% for p in paginator.page_range %}
                 {% if page_obj.number == p %}
-                <div class="button"><span class="label">{{ p }}</span></div>
+                <div class="button on blue"><span class="label">{{ p }}</span></div>
                 {% else %}
-                <a class="button" href="?page={{ p }}"><span class="label">{{ p }}</span></a>
+                <a class="button" rel="page" href="?page={{ p }}"><span class="label">{{ p }}</span></a>
                 {% endif %}
                 {% endfor %}
-                {% if page_obj.has_next %}<a class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
+                {% if page_obj.has_next %}<a rel="page" class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
             </footer>
             {% endif %}
         </article>
