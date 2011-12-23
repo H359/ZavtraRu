@@ -37,7 +37,10 @@
 		    <h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:3 }}</a></h2>
 		    <div class="inner">
 		    {% if item.kind == 'video' %}
-		    <a href="{{ item.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+		    <a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+		    {% endif %}
+		    {% if item.kind == 'image' %}
+		    <a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
 		    {% endif %}
 		    {% if item.kind == 'text' %}
 		    <a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
@@ -50,7 +53,7 @@
 	{% endif %}
     </article>
     <article class="grid_4 omega block rubric-info">
-	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></small></h1></header>
+	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></span></h1></header>
 	<div class="news">
 	    <dl class="content">
 		{% for item in news %}
@@ -101,7 +104,7 @@
         <article>
             <header><h1>Присоединяйся</h1></header>
             <div class="content text-center">
-        	<p class="buttons text-left"><a class="button" href="http://www.yandex.ru/?add=84713&from=promocode">Виджет Яндекса</a></p>
+        	<p class="buttons text-left"><a class="button" href="http://www.yandex.ru/?add=84713&amp;from=promocode">Виджет Яндекса</a></p>
         	<div class="twy"><a href="https://twitter.com/ZavtraRu" class="twitter-follow-button" data-show-count="true" data-lang="ru" data-size="large">Следуй за @ZavtraRu</a></div>
 		<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fzavtraru&amp;width=270&amp;height=427&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=true&amp;header=true&amp;appId=175357809210274" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:270px; height:427px;" allowTransparency="true"></iframe>
 		{% comment %}
