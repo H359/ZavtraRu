@@ -4,6 +4,7 @@
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
+    <a href="{{ comment.content_object.get_absolute_url }}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
     {% if request.user.is_authenticated %}

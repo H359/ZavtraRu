@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 
 from forms import ThreadForm
 from models import Thread
@@ -11,7 +12,7 @@ class EditorialViewIndex(ListView):
     paginate_by = 15
     template_name = 'editorial/view.index.html'
     def get_queryset(self):
-	return Thread.get_root_nodes().order_by('-id')
+	return Thread.get_root_nodes().order_by('-created_at','-id')
 
 class EditorialViewThread(ListView):
     paginate_by = 15
