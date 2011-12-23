@@ -203,7 +203,7 @@ form.regform label { display: block; }
 	.red-arrow .content a { text-decoration: none; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
 	.red-arrow .content .inner img { max-width: 50%; }
-	.red-arrow .content .inner * img { max-width: 25%; width: 25%; float: left; }
+	.red-arrow .content .inner * img { max-width: 25%; width: 25%; float: left; padding-right: 5px; padding-bottom: 5px; }
 
     .red-arrow .third { float: left; width: 33%; }
 
