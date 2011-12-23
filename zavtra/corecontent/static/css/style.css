@@ -143,6 +143,9 @@ article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%
 /*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
 .news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 550px; margin-bottom: 15px; }
+    .news img, .news object, .news iframe { display: none; }
+
+
 
 .twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
 
@@ -198,8 +201,9 @@ form.regform label { display: block; }
 .red-arrow { }
     .red-arrow .content { }
 	.red-arrow .content a { text-decoration: none; }
-	.red-arrow .content .inner { text-align: center; padding: 5px 0; }
+	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
 	.red-arrow .content .inner img { max-width: 95%; }
+	.red-arrow .content .inner p img { max-width: 50%; width: 50%; float: left; }
 
     .red-arrow .third { float: left; width: 33%; }
 

@@ -40,7 +40,7 @@
 		    <a href="{{ item.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
 		    {% endif %}
 		    {% if item.kind == 'text' %}
-		    <a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a>
+		    <a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
 		    {% endif %}
 		    </div>
 		</div>
