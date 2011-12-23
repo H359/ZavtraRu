@@ -122,7 +122,7 @@ class UnpublishedItemsView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, published=False)
+	return ContentItem.batched.batch_select('authors').exclude(rubric=1).filter(enabled=True, pub_date__lte = now, published=False)
 
     def get_context_data(self, **kwargs):
         context = super(UnpublishedItemsView, self).get_context_data(**kwargs)
