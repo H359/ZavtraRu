@@ -1,1 +1,1 @@
-{{ obj.title|safe }}
+{% if obj.kind == 'video' %}ВИДЕО: {% endif %}{{ obj.title|safe }}

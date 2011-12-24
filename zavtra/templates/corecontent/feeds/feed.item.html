@@ -1,17 +1,3 @@
-{% if obj.kind == 'video' %}
-<object width="425" height="344">
-    <param name="movie" value="http://youtube.com/v/{{ item.get_video_id }}&version=3"</param>
-    <param name="allowFullScreen" value="true"></param>
-    <param name="allowScriptAccess" value="always"></param>
-    <param name="wmode" value="transparent"></param>
-    <embed src="http://youtube.com/v/{{ item.get_video_id }}&version=3"
-      type="application/x-shockwave-flash"
-      allowfullscreen="true"
-      allowscriptaccess="always"
-      wmode="transparent"
-      width="425" height="344">
-    </embed>
-</object>
-{% endif %}
+{% if obj.kind == 'video' %}<img src="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" />{% endif %}
 {% if obj.kind == 'image' %}<p style="text-align:center"><img src="{{ MEDIA_URL }}{{ obj.thumbnail }}" /></p>{% endif %}
 {% if obj.kind == 'text' or obj.kind == '' %}{{ obj.content|safe }}{% endif %}
