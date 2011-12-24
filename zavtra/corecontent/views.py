@@ -127,7 +127,7 @@ class UnpublishedItemsView(ListView):
     def get_context_data(self, **kwargs):
         context = super(UnpublishedItemsView, self).get_context_data(**kwargs)
         context['rss']  = reverse('corecontent.rss.unpublished')
-        context['title'] = u'Чего нет в газете'
+        context['title'] = u'Красная строка'
         return context
 
 view_featured_index = FeaturedIndexView.as_view()

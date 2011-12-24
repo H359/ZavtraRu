@@ -37,9 +37,8 @@
             {% endif %}
             <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
         </figure>
-        {% if request.user.is_authenticated and request.user.is_staff %}
 	<article class="red-arrow block clearfix">
-	    <header><h1>Чего нет в газете...<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1></header>
+	    <header><h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1></header>
 	    <div class="scrollable"><div class="items">
 	    {% for group in current %}
 	    <div class="item">
@@ -70,7 +69,6 @@
 		<a class="at_right button next"><span class="icon icon64"></span></a>
 	    </div>
 	</article>
-	{% endif %}
     </article>
     <article class="grid_4 omega block rubric-info">
 	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></span></h1></header>
