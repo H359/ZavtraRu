@@ -14,6 +14,15 @@
     };
     inner();
     $(window).resize(inner);
+    var fetchNew = function(sz){
+	$.get('{% url corecontent.view.unpublished_view %}?from=' + sz, function(data){
+	    console.log(data);
+	});
+    }
+    var scw = $('.scrollable').width();
+    $('.scrollable .item').css({width: scw + 'px'});
+    $('.items').css({width:'2000em'});
+    var scbl = $('.scrollable').scrollable({onSeek: function(){ console.log(this.getIndex(), this.getSize()); }, circular: true});
 })();
 {% endblock %}
 
@@ -31,24 +40,32 @@
         {% if request.user.is_authenticated and request.user.is_staff %}
 	<article class="red-arrow block clearfix">
 	    <header><h1>Чего нет в газете...<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1></header>
-	    {% for item in current %}
-	    <article class="third">
-		<div class="content">
-		    <h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:3 }}</a></h2>
-		    <div class="inner">
-		    {% if item.kind == 'video' %}
-		    <a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
-		    {% endif %}
-		    {% if item.kind == 'image' %}
-		    <a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
-		    {% endif %}
-		    {% if item.kind == 'text' %}
-		    <a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
-		    {% endif %}
+	    <div class="scrollable"><div class="items">
+	    {% for group in current %}
+	    <div class="item">
+		{% for item in group %}
+		<article class="third">
+		    <div class="content">
+			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:3 }}</a></h2>
+			<div class="inner">
+			{% if item.kind == 'video' %}
+			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+			{% endif %}
+			{% if item.kind == 'image' %}
+			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+			{% endif %}
+			{% if item.kind == 'text' %}
+			<a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
+			{% endif %}
+			</div>
 		    </div>
-		</div>
-	    </article>
+		</article>
+		{% endfor %}
+	    </div>
 	    {% endfor %}
+	    </div></div>
+	    <a class="prev">&larr;</a>
+	    <a class="next">&rarr;</a>
 	</article>
 	{% endif %}
     </article>
