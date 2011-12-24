@@ -202,7 +202,9 @@ form.regform label { display: block; }
     .scrollable .items { position: absolute; }
     .scrollable .item { float: left; }
 
-.red-arrow { background: #ffe; margin-top: 1em; }
+.at_right { float: right !important; }
+
+.red-arrow { background: #fafafa; margin-top: 1em; }
     .red-arrow .content { height: 160px; }
 	.red-arrow .content a { text-decoration: none; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
