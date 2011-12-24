@@ -86,6 +86,7 @@ var ThouMakethCommentsShine = function(num, box) {
     $('a.supress-long-toggle', box).on('click', function(){
 	var self = $(this);
 	$('span.supress-long', self.parent()).show();
+	self.prev('br').remove();
 	self.remove();
 	return false;
     });

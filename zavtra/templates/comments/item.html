@@ -8,10 +8,10 @@
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg">
 	<p>
-	{% if comment.comment|length > 400 %}
-	{{ comment.comment|slice:"0:400"|linebreaksbr }}
+	{% if comment.comment|length > 600 %}
+	{{ comment.comment|slice:"0:600"|linebreaksbr }}
 	<br/><a href="#" class="supress-long-toggle">Показать остальное.</a>
-	<span class="supress-long" style="display:none">{{ comment.comment|slice:"400:"|linebreaksbr }}</span>
+	<span class="supress-long" style="display:none">{{ comment.comment|slice:"600:"|linebreaksbr }}</span>
 	{% else %}
 	{{ comment.comment|linebreaksbr }}
 	{% endif %}
