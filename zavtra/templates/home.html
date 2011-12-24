@@ -42,12 +42,12 @@
 		    <div class="content">
 			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:3 }}</a></h2>
 			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
-			<div class="inner">
+			<div class="inner {% if item.kind == 'video' or item.kind == 'image'%}text-center{% endif %}">
 			{% if item.kind == 'video' %}
-			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>
 			{% endif %}
 			{% if item.kind == 'image' %}
-			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" width="200" /></a>
+			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>
 			{% endif %}
 			{% if item.kind == 'text' %}
 			<a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
