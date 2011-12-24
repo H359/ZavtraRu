@@ -6,7 +6,17 @@
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
     <a href="{{ comment.content_object.get_absolute_url }}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
-    <div class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
+    <div class="clearfix msg">
+	<p>
+	{% if comment.comment|length > 400 %}
+	{{ comment.comment|slice:"0:400"|linebreaksbr }}
+	<br/><a href="#" class="supress-long-toggle">Показать остальное.</a>
+	<span class="supress-long" style="display:none">{{ comment.comment|slice:"400:"|linebreaksbr }}</span>
+	{% else %}
+	{{ comment.comment|linebreaksbr }}
+	{% endif %}
+	</p>
+    </div>
     {% if request.user.is_authenticated %}
     <div class="buttons">
 	{% if not stream %}<a class="button reply" href="#">ответить</a>{% endif %}

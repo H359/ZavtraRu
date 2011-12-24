@@ -83,6 +83,12 @@ var ThouMakethCommentsShine = function(num, box) {
 
     $('.buttons a.reply', box).on('click', moveForm);
     $('.buttons a.delete', box).on('click', deleteComment);
+    $('a.supress-long-toggle', box).on('click', function(){
+	var self = $(this);
+	$('span.supress-long', self.parent()).show();
+	self.remove();
+	return false;
+    });
 
     form.submit(submitForm);
 }
