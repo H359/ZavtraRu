@@ -16,7 +16,7 @@ from annoying.decorators import render_to, ajax_request
 from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
 
-from utils import cached
+from utils import cached, group_list
 
 oneday = timedelta(days=1)
 
@@ -65,7 +65,7 @@ def home(request):
 	duration=6000
     )
     current_items = cached(
-	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:3],
+	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
 	'current_items',
 	duration=60
     )

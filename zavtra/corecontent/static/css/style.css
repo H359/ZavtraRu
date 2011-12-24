@@ -198,8 +198,12 @@ table.auth-form td.errors { width: 50%; }
 form.regform { margin: 1em 0; }
 form.regform label { display: block; }
 
+.scrollable { position: relative; overflow: hidden; height: 160px; width: 100%; }
+    .scrollable .items { position: absolute; }
+    .scrollable .item { float: left; }
+
 .red-arrow { background: #ffe; margin-top: 1em; }
-    .red-arrow .content { }
+    .red-arrow .content { height: 160px; }
 	.red-arrow .content a { text-decoration: none; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
 	.red-arrow .content .inner img.real { max-width: 50%; }

@@ -34,3 +34,6 @@ def cached_method(key, duration=60*60*24):
             return cached(lambda: func(self, *args, **kwargs), key.format(**self.__dict__), duration)
         return method
     return wrapper
+
+def group_list(lst, sz):
+    return zip(*[lst[i::sz] for i in range(sz)])

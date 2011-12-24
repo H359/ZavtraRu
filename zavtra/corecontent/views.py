@@ -130,7 +130,6 @@ class UnpublishedItemsView(ListView):
         context['title'] = u'Чего нет в газете'
         return context
 
-
 view_featured_index = FeaturedIndexView.as_view()
 
 view_item = ContentItemView.as_view()
