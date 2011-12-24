@@ -143,6 +143,12 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <script type="text/javascript">
 $(document).ready(function(){
   $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
+  window.___gcfg = {lang: 'ru'};
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
   {% block javascript %}{% endblock %}
 });
   VK.Widgets.Group("vk_groups", {mode: 1, width: "270", height: "290"},32969466);
