@@ -14,15 +14,10 @@
     };
     inner();
     $(window).resize(inner);
-    var fetchNew = function(sz){
-	$.get('{% url corecontent.view.unpublished_view %}?from=' + sz, function(data){
-	    console.log(data);
-	});
-    }
     var scw = $('.scrollable').width();
     $('.scrollable .item').css({width: scw + 'px'});
     $('.items').css({width:'2000em'});
-    var scbl = $('.scrollable').scrollable({onSeek: function(){ console.log(this.getIndex(), this.getSize()); }, circular: true});
+    var scbl = $('.scrollable').scrollable({circular: true});
 })();
 {% endblock %}
 
