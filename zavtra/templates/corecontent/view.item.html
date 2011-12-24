@@ -21,13 +21,12 @@
 	    </div>
             {% if item.kind == 'video' %}
             <div class="text-center">
-		{% with video=item.by_kind %}
                 <object width="425" height="344">
-                <param name="movie" value="http://youtube.com/v/{{ video.get_video_id }}&version=3"</param>
+                <param name="movie" value="http://youtube.com/v/{{ item.get_video_id }}&version=3"</param>
                 <param name="allowFullScreen" value="true"></param>
                 <param name="allowScriptAccess" value="always"></param>
                 <param name="wmode" value="transparent"></param>
-                <embed src="http://youtube.com/v/{{ video.get_video_id }}&version=3"
+                <embed src="http://youtube.com/v/{{ item.get_video_id }}&version=3"
                   type="application/x-shockwave-flash"
                   allowfullscreen="true"
                   allowscriptaccess="always"
@@ -35,7 +34,6 @@
                   width="425" height="344">
                 </embed>
                 </object>
-                {% endwith %}
             </div>
             {% endif %}
             <div class="content">

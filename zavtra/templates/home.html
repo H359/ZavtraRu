@@ -44,7 +44,7 @@
 			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
 			<div class="inner {% if item.kind == 'video' or item.kind == 'image'%}text-center{% endif %}">
 			{% if item.kind == 'video' %}
-			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>
+			<a href="{{ item.get_absolute_url }}"><img class="real" src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" /></a>
 			{% endif %}
 			{% if item.kind == 'image' %}
 			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>

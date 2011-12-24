@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 # Django settings for zavtra project.
 import os, socket
 import pytils.translit
@@ -197,6 +198,16 @@ PIPELINE_JS = {
 	'output_filename': 'js/compressed_js.r?.js',
     }
 }
+
+"""
+VERSIONS = {
+    'thumbnail': {'verbose_name': u'Очень малеьнкое изображение (для главной)', 'width': 60, 'height': 60, 'opts': 'crop'},
+    'small': {'verbose_name': u'Маленькое изображение', 'width': 150, 'height': '', 'opts': ''},
+    'medium': {'verbose_name': u'Среднее изображение', 'width': 300, 'height': '', 'opts': ''},
+    'large': {'verbose_name': u'Большое изображение', 'width': 680, 'height': '', 'opts': ''},
+}
+"""
+
 try:
     from local_settings import *
 except ImportError:

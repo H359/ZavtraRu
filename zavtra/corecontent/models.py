@@ -2,6 +2,9 @@
 import urlparse
 import urllib2
 import random
+#import gdata.youtube.service
+#import cPickle
+
 from datetime import datetime, timedelta
 
 from django.utils.encoding import smart_str, force_unicode
@@ -149,6 +152,11 @@ class ContentItem(models.Model):
         return u'%s (%s)' % (self.title, dt.ru_strftime(date=self.pub_date)) 
     __unicode__.allow_tags = True
 
+    # TODO: DIRTY HACK!!1
+    def get_video_id(self):
+	q = urlparse.urlparse(self.content).query
+	return urlparse.parse_qs(q).get('v')[0]
+
     def save(self, *args, **kwargs):
         if self.id is None:
             from typograph.RemoteTypograf import RemoteTypograf
@@ -245,20 +253,23 @@ class Video(ContentItem):
 	q = urlparse.urlparse(self.content).query
 	return urlparse.parse_qs(q).get('v')[0]
 
+    """
+    def load_thumbnail(self):
+	video_id = self.get_video_id()
+	yt_service = gdata.youtube.service.YouTubeService()
+	entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
+	self.content = cPickle.dumps(sorted([dict(x) for x in entry.media.thumbnail], key=lambda w: int(w.width)))
+	for thumbnail in thumbnails:
+	    try:
+		name = urlparse.urlparse(thumbnail.url).path.split('/')[-1]
+		content = ContentFile(urllib2.urlopen(thumbnail.url).read())
+		self.thumbnail.save(u'%s_%s' % (video_id, name), content, save=False)
+		break
+	    except urllib2.HTTPError:
+		pass
+    """
+
     def save(self, *args, **kwargs):
-	if self.id is None:
-    	    import gdata.youtube.service
-    	    video_id = self.get_video_id()
-    	    yt_service = gdata.youtube.service.YouTubeService()
-    	    entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
-    	    for i in range(len(entry.media.thumbnail)):
-    		try:
-    		    name = urlparse.urlparse(entry.media.thumbnail[i].url).path.split('/')[-1]
-    		    content = ContentFile(urllib2.urlopen(entry.media.thumbnail[i].url).read())
-    		    self.thumbnail.save(name, content, save=False)
-    		    break
-    		except urllib2.HTTPError:
-    		    pass
     	super(Video, self).save(*args, **kwargs)
         ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
