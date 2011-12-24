@@ -206,10 +206,10 @@ form.regform label { display: block; }
 
 .red-arrow { background: #fafafa; margin-top: 1em; }
     .red-arrow .content { height: 160px; }
-	.red-arrow .content a { text-decoration: none; }
+	.red-arrow .content a { text-decoration: none; color: #444; }
 	.red-arrow .content h2 { margin-bottom: 0.1em; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
-	.red-arrow .content .inner p { margin: 0 !important; line-height: 1 !important; background: none !important; }
+	.red-arrow .content .inner p { margin: 0 !important; line-height: 1.2 !important; background: none !important; }
 	.red-arrow .content .inner img.real { max-width: 50%; }
 	.red-arrow .content .inner img { max-width: 25%; width: 25%; float: left; padding-top: 5px; padding-right: 5px; }
 
