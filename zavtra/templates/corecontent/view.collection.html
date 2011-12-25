@@ -13,11 +13,11 @@
             {% if is_paginated %}
 	    <footer class="buttons">
                 {% if page_obj.has_previous %}<a rel="page" class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
-                {% for p in paginator.page_range %}
+                {% for p in page_obj.page_range %}
                 {% if page_obj.number == p %}
                 <div class="button on blue"><span class="label">{{ p }}</span></div>
                 {% else %}
-                <a class="button" rel="page" href="?page={{ p }}"><span class="label">{{ p }}</span></a>
+                {% if p %}<a class="button" rel="page" href="?page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
                 {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}<a rel="page" class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}

@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, YearArchiveView
 from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
 
+from diggpaginator import DiggPaginator
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
 from taggit.models import Tag
@@ -20,6 +21,7 @@ class ContentItemView(DetailView):
 
 class RubricView(ListView):
     paginate_by         = 15
+    paginator_class     = DiggPaginator
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -52,6 +54,7 @@ class NewsView(DetailView):
 
 class FeaturedView(ListView):
     paginate_by         = 15
+    paginator_class     = DiggPaginator
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -87,6 +90,7 @@ class TaggedItemsView(ListView):
 class BlogView(ListView):
     paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
+    paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
 	now = datetime.now().date()
@@ -112,13 +116,15 @@ class GalleryView(YearArchiveView):
 class FeaturedIndexView(ListView):
     paginate_by         = 15
     template_name       = 'corecontent/featured.index.html'
+    paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
 	return FeaturedItems.objects.all()
 
 class UnpublishedItemsView(ListView):
-    paginate_by   = 15
-    template_name = 'corecontent/view.collection.html'
+    paginate_by         = 15
+    template_name       = 'corecontent/view.collection.html'
+    paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
 	now = datetime.now().date()

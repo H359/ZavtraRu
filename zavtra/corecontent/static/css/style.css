@@ -203,6 +203,9 @@ form.regform label { display: block; }
     .scrollable .item { float: left; }
 
 .at_right { float: right !important; }
+.at_left { float: left !important; }
+
+footer.buttons .page_mimic {border:none; background:none;}
 
 .red-arrow { background: #fafafa; margin-top: 1em; }
     .red-arrow .content { height: 160px; }
