@@ -6,22 +6,35 @@ import Data.Maybe (fromJust)
 import Codec.Archive.Zip
 import qualified Data.List as L
 import qualified System.Directory as S
+import qualified System.FilePath.Posix as FP
 import qualified Data.Text as T
+import qualified Data.Map as Map
 import qualified Data.Text.IO as TIO
 import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString.Lazy.Char8 as C
-import qualified Data.Object as DO
-import qualified Data.Object.Yaml as DOY
+import Data.Time.Calendar (fromGregorian, showGregorian, addDays)
+--import qualified Data.Object as DO
+--import qualified Data.Object.Yaml as DOY
+import qualified Text.JSON as JSON
 import Control.Applicative ((<$>))
 import Gazeta
 
-processArticle :: Archive -> C.ByteString -> Either C.ByteString Article
-processArticle archive filepath = do
-    case findEntryByPath (C.unpack filepath) archive of
+addMeta :: Article -> String -> String -> Article
+addMeta a p f = Article{
+    articleUrl=f,
+    articleText=articleText a,
+    articleAuthors=articleAuthors a,
+    articleTitle=articleTitle a,
+    articlePubdate=p}
+
+processArticle :: Archive -> String -> C.ByteString -> Either C.ByteString Article
+processArticle archive pubdate filepath = do
+    case findEntryByPath filepath' archive of
         Nothing -> Left $ B.concat ["Archive operation failure in ", filepath]
-        Just f  -> case (parseArticle $ fromEntry f) of
+        Just f  -> case parseArticle $ fromEntry f of
     	    Left  e -> Left $ B.concat [C.pack $ show e, " in ", filepath]
-    	    Right s -> Right s
+    	    Right s -> Right $ addMeta s pubdate filepath'
+    where filepath' = C.unpack filepath
 
 isHtml :: C.ByteString -> Bool
 isHtml filename = html `B.isSuffixOf` filename
@@ -31,61 +44,50 @@ isIndex :: C.ByteString -> Bool
 isIndex filename = filename == indexFile
     where indexFile = ("index.html"::C.ByteString)
 
-processIssue :: String -> IO Issue
+getIssueDate :: String -> String
+getIssueDate filepath = showGregorian $ addDays diff start
+    where filename = (FP.dropExtension . FP.takeFileName) filepath
+	  issueNumber :: Integer
+	  issueNumber = read filename
+	  diff        = 7*(issueNumber - 150) -- days past 150-th issue
+	  start       = fromGregorian 1996 10 15 -- 150 -> 15-10-96
+
+processIssue :: String -> IO [Article]
 processIssue archiveFile = do
     archive <- toArchive <$> B.readFile archiveFile
-    let files     = L.partition isIndex $ filter isHtml $ map (C.pack) (filesInArchive archive)
-    let processed = map (processArticle archive) (snd files)
+    let pubdate   = getIssueDate archiveFile
+    let files     = filter (\s -> (isHtml s) && (not $ isIndex s)) $ map (C.pack) (filesInArchive archive)
+    let processed = map (processArticle archive pubdate) files
     let articles  = rights processed
     let errors    = lefts processed
-    --mapM_ (\s -> putStrLn $ ("Parse error:" ++ (C.unpack s) ++ " in " ++ archiveFile)) errors
-    --return $ parseIssue (head $ fst files) articles
-    let indexFile = fromEntry $ fromJust $ findEntryByPath (C.unpack (head $ fst files)) archive
-    return $ parseIssue indexFile []
+    mapM_ (\s -> putStrLn $ ("Parse error:" ++ (C.unpack s) ++ " in " ++ archiveFile)) errors
+    return articles
 
 meaningFulDirectory s = s /= "." && s /= ".."
-
-{-
-collectAuthors :: [Issue] -> [T.Text]
-collectAuthors issues = issueAuthors
-	where
-	  issueAuthors = map firstname authorsList
-	  authorsList = concatMap authors $ concatMap articles issues
--}
 
 processYearDirectory directory = do
     issues <- S.getDirectoryContents directory
     let issueDirectories = map (\s -> concat [directory, "/", s]) $ filter meaningFulDirectory issues
     issues <- mapM (\s -> processIssue s) issueDirectories
-    return issues
+    return $ concat issues
 
-type GazetaObject = DO.Object T.Text T.Text
+fetchIssues :: String -> IO [Article]
+fetchIssues root = do
+    years <- S.getDirectoryContents root
+    let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
+    issues <- mapM processYearDirectory yearsDirectories
+    return $ concat issues
 
-issueToObject :: Issue -> GazetaObject
-issueToObject issue = DO.Mapping [
-    (T.pack "pub_date", DO.Scalar $ T.pack $ show $ pub_date issue),
-    (T.pack "rubrics", DO.Sequence $ map rubricToObject $ rubrics issue),
-    (T.pack "articles", DO.Sequence $ map articleToObject $ articles issue)]
-
-rubricToObject :: Rubric -> GazetaObject
-rubricToObject rubric = DO.Mapping [
-    (T.pack "title", DO.Scalar $ rtitle rubric),
-    (T.pack "urls", DO.Sequence $ map DO.Scalar $ urls rubric)]
-
-articleToObject :: Article -> GazetaObject
-articleToObject article = DO.Mapping [
-    (T.pack "title", DO.Scalar $ title article),
-    (T.pack "authors", DO.Sequence $ map authorToObject $ authors article)]
-
-authorToObject :: Author -> GazetaObject
-authorToObject author = DO.Mapping [(T.pack "firstname", DO.Scalar $ firstname author)]
+instance JSON.JSON Article where 
+    showJSON a = JSON.JSObject $ JSON.toJSObject [
+	("title", JSON.showJSON $ articleTitle a),
+	("authors", JSON.JSArray $ map (\s -> JSON.showJSON s) (articleAuthors a)),
+	("url", JSON.showJSON $ articleUrl a),
+	("pubdate", JSON.showJSON $ articlePubdate a),
+	("text", JSON.showJSON $ T.unpack $ articleText a)]
 
 main :: IO ()
 main = do
-    let root = "/home/zw0rk/Work/zavtra_archive/data/zavtra"
-    years <- S.getDirectoryContents root
-    let yearsDirectories = map (\s -> concat [root, "/", s]) $ filter meaningFulDirectory years
-    issues <- mapM processYearDirectory $ take 1 yearsDirectories
-    --mapM_ TIO.putStrLn (L.sort $ L.nub  $ collectAuthors $ concat issues)
-    TIO.putStrLn "OK"
-    DOY.encodeFile "issues.yaml" $ DO.Sequence $ map issueToObject $ concat issues
+    issues <- fetchIssues "/home/zw0rk/Work/zavtra_archive/data/zavtra"
+    let encoded = JSON.encode issues
+    putStrLn encoded

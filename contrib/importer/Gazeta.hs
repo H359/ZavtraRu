@@ -1,59 +1,54 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta (parseIssue, parseArticle, Issue(..), Article(..), Author(..), Rubric(..)) where
+module Gazeta (parseArticle, Article(..)) where
 import Gazeta.Types
 import Gazeta.Utils
 import Gazeta.Parsers
 import qualified Data.Text as T
 import Text.Parsec.Error
 import Text.Parsec.Prim
---import qualified Data.List as L
---import qualified Data.Text.Encoding as TE
 import qualified Data.ByteString.Lazy.Char8 as C
---import qualified Data.ByteString.Lazy as BL
---import qualified Data.ByteString as B
---import qualified Codec.Text.IConv as IConv
 import qualified Text.Pandoc as PD
-
-extractURL :: PD.Inline -> [T.Text]
-extractURL (PD.Link h (u, _)) = [T.pack ((concatMap plain h) ++ " --> " ++ u)]
-    where plain (PD.Str x) = x
-	  plain (PD.Emph x) = concatMap plain x
-	  plain (PD.Strong x) = concatMap plain x
-	  plain (PD.Strikeout x) = concatMap plain x
-	  plain (PD.Superscript x) = concatMap plain x
-	  plain (PD.Subscript x) = concatMap plain x
-	  plain (PD.SmallCaps x) = concatMap plain x
-	  plain (PD.Quoted _ x) = concatMap plain x
-	  plain (PD.Cite _ x) = concatMap plain x
-	  plain (PD.Code _ x) = x
-	  plain (PD.Space) = " "
-	  plain (PD.EmDash) = " &mdash; "
-	  plain (PD.EnDash) = " &ndash; "
-	  plain (PD.Apostrophe) = "'"
-	  plain (PD.Ellipses) = ""
-	  plain (PD.LineBreak) = ""
-	  plain (PD.Math _ x) = x
-	  plain (PD.RawInline _ x) = x
-	  --plain (PD.Link _ x) = x
-
-extractURL _ = []
-
-extractURLs :: PD.Pandoc -> [T.Text]
-extractURLs = PD.queryWith extractURL
-
-extractIssueInfo :: PD.Pandoc -> Issue
-extractIssueInfo pandoc = Issue{pub_date=0, articles=[], rubrics=rubrics'}
-    where rubrics' = [Rubric{rtitle=T.pack "tydy", urls=extractURLs pandoc}]
 
 getMetaArticle :: T.Text -> Either ParseError Article
 getMetaArticle str = parse agaParser "(agahidd)" str
 
-parseIssueIndex :: C.ByteString -> Issue
-parseIssueIndex charmesh = extractIssueInfo pandoc
-    where pandoc = PD.readHtml PD.defaultParserState $ T.unpack $ getCharMesh8 charmesh
+special :: String -> Bool
+special x = (head x == '[') || ((head . reverse) x == ']')
 
-parseIssue :: C.ByteString -> [Article] -> Issue
-parseIssue charmesh newarticles = addArticles (parseIssueIndex charmesh) newarticles
+meta :: String -> Bool
+meta x = x == "Title:" || x == "No:" || x == "Date: "
+
+hasToOmit :: String -> Bool
+hasToOmit x = (special x) || (meta x)
+
+cleanText :: [PD.Inline] -> [PD.Inline]
+cleanText (PD.Link _ _ : xs) = xs
+cleanText (PD.Image _ _ : xs) = xs
+cleanText (PD.Str "__" : xs) = xs
+cleanText (PD.Str x : xs) = if hasToOmit x then xs else (PD.Str x) : xs
+cleanText (PD.LineBreak : PD.LineBreak : xs) = PD.LineBreak : xs
+cleanText (PD.Space : PD.LineBreak : xs) = PD.LineBreak : xs
+cleanText (PD.LineBreak : PD.Space : xs) = PD.LineBreak : xs
+cleanText xs = xs
+
+processText :: T.Text -> T.Text
+processText  = T.pack . writer . cleaner . reader . T.unpack
+    where reader = PD.readHtml PD.defaultParserState
+	  cleaner x = PD.bottomUp cleanText x
+	  writer = PD.writeHtmlString PD.defaultWriterOptions
+	  --writer = PD.writeNative PD.defaultWriterOptions
+
+addText :: Either ParseError Article -> Either ParseError Article
+addText a = case a of 
+    Left  s -> Left s
+    Right s -> Right $ Article{
+	articlePubdate=articlePubdate s,
+	articleTitle=articleTitle s,
+	articleUrl=articleUrl s,
+	articleAuthors=articleAuthors s,
+	articleText=(processText . articleText) s}
 
 parseArticle :: C.ByteString -> Either ParseError Article
-parseArticle charmesh = getMetaArticle $ getCharMesh8 charmesh
+parseArticle charmesh = addText metaArticle
+    where metaArticle = getMetaArticle charmesh8
+	  charmesh8   = getCharMesh8 charmesh

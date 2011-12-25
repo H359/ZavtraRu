@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta.Utils (fixAuthor, getCharMesh8, liftAuthors, addArticles, knownAuthorExceptions) where
+module Gazeta.Utils (fixAuthor, getCharMesh8, liftAuthors, knownAuthorExceptions) where
 import Gazeta.Types
 import qualified Data.Text as T
 import qualified Data.List as L
@@ -8,6 +8,7 @@ import qualified Data.ByteString.Lazy.Char8 as C
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.ByteString as B
 import qualified Codec.Text.IConv as IConv
+import qualified Data.Map as Map
 
 commonFixer :: Char -> Char
 commonFixer '“' = '\"'
@@ -27,24 +28,17 @@ knownInitialExceptions = map T.pack exceptions
     where exceptions = ["специальный корреспондент", "сопредседатель координационного совета", "собственный корреспондент", "собственные корреспонденты"] ++
 		       ["собкор", "председатель думской", "председатель коми", "председатель партии", "духовник"]
 
-knownAuthorExceptions :: Author -> Bool
+knownAuthorExceptions :: String -> Bool
 knownAuthorExceptions author = (authorName `L.notElem` knownFullExceptions) && (foldl (&&) True (map (\s -> not (s `T.isPrefixOf` authorName)) knownInitialExceptions))
-    where authorName = T.toLower $ firstname author
+    where authorName = T.toLower $ T.pack author
 
-fixAuthor :: Author -> Author
-fixAuthor a = Author{firstname=firstname', lastname=lastname', username=username'}
-    where fixName s  = T.map commonFixer s
-	  firstname' = fixName (firstname a)
-	  lastname'  = fixName (lastname a)
-	  username'  = fixName (username a)
+fixAuthor :: String -> String
+fixAuthor a = map commonFixer a
 
 getCharMesh8 :: C.ByteString -> T.Text
 getCharMesh8 charmesh = TE.decodeUtf8 $ B.concat $ BL.toChunks $ IConv.convert "CP1251" "UTF-8" charmesh
 
-liftAuthors :: Maybe [Author] -> [Author]
+liftAuthors :: Maybe [String] -> [String]
 liftAuthors a = case a of
     Just s  -> s
     Nothing -> []
-
-addArticles :: Issue -> [Article] -> Issue
-addArticles issue newarticles = Issue{pub_date = (pub_date issue), articles = newarticles, rubrics=(rubrics issue)}

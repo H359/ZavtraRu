@@ -16,13 +16,22 @@ type GenParser t st = Parsec T.Text st
 
 eol = many (oneOf "\r\n")
 
-authorParser :: Parser Author
+strip :: String -> String
+strip = ltrim . rtrim
+
+ltrim :: String -> String
+ltrim = dropWhile (\s -> s == ' ')
+
+rtrim :: String -> String
+rtrim = reverse . ltrim . reverse
+
+authorParser :: Parser String
 authorParser = do
     name <- many1 (noneOf ",:\r\n\8212\8213")
     many (oneOf ":,\8212\8213")
-    return Author{firstname = T.strip $ T.pack name,lastname = T.empty, username = T.empty}
+    return $ strip name
 
-authorsParser :: Parser [Author]
+authorsParser :: Parser [String]
 authorsParser = do
     string "Author: "
     authors <- many1 authorParser
@@ -36,10 +45,12 @@ titleParser = do
 
 agaParser :: Parser Article
 agaParser = do
-    manyTill anyChar (try (string "<agahidd"))
+    s1 <- manyTill anyChar (try (string "<agahidd"))
     eol
     authors <- optionMaybe authorsParser
     eol
     title <- titleParser
+    eol
     manyTill anyChar (try (string "endhidd>"))
-    return Article { text = T.empty, title = T.pack title, authors = liftAuthors authors }
+    s2 <- many1 anyChar
+    return Article { articleUrl = "", articleText = T.pack (s1 ++ s2), articleTitle = title, articleAuthors = liftAuthors authors, articlePubdate="" }
