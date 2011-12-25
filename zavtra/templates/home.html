@@ -104,13 +104,13 @@
 		<a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова">Купон на Проханова</a>
 	    </p>
 	</aside>
-	<article class="block">
+	<article>
 	    <header><h1>Свежий номер в PDF</h1></header>
 	    <div class="content text-center">
 		<a href="{{ MEDIA_URL }}content/pdfs/51PDF.zip"><img src="{{ MEDIA_URL }}content/pdfs/51.jpg"></a>
 	    </div>
 	</article>
-        <article class="block">
+        <article>
             <header><h1>Рейтинг слухов</h1></header>
             <div class="content">{% display_last_poll %}</div>
         </article>
@@ -132,6 +132,13 @@
                 {% endcomment %}
                 <div id="vk_groups"></div>
             </div>
+        </article>
+        <article>
+    	    <header><h1>Нейромир<span class="small"><a href="http://zavtra.ru/content/rubric/nejromir-tv/" title="Нейромир-ТВ">ещё</a></span></h1><header>
+    	    <dl class="content">
+    		<dt><a href="{{ neuromir.get_absolute_url }}">{{ neuromir.title|safe }}</a></dt>
+    		<dd class="text-center"><a href="{{ neuromir.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ neuromir.get_video_id }}/1.jpg" /></a></dd>
+    	    </dl>
         </article>
         <aside class="block">
             <header><h1>Наши друзья</h1></header>

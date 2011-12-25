@@ -69,11 +69,17 @@ def home(request):
 	'current_items',
 	duration=60
     )
+    neuromir = cached(
+	lambda: ContentItem.objects.filter(rubric=19).latest('pub_date'),
+	'neuromir-latest',
+	duration=600*12
+    )
     return {
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
-	'current': current_items
+	'current': current_items,
+	'neuromir': neuromir
     }
 
 @render_to('user.html')
