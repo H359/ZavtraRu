@@ -3,10 +3,29 @@ import os
 from datetime import datetime
 
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django import forms
 from django.conf import settings
 
+from ajax_filtered_fields.forms import AjaxManyToManyField
+
 from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote, ZhivotovIllustration
+
+class AuthorsLookUpField(AjaxManyToManyField):
+    def __init__(self, *args, **kwargs):
+        import string
+        kwargs['label'] = u'Авторы'
+        kwargs['required'] = False
+        kwargs['default_index'] = 0
+        model = User
+        field_name = 'last_name'
+        lookup_key = "%s__iregex" % field_name
+        lookups = [(i.upper(), {'is_staff': True, lookup_key: u'^[%s%s]' % (i, i.upper())}) for i in map(unichr, range(ord(u'а'), ord(u'я')+1))]
+        # other non-letter records
+        regex_lookup_key = "%s__iregex" % field_name
+        lookups.append((u'другие', {'is_staff': True, regex_lookup_key: "^[^a-z]"}))
+        super(AuthorsLookUpField, self).__init__(model, lookups, *args, **kwargs)
+
 
 class ContentItemMediaMixin(object):
     class Media:
@@ -14,6 +33,10 @@ class ContentItemMediaMixin(object):
 	    'js/wymeditor/wymeditor.fixer.js',
 	    'js/wymeditor/jquery.wymeditor.min.js',
 	    'js/wymeditor/jquery.wymeditor.embed.js',
+	    'admin/js/SelectBox.js',
+	    'admin/js/SelectFilter2.js',
+	    #'js/jquery.1.7.min.js',
+	    'js/ajax_filtered_fields.js',
 	)
     search_fields = ('title',)
     list_filter = ('rubric', 'published', 'enabled')
@@ -23,6 +46,7 @@ class VideoAdminForm(forms.ModelForm):
         model = Video
         exclude = ('published', 'thumbnail', 'old_url')
     content = forms.URLField(verify_exists=True, label=u'Ссылка на страницу с видео на YouTube')
+    authors = AuthorsLookUpField()
 
 class ImageAdminForm(forms.ModelForm):
     class Meta:
@@ -31,11 +55,18 @@ class ImageAdminForm(forms.ModelForm):
         #fields = ('title', 'subtitle', 'rubric', 'description', 'thumbnail', 'pub_date', 'enabled', 'authors', 'tags')
 
     thumbnail = forms.ImageField(label=u'Изображение')
+    authors = AuthorsLookUpField()
+
+class ArticleAdminForm(forms.ModelForm):
+    class Meta:
+	model = Article
+    authors = AuthorsLookUpField()
 
 class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
+    form = ArticleAdminForm
     list_select_related = True
     list_display = ('title', 'pub_date', 'rubric', 'published', 'enabled')
-    filter_horizontal = ('authors',)
+    #filter_horizontal = ('authors',)
 
 class NewsItemAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     exclude = ('old_url', 'authors', 'published', 'rubric')

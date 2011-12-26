@@ -33,6 +33,8 @@ def tag_url(tag):
     return ('corecontent.view.items_by_tag', (), {'slug': tag.slug})
 Tag.get_absolute_url = tag_url
 
+User.__unicode__ = lambda s: s.get_full_name()
+
 class Rubric(models.Model):
     class Meta:
         verbose_name=u'Рубрика'
@@ -158,7 +160,10 @@ class ContentItem(models.Model):
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
     def save(self, *args, **kwargs):
-        if self.id is None:
+	notypo = kwargs.get('notypo', False)
+	if notypo:
+	    del kwargs['notypo']
+        if not notypo and self.id is None:
             from typograph.RemoteTypograf import RemoteTypograf
             rt = RemoteTypograf()
             rt.htmlEntities()

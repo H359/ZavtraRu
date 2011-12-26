@@ -44,6 +44,7 @@ urlpatterns = patterns('',
     #(r'^search/', include('haystack.urls')),
 
     url(r'^editorial/', include('editorial.urls')),
+    (r'^ajax_filtered_fields/', include('ajax_filtered_fields.urls')),
 
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),

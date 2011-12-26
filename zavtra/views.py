@@ -7,11 +7,13 @@ from django.contrib.auth import logout as auth_logout, login as user_login, auth
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView
 from django.template.loader import render_to_string
 from django.utils.functional import lazy
 from django.contrib.auth.context_processors import PermWrapper
 
 from annoying.decorators import render_to, ajax_request
+from diggpaginator import DiggPaginator
 
 from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
@@ -82,10 +84,21 @@ def home(request):
 	'neuromir': neuromir
     }
 
-@render_to('user.html')
-def user(request, username):
-    user = get_object_or_404(User, username=username)
-    return {'user': user}
+class UserView(ListView):
+    paginate_by = 15
+    paginator_class = DiggPaginator
+    template_name = 'user.html'
+    def get_queryset(self, **kwargs):
+	self.user = get_object_or_404(User, username=self.kwargs.get('username'))
+	now = datetime.now().date()
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, authors__in = [self.user])
+
+    def get_context_data(self, **kwargs):
+	context = super(UserView, self).get_context_data(**kwargs)
+	context['ruser'] = self.user
+	return context
+
+user = UserView.as_view()
 
 @render_to('login.html')
 def login(request):

@@ -17,7 +17,7 @@
             </h1>
         </header>
 	    <div class="content">
-            {% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.first_name }} {{author.last_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+            {% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 	    </div>
             {% if item.kind == 'video' %}
             <div class="text-center">

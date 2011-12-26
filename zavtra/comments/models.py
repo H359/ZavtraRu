@@ -35,9 +35,9 @@ class Comment(MP_Node):
 
     def get_author(self):
 	author = self.author
-	username = u' '.join([author.first_name.strip(), author.last_name.strip()])
-	if username != u' ':
-	    return username
-	return author.username
+	if len(author.first_name.strip()) > 0 and len(author.last_name.strip()) > 0:
+	    return author.get_full_name()
+	else:
+	     return author.username
 
 import signals

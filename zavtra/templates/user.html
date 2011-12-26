@@ -3,12 +3,25 @@
 {% block content %}
 <section class="container container_16 clearfix">
     <article class="grid_12 alpha block">
-	<header><h1>Пользователь {{ user }}</h1></header>
+	<header><h1>Пользователь {% if ruser.is_staff %}{{ ruser.get_full_name }}{% else %}{{ ruser.username }}{% endif %}</h1></header>
 	<dl class="content">
-	    {% for item in user.contentitems.all %}
+	    {% for item in object_list %}
 	    {% include 'corecontent/list.item.announce.html' %}
 	    {% endfor %}
 	</dl>
+        {% if is_paginated %}
+        <footer class="buttons">
+            {% if page_obj.has_previous %}<a rel="page" class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
+            {% for p in page_obj.page_range %}
+            {% if page_obj.number == p %}
+            <div class="button on blue"><span class="label">{{ p }}</span></div>
+            {% else %}
+            {% if p %}<a class="button" rel="page" href="?page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}<a rel="page" class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
+        </footer>
+        {% endif %}
     </article>
     <article class="grid_4 omega">
     {% include 'partials/rightside.html' %}
