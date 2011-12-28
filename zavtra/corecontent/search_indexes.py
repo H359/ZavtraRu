@@ -1,15 +1,18 @@
 from datetime import datetime
 
+from django.utils.html import strip_tags
+
 from haystack import indexes
 from models import ContentItem
 
-class ContentItemIndex(indexes.SearchIndex, indexes.Indexable):
-    KIND_MAP = {'text': 1, 'video': 2, 'image': 3}
-    title   = indexes.CharField(boost=1.5)
-    rubric  = indexes.CharField()
-    authors = indexes.FacetMultiValueField(boost=1.25)
-    kind    = indexes.IntegerField()
-    text    = indexes.CharField(document=True, model_attr='content')
+class ContentItemIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
+    KIND_MAP    = {'text': 1, 'video': 2, 'image': 3}
+    title       = indexes.CharField(boost=1.5, model_attr='title')
+    authors     = indexes.FacetMultiValueField(boost=1.25)
+    pub_date    = indexes.DateField(indexed=False, model_attr='pub_date')
+    kind        = indexes.IntegerField(indexed=False)
+    link        = indexes.CharField(stored=True, indexed=False, model_attr='get_absolute_url')
+    text        = indexes.CharField(document=True, model_attr='content')
 
     def prepare_kind(self, obj):
 	return self.KIND_MAP.get(obj.kind, 0)
@@ -19,4 +22,13 @@ class ContentItemIndex(indexes.SearchIndex, indexes.Indexable):
 
     def index_queryset(self):
 	now = datetime.now()
-	return self.get_model().objects.filter(enabled=True, pub_date__lte = now)
+	return self.get_model().batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
+
+    def prepare_title(self, obj):
+	return strip_tags(obj.title)
+
+    def prepare_text(self, obj):
+	return strip_tags(obj.content)
+
+    def prepare_authors(self, obj):
+	return ','.join([x.get_full_name() for x in obj.authors_all])

@@ -7,6 +7,12 @@ from django.views.generic.simple import direct_to_template
 
 from corecontent.sitemap import RubricsSitemap, FeaturedItemsSitemap
 
+from haystack.views import SearchView, search_view_factory
+from haystack.forms import HighlightedSearchForm
+from haystack.query import SearchQuerySet
+
+cc_sqs = SearchQuerySet().order_by('-pub_date')
+
 from taggit.models import TagBase
 from pytils.translit import slugify
 
@@ -42,6 +48,7 @@ urlpatterns = patterns('',
     url(r'^live/update/$', 'views.live_update', name='live.update'),
 
     #(r'^search/', include('haystack.urls')),
+    url(r'^search/', search_view_factory(view_class=SearchView, searchqueryset=cc_sqs, template='search/search.html', results_per_page=15, form_class=HighlightedSearchForm), name = 'search'),
 
     url(r'^editorial/', include('editorial.urls')),
     (r'^ajax_filtered_fields/', include('ajax_filtered_fields.urls')),

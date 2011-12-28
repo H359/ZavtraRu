@@ -7,7 +7,6 @@
 *.pot
 *.egg
 *.egg-info
-*.xml
 *.gz
 zavtra/static
 dist

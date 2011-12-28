@@ -52,9 +52,10 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 {% load utils %}{% load pytils_dt %}
 {% block body %}
     <header class="container container_16 clearfix">
-        <figure class="grid_5 alpha">
-            <a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60" alt="Логотип газеты Завтра"></a>
-        </figure>
+	<div class="grid_5 alpha">
+    	    <figure><a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60" alt="Логотип газеты Завтра"></a></figure>
+    	    <form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input type="search" name="q" /><button type="submit" class="button"><span class="label">найти</span></button></div></form>
+    	</div>
         <div class="grid_6">{% spaceless %}
     	    {% comment %}
     	    {% if quote %}

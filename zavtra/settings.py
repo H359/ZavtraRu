@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     'minipoll',
     'editorial',
     'pipeline',
-    #'haystack',
+    'haystack',
 )
 HAYSTACK_CONNECTIONS = {
     'default': {
