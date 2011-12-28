@@ -54,7 +54,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     <header class="container container_16 clearfix">
 	<div class="grid_5 alpha">
     	    <figure><a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60" alt="Логотип газеты Завтра"></a></figure>
-    	    <form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input type="search" name="q" /><button type="submit" class="button"><span class="label">найти</span></button></div></form>
+    	    {% if request.path != '/search/' %}<form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input type="search" name="q" /><button type="submit" class="button"><span class="label">найти</span></button></div></form>{% endif %}
     	</div>
         <div class="grid_6">{% spaceless %}
     	    {% comment %}
