@@ -180,12 +180,13 @@ def view_archive(request):
 def view_issue(request, issue): 
     issue = int(issue)
     oneweek = timedelta(days=7)
-    epoch = datetime(year=1996, month=10, day=15)
+    epoch = datetime(year=1996, month=10, day=15).date()
     wstart = epoch + (issue-150)*oneweek
     wend = wstart + oneweek
+    print wstart, wend
     return {
 	'issue': issue,
-	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gt = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url')
+	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gte = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url')
     }
 
 view_featured_index = FeaturedIndexView.as_view()
