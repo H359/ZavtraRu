@@ -31,4 +31,8 @@ class ContentItemIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
 	return strip_tags(obj.content)
 
     def prepare_authors(self, obj):
-	return ','.join([x.get_full_name() for x in obj.authors_all])
+	if hasattr(obj, 'authors_all'):
+	    authors = obj.authors_all
+	else:
+	    authors = obj.authors.all()
+	return ','.join([x.get_full_name() for x in authors])

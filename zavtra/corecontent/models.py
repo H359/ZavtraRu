@@ -126,12 +126,12 @@ class ContentItem(models.Model):
         return self._comments_count
     
     def update_comments_count(self):
-    	self._comments_count = Comment.objects.filter(
+    	comments_count = Comment.objects.filter(
             content_type = contentitem_ctype_id,
             object_id=self.id,
             enabled=True
     	).count()
-    	self.save()
+    	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
     	if self.should_be_on_main():
     	    cache.delete('newsletter')
 
