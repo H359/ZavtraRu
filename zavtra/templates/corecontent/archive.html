@@ -12,7 +12,7 @@
 		<tr>
 		    <th>{{ month }}</th>
 		    {% for localnum, globalnum in days %}
-		    <td><a href="#">{{ localnum }} ({{ globalnum }})</a></td>
+		    <td><a href="{% url corecontent.view.issue_view globalnum %}">{{ localnum }} ({{ globalnum }})</a></td>
 		    {% endfor %}
 		</tr>
 	    </table>

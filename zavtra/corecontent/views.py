@@ -176,6 +176,18 @@ def view_archive(request):
     #start, end = q.get('start'), q.get('end')
     return {'dates': get_dates(q)}
 
+@render_to('corecontent/issue.html')
+def view_issue(request, issue): 
+    issue = int(issue)
+    oneweek = timedelta(days=7)
+    epoch = datetime(year=1996, month=10, day=15)
+    wstart = epoch + (issue-150)*oneweek
+    wend = wstart + oneweek
+    return {
+	'issue': issue,
+	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gt = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url')
+    }
+
 view_featured_index = FeaturedIndexView.as_view()
 
 view_item = ContentItemView.as_view()

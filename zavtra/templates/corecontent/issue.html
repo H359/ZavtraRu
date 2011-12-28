@@ -1,0 +1,17 @@
+{% extends base_template %}
+
+{% block content %}
+<section class="container_16 container clearfix">
+    <article class="grid_8 alpha block">
+	<header><h1>Выпуск {{ issue }}</h1></header>
+	<div class="content">
+	{% for item in items %}
+	{% ifchanged item.rubric %}<h2>{{ item.rubric.title }}</h2>{% endifchanged %}
+	{% include 'corecontent/list.item.announce.html' %}
+	{% endfor %}
+	</div>
+    </article>
+    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
+    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
+</section>
+{% endblock %}
