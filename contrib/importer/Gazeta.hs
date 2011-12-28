@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta (parseArticle, Article(..)) where
+module Gazeta (parseArticle, ltrim, rtrim, strip, Article(..)) where
 import Gazeta.Types
 import Gazeta.Utils
 import Gazeta.Parsers
@@ -9,14 +9,16 @@ import Text.Parsec.Prim
 import qualified Data.ByteString.Lazy.Char8 as C
 import qualified Text.Pandoc as PD
 
-getMetaArticle :: T.Text -> Either ParseError Article
-getMetaArticle str = parse agaParser "(agahidd)" str
+getMetaArticle :: T.Text -> Article
+getMetaArticle str = case parse agaParser "(agahidd)" str of
+    Left  e -> Article{articleText=str, articleAuthors=[], articleUrl="", articleTitle="", articlePubdate=""}
+    Right s -> s
 
 special :: String -> Bool
 special x = (head x == '[') || ((head . reverse) x == ']')
 
 meta :: String -> Bool
-meta x = x == "Title:" || x == "No:" || x == "Date: "
+meta x = x == "Title:" || x == "No:" || x == "Date: " || x == "Author: "
 
 hasToOmit :: String -> Bool
 hasToOmit x = (special x) || (meta x)
@@ -38,17 +40,10 @@ processText  = T.pack . writer . cleaner . reader . T.unpack
 	  writer = PD.writeHtmlString PD.defaultWriterOptions
 	  --writer = PD.writeNative PD.defaultWriterOptions
 
-addText :: Either ParseError Article -> Either ParseError Article
-addText a = case a of 
-    Left  s -> Left s
-    Right s -> Right $ Article{
-	articlePubdate=articlePubdate s,
-	articleTitle=articleTitle s,
-	articleUrl=articleUrl s,
-	articleAuthors=articleAuthors s,
-	articleText=(processText . articleText) s}
+addText :: Article -> Article
+addText a = Article{ articlePubdate=articlePubdate a, articleTitle=articleTitle a, articleUrl=articleUrl a, articleAuthors=articleAuthors a, articleText=(processText . articleText) a}
 
-parseArticle :: C.ByteString -> Either ParseError Article
+parseArticle :: C.ByteString -> Article
 parseArticle charmesh = addText metaArticle
     where metaArticle = getMetaArticle charmesh8
 	  charmesh8   = getCharMesh8 charmesh

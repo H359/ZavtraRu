@@ -119,14 +119,6 @@ def login(request):
 	    return {'login_fail': True}
     return {}
 
-@render_to('archive.html')
-def archive(request):
-    issues = sorted(Issue.objects.order_by('date'), key=lambda issue: issue.date.year, reverse=True)
-    return {
-        'in_archive': True,
-        'issues': [(k, list(g)) for k, g in groupby(issues, lambda w: w.date.year)]
-    }
-
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/')

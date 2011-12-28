@@ -1,0 +1,26 @@
+{% extends base_template %}
+
+{% block content %}
+<section class="container_16 container clearfix">
+    <article class="grid_8 alpha block">
+	<header><h1>Архив</h1></header>
+	<div class="content archive">
+	    {% for year, months in dates %}
+	    <h2>{{ year }}</h2>
+	    {% for month, days in months %}
+	    <table>
+		<tr>
+		    <th>{{ month }}</th>
+		    {% for localnum, globalnum in days %}
+		    <td><a href="#">{{ localnum }} ({{ globalnum }})</a></td>
+		    {% endfor %}
+		</tr>
+	    </table>
+	    {% endfor %}
+	    {% endfor %}
+	</div>
+    </article>
+    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
+    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
+</section>
+{% endblock %}

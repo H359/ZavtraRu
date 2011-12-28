@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta.Utils (fixAuthor, getCharMesh8, liftAuthors, knownAuthorExceptions) where
+module Gazeta.Utils (fixAuthor, getCharMesh8, liftAuthors, makethDate, knownAuthorExceptions) where
 import Gazeta.Types
 import qualified Data.Text as T
 import qualified Data.List as L
@@ -9,6 +9,7 @@ import qualified Data.ByteString.Lazy as BL
 import qualified Data.ByteString as B
 import qualified Codec.Text.IConv as IConv
 import qualified Data.Map as Map
+import qualified Data.Time.Calendar as DT
 
 commonFixer :: Char -> Char
 commonFixer '“' = '\"'
@@ -42,3 +43,26 @@ liftAuthors :: Maybe [String] -> [String]
 liftAuthors a = case a of
     Just s  -> s
     Nothing -> []
+
+ruDate :: String -> String
+ruDate "февраля"  = "02"
+ruDate "марта"    = "03"
+ruDate "апреля"   = "04"
+ruDate "мая"      = "05"
+ruDate "июня"     = "06"
+ruDate "июля"     = "07"
+ruDate "августа"  = "08"
+ruDate "сентября" = "09"
+ruDate "октября"  = "10"
+ruDate "ноября"   = "11"
+ruDate x = x
+
+makethDate :: String -> String -> String -> String
+makethDate day month year = DT.showGregorian $ DT.fromGregorian year' month' day'
+    where day' :: Int
+	  day' = read day
+	  month' :: Int
+	  month' = read (ruDate month)
+	  year' = if dyear < 1900 then dyear+1900 else dyear
+	  dyear :: Integer
+	  dyear  = read year

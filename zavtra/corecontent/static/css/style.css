@@ -207,6 +207,9 @@ form.regform label { display: block; }
 
 footer.buttons .page_mimic {border:none; background:none;}
 
+.archive th { width: 8em; text-align: left; vertical-align: middle; }
+.archive td { width: 4em; padding: 0.2em 0.5em; vertical-align: middle; }
+
 .red-arrow { background: #fafafa; margin-top: 1em; }
     .red-arrow .content { height: 160px; }
     .red-arrow h1 { color: red; }

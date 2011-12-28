@@ -72,6 +72,7 @@ class ArticlesParser(object):
 	return user
     def publish(self):
 	spl = self.url.split('.')
+	print self.pubdate, self.title, self.url, spl
 	t = self.dgt.search(spl[0]).group()
 	rubric = self.rubrics_map[t[0]]
 	users = filter(lambda w: w is not None, map(self.get_users, self.authors))
@@ -86,7 +87,6 @@ class ArticlesParser(object):
 	    if x == u')': omit = False
 	self.title = u''.join(nt)
 	self.title = self.title[0:249]
-	print self.pubdate, self.url, self.title
 	cti = ContentItem(
 	    title = self.title,
 	    slug = self.pubdate + '_' + spl[0],
@@ -127,5 +127,7 @@ class ArticlesParser(object):
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 	a = ArticlesParser()
+	ContentItem.objects.filter(rubric__title__regex = u'[0-9]+-я').delete()
+	User.objects.filter(username__regex = u'^ext_[0-9]+$', is_staff=True, is_active=False).delete()
 	with open('data.xml', 'r') as fxml:
 	    a.parse(fxml)

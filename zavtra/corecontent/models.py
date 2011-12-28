@@ -88,7 +88,7 @@ class ContentItem(models.Model):
     thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True)
     kind         = models.CharField(max_length=200, editable=False)
     content      = models.TextField(verbose_name=u'Содержимое', blank=True)
-    old_url      = models.URLField(verify_exists=True, null=True, blank=True, verbose_name=u'URL на старом сайте')
+    old_url      = models.URLField(verify_exists=False, null=True, blank=True, verbose_name=u'URL на старом сайте')
     
     _comments_count = models.IntegerField(default=0, editable=False)
     _base_rating = models.IntegerField(default=0, verbose_name=u'Базовый рейтинг')

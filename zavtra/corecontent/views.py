@@ -1,11 +1,16 @@
 #-*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
+from math import ceil
+
+from pytils.dt import MONTH_NAMES
 
 from django.views.generic import ListView, DetailView, YearArchiveView
 from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.db.models import Min, Max
 
 from diggpaginator import DiggPaginator
+from annoying.decorators import render_to
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
 from taggit.models import Tag
@@ -135,6 +140,41 @@ class UnpublishedItemsView(ListView):
         context['rss']  = reverse('corecontent.rss.unpublished')
         context['title'] = u'Красная строка'
         return context
+
+def get_dates(q):
+    oneday = timedelta(days=1)
+    res = []
+    year = []
+    month = {}
+    nums = 150
+    curyear = q[0].year
+    curmonth = q[0].month
+    local = datetime(year=curyear, month=1, day=1).date()
+    for date in q:
+	#ndate = date - oneday*date.weekday()
+	if curmonth != date.month:
+	    year.append( (MONTH_NAMES[curmonth-1][1], [(k,month.get(k)) for k in sorted(month.keys())]) )
+	    month = {}
+	    curmonth = date.month
+	if curyear != date.year:
+	    res.append( (curyear, year) )
+	    year = []
+	    curyear = date.year
+	    local = datetime(year=curyear, month=1, day=1).date()
+	ldate = 1 + (date-local).days / 7
+	if ldate not in month:
+	    month[ldate] = u'%d (%s)' % (nums, date.strftime("%d.%m.%Y"))
+	    nums += 1
+    year.append( (MONTH_NAMES[curmonth-1][1], [(k,month.get(k)) for k in sorted(month.keys())]) )
+    res.append( (curyear, year) )
+    return reversed(res)
+
+@render_to('corecontent/archive.html')
+def view_archive(request):
+    q = ContentItem.objects.filter(published=True, enabled=True).order_by('pub_date').values_list('pub_date', flat=True).distinct()
+    #start=Min('pub_date'), end=Max('pub_date'))
+    #start, end = q.get('start'), q.get('end')
+    return {'dates': get_dates(q)}
 
 view_featured_index = FeaturedIndexView.as_view()
 

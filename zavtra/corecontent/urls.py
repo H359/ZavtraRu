@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<slug>[_\-\w]+)/$', 'corecontent.views.view_items_by_tag', name='corecontent.view.items_by_tag'),
     url(r'^zhivotov/$', 'corecontent.views.zhivotov_gallery', name='corecontent.view.zhivotov_gallery'),
     url(r'^site-only/$', 'corecontent.views.view_unpublished', name='corecontent.view.unpublished_view'),
+    url(r'^archive/$', 'corecontent.views.view_archive', name='corecontent.view.archive_view'),
     
     url(r'^rss/latest/$', LatestContentFeed(), name='corecontent.rss.latest'),
     url(r'^rss/rubric/(?P<slug>[_\-\w]+)/$', RubricContentFeed(), name='corecontent.rss.rubric'),

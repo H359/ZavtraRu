@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module Gazeta.Parsers (agaParser) where
+module Gazeta.Parsers (agaParser, ltrim, rtrim, strip) where
 import Gazeta.Types
 import Gazeta.Utils
 import qualified Data.Text as T
@@ -43,6 +43,22 @@ titleParser = do
     title <- many (noneOf "\r\n") 
     return title
 
+dateParser :: Parser String
+dateParser = do
+    string "Date: "
+    day <- many1 (noneOf "-")
+    string "-"
+    month <- many1 (noneOf "-")
+    string "-"
+    year <- many1 (noneOf "\r\n")
+    return $ makethDate day month year
+
+noParser :: Parser String
+noParser = do
+    string "No: "
+    no <- many (noneOf "\r\n")
+    return no
+
 agaParser :: Parser Article
 agaParser = do
     s1 <- manyTill anyChar (try (string "<agahidd"))
@@ -51,6 +67,9 @@ agaParser = do
     eol
     title <- titleParser
     eol
+    no <- noParser
+    eol
+    date <- dateParser
     manyTill anyChar (try (string "endhidd>"))
     s2 <- many1 anyChar
-    return Article { articleUrl = "", articleText = T.pack (s1 ++ s2), articleTitle = title, articleAuthors = liftAuthors authors, articlePubdate="" }
+    return Article { articleUrl = "", articleText = T.pack (s1 ++ s2), articleTitle = title, articleAuthors = liftAuthors authors, articlePubdate=date }
