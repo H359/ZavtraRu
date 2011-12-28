@@ -16,24 +16,26 @@
 	    {% if query %}
 	    <dl class="content">
 	    {% for result in page.object_list %}
-		<dt><a href="{{ result.link }}">{{ result.title }}</a></dt>
+		<dt{%if forloop.first%} class="some-top"{% endif%}><a href="{{ result.link }}">{{ result.title }}</a></dt>
 		<dd>{% highlight result.text with query html_tag "span" class "highlighted" %}</dd>
 	    {% empty %}
 		<dt class="some-top">По такому запросу мы ничего не смогли найти. Возможно, вы ошиблись?</dt>
 	    {% endfor %}
 	    </dl>
-	    
-	    
-	        {% if page.has_previous or page.has_next %}
-	        <div>
-	        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-	        |
-	        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-	        </div>
-	        {% endif %}
-	        {% else %}
-	        {# Show some example queries to run, maybe query syntax, something else? #}
-	        {% endif %}
+            {% if page.has_previous or page.has_next %}
+	    <footer class="buttons">
+                {% if page.has_previous %}<a rel="page" class="button" href="?q={{query}}&amp;page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
+                {% for p in page.page_range %}
+                {% if page.number == p %}
+                <div class="button on blue"><span class="label">{{ p }}</span></div>
+                {% else %}
+                {% if p %}<a class="button" rel="page" href="?query={{query}}&amp;page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
+                {% endif %}
+                {% endfor %}
+                {% if page.has_next %}<a rel="page" class="button" href="?query={{query}}&amp;page={{ page.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
+            </footer>
+            {% endif %}
+            {% endif %}
 	</div>
     </article>
     <article class="grid_4">{% include 'partials/centerside.html' %}</article>
