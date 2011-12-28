@@ -163,7 +163,7 @@ def get_dates(q):
 	    local = datetime(year=curyear, month=1, day=1).date()
 	ldate = 1 + (date-local).days / 7
 	if ldate not in month:
-	    month[ldate] = u'%d (%s)' % (nums, date.strftime("%d.%m.%Y"))
+	    month[ldate] = nums
 	    nums += 1
     year.append( (MONTH_NAMES[curmonth-1][1], [(k,month.get(k)) for k in sorted(month.keys())]) )
     res.append( (curyear, year) )
