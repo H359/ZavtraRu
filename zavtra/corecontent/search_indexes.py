@@ -6,16 +6,12 @@ from haystack import indexes
 from models import ContentItem
 
 class ContentItemIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
-    KIND_MAP    = {'text': 1, 'video': 2, 'image': 3}
     title       = indexes.CharField(boost=1.5, model_attr='title')
     authors     = indexes.FacetMultiValueField(boost=1.25)
     pub_date    = indexes.DateField(indexed=False, model_attr='pub_date')
     kind        = indexes.IntegerField(indexed=False)
     link        = indexes.CharField(stored=True, indexed=False, model_attr='get_absolute_url')
     text        = indexes.CharField(document=True, model_attr='content')
-
-    def prepare_kind(self, obj):
-	return self.KIND_MAP.get(obj.kind, 0)
 
     def get_model(self):
 	return ContentItem
