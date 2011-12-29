@@ -24,6 +24,10 @@ class ContentItemIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
 	now = datetime.now()
 	return self.get_model().batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
 
+    def should_update(self, instance, **kwargs):
+	now = datetime.now().date()
+	return instance.enabled and instance.pub_date <= now
+
     def prepare_title(self, obj):
 	return strip_tags(obj.title)
 
