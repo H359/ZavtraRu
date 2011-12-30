@@ -2,21 +2,25 @@
 from datetime import datetime, timedelta
 from itertools import groupby
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import F
 from django.contrib.auth import logout as auth_logout, login as user_login, authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.context_processors import PermWrapper
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.template.loader import render_to_string
 from django.utils.functional import lazy
-from django.contrib.auth.context_processors import PermWrapper
 
 from annoying.decorators import render_to, ajax_request
 from diggpaginator import DiggPaginator
 
 from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
+from voting.models import Vote
 
 from utils import cached, group_list
 
@@ -34,8 +38,7 @@ def home(request):
 	wstart += 7*oneday
 	wend += 7*oneday
 	no_cache = True
-    #num = 49 + math.floor( 1.0*(now - datetime(year=2011,month=12,day=7).date()).days / 7 )
-    num = 1 + (wstart - now.replace(day=1,month=1)).days / 7
+    num = 1 + (wstart - datetime(year=wstart.year,day=1,month=1).date()).days / 7
     def get_illustration():
 	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
@@ -141,3 +144,24 @@ def live_update(request):
 	perms = None
     rendered = [render_to_string('comments/item.html', {'comment': x, 'perms': perms, 'request': request, 'stream': True}) for x in qs]
     return {'stream': rendered}
+
+login_required
+def vote(request):
+    if request.method == 'POST':
+	vote = {'up': 1, 'down': -1}[request.POST.get('vote')]
+	djct = int(request.POST.get('djct'))
+	djoi = int(request.POST.get('djoi'))
+	ct = get_object_or_404(ContentType, pk=djct)
+	try:
+	    v = Vote.objects.get(user=request.user, content_type=ct, object_id=djoi)
+	except Vote.DoesNotExist:
+	    v = Vote(user=request.user, content_type=ct, object_id=djoi)
+	model = ct.model_class()
+	obj = get_object_or_404(model, pk=djoi)
+	if v.vote != vote:
+	    v.vote = vote
+	    v.save()
+	if request.is_ajax():
+	    return HttpResponse()
+	else:
+	    return redirect(obj.get_absolute_url())
