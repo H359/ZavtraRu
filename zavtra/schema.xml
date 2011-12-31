@@ -140,7 +140,7 @@
   <defaultSearchField>text</defaultSearchField>
 
   <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-  <solrQueryParser defaultOperator="AND|OR" />
+  <solrQueryParser defaultOperator="AND" />
 </schema>
 
 
