@@ -54,7 +54,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     <header class="container container_16 clearfix">
 	<div class="grid_5 alpha">
     	    <figure><a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60" alt="Логотип газеты Завтра"></a></figure>
-    	    {% if request.path != '/search/' %}<form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input type="search" name="q" /><button type="submit" class="button"><span class="label">найти</span></button></div></form>{% endif %}
+    	    {% if request.path != '/search/' %}<form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input placeholder="что вы ищете?" type="search" name="q" /><button type="submit" class="button"><span class="icon icon198"></span><span class="label">найти</span></button></div></form>{% endif %}
     	</div>
         <div class="grid_6">{% spaceless %}
     	    {% comment %}
@@ -62,7 +62,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
     	    {% endif %}
     	    {% endcomment %}
-	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/03/499/11.html">По реке, свидетельствуя о размахе несчастья, проплыли трусики балерин Мариинского театра, вставная челюсть актера Басилашвили, несколько утонувших "митьков" и подмоченная репутация Александра Невзорова...</a>&raquo;</blockquote>
+	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/09/812/61.html">Держа речь перед членами правительства, Путин, между прочим, заявил: &laquo;Демократия и жульничество — это не одно и то же&raquo;. Правильно! От одного только простого жульничества народ не вымирает по 800 тысяч в год.</a>&raquo;</blockquote>
         {% endspaceless %}</div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
@@ -93,7 +93,6 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
                {% for rubric in top_rubrics %}
                <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
                {% endfor %}
-               {% comment %}<li class="search last"><input type="search" name="q" placeholder="поиск..."></li>{% endcomment %}
             </ul>
             {% if featured|length %}
             <ul class="secondary">
