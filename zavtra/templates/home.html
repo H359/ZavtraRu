@@ -33,7 +33,11 @@
             <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
         </figure>
 	<article class="red-arrow block clearfix">
-	    <header><h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1></header>
+	    <header class="clearfix">
+		<h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1>
+		<div class="buttons at_left"><a class="button prev"><span class="icon icon63"></span></a></div>
+		<div class="buttons at_right"><a class="button next"><span class="icon icon64"></span></a></div>
+	    </header>
 	    <div class="scrollable"><div class="items">
 	    {% for group in current %}
 	    <div class="item">
@@ -59,10 +63,6 @@
 	    </div>
 	    {% endfor %}
 	    </div></div>
-	    <div class="buttons">
-		<a class="button prev"><span class="icon icon63"></span></a>
-		<a class="at_right button next"><span class="icon icon64"></span></a>
-	    </div>
 	</article>
     </article>
     <article class="grid_4 omega block rubric-info">
@@ -107,7 +107,7 @@
 	<article>
 	    <header><h1>Свежий номер в PDF</h1></header>
 	    <div class="content text-center">
-		<a href="{{ MEDIA_URL }}content/pdfs/52PDF.zip"><img src="{{ MEDIA_URL }}content/pdfs/52.jpg"></a>
+		<a href="{{ MEDIA_URL }}content/pdfs/1PDF.zip"><img src="{{ MEDIA_URL }}content/pdfs/1.jpg"></a>
 	    </div>
 	</article>
         <article>
