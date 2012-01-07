@@ -10,7 +10,7 @@
 	    <form method="get" action="." class="clearfix search-form">
     		<div class="buttons">
     		    <input type="search" name="q"  value="{{ query }}" />
-    		    <button type="submit"><span class="label">Найти</span></button>
+    		    <button class="button" type="submit"><span class="icon icon198"></span><span class="label">Найти</span></button>
     		</div>
     	    </form>
 	    {% if query %}
@@ -29,10 +29,10 @@
                 {% if page.number == p %}
                 <div class="button on blue"><span class="label">{{ p }}</span></div>
                 {% else %}
-                {% if p %}<a class="button" rel="page" href="?query={{query}}&amp;page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
+                {% if p %}<a class="button" rel="page" href="?q={{query}}&amp;page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
                 {% endif %}
                 {% endfor %}
-                {% if page.has_next %}<a rel="page" class="button" href="?query={{query}}&amp;page={{ page.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
+                {% if page.has_next %}<a rel="page" class="button" href="?q={{query}}&amp;page={{ page.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
             </footer>
             {% endif %}
             {% endif %}
