@@ -33,7 +33,7 @@ def tag_url(tag):
     return ('corecontent.view.items_by_tag', (), {'slug': tag.slug})
 Tag.get_absolute_url = tag_url
 
-User.__unicode__ = lambda s: s.get_full_name()
+User.__unicode__ = lambda s: s.get_full_name() if s.first_name or s.last_name else s.username
 
 class Rubric(models.Model):
     class Meta:
@@ -114,13 +114,6 @@ class ContentItem(models.Model):
     def rating(self):
 	return self._rating
     
-    @rating.setter
-    def rating(self, value):
-        self._rating = self._base_rating + value
-    
-    def recalculate_rating(self):
-	self._rating = self._base_rating + Vote.objects.get_score(self)['score']
-    
     @property
     def comments_count(self):
         return self._comments_count
@@ -134,6 +127,9 @@ class ContentItem(models.Model):
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
     	if self.should_be_on_main():
     	    cache.delete('newsletter')
+
+    def get_content_type_id(self):
+	return contentitem_ctype_id 
 
     def should_be_on_main(self):
 	oneday = timedelta(days=1)

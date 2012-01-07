@@ -7,25 +7,9 @@ from django.contrib.auth.models import User
 from django import forms
 from django.conf import settings
 
-from ajax_filtered_fields.forms import AjaxManyToManyField
+from ajaxfields.fields import AjaxForeignKeyField, AjaxManyToManyField
 
-from models import Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote, ZhivotovIllustration
-
-class AuthorsLookUpField(AjaxManyToManyField):
-    def __init__(self, *args, **kwargs):
-        import string
-        kwargs['label'] = u'Авторы'
-        kwargs['required'] = False
-        kwargs['default_index'] = 0
-        model = User
-        field_name = 'last_name'
-        lookup_key = "%s__iregex" % field_name
-        lookups = [(i.upper(), {'is_staff': True, lookup_key: u'^[%s%s]' % (i, i.upper())}) for i in map(unichr, range(ord(u'а'), ord(u'я')+1))]
-        # other non-letter records
-        regex_lookup_key = "%s__iregex" % field_name
-        lookups.append((u'другие', {'is_staff': True, regex_lookup_key: "^[^a-z]"}))
-        super(AuthorsLookUpField, self).__init__(model, lookups, *args, **kwargs)
-
+from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote, ZhivotovIllustration
 
 class ContentItemMediaMixin(object):
     class Media:
@@ -33,10 +17,7 @@ class ContentItemMediaMixin(object):
 	    'js/wymeditor/wymeditor.fixer.js',
 	    'js/wymeditor/jquery.wymeditor.min.js',
 	    'js/wymeditor/jquery.wymeditor.embed.js',
-	    'admin/js/SelectBox.js',
-	    'admin/js/SelectFilter2.js',
-	    #'js/jquery.1.7.min.js',
-	    'js/ajax_filtered_fields.js',
+	    'js/ajaxfields.js'
 	)
     search_fields = ('title',)
     list_filter = ('rubric', 'published', 'enabled')
@@ -46,7 +27,7 @@ class VideoAdminForm(forms.ModelForm):
         model = Video
         exclude = ('published', 'thumbnail', 'old_url')
     content = forms.URLField(verify_exists=True, label=u'Ссылка на страницу с видео на YouTube')
-    authors = AuthorsLookUpField()
+    authors = AjaxManyToManyField(fields=('first_name','last_name'), model=User, guard={'is_staff':True})
 
 class ImageAdminForm(forms.ModelForm):
     class Meta:
@@ -55,12 +36,12 @@ class ImageAdminForm(forms.ModelForm):
         #fields = ('title', 'subtitle', 'rubric', 'description', 'thumbnail', 'pub_date', 'enabled', 'authors', 'tags')
 
     thumbnail = forms.ImageField(label=u'Изображение')
-    authors = AuthorsLookUpField()
+    authors = AjaxManyToManyField(fields=('first_name','last_name'), model=User, guard={'is_staff':True})
 
 class ArticleAdminForm(forms.ModelForm):
     class Meta:
 	model = Article
-    authors = AuthorsLookUpField()
+    authors = AjaxManyToManyField(fields=('first_name','last_name'), model=User, guard={'is_staff':True})
 
 class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
     form = ArticleAdminForm
@@ -100,8 +81,18 @@ class RubricAdmin(admin.ModelAdmin):
 class FeaturedItemsAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
 
+class DailyQuoteAdminForm(forms.ModelForm):
+    class Meta:
+	model = DailyQuote
+    class Media:
+	js = ('js/ajaxfields.js',)
+    source = AjaxForeignKeyField(model=ContentItem, fields=('title',))
+
 class DailyQuoteAdmin(admin.ModelAdmin):
+    form = DailyQuoteAdminForm
     list_display = ('quote', 'day')
+    search_fields = ()
+    list_filter = ()
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)

@@ -61,10 +61,10 @@ urlpatterns = patterns('',
     url(r'^logged-in/$', 'zavtra.views.logged_in', name='complete'),
     url(r'^content/', include('zavtra.corecontent.urls')),
     url(r'^users/(?P<username>[_\-A-Za-z0-9]+)/$', 'zavtra.views.user'),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/', include('zavtra.comments.urls')),
     url(r'^polls/', include('minipoll.urls')),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+    url(r'^vote/$', 'zavtra.views.vote', name='vote'),
 
     url(r'^live/$', 'views.live', name='live'),
     url(r'^live/update/$', 'views.live_update', name='live.update'),
@@ -73,10 +73,11 @@ urlpatterns = patterns('',
     url(r'^search/', search_view_factory(view_class=CCSearchView), name = 'search'),
 
     url(r'^editorial/', include('editorial.urls')),
-    (r'^ajax_filtered_fields/', include('ajax_filtered_fields.urls')),
 
     url(r'^accounts/', include('siteuser.urls')),
+    url(r'^admin/ajax_fields/', include('ajaxfields.urls')),
     url(r'^admin/filebrowser/', include('filebrowser.urls')),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'', include('social_auth.urls')),
 )
 

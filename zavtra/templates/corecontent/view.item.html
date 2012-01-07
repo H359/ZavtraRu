@@ -59,6 +59,15 @@
                 </div>
                 {% endif %}
                 {% endwith %}
+                <div class="buttons">
+                {% if request.user.is_authenticated %}
+            	    {% load voting_tags %}
+            	    {% vote_by_user request.user on item as vote %}
+            	    <form method="post" action="{% url vote %}"><input type="hidden" name="djoi" value="{{ item.id }}" /><input type="hidden" name="djct" value="{{ item.get_content_type_id }}" />{% csrf_token %}<input type="hidden" name="vote" value="up"><button {% if vote.is_upvote %}disabled="disabled"{% endif %} type="submit" class="{% if vote.is_upvote %}on disabled active{% endif %} button"><span class="icon icon101"></span></button></form>
+            	    <form method="post" action="{% url vote %}"><input type="hidden" name="djoi" value="{{ item.id }}" /><input type="hidden" name="djct" value="{{ item.get_content_type_id }}" />{% csrf_token %}<input type="hidden" name="vote" value="down"><button {% if vote.is_downvote %}disabled="disabled"{% endif %} type="submit" class="{% if vote.is_downvote %}on disabled active{% endif %} button"><span class="icon icon100"></span></button></form>
+                {% endif %}
+            	    {{ item.rating }}
+                </div>
                 <div id="comments_block">{% get_comments_for item %}</div>
             </footer>
     </article>

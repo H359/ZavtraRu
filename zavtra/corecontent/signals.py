@@ -46,6 +46,7 @@ def tweet_article(sender, **kwargs):
 
 @receiver(post_save, sender=Vote, dispatch_uid='zavtra.corecontent.signals')
 def update_rating(sender, **kwargs):
+    from models import contentitem_ctype_id
     if kwargs['instance'].content_type_id == contentitem_ctype_id:
         #kwargs['instance'].object.rating = Vote.objects.get_score(kwargs['instance'])['score']
-        kwargs['instance'].object.recalculate_rating()
+        ContentItem.objects.filter(id=kwargs['instance'].object_id).update(_rating = Vote.objects.get_score(kwargs['instance'])['score'])

@@ -126,6 +126,8 @@ class ArticlesParser(object):
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
+	print 'DISABLED!'
+	return
 	a = ArticlesParser()
 	ContentItem.objects.filter(rubric__title__regex = u'[0-9]+-я').delete()
 	User.objects.filter(username__regex = u'^ext_[0-9]+$', is_staff=True, is_active=False).delete()

@@ -200,7 +200,7 @@ form.regform { margin: 1em 0; }
 form.regform label { display: block; }
 
 .search-form input { float: left; height: 29px; margin: 5px; width: 350px; }
-.search-form.top-fig input { width: 210px; }
+.search-form.top-fig input { width: 180px; }
 
 .scrollable { position: relative; overflow: hidden; height: 160px; width: 100%; }
     .scrollable .items { position: absolute; }

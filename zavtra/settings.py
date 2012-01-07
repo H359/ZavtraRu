@@ -74,7 +74,8 @@ AUTH_PROFILE_MODULE = 'siteuser.SiteProfile'
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
-SESSION_ENGINE = 'redis_sessions.session'
+if not DEBUG:
+    SESSION_ENGINE = 'redis_sessions.session'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,6 +131,7 @@ INSTALLED_APPS = (
     'editorial',
     'pipeline',
     'haystack',
+    'ajaxfields',
 )
 HAYSTACK_CONNECTIONS = {
     'default': {

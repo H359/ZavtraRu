@@ -718,3 +718,6 @@ div.dropdown-slider .ddm:active {
 div.dropdown-slider .ddm:last-child {
 	border-bottom: none;
 }
+
+.button.disabled { cursor: default; }
+.button.disabled span.icon { background-image: url(../img/google+-ui-sprite-colour.png); }
