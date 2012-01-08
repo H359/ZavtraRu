@@ -1,10 +1,10 @@
 {% load pytils_dt %}
 {% load utils %}
-<li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth|add:"-1"|mul:"1.75"|floatformat:"2"|fix_commas }}em;"{% endif %}>
+<dt class="comment" id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth }}em;"{% endif %}>
     {% if comment.enabled %}
-    <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="48" /></a>
+    <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="32" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
-    <a href="{{ comment.content_object.get_absolute_url }}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
+    <a href="{% if not stream %}{{ commentable.get_absolute_url }}{% else %}{% url resolve_content_object content_type_id=comment.content_type_id id=comment.object_id %}{% endif %}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg">
 	<p>
@@ -15,15 +15,14 @@
 	{{ comment.comment|linebreaksbr }}
 	{% endif %}
 	</p>
-    </div>
-    {% if request.user.is_authenticated %}
+    </div>{%spaceless%}{% if request.user.is_authenticated %}
     <div class="buttons">
 	{% if not stream %}<a class="button reply" href="#">ответить</a>{% endif %}
 	{% if request.user.is_staff and perms.comments.moderate %}
 	&nbsp;&nbsp;&nbsp;&nbsp;<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
 	{% endif %}
     </div>
-    {% endif %}
+    {% endif %}{%endspaceless%}
     {% else %}
     {% if request.user.is_authenticated and request.user.is_staff and perms.comments.moderate %}
     <div style="border: 2px dashed red" class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
@@ -32,4 +31,4 @@
     <em>комментарий скрыт модератором</em>
     {% endif %}
     {% endif %}
-</li>
+</dt>

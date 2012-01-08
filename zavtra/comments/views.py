@@ -22,17 +22,14 @@ def add_comment(request):
     	    data['parent_id'] = parent
     	    data['author'] = request.user
     	    data['ip'] = request.META.get('REMOTE_ADDR')
+    	    """
     	    if parent is None:
-    		# TODO: create fictive root, append to it
-    		#root, created = Comment.objects.get_or_create(depth=1, content_type=data.get('content_type'), object_id=data.get('object_id'))
-    		# new tree
     		comment = Comment.add_root(**data)
-    		#comment = root.add_child(**data)
     	    else:
-    		# insert at parent
     		comment = Comment.objects.get(id=parent).add_child(**data)
+    	    """
+    	    comment = Comment.objects.create(**data)
             res['status'] = True
-            # TODO: compile template
             res['html'] = render_to_string('comments/item.html', {'comment': comment})
         else:
             res['errors'] = dict( (k, map(unicode, v)) for (k,v) in form.errors.iteritems() )

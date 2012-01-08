@@ -142,7 +142,8 @@ HAYSTACK_CONNECTIONS = {
     }
 }
 if DEBUG:
-    INSTALLED_APPS += ('debug_toolbar',)
+    INSTALLED_APPS = list(INSTALLED_APPS)
+    INSTALLED_APPS.append('debug_toolbar')
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 LOGGING = {
     'version': 1,

@@ -103,6 +103,11 @@ class UserView(ListView):
 
 user = UserView.as_view()
 
+def resolver(request, content_type_id, id):
+    ctype = get_object_or_404(ContentType, id=content_type_id)
+    obj = get_object_or_404(ctype.model_class(), id=id)
+    return redirect(obj.get_absolute_url())
+
 @render_to('login.html')
 def login(request):
     if request.user.is_authenticated():

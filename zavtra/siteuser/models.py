@@ -9,7 +9,7 @@ default_avatar = 'http://zavtra.ru/static/img/anon.jpg'
 def email2avatar(email):
     return u'http://www.gravatar.com/avatar/%s?%s' % (
         md5.new(email.lower()).hexdigest(),
-        urllib.urlencode({'d': default_avatar, 's': str(48)})
+        urllib.urlencode({'d': default_avatar, 's': str(32)})
     )
 
 class SiteProfile(models.Model):

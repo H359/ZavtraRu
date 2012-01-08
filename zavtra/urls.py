@@ -73,6 +73,7 @@ urlpatterns = patterns('',
     url(r'^search/', search_view_factory(view_class=CCSearchView), name = 'search'),
 
     url(r'^editorial/', include('editorial.urls')),
+    url(r'^resolver/(?P<content_type_id>[0-9]+)/(?P<id>[0-9]+)/$', 'views.resolver', name='resolve_content_object'),
 
     url(r'^accounts/', include('siteuser.urls')),
     url(r'^admin/ajax_fields/', include('ajaxfields.urls')),

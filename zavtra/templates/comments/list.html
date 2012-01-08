@@ -6,6 +6,8 @@
     	    {% include 'comments/item.html' %}
             {% endfor %}
         </ul>
+        <p>Возможность комментирования временно отключена. Приносим извинения за неудобства. Планируемое время включения комментирования 16:00 по московскому времени.</p>
+        {%comment%}
         {% if request.user.is_authenticated %}
         <form method="post" action="{% url comments.add %}">
             {% csrf_token %}
@@ -17,5 +19,6 @@
         {% else %}
         <p>Чтобы иметь возможность оставлять комментарии, вам нужно <a rel="inline" href="{% url login %}">войти в свою учетную запись (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала)</a>  или <a href="{% url accounts.register %}">зарегистрировать её</a>, если у вас таковой еще нет.</p>
         {% endif %}
+        {%endcomment%}
     </div>
 </div>

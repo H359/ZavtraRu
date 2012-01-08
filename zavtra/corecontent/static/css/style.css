@@ -209,6 +209,18 @@ form.regform label { display: block; }
 .at_right { float: right !important; }
 .at_left { float: left !important; }
 
+.comment { padding: 5px; font-size: 15px; }
+    .comment time, .comment a { font-weight: normal; font-size: 0.9em; }
+    .comment .gravatar { margin-right: 8px; float: left; }
+    .comment p { font-weight: normal; }
+    .comment .buttons .button { color: black; }
+
+.gallery { position: relative; width: 100%; max-width: 1920px; height: 400px; margin: 0 auto;}
+    .gallery ul { height: 100%; width: 100%; position: relative; overflow: hidden; }
+	.gallery ul li { position: absolute; top: 0px; left: 0px; overflow: hidden; height: 100%; width: 100%; }
+	    .gallery ul li figure img { width: 100%; }
+	    .gallery ul li figure figcaption { font-size: 2em; font-weight: bold; }
+
 footer.buttons .page_mimic {border:none; background:none;}
 
 .archive th { width: 8em; text-align: left; vertical-align: middle; }
