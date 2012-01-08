@@ -14,5 +14,5 @@ def update_comments_count(sender, **kwargs):
     if target and hasattr(target, 'update_comments_count'):
 	target.update_comments_count()
 
-#receiver(post_save, sender=Comment, dispatch_uid='zavtra.comments.signals')(update_comments_count)
-#receiver(pre_delete, sender=Comment, dispatch_uid='zavtra.comments.signals')(update_comments_count)
+receiver(post_save, sender=Comment, dispatch_uid='zavtra.comments.signals')(update_comments_count)
+receiver(pre_delete, sender=Comment, dispatch_uid='zavtra.comments.signals')(update_comments_count)
