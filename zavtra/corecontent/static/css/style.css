@@ -226,9 +226,9 @@ footer.buttons .page_mimic {border:none; background:none;}
 .archive th { width: 8em; text-align: left; vertical-align: middle; }
 .archive td { width: 4em; padding: 0.2em 0.5em; vertical-align: middle; }
 
-.red-arrow { background: #fafafa; margin-top: 1em; }
+.red-arrow { margin-top: 1em; }
     .red-arrow .content { height: 160px; }
-    .red-arrow h1 { color: red; }
+    .red-arrow h1 { color: #CF3A2D; }
 	.red-arrow .content a { text-decoration: none; color: #444; }
 	.red-arrow .content h2 { margin-bottom: 0.1em; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
