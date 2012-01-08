@@ -65,7 +65,7 @@ var ThouMakethCommentsShine = function(num, box) {
 
     var moveForm = function(){
 	var self = $(this);
-	var li = self.parents('li');
+	var li = self.parents('dt');
 	$('input[name=parent]', form).val(li.attr('id').split('-')[1]);
 	li.append(form);
 	return false;
