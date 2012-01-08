@@ -73,7 +73,7 @@ var ThouMakethCommentsShine = function(num, box) {
 
     var deleteComment = function(){
 	var self = $(this);
-	var li = self.parents('li');
+	var li = self.parents('dt');
 	var root = li.attr('id').split('-')[1];
 	$.post('/comments/delete/', {id: root}, function(){
 	    li.html('скрыто');
