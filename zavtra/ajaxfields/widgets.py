@@ -2,7 +2,6 @@ from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
-from django.forms.util import ValidationError
 from django.utils import simplejson
 
 class AjaxFilteringSelectMultiple(forms.SelectMultiple):
@@ -13,7 +12,10 @@ class AjaxFilteringSelectMultiple(forms.SelectMultiple):
 	    attrs['name'] = name
 	return '<select %s multiple="multiple">%s</select>' % (' '.join(['%s=%s' % (x,y) for x,y in attrs.items()]), values)
     def render(self, name, value, attrs=None):
-	selected = self.model.objects.filter(pk__in = value)
+	if value:
+	    selected = self.model.objects.filter(pk__in = value)
+	else:
+	    selected = self.model.objects.none()
 	leftside = self.render_choices(None, self.choices)
 	rightside = self.render_choices(name, ((x.pk, unicode(x)) for x in selected))
 	return mark_safe("""

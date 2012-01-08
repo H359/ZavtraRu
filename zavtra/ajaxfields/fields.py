@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.util import ValidationError
 
 from widgets import AjaxFilteringSelect, AjaxFilteringSelectMultiple
 
@@ -45,7 +46,7 @@ class AjaxManyToManyField(forms.ModelMultipleChoiceField, AjaxFieldMixin):
 
     def clean(self, value):
 	if self.required and not value:
-	    return ValidationError(self.error['required'])
+	    return ValidationError('required')
 	elif not self.required and not value:
 	    return []
 	return self.model.objects.filter(pk__in = value)
