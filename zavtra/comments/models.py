@@ -9,14 +9,16 @@ from django.contrib.auth.models import User
 
 from treebeard.mp_tree import MP_Node
 
+#class Comment(models.Model):
 class Comment(MP_Node):
     class Meta:
-	ordering = ['path']
+	ordering = ('path',)
 	permissions = (
 	    ('moderate', u'Может модерировать комментарии'),
 	)
 	verbose_name=u'Комментарий'
 	verbose_name_plural=u'Комментарии'
+    parent         = models.ForeignKey('self', null=True, blank=True, verbose_name=u'Родительский комментарий', related_name='children')
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
@@ -35,9 +37,14 @@ class Comment(MP_Node):
 
     def get_author(self):
 	author = self.author
-	if len(author.first_name.strip()) > 0 and len(author.last_name.strip()) > 0:
+	if author.first_name or author.last_name:
 	    return author.get_full_name()
 	else:
-	     return author.username
+	    return author.username
+
+    @staticmethod
+    def paths2parents():
+	for comment in Comment.objects.all():
+	    Comment.objects.filter(pk=comment.pk).update(parent = comment.get_parent())
 
 import signals

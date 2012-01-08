@@ -10,8 +10,7 @@
 	<p>
 	{% if comment.comment|length > 600 %}
 	{{ comment.comment|slice:"0:600"|linebreaksbr }}
-	<br/><a href="#" class="supress-long-toggle">Показать остальное.</a>
-	<span class="supress-long" style="display:none">{{ comment.comment|slice:"600:"|linebreaksbr }}</span>
+	<br/><a href="#" class="supress-long-toggle">Показать остальное.</a><span class="supress-long" style="display:none">{{ comment.comment|slice:"600:"|linebreaksbr }}</span>
 	{% else %}
 	{{ comment.comment|linebreaksbr }}
 	{% endif %}

@@ -19,6 +19,7 @@ def add_comment(request):
     	    data = form.cleaned_data
     	    parent = data.get('parent')
     	    del data['parent']
+    	    data['parent_id'] = parent
     	    data['author'] = request.user
     	    data['ip'] = request.META.get('REMOTE_ADDR')
     	    if parent is None:
