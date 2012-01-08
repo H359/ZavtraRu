@@ -72,6 +72,6 @@ class Comment(models.Model):
 	    Comment.objects.filter(pk=comment.pk).update(parent = comment.get_parent())
 
 Comment.alphabet = map(chr, range(48,58) + range(65,91) + range(97,123))
-Comment.step_size = 8
+Comment.step_size = 6
 
 import signals
