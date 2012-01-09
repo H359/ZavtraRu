@@ -264,6 +264,8 @@ footer.buttons .page_mimic {border:none; background:none;}
     background: -ms-linear-gradient(left, #CF3A2D 30%, white 100%);
 }
 
+.block-highlighted.block header { padding-left: 0; }
+
 .block-highlighted header h1 {
     font-family: Helvetica;
     padding: 6px;
