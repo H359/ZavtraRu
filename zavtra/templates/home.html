@@ -76,7 +76,7 @@
 	    <header><h1>Завтра.TV<span class="small"><a href="/content/rubric/zavtratv/">еще</a></span></h1></header>
 	    <div class="content text-center">
 		{% if zavtra_tv %}
-		<img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" height="240" />
+		<a href="{{ zavtra_tv.get_absolute_url }}" title="{{ zavtra_tv.title }}"><img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" height="240" /></a>
 		{% endif %}
 	    </div>
 	</article>
