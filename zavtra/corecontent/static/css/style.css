@@ -255,8 +255,8 @@ footer.buttons .page_mimic {border:none; background:none;}
 .auth-icon.vkontakte { background-image: url(../img/social/vkontakte.png); }
 .auth-icon.openid { background-image: url(../img/social/openid.png); }
 
-.fb-like-box { width: 220px; height: 290px; }
-#vk_groups { width: 220px; height: 117px; margin: 0 auto; }
+.fb-like-box { width: 270px; height: 600px; }
+#vk_groups { width: 270px; height: 117px; margin: 0 auto; }
 
 /*.search { margin: 5px; padding: 5px 6px 4px 6px; width: 220px; }*/
 .sep-bar { background-color: #F7F2ED; padding: 5px 0; margin: 5px 0; }
