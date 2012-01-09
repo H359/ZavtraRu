@@ -60,7 +60,7 @@ def home(request):
 	newsletter = cached(
 	    get_content,
 	    'newsletter',
-	    duration=600
+	    duration=60*60*4
 	)
     else:
 	newsletter = get_content()
@@ -72,12 +72,12 @@ def home(request):
     current_items = cached(
 	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
 	'current_items',
-	duration=60
+	duration=120
     )
     neuromir = cached(
 	lambda: ContentItem.objects.filter(rubric=19).latest('pub_date'),
 	'neuromir-latest',
-	duration=600*12
+	duration=60*60*4
     )
     return {
 	'issue_info': { 'date': wstart, 'num': num },

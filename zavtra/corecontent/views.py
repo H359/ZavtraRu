@@ -4,7 +4,7 @@ from math import ceil
 
 from pytils.dt import MONTH_NAMES
 
-from django.views.generic import ListView, DetailView, YearArchiveView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.db.models import Min, Max
@@ -107,21 +107,18 @@ class BlogView(ListView):
         context['title'] = u'Блоги'
         return context
 
-class GalleryView(YearArchiveView):
-    date_field = 'pub_date'
-    model      = ZhivotovIllustration
-    make_object_list = True
+class GalleryView(ListView):
+    template_name = 'corecontent/zhivotovillustration.list.html'
+    context_object_name = 'items'
+    def get_queryset(self):
+	return ZhivotovIllustration.objects.order_by('pub_date')
+    """
     def get_context_data(self, **kwargs):
 	context = super(GalleryView, self).get_context_data(**kwargs)
-	max_year = ZhivotovIllustration.objects.aggregate(max_year=Max('pub_date')).get('max_year').year+1
-	context['dates'] = xrange(2011, max_year)
+	dates = ZhivotovIllustration.objects.aggregate(miny=Min('pub_date'), maxy=Max('pub_date'))
+	context['dates'] = xrange(dates.get('miny').year, dates.get('maxy').year+1)
 	return context
-    def get_year(self):
-	try:
-	    year = super(GalleryView, self).get_year()
-	except Http404:
-	    year = datetime.now().year
-	return int(year)
+    """
 
 class FeaturedIndexView(ListView):
     paginate_by         = 15

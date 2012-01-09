@@ -16,6 +16,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.core.cache import cache
 
+from imagekit.models import ImageSpec
+from imagekit.processors import resize, Adjust
 from batch_select.models import BatchManager
 from voting.models import Vote
 #from taggit.managers import TaggableManager
@@ -191,14 +193,19 @@ class ZhivotovIllustration(models.Model):
     class Meta:
 	verbose_name=u'Иллюстрация Животова'
 	verbose_name_plural=u'Иллюстрации Животова'
-	ordering = ['-pub_date', '-id']
+	ordering = ('-pub_date', '-id')
     pub_date  = models.DateField(verbose_name=u'Дата публикации', default=datetime.now)
     title     = models.CharField(max_length=250, verbose_name=u'Название')
     thumbnail = models.ImageField(upload_to='zhivot/thumb/', verbose_name=u'Изображение для главной')
     original  = models.ImageField(upload_to='zhivot/big/', verbose_name=u'Оригинальное Изображение')
+    micro     = ImageSpec([Adjust(contrast=1.2, sharpness=1.1), resize.Crop(160,80)],
+			  image_field='original', format='JPEG', pre_cache=True)
 
     def __unicode__(self):
 	return u'%s %s' % (self.title, self.pub_date)
+
+    def get_rus_month_with_year(self):
+	return '%s %s' % (dt.MONTH_NAMES[self.pub_date.month-1][1].capitalize(), self.pub_date.year)
 
 """ Specific content items """
 

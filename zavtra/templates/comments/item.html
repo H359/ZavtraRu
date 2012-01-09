@@ -4,7 +4,7 @@
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="32" /></a>
     <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
-    <a href="{% if not stream %}{{ commentable.get_absolute_url }}{% else %}{% url resolve_content_object content_type_id=comment.content_type_id id=comment.object_id %}{% endif %}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
+    <a href="{% if stream %}{% url resolve_content_object content_type_id=comment.content_type_id id=comment.object_id %}{% endif %}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg">
 	<p>

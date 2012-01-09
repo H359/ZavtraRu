@@ -1,4 +1,3 @@
-{% load thumbnail %}
 {% load pytils_dt %}
 {% load pytils_numeral %}
 <dt>
@@ -15,9 +14,7 @@
     <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" width="150" /></a></div>
     {% endif %}
     {% if item.kind == 'image' %}
-    {% thumbnail item.thumbnail "200x200" as im %}
-    <div class="text-center"><img src="{{ im.url }}" width="{{ im.x }}" height="{{ im.y }}" alt="{{ item.title }}" style="margin: {{ im|margin:"200x200" }}" /></div>
-    {% endthumbnail %}
+    <div class="text-center"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" alt="{{ item.title }}" /></div>
     {% endif %}
     <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
     <div class="info">

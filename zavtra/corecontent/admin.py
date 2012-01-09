@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.conf import settings
 
+from imagekit.admin import AdminThumbnail
 from ajaxfields.fields import AjaxForeignKeyField, AjaxManyToManyField
 
 from models import ContentItem, Article, Video, Image, Rubric, FeaturedItems, NewsItem, DailyQuote, ZhivotovIllustration
@@ -94,6 +95,10 @@ class DailyQuoteAdmin(admin.ModelAdmin):
     search_fields = ()
     list_filter = ()
 
+class ZhivotovIllustrationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'micro')
+    micro = AdminThumbnail(image_field='micro')
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Image, ImageAdmin)
@@ -101,4 +106,4 @@ admin.site.register(NewsItem, NewsItemAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(FeaturedItems, FeaturedItemsAdmin)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
-admin.site.register(ZhivotovIllustration)
+admin.site.register(ZhivotovIllustration, ZhivotovIllustrationAdmin)

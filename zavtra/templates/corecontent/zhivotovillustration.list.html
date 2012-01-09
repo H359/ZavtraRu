@@ -1,0 +1,49 @@
+{% extends base_template %}
+
+{% block javascript %}
+{{ block.super }}
+(function(){
+    $('.scrollable').scrollable();
+    var wrap = $('#item_wrap');
+    $('.scrollable .item a').click(function(){
+	var self=$(this);
+        var url = self.attr('href'), img = new Image();
+	img.onload = function(){
+	    wrap.animate({height: img.height + 'px', width: img.width + 'px'});
+	    var prevImg = wrap.find('img');
+	    prevImg.css({zIndex:2});
+	    var newImg = $(img).css({zIndex:1});
+	    wrap.append(newImg);
+	    prevImg.fadeOut(function(){ $(this).remove(); });
+	}
+	img.src = url;
+	return false;
+    }).filter(":first").click();
+})();
+{% endblock %}
+
+{% block content %}
+<section class="container container_16 clearfix">
+    <article class="grid_16 alpha omega block">
+	<header><h1>Иллюстрации Геннадия Животова</h1></header>
+	<div class="content gallery clearfix">
+	    <div class="buttons"><a class="at_left button prev" href="#"><span class="icon icon63"></span></a></div>
+	    <div class="scrollable">
+		<div class="items">
+		{% for item in items %}
+		{% ifchanged item.pub_date.month %}{% if not forloop.first %}</div>{% endif %}<div class="item"><h2>{{ item.get_rus_month_with_year }}</h2><br/>{% endifchanged %}
+		<a title="{{ item.title }}" href="{{ MEDIA_URL }}{{ item.original }}"><img src="{{ MEDIA_URL }}{{ item.micro }}" width="160" height="80" alt="{{ item.title }}" /></a>
+		{% endfor %}
+		    </div>
+		</div>
+	    </div>
+	    <div class="buttons"><a class="at_left button next" href="#"><span class="icon icon64"></span></a></div>
+	</div>
+	<div class="content">
+	    <div id="item_wrap">
+		<img src="{{ STATIC_URL }}img/blank.gif" />
+	    </div>
+	</div>
+    </article>
+</section>
+{% endblock %}

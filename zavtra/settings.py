@@ -117,12 +117,12 @@ INSTALLED_APPS = (
     'pytils',
     'autoslug',
     'corecontent',
-    'sorl.thumbnail',
+    #'sorl.thumbnail',
     'taggit',
     'taggit_autosuggest',
     'voting',
     #'mptt',
-    'treebeard',
+    #'treebeard',
     'mail',
     'social_auth',
     'siteuser',
@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'pipeline',
     'haystack',
     'ajaxfields',
+    'imagekit',
 )
 HAYSTACK_CONNECTIONS = {
     'default': {
