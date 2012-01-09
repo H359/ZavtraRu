@@ -56,7 +56,7 @@ class AjaxFilteringSelect(forms.Select):
     def render(self, name, value, attrs=None):
 	#output = super(AjaxFilteringSelect, self).render(name, value, attrs)
 	if value:
-	    obj = [self.model.objects.get(pk=value)]
+	    obj = self.model.objects.filter(pk=value)
 	else:
 	    obj = None
 	output = '<select name="%s">%s</select>' % (name,
