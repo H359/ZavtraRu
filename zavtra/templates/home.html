@@ -78,8 +78,8 @@
     </article>
 </section>
 <section class="container container_16 clearfix">
-    <article class="grid_16 alpha omega block block-highlighted">
-	<header><h1>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</h1></header>
+    <article id="current-issue" class="grid_16 alpha omega block block-highlighted">
+	<header><h1><a href="#current-issue">Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</a></h1></header>
     </article>
     <article class="grid_4 alpha rubric-info">
         {% for group in newsletter|slice:"0::3" %}

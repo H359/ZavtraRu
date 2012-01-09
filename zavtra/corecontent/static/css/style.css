@@ -280,6 +280,7 @@ footer.buttons .page_mimic {border:none; background:none;}
     background: -ms-linear-gradient(left, #444 30%, white 100%);
 }
 .block-highlighted.block header h1 span.small a { color: white; }
+.block-highlighted.block header h1 a { color: white; text-decoration: none; }
 .cssgradients .block-highlighted.block header h1 span.small a { color: #444; }
 
 .fb-like-box { width: 270px; height: 600px; }
