@@ -143,13 +143,14 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 {%spaceless%}<script type="text/javascript">
 window.vkAsyncInit=function(){VK.Widgets.Group("vk_groups",{mode:1,width:"270",height:"290"},32969466);};
 setTimeout(function(){var el = document.createElement("script");el.type = "text/javascript";el.src = "http://vkontakte.ru/js/api/openapi.js";el.async = true;document.getElementById("vk-root").appendChild(el);}, 0);
+setTimeout(function(){(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";js.async=true;fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));}, 0);
+setTimeout(function(){(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();}, 0);
+setTimeout(function(){!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");}, 0);
+window.___gcfg = {lang: 'ru'};
 $(document).ready(function(){
   $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
-  window.___gcfg = {lang: 'ru'};
-  (function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
   {% block javascript %}{% endblock %}
 });
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>{%endspaceless%}
 </body>
 </html>
