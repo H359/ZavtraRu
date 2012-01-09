@@ -55,12 +55,9 @@ class AjaxFilteringSelectMultiple(forms.SelectMultiple):
 class AjaxFilteringSelect(forms.Select):
     def render(self, name, value, attrs=None):
 	#output = super(AjaxFilteringSelect, self).render(name, value, attrs)
-	if value:
-	    obj = self.model.objects.filter(pk=value)
-	else:
-	    obj = None
+	objs = self.model.objects.filter(pk=value)
 	output = '<select name="%s">%s</select>' % (name,
-						    ''.join(['<option value="%d">%s</option>' % (x.pk, unicode(x)) for x in obj]))
+						    ''.join(['<option value="%d">%s</option>' % (x.pk, unicode(x)) for x in objs]))
 	return mark_safe("""
 	    <div class="selector" id="ajax_filter_selector_for_%s">
 	    <div class="selector-filter"><input type="text"></div>
