@@ -181,7 +181,7 @@ class DailyQuote(models.Model):
 	verbose_name_plural=u'Цитаты дня'
     quote  = models.TextField(verbose_name=u'Цитата')
     source = models.ForeignKey(ContentItem, verbose_name=u'Источник цитаты')
-    day    = models.DateField(verbose_name=u'День', unique=True)
+    day    = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())
 
     def __unicode__(self):
 	return u'%s' % (self.quote)

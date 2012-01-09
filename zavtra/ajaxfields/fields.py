@@ -21,12 +21,18 @@ class AjaxForeignKeyField(forms.ModelChoiceField, AjaxFieldMixin):
 	    (optional) guard - queryset filter dict
 	"""
 	self.model = model
-	qs, args, kwargs = self._prepare_params(*args, **kwargs)
+	_, args, kwargs = self._prepare_params(*args, **kwargs)
+	queryset = self.model.objects.none()
 	widget = AjaxFilteringSelect
 	widget.model = model
 	widget.fields = fields
 	widget.guard = self.guard
-	super(AjaxForeignKeyField, self).__init__(queryset=qs, widget=widget, *args, **kwargs)
+	super(AjaxForeignKeyField, self).__init__(queryset=queryset, widget=widget, *args, **kwargs)
+
+    def clean(self, value):
+	if value in forms.fields.EMPTY_VALUES:
+	    return None
+	return self.model.objects.get(pk=value)
 
 class AjaxManyToManyField(forms.ModelMultipleChoiceField, AjaxFieldMixin):
     def __init__(self, model, fields, *args, **kwargs):

@@ -57,12 +57,11 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     	    {% if request.path != '/search/' %}<form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input placeholder="что вы ищете?" type="search" name="q" /><button type="submit" class="button"><span class="icon icon198"></span><span class="label">найти</span></button></div></form>{% endif %}
     	</div>
         <div class="grid_6">{% spaceless %}
-    	    {% comment %}
     	    {% if quote %}
     	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
-    	    {% endif %}
-    	    {% endcomment %}
+    	    {% else %}
 	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/00/318/22.html">Для победы над "новым мировым порядком", даже для того, чтобы просто бросить ему вызов, мы обязаны осознать всю серьезность положения. Необходимо усилие, колоссальное и в первую очередь духовное, интеллектуальное.</a>&raquo;</blockquote>
+	    {% endif %}
         {% endspaceless %}</div>
         <div class="grid_5 omega text-right">
     	    <aside class="supp">
