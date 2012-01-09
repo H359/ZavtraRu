@@ -32,7 +32,7 @@
             {% endif %}
             <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
         </figure>
-	<article class="red-arrow block clearfix">
+	<article class="red-arrow block clearfix block-highlighted">
 	    <header class="clearfix">
 		<h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1>
 		<div class="buttons at_left"><a class="button prev"><span class="icon icon63"></span></a></div>
@@ -78,7 +78,7 @@
     </article>
 </section>
 <section class="container container_16 clearfix">
-    <article class="grid_16 alpha omega block issue-initiator">
+    <article class="grid_16 alpha omega block block-highlighted">
 	<header><h1>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</h1></header>
     </article>
     <article class="grid_4 alpha rubric-info">
