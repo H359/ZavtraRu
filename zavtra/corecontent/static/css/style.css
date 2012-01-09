@@ -255,18 +255,27 @@ footer.buttons .page_mimic {border:none; background:none;}
 .auth-icon.vkontakte { background-image: url(../img/social/vkontakte.png); }
 .auth-icon.openid { background-image: url(../img/social/openid.png); }
 
-.block-highlighted header h1 {
-    font-family: Helvetica;
-    padding: 6px;
-    font-size: 1.2em;
-    color: #eee;
+.red-arrow.block-highlighted header h1 {
     background: #CF3A2D;
     background: linear-gradient(left, #CF3A2D 30%, white 100%);
     background: -webkit-linear-gradient(left, #CF3A2D 30%, white 100%);
     background: -o-linear-gradient(left, #CF3A2D 30%, white 100%);
     background: -moz-linear-gradient(left, #CF3A2D 30%, white 100%);
     background: -ms-linear-gradient(left, #CF3A2D 30%, white 100%);
+}
+
+.block-highlighted header h1 {
+    font-family: Helvetica;
+    padding: 6px;
+    font-size: 1.2em;
+    color: #eee;
     border-bottom: none;
+    background: #444;
+    background: linear-gradient(left, #444 30%, white 100%);
+    background: -webkit-linear-gradient(left, #444 30%, white 100%);
+    background: -o-linear-gradient(left, #444 30%, white 100%);
+    background: -moz-linear-gradient(left, #444 30%, white 100%);
+    background: -ms-linear-gradient(left, #444 30%, white 100%);
 }
 .block-highlighted.block header h1 span.small a { color: white; }
 .cssgradients .block-highlighted.block header h1 span.small a { color: #444; }
