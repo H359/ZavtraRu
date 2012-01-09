@@ -56,8 +56,8 @@ class AjaxFilteringSelect(forms.Select):
     def render(self, name, value, attrs=None):
 	#output = super(AjaxFilteringSelect, self).render(name, value, attrs)
 	objs = self.model.objects.filter(pk=value)
-	output = '<select name="%s">%s</select>' % (name,
-						    ''.join(['<option value="%d">%s</option>' % (x.pk, unicode(x)) for x in objs]))
+	output = mark_safe('<select name="%s">%s</select>' % (name,
+						    ''.join(['<option value="%d">%s</option>' % (x.pk, unicode(x)) for x in objs])))
 	return mark_safe("""
 	    <div class="selector" id="ajax_filter_selector_for_%s">
 	    <div class="selector-filter"><input type="text"></div>
