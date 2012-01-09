@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.template.loader import render_to_string
 from django.utils.functional import lazy
+from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
 from diggpaginator import DiggPaginator
@@ -29,7 +30,7 @@ oneday = timedelta(days=1)
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date()
+    now = datetime.now().date().replace(year=2011,month=12,day=12)
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
@@ -64,19 +65,29 @@ def home(request):
 	)
     else:
 	newsletter = get_content()
+    def get_latest_rubric(rubric):
+	try:
+	    return ContentItem.objects.filter(enabled=True, rubric=rubric).latest('pub_date')
+	except ContentItem.DoesNotExist:
+	    return None
     illustration = cached(
 	get_illustration,
 	'illustration',
 	duration=6000
     )
     current_items = cached(
-	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
+	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 2),
 	'current_items',
 	duration=120
     )
     neuromir = cached(
-	lambda: ContentItem.objects.filter(rubric=19).latest('pub_date'),
-	'neuromir-latest',
+        lambda: get_latest_rubric(19),
+        'neuromir-latest',
+        duration=60*60*4
+    )
+    zavtra_tv = cached(
+	lambda: get_latest_rubric(19 if settings.DEBUG else 44),
+	'zavtra-tv',
 	duration=60*60*4
     )
     return {
@@ -84,7 +95,8 @@ def home(request):
 	'newsletter': newsletter,
 	'illustration': illustration,
 	'current': current_items,
-	'neuromir': neuromir
+	'neuromir': neuromir,
+	'zavtra_tv': zavtra_tv
     }
 
 class UserView(ListView):

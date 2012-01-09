@@ -142,10 +142,8 @@ article.rubric-info img { max-width: 95%; }
 article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%; }
 /*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
-.news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 550px; margin-bottom: 15px; }
+.news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 400px; margin-bottom: 15px; }
     .news img, .news object, .news iframe { display: none; }
-
-
 
 .twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
 
@@ -230,17 +228,17 @@ footer.buttons .page_mimic {border:none; background:none;}
 .archive th { width: 8em; text-align: left; vertical-align: middle; }
 .archive td { width: 4em; padding: 0.2em 0.5em; vertical-align: middle; }
 
-.red-arrow { margin-top: 1em; }
+.red-arrow {  }
     .red-arrow .content { height: 160px; }
     .red-arrow h1 { color: #CF3A2D; }
 	.red-arrow .content a { text-decoration: none; color: #444; }
 	.red-arrow .content h2 { margin-bottom: 0.1em; }
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
 	.red-arrow .content .inner p { margin: 0 !important; line-height: 1.2 !important; background: none !important; }
-	.red-arrow .content .inner img.real { height: 100px; max-width: none; width: auto; float: none; }
-	.red-arrow .content .inner img { max-width: 25%; width: 25%; float: left; padding-top: 5px; padding-right: 5px; }
+	.red-arrow .content .inner img.real { float: none; }
+	.red-arrow .content .inner img { float: left; padding-top: 5px; padding-right: 5px; }
 
-    .red-arrow .third { float: left; width: 33%; }
+    .red-arrow .half { float: left; width: 50%; }
 
 .highlighted { color: #CF3A2D; }
 

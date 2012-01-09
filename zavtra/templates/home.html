@@ -7,13 +7,6 @@
 {% block javascript %}
 {{ block.super }}
 (function(){
-    var minHeight = parseInt($('div.news').css('minHeight'));
-    var inner = function(){
-	var maxHeight = $('article.top-image').height() - 45;
-	if (maxHeight > minHeight) $('div.news').css({'maxHeight': maxHeight + 'px'});
-    };
-    inner();
-    $(window).resize(inner);
     var scw = $('.scrollable').width();
     $('.scrollable .item').css({width: scw + 'px'});
     $('.items').css({width:'2000em'});
@@ -32,6 +25,19 @@
             {% endif %}
             <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
         </figure>
+    </article>
+    <article class="grid_4 omega block rubric-info">
+	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></span></h1></header>
+	<div class="news">
+	    <dl class="content">
+		{% for item in news %}
+		<dt><small>{{ item.pub_date|ru_strftime }}</small>&nbsp;<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
+		<dd>{{ item.description|safe }}</dd>
+		{% endfor %}
+	    </dl>
+	</div>
+    </article>
+    <article class="grid_8 alpha">
 	<article class="red-arrow block clearfix block-highlighted">
 	    <header class="clearfix">
 		<h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1>
@@ -42,9 +48,9 @@
 	    {% for group in current %}
 	    <div class="item">
 		{% for item in group %}
-		<article class="third">
+		<article class="half">
 		    <div class="content">
-			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:3 }}</a></h2>
+			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:5 }}</a></h2>
 			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
 			<div class="inner {% if item.kind == 'video' or item.kind == 'image'%}text-center{% endif %}">
 			{% if item.kind == 'video' %}
@@ -65,16 +71,15 @@
 	    </div></div>
 	</article>
     </article>
-    <article class="grid_4 omega block rubric-info">
-	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></span></h1></header>
-	<div class="news">
-	    <dl class="content">
-		{% for item in news %}
-		<dt><small>{{ item.pub_date|ru_strftime }}</small>&nbsp;<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
-		<dd>{{ item.description|safe }}</dd>
-		{% endfor %}
-	    </dl>
-	</div>
+    <article class="grid_8 omega">
+	<article class="block clearfix block-highlighted">
+	    <header><h1>Завтра.TV<span class="small"><a href="/content/rubric/zavtratv/">еще</a></span></h1></header>
+	    <div class="content text-center">
+		{% if zavtra_tv %}
+		<img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" height="240" />
+		{% endif %}
+	    </div>
+	</article>
     </article>
 </section>
 <section class="container container_16 clearfix">

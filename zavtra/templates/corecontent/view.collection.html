@@ -3,13 +3,22 @@
 {% block page_title %}{{ block.super }} / {{ title|safe }}{% endblock %}
 
 {% block content %}
+
 <section class="container container_16 clearfix">
     <div class="alpha {% if title.id == 1 %}grid_12{% else %}grid_8{% endif %}">
         <article class="block rubric-info">
     	    <header>
     		<h1>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<span class="small"><a href="{{ rss }}" class="rss">RSS</a></span>{% endif %}</h1>
     	    </header>
-	    <dl class="content">{% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</dl>
+	    <dl class="content">
+	    {% if title.id == 44 %}
+		<p>Уважаемые друзья! Представляем вашему вниманию новуб рубрику сайта &mdash; ЗАВТРА.ТВ. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.ТВ Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>
+		   Список вопросов будет формироваться в <a href="/content/rubric/voprosyi-prohanovu/">этом разделе</a> голосованием посетителей за отобранные модераторами вопросы. Задать свой вопрос А.А. Проханову можно там же.<br/>
+		   В дальнейшем, в рубрике ЗАВТРА.ТВ появятся и иные по формату видеоматериалы, в том числе репортажные.<br/>
+		   Спасибо за ваше участие!
+		</p>
+	    {% endif %}
+	    {% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</dl>
             {% if is_paginated %}
 	    <footer class="buttons">
                 {% if page_obj.has_previous %}<a rel="page" class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
