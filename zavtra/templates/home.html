@@ -113,12 +113,14 @@
 	{% endcomment %}
 	{% if special_project %}
 	<article>
-	    <header><h1>Спецпроект</h1></header>
-	    <div class="content">
-		<h2><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></h2>
-		{% if special_project.subtitle %}<h3><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.subtitle|safe }}</a></h3>{% endif %}
-		<div><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></div>
-	    </div>
+	    <header><h1>Спецпроект<span class="small"><a href="/content/rubric/spetsproekt-2/">еще</a></span></h1></header>
+	    <dl class="content">
+		<dt>
+		    <h2><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></h2>
+		    {% if special_project.subtitle %}<h3><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.subtitle|safe }}</a></h3>{% endif %}
+		</dt>
+		<dd><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></dd>
+	    </dl>
 	</article>
 	{% endif %}
 	<article>
