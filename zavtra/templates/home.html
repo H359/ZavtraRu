@@ -115,9 +115,9 @@
 	<article>
 	    <header><h1>Спецпроект</h1></header>
 	    <div class="content">
-		<h2>{{ special_project.title|safe }}</h2>
-		{% if special_project.subtitle %}<h3>{{ special_project.subtitle|safe }}</h3>{% endif %}
-		<div>{{ special_project.description|safe }}</div>
+		<h2><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></h2>
+		{% if special_project.subtitle %}<h3><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.subtitle|safe }}</a></h3>{% endif %}
+		<div><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></div>
 	    </div>
 	</article>
 	{% endif %}
