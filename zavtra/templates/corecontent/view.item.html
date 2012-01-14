@@ -15,6 +15,7 @@
                 <time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time>
                 {{ item.title|safe }}
             </h1>
+            {% if item.subtitle %}<h2>{{ item.subtitle|safe }}</h2>{% endif %}
         </header>
 	    <div class="content">
             {% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
