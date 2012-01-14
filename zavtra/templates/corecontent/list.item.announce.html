@@ -1,7 +1,7 @@
 {% load pytils_dt %}
 {% load pytils_numeral %}
 <dt>
-    <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>
+    <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>{% if item.subtitle %}<br/><small>{{ item.subtitle }}</small>{% endif %}
     <div class="details">
         {{ item.pub_date|ru_strftime }}
         {% for author in item.authors_all %}
