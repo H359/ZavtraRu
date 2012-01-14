@@ -76,7 +76,7 @@ def home(request):
 	duration=6000
     )
     current_items = cached(
-	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 2),
+	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
 	'current_items',
 	duration=120
     )
@@ -90,13 +90,19 @@ def home(request):
 	'zavtra-tv',
 	duration=60*60*4
     )
+    special_project = cached(
+	lambda: get_latest_rubric(47),
+	'special-project',
+	duration=60*60*4
+    )
     return {
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
 	'current': current_items,
 	'neuromir': neuromir,
-	'zavtra_tv': zavtra_tv
+	'zavtra_tv': zavtra_tv,
+	'special_project': special_project
     }
 
 class UserView(ListView):

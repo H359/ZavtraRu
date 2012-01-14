@@ -37,7 +37,7 @@
 	    </dl>
 	</div>
     </article>
-    <article class="grid_8 alpha">
+    <article class="grid_12 alpha">
 	<article class="red-arrow block clearfix block-highlighted">
 	    <header class="clearfix">
 		<h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1>
@@ -48,7 +48,7 @@
 	    {% for group in current %}
 	    <div class="item">
 		{% for item in group %}
-		<article class="half">
+		<article class="third">
 		    <div class="content">
 			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:5 }}</a>{% if item.subtitle %}<br/><a href="{{ item.get_absolute_url }}"><small>{{ item.subtitle }}</small></a>{% endif %}</h2>
 			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
@@ -71,7 +71,7 @@
 	    </div></div>
 	</article>
     </article>
-    <article class="grid_8 omega">
+    <article class="grid_4 omega">
 	<article class="block clearfix block-highlighted">
 	    <header><h1>Завтра.LIVE<span class="small"><a href="/content/rubric/zavtratv/">еще</a></span></h1></header>
 	    <div class="content text-center">
@@ -102,6 +102,7 @@
         {% endfor %}
     </article>
     <article class="grid_4 omega block">
+	{% comment %}
 	<aside class="content">
 	    <p class="text-center">
 	        <a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова"><img src="{{ STATIC_URL }}img/banners/kupon1.gif" alt="Купон на Проханова" /></a>
@@ -109,6 +110,17 @@
 		<a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова">Купон на Проханова</a>
 	    </p>
 	</aside>
+	{% endcomment %}
+	{% if special_project %}
+	<article>
+	    <header><h1>Спецпроект</h1></header>
+	    <div class="content">
+		<h2>{{ special_project.title|safe }}</h2>
+		{% if special_project.subtitle }}<h3>{{ special_project.subtitle|safe }}</h3>{% endif %}
+		<div>{{ special_project.description }}</div>
+	    </div>
+	</article>
+	{% endif %}
 	<article>
 	    <header><h1>Свежий номер в PDF</h1></header>
 	    <div class="content text-center">
