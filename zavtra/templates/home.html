@@ -50,7 +50,7 @@
 		{% for item in group %}
 		<article class="half">
 		    <div class="content">
-			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:5 }}</a></h2>
+			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:5 }}</a>{% if item.subtitle %}<br/><a href="{{ item.get_absolute_url }}"><small>{{ item.subtitle }}</small></a>{% endif %}</h2>
 			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
 			<div class="inner {% if item.kind == 'video' or item.kind == 'image'%}text-center{% endif %}">
 			{% if item.kind == 'video' %}
