@@ -35,7 +35,9 @@
                 "height",
                 "src",
                 "type",
-                "width"
+                "width",
+                "flashvars",
+                "pluginspage"
             ]
         };
 
