@@ -142,7 +142,7 @@ article.rubric-info img { max-width: 95%; }
 article.of-kind-text .content { /*max-width: 36em; min-width: 25em;*/ width: 95%; }
 /*article.of-kind-text p + p:first-letter { margin-left: 1em; }*/
 
-.news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 400px; margin-bottom: 15px; }
+.news { overflow-y: scroll; overflow-x: hidden; min-height: 300px; max-height: 350px; margin-bottom: 15px; }
     .news img, .news object, .news iframe { display: none; }
 
 .twy { text-align: center; width: 270px; overflow-x: hidden; margin: 0 auto; }
@@ -239,7 +239,7 @@ footer.buttons .page_mimic {border:none; background:none;}
 	.red-arrow .content .inner img { float: left; padding-top: 5px; padding-right: 5px; max-width: 50%; }
 	.red-arrow .content .inner embed { display: none; }
 
-    .red-arrow .half { float: left; width: 50%; }
+    .red-arrow .third { float: left; width: 33%; }
 
 .highlighted { color: #CF3A2D; }
 
