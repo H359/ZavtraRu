@@ -236,7 +236,7 @@ footer.buttons .page_mimic {border:none; background:none;}
 	.red-arrow .content .inner { text-align: left; padding: 5px 0; }
 	.red-arrow .content .inner p { margin: 0 !important; line-height: 1.2 !important; background: none !important; }
 	.red-arrow .content .inner img.real { float: none; max-width: 50%; }
-	.red-arrow .content .inner img { float: left; padding-top: 5px; padding-right: 5px; max-width: 50%; }
+	.red-arrow .content .inner img { float: left; padding-top: 5px; padding-right: 5px; max-width: 50%; width: 50%; }
 	.red-arrow .content .inner embed { display: none; }
 
     .red-arrow .third { float: left; width: 33%; }
