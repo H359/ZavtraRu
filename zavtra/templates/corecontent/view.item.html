@@ -1,6 +1,6 @@
 {% extends base_template %}
 
-{% block meta_author %}{% if item.authors_all %}{% for author in item.authors_all %}{{ author.get_full_name }}{% endfor %}{% else %}{{ block.super }}{% endif %}{% endblock %}
+{% block meta_author %}{% if item.authors_all %}{% for author in item.authors_all %}{{ author.get_full_name }}{% if not forloop.last %},{% endif %}{% endfor %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block meta_extra %}{{ block.super }}{% spaceless %}
 <meta property="og:title" content="{{ item.title|safe }}" />
 {% if item.kind == 'video' %}
