@@ -12,6 +12,7 @@
     <meta name="author" content="{% block meta_author %}Редакция газеты Завтра{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="yandex-verification" content="79bffe9a083206fe" />
+    {% block meta_extra %}{% endblock %}
     <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru{% url corecontent.rss.latest %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
     {% load compressed %}
