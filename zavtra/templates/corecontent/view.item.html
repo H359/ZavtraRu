@@ -3,6 +3,8 @@
 {% block meta_author %}{% if item.authors_all %}{% for author in item.authors_all %}{{ author.get_full_name }}{% if not forloop.last %},{% endif %}{% endfor %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block meta_extra %}{{ block.super }}{% spaceless %}
 <meta property="og:title" content="{{ item.title|safe }}" />
+<meta property="og:locale" content="ru" />
+<meta property="og:url" content="http://zavtra.ru{{ item.get_absolute_url }}" />
 {% if item.kind == 'video' %}
 <meta property="og:type" content="video.other" />
 <meta property="og:image" content="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" />
