@@ -10,7 +10,7 @@
 <meta property="og:image" content="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" />
 <meta property="og:video" content="{% spaceless %}{{ item.content }}{% endspaceless %}" />
 {% else %}
-<meta property="og:type" content="aritcle" />
+<meta property="og:type" content="article" />
 {% if item.authors_all %}{% for author in item.authors_all %}
 <meta property="og:article:author" content="{{ author.get_full_name }}" />
 {% endfor %}{% endif %}
