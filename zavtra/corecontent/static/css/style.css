@@ -126,8 +126,8 @@ h1.article { font-size: 1.15em; text-transform: uppercase; padding-bottom: 5px; 
 
 .top-image { margin-top: 10px; /*min-width: 720px;*/ }
     .top-image figure { display: block; margin: 0 auto; text-align: center; }
-	.top-image figure img { width: 95%; }
-	.top-image figure figcaption { text-align: right; width: 98%; }
+	.top-image figure img { width: 100%; }
+	.top-image figure figcaption { text-align: right; width: 100%; }
 
 article {}
     article.of-kind-text p, article.of-kind-image p, article.of-kind-video p, article.of-kind- { margin-bottom: 1em; font-size: 16px; }
