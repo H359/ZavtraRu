@@ -3,7 +3,8 @@
 <dt class="comment" id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth }}em;"{% endif %}>
     {% if comment.enabled %}
     <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="32" /></a>
-    <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}{% if not comment.author.is_active %}&nbsp;[деактивирован]{% endif %}</a>
+    <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
+    {% if not comment.author.is_active %}&nbsp;[деактивирован]&nbsp;{% endif %}
     <a href="{% if stream %}{% url resolve_content_object content_type_id=comment.content_type_id id=comment.object_id %}{% endif %}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
     <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
     <div class="clearfix msg">
