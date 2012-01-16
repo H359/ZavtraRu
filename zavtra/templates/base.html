@@ -1,10 +1,6 @@
-<!doctype html>
-<!--[if lt IE 7 ]> <html lang="ru" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="ru" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="ru" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="ru" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
-<head>
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
     <meta charset="utf-8" />
     <title>{% block page_title %}Газета &laquo;Завтра&raquo;{% endblock %}</title>
     <meta name="keywords" content="{% block meta_keywords %}проханов,свежий номер{% endblock %}" />
@@ -15,18 +11,18 @@
     {% block meta_extra %}{% endblock %}
     <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru{% url corecontent.rss.latest %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
+    <style type="text/css">body { padding-top: 60px; }</style>
+    {% comment %}
     {% load compressed %}
     {% compressed_css 'main' %}
-    {% comment %}
-    <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css?v=1488" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/colorbox.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/forms.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/css3-buttons.css" />
     {% endcomment %}
     {% block css %}{% endblock %}
-    <script src="{{ STATIC_URL }}js/modernizr.min.js"></script>
     {% block js_extra_head %}{% endblock %}
     <script>
 var _gaq = _gaq || [];
@@ -50,76 +46,77 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt="">
 </noscript>
 <!--/ tns-counter.ru -->
-{% load utils %}{% load pytils_dt %}
+{% load utils %}{% load pytils_dt %}{% load pytils_numeral %}
 {% block body %}
-    <header class="container container_16 clearfix">
-	<div class="grid_5 alpha">
-    	    <figure><a href="/"><img src="{{ STATIC_URL }}img/logo.gif" width="278" height="60" alt="Логотип газеты Завтра"></a></figure>
-    	    {% if request.path != '/search/' %}<form method="get" action="{% url search %}" class="top-fig search-form"><div class="buttons"><input placeholder="что вы ищете?" type="search" name="q" /><button type="submit" class="button"><span class="icon icon198"></span><span class="label">найти</span></button></div></form>{% endif %}
-    	</div>
-        <div class="grid_6">{% spaceless %}
-    	    {% if quote %}
-    	    <blockquote class="topquote">&laquo;<a href="{{ quote.get_absolute_url }}">{{ quote.quote }}</a>&raquo;</blockquote>
-    	    {% else %}
-	    <blockquote class="topquote">&laquo;<a href="/cgi/veil/data/zavtra/00/318/22.html">Для победы над "новым мировым порядком", даже для того, чтобы просто бросить ему вызов, мы обязаны осознать всю серьезность положения. Необходимо усилие, колоссальное и в первую очередь духовное, интеллектуальное.</a>&raquo;</blockquote>
-	    {% endif %}
-        {% endspaceless %}</div>
-        <div class="grid_5 omega text-right">
-    	    <aside class="supp">
-    		<a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a>&nbsp;<a href="/denlit/index.html">Архив &laquo;День литературы&raquo;</a>
-    	    </aside>
-    	    <div style="font-size: 1.1em;">
-    		{% if request.user.is_authenticated %}
-    		Приветствуем, {{ request.user }}! <a href="/logout/">Выход</a>.
-    		{% if request.user.is_staff %}
-    		<div class="buttons">
-    		    <a style="float:right;font-size:1.2em;" href="{% url editorial.view.index %}" class="button red"><span class="label"><strong>Редационный блог</strong></span></a>
-    		</div>
-    		<p><a href="/?next_number=1">Новый номер</a>&nbsp;&nbsp;&nbsp;<a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></p>
-    		{% endif %}
-    		{% else %}
-    		<div class="buttons">
-    		    <a style="float:right;font-size:1.2em;" class="button green" rel="inline" href="{% url login %}"><span class="label">Войти</span></a>
-    		    <a style="float:right;font-size:1.2em;" class="button green" href="{% url accounts.register %}"><span class="label">Регистрация</span></a>
-    		</div>
-    		{% endif %}
-    	    </div>
-        </div>
-    </header>
-    <nav class="container container_16 clearfix top-nav">
-        <div class="grid_16 alpha omega">
-            <ul class="primary">
-               <li><a href="/content/rubric/novosti/">Новости</a></li>
-               {% for rubric in top_rubrics %}
-               <li><a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a></li>
-               {% endfor %}
-            </ul>
-            {% if featured|length %}
-            <ul class="secondary">
-        	<li><span><a href="{% url corecontent.view.featured_index %}">Каждый день:</a></span></li>
-                {% for item in featured %}
-                <li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-    </nav>
-    <div id="main" role="main">{% block content %}{% endblock %}</div>
-    <footer class="container container_16 clearfix">
-        <div class="grid_16 alpha omega">
-            <p class="content">
-        	&copy;&nbsp;1996&ndash;{% now "Y" %} газета &laquo;Завтра&raquo;<br/>
-        	Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a>, twitter: <a href="https://twitter.com/ZavtraRu">@ZavtraRu</a>, rss: <a class="rss" href="http://zavtra.ru{% url corecontent.rss.latest %}">общая</a>&nbsp;&nbsp;&nbsp;<a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a>, электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.<br/>
-        	Адрес редакции: 119146, Москва, Фрунзенская наб., 18&ndash;60. Телефон: (495) 726-54-83.
-            </p>
-        </div>
-    </footer>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="/"><img src="{{ STATIC_URL }}img/logo_inv.png" /></a>
+      <ul class="nav">
+        <!--<li><a href="/">Главная</a></li>-->
+        <!--<li><a href="">Текущий выпуск</a></li>-->
+        <li><a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a></li>
+        <li><a href="/denlit/index.html">Архив &laquo;Дня литературы&raquo;</a></li>
+      </ul>
+      <form class="pull-left" action="{% url search %}">
+        <input type="text" name="q" placeholder="Поиск..." />
+      </form>
+      <ul class="nav secondary-nav">
+        {% if request.user.is_authenticated %}
+        <li class="dropdown">
+    	  <a href="#" class="dropdown-toggle">{{ request.user.get_full_name }}.</a>
+    	  <ul class="dropdown-menu">
+    	    <li><a href="{% url logout %}">Выйти</a></li>
+    	  </ul>
+    	</li>
+    	{% else %}
+        <li><a href="{% url login %}">Войти</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="content">
+    <ul class="unstyled rubrics topbar-inner">
+	{% for item in top_rubrics %}
+	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+	{% endfor %}
+    </ul>
+    <ul class="unstyled featured well">
+	<li class="first"><a href="{% url corecontent.view.featured_index %}">Каждый день:</a></li>
+	{% for item in featured %}
+	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title|title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <div class="content">{% block content %}{% endblock %}</div>
+  <div class="sidebar">
+    <div class="well">
+      <h3>Новости</h3>
+      <ul class="unstyled news rubric">
+        {% for item in news %}
+        <li class="clearfix">
+          <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
+          <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
+          <div class="txt">{{ item.description|safe }}</div>
+          <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
     
 {% block javascript_library %}
+{% comment %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
 {% compressed_js 'main' %}
+{% endcomment %}
 {% endblock %}
 <!--[if lt IE 7 ]>
 <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
@@ -140,6 +137,10 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <!-- /Yandex.Metrika counter --> 
 <div id="fb-root"></div><div id="vk-root"></div>
 {%comment%}<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>{%endcomment%}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
+<script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
 {%spaceless%}<script type="text/javascript">
 window.vkAsyncInit=function(){VK.Widgets.Group("vk_groups",{mode:1,width:"270",height:"290"},32969466);};
 setTimeout(function(){var el = document.createElement("script");el.type = "text/javascript";el.src = "http://vkontakte.ru/js/api/openapi.js";el.async = true;document.getElementById("vk-root").appendChild(el);}, 0);
@@ -148,7 +149,9 @@ setTimeout(function(){(function() {var po = document.createElement('script'); po
 setTimeout(function(){!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";js.async=true;fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");}, 0);
 window.___gcfg = {lang: 'ru'};
 $(document).ready(function(){
-  $('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
+  //$('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
+  $('.topbar').dropdown();
+  if (window.modal_bootstrap) window.modal_bootstrap();
   {% block javascript %}{% endblock %}
 });
 </script>{%endspaceless%}

@@ -3,157 +3,57 @@
 {% load utils %}
 {% load minipoll_tags %}
 {% load pytils_dt %}
+{% load pytils_numeral %}
 
 {% block javascript %}
-{{ block.super }}
-(function(){
-    var scw = $('.scrollable').width();
-    $('.scrollable .item').css({width: scw + 'px'});
-    $('.items').css({width:'2000em'});
-    var scbl = $('.scrollable').scrollable({circular: true});
-})();
 {% endblock %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="top-image grid_12 alpha">
-        <figure>
-    	    {% if illustration %}
-    	    <a title="{{ illustration.title }}" rel="inline" href="{{ MEDIA_URL }}{{ illustration.original }}"><img src="{{ MEDIA_URL }}{{ illustration.thumbnail }}"></a>
-	    {% else %}
-            <a rel="inline" href="{{ STATIC_URL }}img/givot_big.jpg"><img src="{{ STATIC_URL }}img/givot_sra.jpg"></a>
-            {% endif %}
-            <figcaption><a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></figcaption>
-        </figure>
-    </article>
-    <article class="grid_4 omega block rubric-info">
-	<header><h1>Новости<span class="small"><a href="{% url corecontent.view.rubric slug='novosti' %}">ещё</a></span></h1></header>
-	<div class="news">
-	    <dl class="content">
-		{% for item in news %}
-		<dt><small>{{ item.pub_date|ru_strftime }}</small>&nbsp;<a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
-		<dd>{{ item.description|safe }}</dd>
-		{% endfor %}
-	    </dl>
-	</div>
-    </article>
-    <article class="grid_12 alpha">
-	<article class="red-arrow block clearfix block-highlighted">
-	    <header class="clearfix">
-		<h1>Красная строка<span class="small"><a href="{% url corecontent.view.unpublished_view %}">еще</a></span></h1>
-		<div class="buttons at_left"><a class="button prev"><span class="icon icon63"></span></a></div>
-		<div class="buttons at_right"><a class="button next"><span class="icon icon64"></span></a></div>
-	    </header>
-	    <div class="scrollable"><div class="items">
-	    {% for group in current %}
-	    <div class="item">
-		{% for item in group %}
-		<article class="third">
-		    <div class="content">
-			<h2><a href="{{ item.get_absolute_url }}">{{ item.title|safe|truncatewords_html:5 }}</a>{% if item.subtitle %}<br/><a href="{{ item.get_absolute_url }}"><small>{{ item.subtitle }}</small></a>{% endif %}</h2>
-			<div><small>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</small></div>
-			<div class="inner {% if item.kind == 'video' or item.kind == 'image'%}text-center{% endif %}">
-			{% if item.kind == 'video' %}
-			<a href="{{ item.get_absolute_url }}"><img class="real" src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" /></a>
-			{% endif %}
-			{% if item.kind == 'image' %}
-			<a href="{{ item.get_absolute_url }}"><img class="real" src="{{ MEDIA_URL }}{{ item.thumbnail }}" /></a>
-			{% endif %}
-			{% if item.kind == 'text' %}
-			<a href="{{ item.get_absolute_url }}">{{ item.description|safe|truncatewords_html:25 }}</a>
-			{% endif %}
-			</div>
-		    </div>
-		</article>
-		{% endfor %}
-	    </div>
-	    {% endfor %}
-	    </div></div>
-	</article>
-    </article>
-    <article class="grid_4 omega">
-	<article class="block clearfix block-highlighted">
-	    <header><h1>Завтра.LIVE<span class="small"><a href="/content/rubric/zavtratv/">еще</a></span></h1></header>
-	    <div class="content text-center">
-		{% if zavtra_tv %}
-		<a href="{{ zavtra_tv.get_absolute_url }}" title="{{ zavtra_tv.title }}"><img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" width="240" /></a>
-		{% endif %}
-	    </div>
-	</article>
-    </article>
-</section>
-<section class="container container_16 clearfix">
-    <article id="current-issue" class="grid_16 alpha omega block block-highlighted">
-	<header><h1><a href="#current-issue">Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</a></h1></header>
-    </article>
-    <article class="grid_4 alpha rubric-info">
-        {% for group in newsletter|slice:"0::3" %}
-        {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
+  <div class="row">
+    <div class="first span12 last">
+      {% with source=quote.get_source %}
+      <blockquote class="top-quote">
+        <a href="{{ source.get_absolute_url }}">{{ quote.quote }}</a>
+        {% if source.authors_all %}<small>{% for author in source.authors_all %}
+        {{ author.get_full_name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}</small>{% endif %}
+      </blockquote>
+      {% endwith %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 rubric">
+      <figure class="top-illustration">
+        <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" width="600" height="262" />
+        <figcaption>&laquo;{{ illustration.title }}&raquo;, <a href="#">Геннадий Животов</a></figcaption>
+      </figure>
+      <h2>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</h2>
+      {% for group in newsletter %}
+      {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
+      {% endfor %}
+    </div>
+    <div class="span4 rubric last">
+      {% if zavtra_tv %}
+      <div class="specialitaet">
+          <h3><a href="/content/rubric/zavtratv/">Завтра.LIVE</a></h3>
+          <a href="{{ zavtra_tv.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" /></a>
+          <h5><a href="{{ zavtra_tv.get_absolute_url }}">{{ zavtra_tv.title|safe }}</a> </h5>
+          <a href="{{ zavtra_tv.get_absolute_url }}#comments" class="pull-right">{{ zavtra_tv.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+      </div>
+      {% endif %}
+      <h3>Рейтинг слухов</h3>
+      <div>{% display_last_poll %}</div>
+      <h3>Красная строка</h3>
+      <ul class="unstyled">
+        {% for item in current %}
+        <li class="clearfix">
+          <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
+          <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
+          <div class="txt">{{ item.description|safe }}</div>
+          <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+        </li>
         {% endfor %}
-    </article>
-    <article class="grid_4 rubric-info">
-        {% for group in newsletter|slice:"1::3" %}
-        {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
-        {% endfor %}
-    </article>
-    <article class="grid_4 rubric-info">
-        {% for group in newsletter|slice:"2::3" %}
-        {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
-        {% endfor %}
-    </article>
-    <article class="grid_4 omega block">
-	{% comment %}
-	<aside class="content">
-	    <p class="text-center">
-	        <a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова"><img src="{{ STATIC_URL }}img/banners/kupon1.gif" alt="Купон на Проханова" /></a>
-		<br />
-		<a href="{{ STATIC_URL }}img/banners/kupon.gif" title="Купон на Проханова">Купон на Проханова</a>
-	    </p>
-	</aside>
-	{% endcomment %}
-	{% if special_project %}
-	<article class="rubric-info">
-	    <header><h1>Спецпроект<span class="small"><a href="/content/rubric/spetsproekt-2/">еще</a></span></h1></header>
-	    <dl class="content">
-		<dt><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></dt>
-		<dd><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></dd>
-	    </dl>
-	</article>
-	{% endif %}
-	<article>
-	    <header><h1>Свежий номер в PDF</h1></header>
-	    <div class="content text-center">
-		<a href="{{ MEDIA_URL }}content/pdfs/2PDF.zip"><img src="{{ MEDIA_URL }}content/pdfs/2.jpg" width="220" height="325" /></a>
-	    </div>
-	</article>
-        <article>
-            <header><h1>Рейтинг слухов</h1></header>
-            <div class="content">{% display_last_poll %}</div>
-        </article>
-        <article>
-            <header><h1>Присоединяйся</h1></header>
-            <div class="content text-center">
-		<div class="g-plusone" data-annotation="inline" data-width="270" data-href="http://zavtra.ru"></div>
-        	{%comment%}<p class="buttons text-left"><a class="button" href="http://www.yandex.ru/?add=84713&amp;from=promocode">Виджет Яндекса</a></p>{%endcomment%}
-        	<div class="twy"><a href="https://twitter.com/ZavtraRu" class="twitter-follow-button" data-show-count="true" data-lang="ru" data-size="large">Следуй за @ZavtraRu</a></div>
-		{%comment%}<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fzavtraru&amp;width=270&amp;height=427&amp;colorscheme=light&amp;show_faces=false&amp;border_color&amp;stream=true&amp;header=true&amp;appId=175357809210274" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:270px; height:427px;" allowTransparency="true"></iframe>{%endcomment%}
-		<div class="fb-like-box" data-href="http://facebook.com/zavtraru" data-width="270" data-height="600" data-show-faces="true" data-stream="true" data-header="true"></div>
-                <div id="vk_groups"></div>
-            </div>
-        </article>
-        <article>
-    	    <header><h1>Нейромир<span class="small"><a href="http://zavtra.ru/content/rubric/nejromir-tv/" title="Нейромир-ТВ">ещё</a></span></h1><header>
-    	    <dl class="content">
-    		<dt><a href="{{ neuromir.get_absolute_url }}">{{ neuromir.title|safe }}</a></dt>
-    		<dd class="text-center"><br/><a href="{{ neuromir.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ neuromir.get_video_id }}/1.jpg" /></a></dd>
-    	    </dl>
-        </article>
-        <aside class="block">
-            <header><h1>Наши друзья</h1></header>
-            <div class="content text-center">
-        	<a rel="nofollow" href="http://id-dostoinstvo.ru/page/51.html"><img src="{{ STATIC_URL }}img/banners/calendar.gif" /></a>
-            </div>
-        </aside>
-    </article>
-</section>
+      </ul>
+    </div>
+  </div>
 {% endblock %}

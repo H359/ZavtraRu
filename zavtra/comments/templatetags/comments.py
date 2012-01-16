@@ -6,7 +6,7 @@ from zavtra.comments.models import Comment
 
 register = template.Library()
 
-@register.inclusion_tag('comments.list.html', takes_context=True)
+@register.inclusion_tag('comments/list.html', takes_context=True)
 def get_comments_for(context, obj):
     ctype = ContentType.objects.get_for_model(obj.__class__)
     initial_data = {

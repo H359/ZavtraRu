@@ -1,34 +1,18 @@
-{% load pytils_dt %}
-{% load utils %}
-<dt class="comment" id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth }}em;"{% endif %}>
-    {% if comment.enabled %}
-    <a class="gravatar" href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar }}" width="32" /></a>
-    <a href="{{ comment.author.get_absolute_url }}"">{{ comment.get_author }}</a>
-    <a href="{% if stream %}{% url resolve_content_object content_type_id=comment.content_type_id id=comment.object_id %}{% endif %}#comment-{{ comment.id }}" title="Ссылка на этот комментарий">#</a>
-    <time pubdate="pubdate" datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}</time>
-    <div class="clearfix msg">
-	<p>
-	{% if comment.comment|length > 600 %}
-	{{ comment.comment|slice:"0:600"|linebreaksbr }}
-	<br/><a href="#" class="supress-long-toggle">Показать остальное.</a><span class="supress-long" style="display:none">{{ comment.comment|slice:"600:"|linebreaksbr }}</span>
-	{% else %}
-	{{ comment.comment|linebreaksbr }}
-	{% endif %}
-	</p>
-    </div>{%spaceless%}{% if request.user.is_authenticated %}
-    <div class="buttons">
-	{% if not stream %}<a class="button reply" href="#">ответить</a>{% endif %}
-	{% if request.user.is_staff and perms.comments.moderate %}
-	&nbsp;&nbsp;&nbsp;&nbsp;<a class="button red delete" href="#"><span class="icon icon56"></span><span class="label">скрыть</span></a>
-	{% endif %}
-    </div>
-    {% endif %}{%endspaceless%}
-    {% else %}
-    {% if request.user.is_authenticated and request.user.is_staff and perms.comments.moderate %}
-    <div style="border: 2px dashed red" class="clearfix msg"><p>{{ comment.comment|linebreaksbr }}</p></div>
-    <div>комментарий скрыт</div>
-    {% else %}
-    <em>комментарий скрыт модератором</em>
-    {% endif %}
-    {% endif %}
-</dt>
+{% load pytils_dt %}{% load utils %}
+<li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth }}em;"{% endif %}>
+    <article class="comment">
+	<span class="avatar"><img src="{{ comment.author.avatar }}" width="32" /></span>
+	<div class="inner">
+	    <div class="body clearfix">
+		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>:</div>
+		<div class="text">{% if comment.enabled %}{{ comment.comment }}{% else %}комментарий скрыт{% endif %}</div>
+		<div class="actions">
+    		    <div class="btn small primary">Ответить</div>
+    		    {% if request.user.is_authenticated and request.user.is_staff and perms.comments.moderate %}
+    		    <div class="btn small danger" data-controls-modal="hide-modal" data-backdrop="static">Скрыть</div>
+    		    {% endif %}
+		</div>
+	    </div>
+	</div>
+    </article>
+</li>

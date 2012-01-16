@@ -1,24 +1,50 @@
-{% load pytils_dt %}
 <div class="comments">
+    <h3>Комментарии</h3>
     <div class="content">
-        <ul>
-            {% for comment in comments %}
-    	    {% include 'comments/item.html' %}
+        <ul id="comments" class="unstyled">
+	    {% for comment in comments %}
+            {% include 'comments/item.html' %}
             {% endfor %}
         </ul>
-        <p>Возможность комментирования временно отключена. Приносим извинения за неудобства. Планируемое время включения комментирования 16:00 по московскому времени.</p>
-        {%comment%}
         {% if request.user.is_authenticated %}
-        <form method="post" action="{% url comments.add %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <p class="buttons">
-                <button type="submit" class="button"><span class="label">Отправить</span></button>
-            </p>
-        </form>
+        <article class="comment-form comment">
+    	    <span class="avatar"><img src="{{ request.user.avatar }}" width="32" /></span>
+    	    <form class="inner" method="post" action="{% url comments.add %}">
+    		<fieldset class="body">
+    		    <h4>Прокомментировать</h4>
+    		    <div>{% csrf_token %}</div>
+    		    {% for field in form %}
+    		    {% if field.is_hidden %}
+    		    <div>{{ field }}</div>
+		    {% else %}
+		    <div class="clearfix">
+    			{{ field.label_tag }}
+    			<div class="input">
+    			    {{ field }}
+    			    {% if field.help_text %}<span class="help-block">{{ field.help_text|safe }}</span>{% endif %}
+    			</div>
+    		    </div>
+    		    {% endif %}
+    		    {% endfor %}
+    		    <div class="actions">
+    			<input type="submit" class="btn primary"  value="Отправить" />
+    		    </div>
+    		</fieldset>
+    	    </form>
+        </article>
         {% else %}
-        <p>Чтобы иметь возможность оставлять комментарии, вам нужно <a rel="inline" href="{% url login %}">войти в свою учетную запись (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала)</a>  или <a href="{% url accounts.register %}">зарегистрировать её</a>, если у вас таковой еще нет.</p>
+	<p>Чтобы иметь возможность оставлять комментарии, вам нужно <a rel="inline" href="{% url login %}">войти в свою учетную запись (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала)</a>  или <a href="{% url accounts.register %}">зарегистрировать её</a>, если у вас таковой еще нет.</p>
         {% endif %}
-        {%endcomment%}
     </div>
 </div>
+{% if request.user.is_authenticated and request.user.is_staff and perms.comments.moderate %}
+<div id="hide-modal" class="modal hide fade">
+    <div class="modal-header">Вы действительно хотите скрыть этот комментарий?</div>
+    <div class="modal-body">Скрытие комментариев сохраняет подветку.<br/>Это действие обратимо.</div>
+    <div class="modal-footer">
+	<a href="#" class="btn primary">Да</div>
+	<a href="#" class="btn">Нет</div>
+    </div>
+</div>
+{% endif %}
+<script>window.modal_bootstrap = function(){ $('#hide-modal').modal(); };</script>

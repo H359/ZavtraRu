@@ -30,7 +30,7 @@ oneday = timedelta(days=1)
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date()
+    now = datetime.now().date().replace(year=2011,month=12,day=22)
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
@@ -41,11 +41,11 @@ def home(request):
 	no_cache = True
     num = 1 + (wstart - datetime(year=wstart.year,day=1,month=1).date()).days / 7
     def get_illustration():
-	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
-	    return p[0]
-	except IndexError:
-	    return None
+	    zh = ZhivotovIllustration.objects.latest('pub_date')
+	except ZhivotovIllustration.DoesNotExist:
+	    zh = None
+	return zh
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
 	    enabled=True, rubric__on_main=True, pub_date__gte = wstart, pub_date__lt = wend, published=True
@@ -65,9 +65,9 @@ def home(request):
 	)
     else:
 	newsletter = get_content()
-    def get_latest_rubric(rubric):
+    def get_latest_rubric(rubric, kind='video'):
 	try:
-	    return ContentItem.objects.filter(enabled=True, rubric=rubric).latest('pub_date')
+	    return ContentItem.objects.filter(kind=kind, enabled=True, rubric=rubric).latest('pub_date')
 	except ContentItem.DoesNotExist:
 	    return None
     illustration = cached(
@@ -76,7 +76,7 @@ def home(request):
 	duration=6000
     )
     current_items = cached(
-	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
+	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
 	'current_items',
 	duration=120
     )

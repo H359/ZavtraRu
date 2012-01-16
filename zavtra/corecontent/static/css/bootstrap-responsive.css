@@ -1,0 +1,246 @@
+/* Mostly based on the 1140px Grid V2 by Andy Taylor \ http://cssgrid.net
+
+/* Column percentages */
+.container-fluid {
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.container-fluid .span1, .container-fluid .span2,
+.container-fluid .span3, .container-fluid .span4,
+.container-fluid .span5, .container-fluid .span6,
+.container-fluid .span7, .container-fluid .span8,
+.container-fluid .span9, .container-fluid .span10, 
+.container-fluid .span11 {
+  margin-right: 3.8%;
+  margin-left: 0;
+  float: left;
+  min-height: 1px; }
+
+.container-fluid .row {
+  width: 100%;
+  /*max-width: 1140px;*/
+  min-width: 755px;
+  margin: 0 auto;
+  overflow: hidden; }
+  .container-fluid .row .span1 {
+    width: 4.85%; }
+  .container-fluid .row .span2 {
+    width: 13.45%; }
+  .container-fluid .row .span3 {
+    width: 22.05%; }
+  .container-fluid .row .span4 {
+    width: 30.75%; }
+  .container-fluid .row .span5 {
+    width: 39.45%; }
+  .container-fluid .row .span6 {
+    width: 48%; }
+  .container-fluid .row .span7 {
+    width: 56.75%; }
+  .container-fluid .row .span8 {
+    width: 65.4%; }
+  .container-fluid .row .span9 {
+    width: 74.05%; }
+  .container-fluid .row .span10 {
+    width: 82.7%; }
+  .container-fluid .row .span11 {
+    width: 91.35%; }
+  .container-fluid .row .span12 {
+    width: 100%;
+    float: left; }
+  .container-fluid .row .last, .container-fluid .row > :last-child {
+    margin-right: 0px; }
+  .container-fluid .row .first, .container-fluid .row > :first-child {
+    margin-left: 0px; }
+  .container-fluid .row .offset1 {
+    margin-left: 8.65%; }
+  .container-fluid .row .offset2 {
+    margin-left: 17.25%; }
+  .container-fluid .row .offset3 {
+    margin-left: 25.85%; }
+  .container-fluid .row .offset4 {
+    margin-left: 34.55%; }
+  .container-fluid .row .offset5 {
+    margin-left: 43.25%; }
+  .container-fluid .row .offset6 {
+    margin-left: 51.8%; }
+  .container-fluid .row .offset7 {
+    margin-left: 60.55%; }
+  .container-fluid .row .offset8 {
+    margin-left: 69.2%; }
+  .container-fluid .row .offset9 {
+    margin-left: 77.85%; }
+  .container-fluid .row .offset10 {
+    margin-left: 86.5%; }
+  .container-fluid .row .offset11 {
+    margin-left: 95.15%; }
+  .container-fluid .row .formLeftCol {
+    width: 130px;
+    float: left; }
+  .container-fluid .row .formRightCol {
+    margin-left: 150px; }
+
+.container-fluid img, .container-fluid object, .container-fluid embed {
+  max-width: 100%; }
+
+.container-fluid img {
+  height: auto; }
+  
+/* Form styling */
+  .container-fluid input.span1, 
+  .container-fluid input.span2, 
+  .container-fluid input.span3, 
+  .container-fluid input.span4, 
+  .container-fluid input.span5, 
+  .container-fluid input.span6, 
+  .container-fluid input.span7, 
+  .container-fluid input.span8, 
+  .container-fluid input.span9, 
+  .container-fluid input.span10,
+  .container-fluid input.span11, 
+  .container-fluid input.span12, 
+  .container-fluid select.span1, 
+  .container-fluid select.span2, 
+  .container-fluid select.span3, 
+  .container-fluid select.span4, 
+  .container-fluid select.span5, 
+  .container-fluid select.span6, 
+  .container-fluid select.span7, 
+  .container-fluid select.span8, 
+  .container-fluid select.span9, 
+  .container-fluid select.span10, 
+  .container-fluid select.span11, 
+  .container-fluid select.span12, 
+  .container-fluid textarea.span1, 
+  .container-fluid textarea.span2, 
+  .container-fluid textarea.span3, 
+  .container-fluid textarea.span4, 
+  .container-fluid textarea.span5, 
+  .container-fluid textarea.span6, 
+  .container-fluid textarea.span7, 
+  .container-fluid textarea.span8, 
+  .container-fluid textarea.span9, 
+  .container-fluid textarea.span10,
+  .container-fluid textarea.span11, 
+  .container-fluid textarea.span12 {
+  display: inline-block;
+  float: none;
+  margin-left: 0; }
+
+.container-fluid .input-mini,
+.container-fluid input.mini,
+.container-fluid textarea.mini,
+.container-fluid select.mini {
+  width: 60px; }
+
+.container-fluid .input-small,
+.container-fluid input.small,
+.container-fluid textarea.small,
+.container-fluid select.small {
+  width: 90px; }
+
+/* Media Queries
+================================================== */
+/* Larger than Tablet Portrait size */
+@media only screen and (min-width: 768px),
+	only screen and (min-device-width: 768px) {
+  .container-fluid .input-xxlarge,
+  .container-fluid input.xxlarge,
+  .container-fluid textarea.xxlarge,
+  .container-fluid select.xxlarge {
+    width: 530px; } }
+	
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 768px),
+	only screen and (max-device-width: 768px) and (orientation: portrait) {
+  .container-fluid { min-width: 90%; }
+  .container-fluid .content { margin-right: 0; }
+  .container-fluid .sidebar { position: static; width: 100%; }
+
+  .container-fluid .row, body {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px; }
+
+  .container-fluid .row .span1,
+  .container-fluid .row .span2,
+  .container-fluid .row .span3,
+  .container-fluid .row .span4,
+  .container-fluid .row .span5,
+  .container-fluid .row .span6,
+  .container-fluid .row .span7,
+  .container-fluid .row .span8,
+  .container-fluid .row .span9,
+  .container-fluid .row .span10,
+  .container-fluid .row .span11,
+  .container-fluid .row .span12 {
+    width: auto;
+    float: none;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px; }
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px),
+	 only screen and (min-device-width: 480px) and (max-device-width: 767px) {
+  .container-fluid { min-width: 90%; }
+  .container-fluid .content { margin-right: 0; }
+  .container-fluid .sidebar { position: static; width: 100%; }
+  .container-fluid .input-xxlarge,
+  .container-fluid input.xxlarge,
+  .container-fluid textarea.xxlarge,
+  .container-fluid  select.xxlarge {
+    width: 270px; } }
+	
+/* Larger than Mobile Landscape Size */
+@media only screen and (min-width: 480px),
+	only screen and (min-device-width: 480px) {
+  .container-fluid { min-width: 90%; }
+  .container-fluid .content { margin-right: 0; }
+  .container-fluid .sidebar { position: static; width: 100%; }
+
+  .container-fluid .input-medium,
+  .container-fluid input.medium,
+  .container-fluid textarea.medium,
+  .container-fluid select.medium {
+    width: 150px; }
+
+  .container-fluid .input-large,
+  .container-fluid input.large,
+  .container-fluid textarea.large,
+  .container-fluid select.large {
+    width: 210px; }
+
+  .container-fluid .input-xlarge,
+  .container-fluid input.xlarge,
+  .container-fluid textarea.xlarge,
+  .container-fluid select.xlarge {
+    width: 270px; } }
+	
+/* Samller than Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px),
+	only screen and (max-device-width: 479px) {
+  .container-fluid { min-width: 90%; }
+  .container-fluid .content { margin-right: 0; }
+  .container-fluid .sidebar { position: static; width: 100%; }
+
+  .container-fluid .input-medium,
+  .container-fluid input.medium,
+  .container-fluid textarea.medium,
+  .container-fluid select.medium,
+  .container-fluid .input-large,
+  .container-fluid input.large,
+  .container-fluid textarea.large,
+  .container-fluid select.large,
+  .container-fluid .input-xlarge,
+  .container-fluid input.xlarge,
+  .container-fluid textarea.xlarge,
+  .container-fluid select.xlarge,
+  .container-fluid .input-xxlarge,
+  .container-fluid input.xxlarge,
+  .container-fluid textarea.xxlarge,
+  .container-fluid select.xxlarge {
+    width: 125px; } }
