@@ -1,7 +1,7 @@
 {% load pytils_dt %}{% load utils %}{% with commentlength=comment.comment|length %}
 <li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth_truncated|imul:40 }}px;"{% endif %}>
     <article class="comment">
-	<span class="avatar"><a href="#" rel="popover" data-content="Пользователь {{ comment.get_author }} с нами с {{ comment.author.date_joined|ru_strftime:"%d %B %Y" }}" title="{{ comment.get_author }} года."><img src="{{ comment.author.avatar }}" width="32" /></a></span>
+	<span class="avatar"><a href="#" rel="popover" data-content="Пользователь {{ comment.get_author }} с нами с {{ comment.author.date_joined|ru_strftime:"%d %B %Y" }} года." title="{{ comment.get_author }}"><img src="{{ comment.author.avatar }}" width="32" /></a></span>
 	<div class="inner">
 	    <div class="body clearfix">
 		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>:</div>

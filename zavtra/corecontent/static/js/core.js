@@ -18,9 +18,11 @@ $(document).ajaxSend(function(event, xhr, settings) {
 });
 
 $(function(){
-    $('.sidebar .collapse').click(function(){
-	var collapsed = $('body').toggleClass('collapsed').hasClass('collapsed');
-	$.cookie('news_collapsed', collapsed, {expires:365});
-	$(this).html( $(this).html() == '&gt;&gt;&gt;' ? '&lt;&lt;&lt;' : '&gt;&gt;&gt;' );
-    });
+    (function(){
+	$('.sidebar .collapse').click(function(){
+	    var collapsed = $('body').toggleClass('collapsed').hasClass('collapsed');
+	    $.cookie('news_collapsed', collapsed, {expires:365});
+	    $(this).html( $(this).html() == '&gt;&gt;&gt;' ? '&lt;&lt;&lt;' : '&gt;&gt;&gt;' );
+	});
+    })();
 });

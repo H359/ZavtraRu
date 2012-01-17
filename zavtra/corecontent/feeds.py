@@ -36,7 +36,7 @@ class ExclusiveNewsFeed(Feed):
 
     def items(self):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric_id=1, exclusive=True, pub_date__lte = now)[0:10]
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, exclusive=True, pub_date__lte = now)[0:10]
 
     def item_title(self, item):
 	title = strip_tags(item.title)

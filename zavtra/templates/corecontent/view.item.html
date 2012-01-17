@@ -23,7 +23,7 @@
 {% load pytils_dt %}
 {% load comments %}
 
-{% block page_title %}{{ block.super }} &rarr; {% if item.rubric %}{{ item.rubric.title|safe }}{% else %}Блоги{% endif %} &rarr; {{ item.title|safe }}{% endblock %}
+{% block page_title %}{{ block.super }} / {% if item.rubric %}{{ item.rubric.title|safe }}{% else %}Блоги{% endif %} / {{ item.title|safe }}{% endblock %}
 {% block javascript_library %}{{ block.super }}<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>{% endblock %}
 
 {% block content %}
@@ -33,7 +33,7 @@
   <li class="active">{{ item.title|safe }}</li>
 </ul>
 <div class="row">
-  <article class="span8 article-text">
+  <article class="span8">
     <header>
       <h2>{{ item.title|safe }}<small>&nbsp;<time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time></small></h2>
       {% if item.subtitle %}<h2>{{ item.subtitle|safe }}</h2>{% endif %}
@@ -58,7 +58,7 @@
     {% else %}{% if item.content|length > 1500 %}
     <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}{% endif %}
-    {% if item.kind == 'text' or item.kind == '' %}{{ item.content|safe }}{% endif %}
+    {% if item.kind == 'text' or item.kind == '' %}<article class="article-text">{{ item.content|safe }}</article>{% endif %}
     {% if item.tags.all|length %}
     <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}

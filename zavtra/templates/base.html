@@ -103,9 +103,9 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
   <div class="content smooth">{% block content %}{% endblock %}</div>
   <div class="sidebar smooth">
     {% if request.COOKIES.news_collapsed == 'true' %}
-    <a href="#" class="collapse" title="свернуть">&lt;&lt;&lt;</a>
+    <a href="#" class="smooth collapse" title="свернуть">&lt;&lt;&lt;</a>
     {% else %}
-    <a href="#" class="collapse" title="свернуть">&gt;&gt;&gt;</a>
+    <a href="#" class="smooth collapse" title="свернуть">&gt;&gt;&gt;</a>
     {% endif %}
     <div class="well">
       <h3 class="smooth"><a href="/content/rubric/novosti/">Новости</a></h3>

@@ -34,15 +34,16 @@ body { font-family: Arial; padding-top: 50px; }
     -ms-transition: all 0.5s ease-in-out;
 }
 
-.collapsed .sidebar { width: 40px; overflow: hidden; }
+.collapsed .sidebar { overflow: hidden; width: 40px; }
+.collapsed .sidebar .well { height: 300px; }
 .collapsed .sidebar h3 {
-    transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
+    transform: translatey(70px) rotate(-90deg);
+    -webkit-transform: translatey(70px) rotate(-90deg);
+    -moz-transform: translatey(70px) rotate(-90deg);
+    -o-transform: translatey(70px) rotate(-90deg);
+    -ms-transform: translatey(70px) rotate(-90deg);
 }
-.collapsed .sidebar .unstyled { margin-left: 200px; }
+.collapsed .sidebar .unstyled { display: none; }
 .collapsed .container-fluid > .content { margin-right: 40px; }
 
 .sidebar .collapse { position: absolute; right: 10px; top: 10px; }
@@ -53,9 +54,9 @@ body { font-family: Arial; padding-top: 50px; }
 .news h6 { font-size: 11px; }
 .news li { margin-bottom: 12px; padding-bottom: 20px; border-bottom: 1px dashed #444; }
 .news li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.news li .txt { word-wrap: break-word;  }
+.news li .txt { word-wrap: break-word; }
 
-.rubric .free h4, .rubric .free h5 { border: none; }
+.rubric .free h4, .rubric .free h5 { border: none; line-height: 36px; }
     .rubric .free h4 small { float: none; }
 
 .gazette .rubric h4 { border-bottom: 1px solid #444; }
@@ -82,7 +83,10 @@ body { font-family: Arial; padding-top: 50px; }
     .featured li.last { border-right: none; margin-right: 0; padding-right: 0; }
     .featured a { font-size: 14px; }
 
+.article-text { max-width: 52em; }
 .article-text p { font-size: 16px; line-height: 20px; margin-bottom: 20px; }
+
+#comments { max-width: 52em; }
 
 .comment { padding-left: 40px; margin-bottom: 8px; background: url(/static/img/border.png) no-repeat 30px 20px; }
     .comment .avatar { float: left; margin-left: -40px; width: 36px; height: 36px; display: block; margin-top: 6px; }
@@ -96,7 +100,7 @@ body { font-family: Arial; padding-top: 50px; }
 
 .comment-form form, .comment-form fieldset { margin: 0; }
 .comment-form h4 { padding-left: 150px; }
-.comment-form textarea { width: 520px; height: 100px; }
+.comment-form textarea { width: 95%; height: 100px; }
 .comment-form .actions { background: white; padding: 4px 0 0 150px; border-top: none; float: none; border-top: none; }
 
 .txt { text-align: justify; }
