@@ -3,33 +3,19 @@
 {% block page_title %}{{ block.super }} / {{ title|safe }}{% endblock %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <div class="alpha grid_8">
-        <article class="block rubric-info">
-    	    <header><h1>Каждый день</h1></header>
-	    <dl class="content">
-	    {% for item in object_list %}
-		<dt><a href="{{ item.get_absolute_url }}" title="{{ item.title }}">{{ item.title }}</a></dt>
-	    {% endfor %}
-	    </dl>
-            {% if is_paginated %}
-	    <footer class="buttons">
-                {% if page_obj.has_previous %}<a class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
-                {% for p in paginator.page_range %}
-                {% if page_obj.number == p %}
-                <div class="button"><span class="label">{{ p }}</span></div>
-                {% else %}
-                <a class="button" href="?page={{ p }}"><span class="label">{{ p }}</span></a>
-                {% endif %}
-                {% endfor %}
-                {% if page_obj.has_next %}<a class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
-            </footer>
-            {% endif %}
-        </article>
+<div class="row">
+    <div class="span8 rubric">
+    	<h3>Каждый день</h3>
+    	<div class="content">
+	    <ul class="unstyled">
+		{% for item in items %}
+		<li><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></li>
+		{% endfor %}
+	    </ul>
+	</div>
     </div>
-    <div class="grid_4">{% include 'partials/centerside.html' %}</div>
-    <div class="grid_4 omega">
+    <div class="span4 last">
 	{% include 'partials/rightside.html' %}
     </div>
-</section>
+</div>
 {% endblock %}

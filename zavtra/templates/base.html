@@ -17,7 +17,6 @@
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
-    <style type="text/css">body { padding-top: 60px; }</style>
     {% comment %}
     {% load compressed %}
     {% compressed_css 'main' %}
@@ -36,7 +35,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
     </script>
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}{% if request.COOKIES.news_collapsed == 'true' %} collapsed{% endif %}">
 <!-- tns-counter.ru -->
 <script type="text/javascript">
 var img = new Image();
@@ -77,8 +76,18 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
   </div>
 </div>
 
+<div>{% with source=quote.get_source %}
+  <blockquote class="top-quote">
+    <a href="{{ source.get_absolute_url }}">{{ quote.quote }}</a>
+    {% if source.authors_all %}<small>{% for author in source.authors_all %}
+    {{ author.get_full_name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}</small>{% endif %}
+  </blockquote>
+{% endwith %}</div>
+
+
 <div class="container-fluid">
-  <div class="content">
+  <div class="content smooth">
     <ul class="unstyled rubrics topbar-inner">
 	{% for item in top_rubrics %}
 	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
@@ -91,13 +100,18 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 	{% endfor %}
     </ul>
   </div>
-  <div class="content">{% block content %}{% endblock %}</div>
-  <div class="sidebar">
+  <div class="content smooth">{% block content %}{% endblock %}</div>
+  <div class="sidebar smooth">
+    {% if request.COOKIES.news_collapsed == 'true' %}
+    <a href="#" class="collapse" title="свернуть">&lt;&lt;&lt;</a>
+    {% else %}
+    <a href="#" class="collapse" title="свернуть">&gt;&gt;&gt;</a>
+    {% endif %}
     <div class="well">
-      <h3>Новости</h3>
-      <ul class="unstyled news rubric">
+      <h3 class="smooth"><a href="/content/rubric/novosti/">Новости</a></h3>
+      <ul class="unstyled smooth news rubric">
         {% for item in news %}
-        <li class="clearfix">
+        <li>
           <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
           <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
           <div class="txt">{{ item.description|safe }}</div>
@@ -139,19 +153,28 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 {%comment%}<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>{%endcomment%}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
+<script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-twipsy.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
+<script src="{{ STATIC_URL }}js/core.js"></script>
+<script src="{{ STATIC_URL }}js/comments.js"></script>
 {%spaceless%}<script type="text/javascript">
+/*
 window.vkAsyncInit=function(){VK.Widgets.Group("vk_groups",{mode:1,width:"270",height:"290"},32969466);};
 setTimeout(function(){var el = document.createElement("script");el.type = "text/javascript";el.src = "http://vkontakte.ru/js/api/openapi.js";el.async = true;document.getElementById("vk-root").appendChild(el);}, 0);
 setTimeout(function(){(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";js.async=true;fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));}, 0);
 setTimeout(function(){(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();}, 0);
 setTimeout(function(){!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";js.async=true;fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");}, 0);
 window.___gcfg = {lang: 'ru'};
-$(document).ready(function(){
+*/
+$(function(){
   //$('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
   $('.topbar').dropdown();
+  $('a[rel=popover]').popover();
   if (window.modal_bootstrap) window.modal_bootstrap();
+  if (window.comments_bootstrap) window.comments_bootstrap();
   {% block javascript %}{% endblock %}
 });
 </script>{%endspaceless%}

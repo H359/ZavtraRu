@@ -1,4 +1,4 @@
-body { font-family: Arial; }
+body { font-family: Arial; padding-top: 50px; }
 
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
@@ -6,25 +6,66 @@ body { font-family: Arial; }
 
 .topbar .brand { padding: 8px 20px 6px; }
 
-.top-illustration { padding: 0; margin: 0; }
-    .top-illustration img { width: 100%; }
-    .top-illustration figcaption { text-align: right; font-size: 14px; }
+.top-illustration { padding: 0; margin: 0; position: relative; width: 100%; color: white; }
+    .top-illustration img { width: 100%; display: block; }
+    .top-illustration figcaption { position: absolute; bottom: 0; padding: 5px; right: 5px; background: rgba(50,50,50,0.5); display: block; left: 0; text-align: right; }
+	.top-illustration figcaption h3 { border-bottom: none; }
+	.top-illustration figcaption a { color: white; }
 
-.top-quote { line-height: 1.2; font-style: italic; font-family: Verdana; padding-top: 4px; padding-bottom: 4px; }
+.top-quote { line-height: 1.2; font-style: italic; font-family: Verdana; padding: 4px 0 4px 10px; margin: 0 20px 10px 20px; }
     .top-quote a { color: #333; }
 
 .specialitaet { margin-bottom: 1em; }
-    .specialitaet h3 { line-height: 20px; padding-bottom: 6px; }
+    .specialitaet figure { position: relative; width: 100%; margin: 0; }
+	.specialitaet figure img { width: 100%; margin: 0; padding: 0; display: block; }
+	.specialitaet figure figcaption { position: absolute; bottom: 5px; background: rgba(50,50,50,0.5); display: block; right: 0; left: 0; padding: 4px; }
+	    .specialitaet figure figcaption a { color: white; }
+	    .specialitaet figure figcaption h3,
+	    .specialitaet figure figcaption h4 { border-bottom: none; padding: 4px; line-height: 1.2em; }
+
+.gazette .container-fluid .row { background: url(/static/img/border2.png) repeat-y 67.3% 0; }
+.gazette h1 { margin-top: 8px; font-weight: 400; font-size: 36px; }
+
+.smooth {
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+}
+
+.collapsed .sidebar { width: 40px; overflow: hidden; }
+.collapsed .sidebar h3 {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+}
+.collapsed .sidebar .unstyled { margin-left: 200px; }
+.collapsed .container-fluid > .content { margin-right: 40px; }
+
+.sidebar .collapse { position: absolute; right: 10px; top: 10px; }
+.sidebar .unstyled li { position: relative; }
+.sidebar .pull-right { float: none; position: absolute; right: 0; }
 
 .news h5 { font-size: 13px; }
 .news h6 { font-size: 11px; }
 .news li { margin-bottom: 12px; padding-bottom: 20px; border-bottom: 1px dashed #444; }
 .news li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
+.rubric .free h4, .rubric .free h5 { border: none; }
+    .rubric .free h4 small { float: none; }
+
+.gazette .rubric h4 { border-bottom: 1px solid #444; }
+
 .rubric { }
     .rubric h3, .rubric h4 { border-bottom: 1px solid #CF3A2D; }
-	.rubric h3 small, .rubric h4 small { float: right; margin-top: 10px; margin-right: 8px; }
+    .rubric h4 { line-height: 20px; }
+	.rubric h3 small, .rubric h4 small { float: right; margin-top: 4px; margin-right: 8px; }
 	    .rubric h3 small a, .rubric h4 small a { text-decoration: underline; }
+	.rubric small.rss { margin-top: 14px; }
+	    .rubric small.rss a { background: url(/static/img/rss.gif) no-repeat; padding-left: 18px; }
     .rubric h5 { line-height: 20px; margin-top: 6px; }
 	.rubric h6 { text-transform: none; line-height: 14px; margin-bottom: 12px; color: #444; }
     .rubric ul.unstyled { margin-bottom: 24px; }
@@ -42,18 +83,19 @@ body { font-family: Arial; }
 
 .article-text p { font-size: 16px; line-height: 20px; margin-bottom: 20px; }
 
-.comment { padding-left: 40px; margin-bottom: 8px; }
-    .comment .avatar { float: left; margin-left: -40px; width: 32px; height: 32px; display: block; margin-top: 6px; }
-    .comment .inner { padding: 3px; background: #eee; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; }
+.comment { padding-left: 40px; margin-bottom: 8px; background: url(/static/img/border.png) no-repeat 30px 20px; }
+    .comment .avatar { float: left; margin-left: -40px; width: 36px; height: 36px; display: block; margin-top: 6px; }
+    .comment .avatar a { display: block; }
+    .comment .inner { padding: 3px; background-color: #eee; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; }
         .comment .inner .body { padding: 6px 10px; background: white; color: #222; border: 1px solid #ccc; }
     	    .comment .inner .body .avatar { margin: 10px 0 0; }
-    	    .comment .inner .body .text { margin: 0; padding: 8px 0 0 0; }
+    	    .comment .inner .body .text { margin: 0; padding: 8px 0 0 0; font-size: 14px; }
 
-    .comment .actions { padding: 0; margin: 4px 0; float: right; }
+    .comment .actions { padding: 0; margin: 4px 0; float: right; border-top: none; }
 
 .comment-form form, .comment-form fieldset { margin: 0; }
 .comment-form h4 { padding-left: 150px; }
-.comment-form textarea { width: 400px; height: 80px; }
+.comment-form textarea { width: 520px; height: 100px; }
 .comment-form .actions { background: white; padding: 4px 0 0 150px; border-top: none; float: none; border-top: none; }
 
 .txt { text-align: justify; }

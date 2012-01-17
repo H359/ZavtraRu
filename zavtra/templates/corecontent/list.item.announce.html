@@ -1,33 +1,16 @@
 {% load pytils_dt %}
 {% load pytils_numeral %}
-<dt>
-    <a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>{% if item.subtitle %}<br/><small>{{ item.subtitle|safe }}</small>{% endif %}
-    <div class="details">
-        {{ item.pub_date|ru_strftime }}
-        {% for author in item.authors_all %}
-        <a class="author" href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </div>
-</dt>
-<dd>
-    {% if item.kind == 'video' %}
-    <div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" width="150" /></a></div>
-    {% endif %}
-    {% if item.kind == 'image' %}
-    <div class="text-center"><img src="{{ MEDIA_URL }}{{ item.thumbnail }}" alt="{{ item.title }}" /></div>
-    {% endif %}
-    <div><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
-    <div class="info">
-        <span class="rating ddm">
-            {% with rating=item.rating %}
-            {% if rating != 0 %}
-            <span class="icon icon{% if rating > 0 %}101{% endif %}{% if rating < 0 %}100{% endif %}"></span>
-            <span class="label">{{ rating }}</span>
-            {% endif %}
-            {% endwith %}
-        </span>
-        <span class="comments-count">
-            <a href="{{ item.get_absolute_url }}#comments_block">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
-        </span>
-    </div>
-</dd>
+<li class="clearfix">
+    <article>
+	<header>
+	    <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a><small>&nbsp;<time pubdate="pubdate" datetime={{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time></small></h4>
+	    {% if item.subtitle %}<h5>{{ item.subtitle|safe }}</h5>{% endif %}
+	    {% if item.authors_all %}<h6>{% for author in item.authors_all %}<a class="author" href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h6>{% endif %}
+	</header>
+	{% if item.kind == 'video' %}
+	<div class="text-center"><a href="{{ item.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" /></a></div>
+	{% endif %}
+	<div class="txt"><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
+        <a class="pull-right" href="{{ item.get_absolute_url }}#comments">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+    </article>
+</li>

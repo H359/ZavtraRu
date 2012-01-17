@@ -1,18 +1,34 @@
-{% load pytils_dt %}{% load utils %}
-<li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth }}em;"{% endif %}>
+{% load pytils_dt %}{% load utils %}{% with commentlength=comment.comment|length %}
+<li id="comment-{{ comment.id }}" {% if not stream %}style="padding-left: {{ comment.depth_truncated|imul:40 }}px;"{% endif %}>
     <article class="comment">
-	<span class="avatar"><img src="{{ comment.author.avatar }}" width="32" /></span>
+	<span class="avatar"><a href="#" rel="popover" data-content="Пользователь {{ comment.get_author }} с нами с {{ comment.author.date_joined|ru_strftime:"%d %B %Y" }}" title="{{ comment.get_author }} года."><img src="{{ comment.author.avatar }}" width="32" /></a></span>
 	<div class="inner">
 	    <div class="body clearfix">
 		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>:</div>
-		<div class="text">{% if comment.enabled %}{{ comment.comment }}{% else %}комментарий скрыт{% endif %}</div>
+		<div class="text">
+		{% if comment.enabled %}{% spaceless %}{{ comment.comment|slice:"0:1500" }}{% if commentlength > 1500 %}&#8230;<span class="hide">{{ comment.comment|slice:"1500:" }}</span>{% endif %}{% endspaceless %}
+		{% else %}<em>комментарий скрыт</em>
+		    {% if request.user.is_authenticated and request.user.is_staff %}
+		    <br/>Текст:<br/>{{ comment.comment }}
+		    {% endif %}
+		{% endif %}
+		</div>
 		<div class="actions">
-    		    <div class="btn small primary">Ответить</div>
-    		    {% if request.user.is_authenticated and request.user.is_staff and perms.comments.moderate %}
-    		    <div class="btn small danger" data-controls-modal="hide-modal" data-backdrop="static">Скрыть</div>
+		{% if commentlength > 1500 %}<a href="#expand:{{ comment.id }}" class="more-trigger small btn info">показать комментарий полностью</a>{% endif %}
+		{% if request.user.is_authenticated and request.user.is_active %}
+		    {% if comment.enabled %}
+		    <a href="#reply:{{ comment.id }}" class="btn small primary">Ответить</a>
+		    {% endif %}
+    		    {% if request.user.is_staff and perms.comments.moderate %}
+    		    {% if comment.enabled %}
+    		    <a href="#hide:{{ comment.id }}" class="btn small danger">Скрыть</a>
+    		    {% else %}
+    		    <a href="#hide:{{ comment.id }}" class="btn small danger">Раскрыть</a>
     		    {% endif %}
+    		    {% endif %}
+    		{% endif %}
 		</div>
 	    </div>
 	</div>
     </article>
-</li>
+</li>{% endwith %}

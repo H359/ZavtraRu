@@ -8,26 +8,16 @@
 {% block javascript %}
 {% endblock %}
 
+{% block body_class %}gazette{% endblock %}
+
 {% block content %}
-  <div class="row">
-    <div class="first span12 last">
-      {% with source=quote.get_source %}
-      <blockquote class="top-quote">
-        <a href="{{ source.get_absolute_url }}">{{ quote.quote }}</a>
-        {% if source.authors_all %}<small>{% for author in source.authors_all %}
-        {{ author.get_full_name }}{% if not forloop.last %}, {% endif %}
-        {% endfor %}</small>{% endif %}
-      </blockquote>
-      {% endwith %}
-    </div>
-  </div>
   <div class="row">
     <div class="span8 rubric">
       <figure class="top-illustration">
-        <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" width="600" height="262" />
-        <figcaption>&laquo;{{ illustration.title }}&raquo;, <a href="#">Геннадий Животов</a></figcaption>
+        <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" />
+        <figcaption><h3>&laquo;{{ illustration.title }}&raquo;, <a href="#">Геннадий Животов</a></h5></figcaption>
       </figure>
-      <h2>Выпуск №{{ issue_info.num }} от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</h2>
+      <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</small></h1>
       {% for group in newsletter %}
       {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
       {% endfor %}
@@ -35,10 +25,14 @@
     <div class="span4 rubric last">
       {% if zavtra_tv %}
       <div class="specialitaet">
-          <h3><a href="/content/rubric/zavtratv/">Завтра.LIVE</a></h3>
-          <a href="{{ zavtra_tv.get_absolute_url }}"><img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" /></a>
-          <h5><a href="{{ zavtra_tv.get_absolute_url }}">{{ zavtra_tv.title|safe }}</a> </h5>
-          <a href="{{ zavtra_tv.get_absolute_url }}#comments" class="pull-right">{{ zavtra_tv.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+        <figure>
+    	    <img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" />
+    	    <figcaption>
+    		<h3><a href="/content/rubric/zavtratv/">Завтра.LIVE:</a></h3>
+    		<h4><a href="{{ zavtra_tv.get_absolute_url }}">{{ zavtra_tv.title|safe }}</a></h4>
+    		<a href="{{ zavtra_tv.get_absolute_url }}#comments" class="pull-right">{{ zavtra_tv.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+    	    </figcatpion>
+        </figure>
       </div>
       {% endif %}
       <h3>Рейтинг слухов</h3>

@@ -221,8 +221,8 @@ body {
 .container-fluid > .sidebar {
   position: absolute;
   top: 0;
-  right: 20px;
-  width: 220px;
+  right: 0;
+  width: 240px;
 }
 .container-fluid > .content {
   margin-right: 240px;
@@ -416,7 +416,7 @@ h3 small,
 h4 small,
 h5 small,
 h6 small {
-  color: #bfbfbf;
+  color: #9f9f9f;
 }
 h1 {
   margin-bottom: 18px;

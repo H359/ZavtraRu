@@ -3,55 +3,35 @@
 {% block page_title %}{{ block.super }} / {{ title|safe }}{% endblock %}
 
 {% block content %}
+<ul class="breadcrumb">
+    <li><a href="/">Главная</a><span class="divider">/</span></li>
+    <li>{{ title|safe }}</li>
+</ul>
 
-<section class="container container_16 clearfix">
-    <div class="alpha {% if title.id == 1 %}grid_12{% else %}grid_8{% endif %}">
-        <article class="block rubric-info">
-    	    <header>
-    		<h1>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<span class="small"><a href="{{ rss }}" class="rss">RSS</a></span>{% endif %}</h1>
-    	    </header>
-	    <dl class="content">
-	    {% if title.id == 44 %}
-		<p>Уважаемые друзья! Представляем вашему вниманию новуб рубрику сайта &mdash; ЗАВТРА.LIVE. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.LIVE Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>
-		   Список вопросов будет формироваться в <a href="/content/rubric/voprosyi-prohanovu/">этом разделе</a> голосованием посетителей за отобранные модераторами вопросы. Задать свой вопрос А.А. Проханову можно там же.<br/>
-		   В дальнейшем, в рубрике ЗАВТРА.LIVE появятся и иные по формату видеоматериалы, в том числе репортажные.<br/>
-		   Спасибо за ваше участие!
-		</p>
-	    {% endif %}
-	    {% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</dl>
-            {% if is_paginated %}
-	    <footer class="buttons">
-                {% if page_obj.has_previous %}<a rel="page" class="button" href="?page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
-                {% for p in page_obj.page_range %}
-                {% if page_obj.number == p %}
-                <div class="button on blue"><span class="label">{{ p }}</span></div>
-                {% else %}
-                {% if p %}<a class="button" rel="page" href="?page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
-                {% endif %}
-                {% endfor %}
-                {% if page_obj.has_next %}<a rel="page" class="button" href="?page={{ page_obj.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
-            </footer>
-            {% endif %}
-        </article>
-    </div>
-    {% if title.id == 1 %}
-    <div class="grid_4 omega">{% include 'partials/rightside.html' %}</div>
-    {% else %}
-    <div class="grid_4">{% include 'partials/centerside.html' %}</div>
-    <div class="grid_4 omega">
-	{% include 'partials/rightside.html' %}
-	{% if title.id == 2 %}
-	<article class="block">
-	    <header><h1>Наши друзья</h1></header>
-	    <div class="content text-center">
-		<div><a title="Интернет-магазин Делократ.Ру - Суди власть по делам!" rel="nofollow" href="http://www.delocrat.ru"><img src="{{ STATIC_URL }}img/banners/delokrat.gif" /></a></div>
-		<div><a title="Курсы Сергея Переслегина" rel="nofollow" href="http://www.psychotechnology.ru/cgi-bin/courses.pl?t=15"><img src="{{ STATIC_URL }}img/banners/pereslegin.jpg" /></a></div>
-		<div><a title="Политкнига" rel="nofollow" href="http://www.politkniga.ru/index.php?productID=3403"><img src="{{ STATIC_URL }}img/banners/politkniga.gif" /></a></div>
-		<div><a title="Им нужна помощь" rel="nofollow" href="http://1mpf.ru"><img src="{{ STATIC_URL }}img/banners/ucanhelp.gif" /></a></div>
-	    </div>
-	</article>
+<div class="row">
+    <article class="span8 rubric">
+    	<h3>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<small class="rss">&nbsp;<a href="{{ rss }}">RSS</a></small>{% endif %}</h3>
+	<div class="content">
+	{% if title.id == 44 %}
+	<p>Уважаемые друзья! Представляем вашему вниманию новую рубрику сайта &mdash; ЗАВТРА.LIVE. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.LIVE Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>
+	   Список вопросов будет формироваться в <a href="/content/rubric/voprosyi-prohanovu/">этом разделе</a> голосованием посетителей за отобранные модераторами вопросы. Задать свой вопрос А.А. Проханову можно там же.<br/>
+	   В дальнейшем, в рубрике ЗАВТРА.LIVE появятся и иные по формату видеоматериалы, в том числе репортажные.<br/>
+	   Спасибо за ваше участие!
+	</p>
 	{% endif %}
-    </div>
-    {% endif %}
-</section>
+	<ul class="unstyled free">{% for item in items %}{% include 'corecontent/list.item.announce.html' %}{% endfor %}</ul>
+        {% if is_paginated %}
+	<footer class="pagination">
+	    <ul>
+		<li class="prev {% if not page_obj.has_previous %}disabled{% endif %}"><a rel="page" href="?page={{ page_obj.previous_page_number }}">&larr; Позже</a></li>
+        	{% for p in page_obj.page_range %}
+        	<li{% if page_obj.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
+        	{% endfor %}
+        	<li class="next {% if not page_obj.has_next %}disabled{% endif %}"><a rel="page" href="?page={{ page_obj.next_page_number }}">Раньше &rarr;</a></li>
+    	    </ul>
+        </footer>
+        {% endif %}
+    </article>
+    <div class="span4 last">{% include 'partials/rightside.html' %}</div>
+</div>
 {% endblock %}

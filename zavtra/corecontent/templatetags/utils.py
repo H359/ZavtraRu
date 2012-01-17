@@ -7,6 +7,14 @@ def mul(val, k):
     return val*float(k)
 
 @register.filter
+def imul(val, k):
+    return val*k
+
+@register.filter
+def inv_div(val, k):
+    return k / val
+
+@register.filter
 def fix_commas(val):
     return unicode(val).replace(',', '.')
 

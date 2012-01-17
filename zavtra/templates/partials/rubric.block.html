@@ -1,8 +1,9 @@
-{% load pytils_dt %}{% load pytils_numeral %}
+{% load utils %}{% load pytils_dt %}{% load pytils_numeral %}
 <h4>{{ rubric.title }}<small class="">&nbsp;<a href="{{ rubric.get_absolute_url }}">ещё</a></small></h4>
-<ul class="unstyled">
+{% with span=items|length|inv_div:12 %}
+<ul class="unstyled clearfix">
   {% for item in items %}
-  <li class="clearfix">
+  <li class="span{{ span }}{% if forloop.last %} last{% endif %}">
     <h5><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
     {% if item.authors_all %}<h6>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h6>{% endif %}
     <div class="txt"><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
@@ -10,3 +11,4 @@
   </li>
   {% endfor %}
 </ul>
+{% endwith %}

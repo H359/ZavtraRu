@@ -1,5 +1,7 @@
 {% extends base_template %}
 
+{% block meta_keywords %}{{ block.super }},{% for tag in item.tags.all %}{{ tag }}{% if not forloop.last %},{% endif %}{% endfor %}{% endblock %}
+
 {% block meta_author %}{% if item.authors_all %}{% for author in item.authors_all %}{{ author.get_full_name }}{% if not forloop.last %},{% endif %}{% endfor %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block meta_extra %}{{ block.super }}{% spaceless %}
 <meta property="og:title" content="{{ item.title }}" />
@@ -27,7 +29,7 @@
 {% block content %}
 <ul class="breadcrumb">
   <li><a href="/">Главная</a><span class="divider">/</span></li>
-  <li>{% if item.rubric %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}<a href="{% url 'corecontent.view.blog' %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
+  <li>{% if item.rubric %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}<a href="{% url corecontent.view.blog %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
   <li class="active">{{ item.title|safe }}</li>
 </ul>
 <div class="row">
@@ -53,19 +55,16 @@
         </embed>
       </object>
     </div>
+    {% else %}{% if item.content|length > 1500 %}
+    <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
+    {% endif %}{% endif %}
+    {% if item.kind == 'text' or item.kind == '' %}{{ item.content|safe }}{% endif %}
+    {% if item.tags.all|length %}
+    <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}
-    {% if item.kind == 'text' or item.kind == '' %}
-      {% if item.content|length > 1500 %}<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>{% endif %}
-      {{ item.content|safe }}
-    {% endif %}
-    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <footer>
-    {% with tags=item.tags.all %}{% if tags|length %}
-    {% block meta_keywords %}{{ block.super }},{% for tag in tags %}{{ tag }}{% if not forloop.last %},{% endif %}{% endfor %}{% endblock %}
-      <p>Теги:{% for tag in tags %}<a rel="tag" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</p>
-     {% endif %}{% endwith %}
-    <div id="comments_block">{% get_comments_for item %}</div>
-   </footer>
+      <div id="comments">{% get_comments_for item %}</div>
+    </footer>
   </article>
   <div class="span4 last">{% include 'partials/rightside.html' %}</div>
 </div>

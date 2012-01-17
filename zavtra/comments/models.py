@@ -54,6 +54,9 @@ class Comment(models.Model):
     def depth(self):
 	return (len(self.path) / self.step_size) - 1
 
+    def depth_truncated(self):
+	return min([4, self.depth()])
+
     def get_author(self):
 	author = self.author
 	if author.first_name or author.last_name:
