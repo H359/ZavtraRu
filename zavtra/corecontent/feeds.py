@@ -4,7 +4,11 @@ from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404, Http404
 from django.conf import settings
 from django.utils import feedgenerator
+from django.utils.html import strip_tags
+from email import utils
+import time
 
+from yafeed import YandexNewsRss
 from models import ContentItem, Rubric, Tag, FeaturedItems
 
 class LatestContentFeed(Feed):
@@ -24,17 +28,29 @@ class LatestContentFeed(Feed):
 	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
 
 class ExclusiveNewsFeed(Feed):
-    feed_type = feedgenerator.Rss201rev2Feed
+    feed_type = YandexNewsRss
     ttl = 600
-    title =u'Газета Завтра - новости'
-    link = u'/'
-    description = u'Лента новостей'
-    description_template = 'corecontent/feeds/feed.item.html'
-    title_template = 'corecontent/feeds/feed.title.html'
+    title =u'Газета Завтра'
+    link = u'http://zavtra.ru'
+    description = u'Еженедельная федеральная газета'
 
     def items(self):
 	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(rubric=1, enabled=True, exclusive=True, pub_date__lte = now)[0:20]
+	return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric_id=1, exclusive=True, pub_date__lte = now)[0:10]
+
+    def item_title(self, item):
+	title = strip_tags(item.title)
+	if title.endswith('.'): title = title[0:-1]
+	return title
+
+    def item_description(self, item):
+	return strip_tags(item.description)
+
+    def item_extra_kwargs(self, item):
+	return {
+	    'fulltext': strip_tags(item.content),
+	    'pubDate': utils.formatdate(time.mktime(item.pub_date.timetuple()), True)
+	}
 
     def item_author_name(self, item):
 	return u', '.join(map(lambda w: u'%s %s' % (w.first_name, w.last_name), item.authors_all))
