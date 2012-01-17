@@ -45,6 +45,7 @@ class ArticleAdminForm(forms.ModelForm):
     authors = AjaxManyToManyField(fields=('first_name','last_name'), model=User, guard={'is_staff':True})
 
 class ArticleAdmin(ContentItemMediaMixin, admin.ModelAdmin):
+    exclude = ('exclusive',)
     form = ArticleAdminForm
     list_select_related = True
     list_display = ('title', 'pub_date', 'rubric', 'published', 'enabled')
@@ -61,11 +62,13 @@ class NewsItemAdmin(ContentItemMediaMixin, admin.ModelAdmin):
 	return formfield
 
 class VideoAdmin(ContentItemMediaMixin, admin.ModelAdmin):
+    exclude = ('exclusive',)
     form = VideoAdminForm
     list_select_related = True
     list_display = ('__unicode__', 'rubric', 'published', 'enabled')
 
 class ImageAdmin(ContentItemMediaMixin, admin.ModelAdmin):
+    exclude = ('exclusive',)
     form = ImageAdminForm
     list_select_related = True
     list_display = ('__unicode__', 'rubric', 'published', 'enabled')

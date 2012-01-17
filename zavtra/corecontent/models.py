@@ -91,6 +91,7 @@ class ContentItem(models.Model):
     kind         = models.CharField(max_length=200, editable=False)
     content      = models.TextField(verbose_name=u'Содержимое', blank=True)
     old_url      = models.URLField(verify_exists=False, null=True, blank=True, verbose_name=u'URL на старом сайте')
+    exclusive    = models.BooleanField(verbose_name=u'Экслюзив', default=False)
     
     _comments_count = models.IntegerField(default=0, editable=False)
     _base_rating = models.IntegerField(default=0, verbose_name=u'Базовый рейтинг')

@@ -53,6 +53,7 @@ body { font-family: Arial; padding-top: 50px; }
 .news h6 { font-size: 11px; }
 .news li { margin-bottom: 12px; padding-bottom: 20px; border-bottom: 1px dashed #444; }
 .news li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.news li .txt { word-wrap: break-word;  }
 
 .rubric .free h4, .rubric .free h5 { border: none; }
     .rubric .free h4 small { float: none; }
