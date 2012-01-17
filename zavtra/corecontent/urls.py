@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from feeds import LatestContentFeed, RubricContentFeed, TagContentFeed, FeaturedItemsContentFeed, UnpublishedContentFeed
+from feeds import LatestContentFeed, RubricContentFeed, TagContentFeed, FeaturedItemsContentFeed, UnpublishedContentFeed, ExclusiveNewsFeed
 
 urlpatterns = patterns('',
     url(r'^rubric/(?P<slug>[-_A-Za-z0-9]+)/$', 'corecontent.views.view_rubric', name='corecontent.view.rubric'),
@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^archive/$', 'corecontent.views.view_archive', name='corecontent.view.archive_view'),
     url(r'^archive/(?P<issue>[0-9]+)/$', 'corecontent.views.view_issue', name='corecontent.view.issue_view'),
     
+    url(r'^rss/ynews/$', ExclusiveNewsFeed(), name='corecontent.rss.exclusive_news'),
     url(r'^rss/latest/$', LatestContentFeed(), name='corecontent.rss.latest'),
     url(r'^rss/rubric/(?P<slug>[-_A-Za-z0-9]+)/$', RubricContentFeed(), name='corecontent.rss.rubric'),
     url(r'^rss/tag/(?P<slug>[-_A-Za-z0-9]+)/$', TagContentFeed(), name='corecontent.rss.tag'),
