@@ -6,10 +6,10 @@ body { font-family: Arial; padding-top: 50px; }
 
 .topbar .brand { padding: 8px 20px 6px; }
 
-.top-illustration { padding: 0; margin: 0; position: relative; width: 100%; color: white; }
+.top-illustration { padding: 0; margin: 0; position: relative; width: 100%; }
     .top-illustration img { width: 100%; display: block; }
     .top-illustration figcaption { position: absolute; bottom: 0; padding: 5px; right: 5px; background: rgba(50,50,50,0.5); display: block; left: 0; text-align: right; }
-	.top-illustration figcaption h3 { border-bottom: none; }
+	.top-illustration figcaption h3 { border-bottom: none; color: black; }
 	.top-illustration figcaption a { color: white; }
 
 .top-quote { line-height: 1.2; font-style: italic; font-family: Verdana; padding: 4px 0 4px 10px; margin: 0 20px 10px 20px; }
