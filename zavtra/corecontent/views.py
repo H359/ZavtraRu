@@ -46,7 +46,7 @@ class NewsView(DetailView):
     context_object_name = 'item'
     def get_object(self):
 	now = datetime.now().date()
-	date = datetime(year=int(self.kwargs.get('year')), month=int(self.kwargs.get('month')), day=int(self.kwargs.get('day')))
+	date = datetime(year=int(self.kwargs.get('year')), month=int(self.kwargs.get('month')), day=int(self.kwargs.get('day'))).date()
 	if date > now:
 	    raise Http404
 	qs = ContentItem.batched.batch_select('authors').filter(
