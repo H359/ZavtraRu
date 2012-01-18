@@ -38,6 +38,15 @@
         </figure>
       </div>
       {% endif %}
+      
+      {% if special_project %}
+      <h3><a href="/content/rubric/spetsproekt-2/">Спецпроект</a></h3>
+      <div>
+	<a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a>
+	<a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a>
+      </div>
+      {% endif %}
+      
       <h3>Рейтинг слухов</h3>
       <div>{% display_last_poll %}</div>
       
