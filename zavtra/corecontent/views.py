@@ -31,7 +31,7 @@ class RubricView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
-        now = datetime.now().date()
+        now = datetime.now() #.date()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lte = now)
     
     def get_context_data(self, **kwargs):
@@ -45,7 +45,7 @@ class NewsView(DetailView):
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
     def get_object(self):
-	now = datetime.now().date()
+	now = datetime.now()#.date()
 	date = datetime(year=int(self.kwargs.get('year')), month=int(self.kwargs.get('month')), day=int(self.kwargs.get('day'))).date()
 	if date > now:
 	    raise Http404
@@ -64,7 +64,7 @@ class FeaturedView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.featured = get_object_or_404(FeaturedItems, slug=self.kwargs['slug'])
-        now = datetime.now().date()
+        now = datetime.now()#.date()
         return ContentItem.batched.batch_select('authors').filter(
             enabled=True, pub_date__lte = now, tags__id__in=self.featured.tags.all()
         ).distinct()
@@ -82,7 +82,7 @@ class TaggedItemsView(ListView):
     context_object_name = 'items'
     def get_queryset(self):
         self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
-        now = datetime.now().date()
+        now = datetime.now()#.date()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, tags__id=self.tag.id)
 
     def get_context_data(self, **kwargs):
@@ -98,7 +98,7 @@ class BlogView(ListView):
     paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
-	now = datetime.now().date()
+	now = datetime.now()#.date()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, rubric=None)
     
     def get_context_data(self, **kwargs):
@@ -134,7 +134,7 @@ class UnpublishedItemsView(ListView):
     paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
-	now = datetime.now().date()
+	now = datetime.now()#.date()
 	return ContentItem.batched.batch_select('authors').exclude(rubric=1).filter(enabled=True, pub_date__lte = now, published=False)
 
     def get_context_data(self, **kwargs):
