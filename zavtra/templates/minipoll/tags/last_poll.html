@@ -3,7 +3,7 @@
 {% load minipoll_tags %}
 {% if poll %}
     <h5>{{ poll.title }}</h5>
-    {% if user_has_vote %}{% cache 60 latest_poll_results %}
+    {% if user_has_vote %}
     <ol class="unstyled">
 	{% for choice in poll.choice_set.all %}
         <li>{{ choice.title }}
@@ -16,10 +16,9 @@
         {% endfor %}
         <a href="{% url minipoll_poll_list %}">Другие слухи</a>
     </ol>
-    {% endcache %}{% else %}
+    {% else %}
     <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
       {% csrf_token %}
-      {% cache 60 latest_poll_form %}
       <div class="clearfix"><ul class="inputs-list">
       {% for choice in poll.choice_set.all %}
       <li>
@@ -33,7 +32,6 @@
       </li>
       {% endfor %}
       </ul></div>
-    {% endcache %}
     <div><input type="submit" class="btn primary" value="Ответить"></div>
   </form>
   {% endif %}
