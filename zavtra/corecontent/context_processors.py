@@ -6,7 +6,7 @@ from corecontent.models import Rubric, FeaturedItems, DailyQuote, ContentItem
 from utils import cached
 
 def common_pieces(request):
-    now = datetime.now().date()
+    now = datetime.now()
     if request.is_ajax():
 	base_template = 'base_ajax.html'
     else:
