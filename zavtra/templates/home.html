@@ -38,7 +38,9 @@
         </figure>
       </div>
       {% endif %}
-      
+
+      <div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 232xN]</div>
+
       {% if special_project %}
       <h3><a href="/content/rubric/spetsproekt-2/">Спецпроект</a></h3>
       <div>
@@ -46,11 +48,10 @@
 	<a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a>
       </div>
       {% endif %}
-      
+
       <h3>Рейтинг слухов</h3>
       <div>{% display_last_poll %}</div>
-      
-      <h3>Реклама</h3>
+
       <div style="width:100%; background: red; color: white; text-align: center;; line-height: 200px; height: 200px;">[min 232xN]</div>
 
       <h3>Красная строка</h3>
