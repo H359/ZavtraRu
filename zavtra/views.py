@@ -79,7 +79,7 @@ def home(request):
     )
     current_items = cached(
 	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
-	'current_items',
+	'red_string',
 	duration=120
     )
     neuromir = cached(
