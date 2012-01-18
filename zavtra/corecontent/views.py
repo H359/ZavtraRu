@@ -20,7 +20,7 @@ class ContentItemView(DetailView):
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
     def get_object(self):
-	now = datetime.now().date()
+	now = datetime.now()#.date()
 	qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
 	return super(ContentItemView, self).get_object(qs)
 
