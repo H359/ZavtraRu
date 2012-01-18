@@ -202,6 +202,8 @@ class ZhivotovIllustration(models.Model):
     original  = models.ImageField(upload_to='zhivot/big/', verbose_name=u'Оригинальное Изображение')
     micro     = ImageSpec([Adjust(contrast=1.2, sharpness=1.1), resize.Crop(160,80)],
 			  image_field='original', format='JPEG', pre_cache=True)
+    for_main  = ImageSpec([resize.Fit(600, 262)],
+			  image_field='thumbnail', format='JPEG', pre_cache=True)
 
     def __unicode__(self):
 	return u'%s %s' % (self.title, self.pub_date)
