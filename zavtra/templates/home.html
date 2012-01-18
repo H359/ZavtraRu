@@ -19,6 +19,9 @@
       </figure>
       <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</small></h1>
       {% for group in newsletter %}
+      {% if forloop.counter == 4 %}
+      <div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 500xN]</div>
+      {% endif %}
       {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
       {% endfor %}
     </div>
@@ -37,6 +40,10 @@
       {% endif %}
       <h3>Рейтинг слухов</h3>
       <div>{% display_last_poll %}</div>
+      
+      <h3>Реклама</h3>
+      <div style="width:100%; background: red; color: white; text-align: center;; line-height: 200px; height: 200px;">[min 232xN]</div>
+
       <h3>Красная строка</h3>
       <ul class="unstyled">
         {% for item in current %}

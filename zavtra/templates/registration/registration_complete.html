@@ -3,13 +3,10 @@
 {% block page_title %}{{ block.super }} / Регистрация{% endblock %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="grid_12 alpha block of-kind-text">
-	<header><h1>Регистрация</h1></header>
+<div class="row">
+    <article class="span12 last rubric">
+	<h3>Регистрация</h3>
 	<div class="content">Регистрация прошла успешно. Теперь вы можете воспользоваться своим логином и паролем для входа на сайт.</div>
     </article>
-    <article class="grid_4 omega">
-	{% include 'partials/rightside.html' %}
-    </article>
-</section>
+</div>
 {% endblock %}
