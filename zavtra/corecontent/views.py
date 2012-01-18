@@ -52,7 +52,8 @@ class NewsView(DetailView):
 	    raise Http404
 	qs = ContentItem.batched.batch_select('authors').filter(
 	    enabled=True,
-	    pub_date=date,
+	    pub_date__gte=date,
+	    slug = self.kwargs.get('slug'),
 	    rubric=1,
 	)
 	#print qs
