@@ -6,13 +6,13 @@
 <div class="row">
     <div class="span8 rubric">
     	<h3>Каждый день</h3>
-    	<div class="content">
+    	<article class="content">
 	    <ul class="unstyled">
 		{% for item in items %}
 		<li><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></li>
 		{% endfor %}
 	    </ul>
-	</div>
+	</article>
     </div>
     <div class="span4 last">
 	{% include 'partials/rightside.html' %}

@@ -11,8 +11,8 @@ def imul(val, k):
     return val*k
 
 @register.filter
-def inv_div(val, k):
-    return k / val
+def idivmod(val, k):
+    return divmod(k, val)
 
 @register.filter
 def fix_commas(val):

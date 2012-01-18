@@ -3,7 +3,7 @@
 <li class="clearfix">
     <article>
 	<header>
-	    <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a><small>&nbsp;<time pubdate="pubdate" datetime={{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time></small></h4>
+	    <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a>&nbsp;<small><time pubdate="pubdate" datetime={{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time></small></h4>
 	    {% if item.subtitle %}<h5>{{ item.subtitle|safe }}</h5>{% endif %}
 	    {% if item.authors_all %}<h6>{% for author in item.authors_all %}<a class="author" href="{{ author.get_absolute_url }}">{{ author.first_name }} {{ author.last_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h6>{% endif %}
 	</header>
