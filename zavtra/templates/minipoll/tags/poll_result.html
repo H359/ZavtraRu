@@ -1,6 +1,6 @@
 {% load utils %}
 <div id="poll_result_{{ poll.slug }}">
-  <table class="choices">
+  <table class="zebra-striped bordered-table">
   {% for choice in poll.choice_set.all %}
   <tr>
     <td>{{ choice.title }}</td>

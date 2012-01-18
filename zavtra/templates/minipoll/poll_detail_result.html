@@ -3,39 +3,27 @@
 {% load pytils_numeral %}
 {% load comments %}
 
-{% block title %}{{ object.title }} - {% trans "Results" %}{% endblock %}
+{% block page_title %}{{ block.super }} / Слух &laquo;{{ object.title }}&raquo; / {% trans "Results" %}{% endblock %}
 
 {% block description %}{{ object.description|striptags }}, {% trans "results" %}.{% endblock %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="grid_8 alpha block">
-	<header><h1>{{ object.title }}</h1></header>
+<ul class="breadcrumb">
+    <li><a href="/">Главная</a><span class="divider">/</span></li>
+    <li><a href="{% url minipoll_poll_list %}">Слухи</a><span class="divider">/</span></li>
+    <li>{{ object.title }}</li>
+</ul>
+
+<div class="row">
+    <article class="span8">
+	<h3>{{ object.title }}</h3>
 	<div class="content">
-	    <div>{{ object.description|safe }}</div>
+	    {{ object.description|safe }}
 	    <div>{% display_poll_result object %}</div>
-	    <div>Всего {{ object.votes|get_plural:"проголосовавший,проголосовавших,проголосовавших" }}.</div>
+	    <strong>Всего {{ object.votes|get_plural:"пользователь,пользователя,пользователей" }} приняли участие в этом опросе.</strong>
 	</div>
-	<div id="comments_block">{% get_comments_for object %}</div>
+	<footer><div id="comments">{% get_comments_for object %}</div></footer>
     </article>
-    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
-    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
-</section>
-	{% comment %}
-<h2 class="poll_title">
-  <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
-</h2>
-<div class="poll">
-  <div class="poll_description">
-    {{ object.description|safe }}
-    {% display_poll_result object %}
-    <p>
-      {{ object.votes }} {% trans "votes" %}.
-      {% if not user_has_vote %}
-      <a href="{{ object.get_absolute_url }}">{% trans "Vote to this poll." %}</a>
-      {% endif %}
-    </p>
-  </div>
+    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
 </div>
-{% endcomment %}
 {% endblock %}
