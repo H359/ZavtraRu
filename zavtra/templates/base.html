@@ -16,7 +16,6 @@
     <![endif]-->
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/orbit-1.2.3.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
     {% comment %}
     {% load compressed %}
@@ -102,7 +101,31 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 	{% endfor %}
     </ul>
   </div>
-  <div class="content smooth">{% block content %}{% endblock %}</div>
+  <div class="content smooth">
+    <div class="row">
+	<div class="span12 last stripe">
+    	    <div id="red_stripe">
+    		<span class="snav prev"></span>
+    		<span class="snav next"></span>
+    		<div class="scrollable">
+    		    <div class="items">
+        		{% for group in current_items|in_groups_of:3 %}
+    			<div class="item">
+			    {% for item in group %}
+			    <div class="third" data-link="{{ item.get_absolute_url }}">
+				<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
+        			{{ item.description|safe }}
+			    </div>
+			    {% endfor %}
+			</div>
+    			{% endfor %}
+    		    </div>
+    		</div>
+    	    </div>
+	</div>
+    </div>
+  </div>
+  <div class="content smooth gstyle">{% block content %}{% endblock %}</div>
   <div class="sidebar smooth">
     {% if request.COOKIES.news_collapsed == 'true' %}
     <a href="#" class="smooth collapse" title="свернуть">&lt;&lt;&lt;</a>
@@ -160,9 +183,9 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-twipsy.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.tools.js"></script>
 <script src="{{ STATIC_URL }}js/core.js"></script>
 <script src="{{ STATIC_URL }}js/comments.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.tools.min.js"></script>
 <!--<script src="{{ STATIC_URL }}js/jquery.galleriffic.js"></script>-->
 {%spaceless%}<script type="text/javascript">
 /*

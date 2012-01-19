@@ -77,11 +77,6 @@ def home(request):
 	'illustration',
 	duration=6000
     )
-    current_items = cached(
-	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
-	'red_string',
-	duration=120
-    )
     neuromir = cached(
         lambda: get_latest_rubric(19),
         'neuromir-latest',
@@ -101,7 +96,6 @@ def home(request):
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
-	'current': current_items,
 	'neuromir': neuromir,
 	'zavtra_tv': zavtra_tv,
 	'special_project': special_project

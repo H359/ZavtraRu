@@ -26,10 +26,16 @@ def common_pieces(request):
     except IndexError:
 	quote = None
     news = cached(lambda: map(news_stripper, ContentItem.objects.filter(enabled=True, pub_date__lte=now, rubric__title=u'Новости')[0:6]), 'news', duration=120)
+    current_items = cached(
+	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
+	'red_string',
+	duration=120
+    )
     return {
 	'news': news,
 	'base_template': base_template,
         'top_rubrics': top_rubrics,
         'featured': featured,
-        'quote': quote
+        'quote': quote,
+        'current_items': current_items
     }

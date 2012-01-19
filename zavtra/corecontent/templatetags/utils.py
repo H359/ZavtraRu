@@ -29,5 +29,5 @@ def filter_by_field(val, field):
     return filter(lambda w: getattr(w, field), val)
 
 @register.filter
-def in_group_of(val, k):
+def in_groups_of(val, k):
     return group_list(val, k)

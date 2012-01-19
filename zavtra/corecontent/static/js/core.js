@@ -26,3 +26,9 @@ $(function(){
 	});
     })();
 });
+
+$(window).load(function(){
+    var rs = $('#red_stripe'), rsw = rs.width() - 180;
+    $('.item', rs).width(rsw);
+    $('.scrollable', rs).width(rsw).show().scrollable({circular:true});
+});

@@ -9,22 +9,6 @@
 
 {% block content %}
   <div class="row">
-    <div class="span12 last">
-      <div id="red_stripe">
-      {% for group in current|group_list:3 %}
-      <div class="items">
-        {% for item in group %}
-        <div class="item" data-link="{{ item.get_absolute_url }}">
-          <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
-          {{ item.description|safe }}
-        </div>
-        {% endfor %}
-      </div>
-      {% endfor %}
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="span8 rubric">
       <figure class="top-illustration">
         <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" />
@@ -90,10 +74,6 @@
   </div>
 {% endblock %}
 
-{% block javascript %}
-{{ block.super }}
-$('#red_stripe').scrollable();
-{% endblock %}
 {% block banners_js %}
 {{ block.super }}
 <script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49094&div=DIV_DA_49094"></script>

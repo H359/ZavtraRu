@@ -23,8 +23,17 @@ body { font-family: Arial; padding-top: 50px; }
 	    .specialitaet figure figcaption h3,
 	    .specialitaet figure figcaption h4 { border-bottom: none; padding: 4px; line-height: 1.2em; }
 
-.gazette .container-fluid .row { background: url(/static/img/border2.png) repeat-y 67.3% 0; }
+.gazette .container-fluid .gstyle .row { background: url(/static/img/border2.png) repeat-y 67.3% 0; }
 .gazette h1 { margin-top: 8px; font-weight: 400; font-size: 36px; }
+
+#red_stripe .snav { width: 90px; height: 100px; cursor: pointer; }
+#red_stripe .prev { float: left; background: url(orbit/left-arrow.png) no-repeat; }
+#red_stripe .next { float: right; background: url(orbit/right-arrow.png) no-repeat; }
+.scrollable { position: relative; overflow: hidden; height: 160px; top: 0; display: none; }
+    .scrollable .items { width: 2000em; position: absolute;  }
+	.scrollable .items .item { float: left; }
+	.scrollable .items .third { float: left; width: 33.33%; }
+	    .scrollable .items .third img { width: 50%; }
 
 .smooth {
     transition: all 0.5s ease-in-out;
