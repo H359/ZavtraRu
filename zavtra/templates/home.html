@@ -5,12 +5,21 @@
 {% load pytils_dt %}
 {% load pytils_numeral %}
 
-{% block javascript %}
-{% endblock %}
-
 {% block body_class %}gazette{% endblock %}
 
 {% block content %}
+  <div class="row">
+    <div class="span12 last">
+      <div id="red_stripe">
+      {% for item in current %}
+      <div class="item" data-link="{{ item.get_absolute_url }}">
+        <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
+        {{ item.description|safe }}
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="span8 rubric">
       <figure class="top-illustration">
@@ -60,6 +69,7 @@
       <h3>Реклама</h3>
       <div id="DIV_DA_49095"></div>
 
+      {% comment %}
       <h3>Красная строка</h3>
       <ul class="unstyled">
         {% for item in current %}
@@ -71,6 +81,18 @@
         </li>
         {% endfor %}
       </ul>
+      {% endcomment %}
     </div>
   </div>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+$('#red_stripe').scrollable();
+{% endblock %}
+{% block banners_js %}
+{{ block.super }}
+<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49094&div=DIV_DA_49094"></script>
+<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49095&div=DIV_DA_49095"></script>
+<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49096&div=DIV_DA_49096"></script>
 {% endblock %}
