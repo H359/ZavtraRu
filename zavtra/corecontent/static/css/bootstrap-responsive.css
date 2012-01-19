@@ -204,10 +204,10 @@
 	only screen and (min-device-width: 480px) {
   body .stripe { display: none; }
   body .container-fluid { min-width: 90%; }
-  body .container-fluid .content { margin-right: 0; }
+  /*body .container-fluid .content { margin-right: 0; }
   body .container-fluid .sidebar { position: static; width: 100%; }
   body .topbar { height: 80px; overflow-y: scroll; }
-  html body { padding-top: 100px; }
+  html body { padding-top: 100px; }*/
 
   .container-fluid .input-medium,
   .container-fluid input.medium,
