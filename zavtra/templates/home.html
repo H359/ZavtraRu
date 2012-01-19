@@ -11,10 +11,14 @@
   <div class="row">
     <div class="span12 last">
       <div id="red_stripe">
-      {% for item in current %}
-      <div class="item" data-link="{{ item.get_absolute_url }}">
-        <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
-        {{ item.description|safe }}
+      {% for group in current|group_list:3 %}
+      <div class="items">
+        {% for item in group %}
+        <div class="item" data-link="{{ item.get_absolute_url }}">
+          <h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
+          {{ item.description|safe }}
+        </div>
+        {% endfor %}
       </div>
       {% endfor %}
       </div>

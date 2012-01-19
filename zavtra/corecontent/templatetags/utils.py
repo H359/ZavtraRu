@@ -1,5 +1,7 @@
 from django.template import Library
 
+from zavtra.utils import group_list
+
 register = Library()
 
 @register.filter
@@ -28,4 +30,4 @@ def filter_by_field(val, field):
 
 @register.filter
 def in_group_of(val, k):
-    return None
+    return group_list(val, k)
