@@ -19,7 +19,7 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 var rs = null;
 var pfp = function(){
-        var rsw = rs.width() - 180;
+        var rsw = rs.width() - 90;
 	$('.item', rs).width(rsw);
 	return rsw;
 }
