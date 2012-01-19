@@ -189,7 +189,11 @@ FILEBROWSER_EXCLUDE = []
 PIPELINE_AUTO = False
 PIPELINE_VERSION = True
 PIPELINE_VERSIONING = 'pipeline.versioning.git.GitHeadRevVersioning'
-PIPELINE_YUI_BINARY = '/usr/bin/yuicompressor'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.csstidy.CSSTidyCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.closure.ClosureCompressor'
+PIPELINE_CSSTIDY_BINARY = '/usr/bin/csstidy'
+PIPELINE_CLOSURE_BINARY = '/usr/bin/closure'
+#PIPELINE_YUI_BINARY = '/usr/bin/yuicompressor'
 PIPELINE_CSS = {
     'main': {
 	'source_filenames': ('css/*.css',),
