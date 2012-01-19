@@ -89,7 +89,7 @@ body { font-family: Arial; padding-top: 50px !important; }
 	.rubric h3 small, .rubric h4 small { float: right; margin-top: 4px; margin-right: 8px; }
 	    .rubric h3 small a, .rubric h4 small a { text-decoration: underline; }
 	.rubric small.rss { margin-top: 14px; }
-	    .rubric small.rss a { background: url(/static/img/rss.gif) no-repeat; padding-left: 18px; }
+	    .rubric small.rss a { background: url(/img/rss.gif) no-repeat; padding-left: 18px; }
     .rubric h5 { line-height: 20px; margin-top: 6px; }
 	.rubric h6 { text-transform: none; line-height: 14px; margin-bottom: 12px; color: #444; }
     .rubric ul.unstyled { margin-bottom: 24px; }
