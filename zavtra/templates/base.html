@@ -57,7 +57,11 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
         <li><a href="/content/rubric/voprosyi-prohanovu/">Задать вопрос А. А. Проханову</a></li>
         <li><a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a></li>
         <li><a href="/denlit/index.html">Архив &laquo;Дня литературы&raquo;</a></li>
-        {% if request.user.is_authenticated and request.user.is_staff %}<li><a href="/editorial/">Редакционный блог</a></li>{% endif %}
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <li><a href="/editorial/">Редакционный блог</a></li>
+        <li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></li>
+        <li><a href="/?next_number=1">Новый номер (предпросмотр)</a></li>
+        {% endif %}
       </ul>
       <form class="pull-left" action="{% url search %}">
         <input type="text" name="q" placeholder="Поиск..." />
