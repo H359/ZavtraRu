@@ -23,7 +23,7 @@ body { font-family: Arial; padding-top: 50px !important; }
 	    .specialitaet figure figcaption h3,
 	    .specialitaet figure figcaption h4 { border-bottom: none; padding: 4px; line-height: 1.2em; }
 
-.gazette .container-fluid .gstyle .row { background: url(/static/img/border2.png) repeat-y 67.3% 0; }
+.gazette .container-fluid .gstyle .row { background: url(/img/border2.png) repeat-y 67.3% 0; }
 .gazette h1 { margin-top: 8px; font-weight: 400; font-size: 36px; }
 
 .stripe h3 {
