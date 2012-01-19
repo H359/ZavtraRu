@@ -100,11 +100,11 @@ body { font-family: Arial; padding-top: 50px ; }
     .rubrics li.last { border-right: none; margin-right: 0; padding-right: 0; }
     .rubrics a { color: white; font-size: 16px; }
 
-.featured { padding: 8px ; }
-    .featured li { display: inline; padding-right: 10px; margin-right: 8px; border-right: 1px solid #222; }
-    .featured li.first { border-right: none; padding-right: 2px; margin-right: 2px; }
-    .featured li.last { border-right: none; margin-right: 0; padding-right: 0; }
-    .featured a { font-size: 14px; }
+.content .featured { padding: 8px; }
+    .content .featured li { display: inline; padding-right: 10px; margin-right: 8px; border-right: 1px solid #222; }
+    .content .featured li.first { border-right: none; padding-right: 2px; margin-right: 2px; }
+    .content .featured li.last { border-right: none; margin-right: 0; padding-right: 0; }
+    .content .featured a { font-size: 14px; }
 
 .article-text { max-width: 52em; }
 .article-text p { font-size: 16px; line-height: 20px; margin-bottom: 20px; }
