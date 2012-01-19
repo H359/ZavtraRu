@@ -30,7 +30,7 @@ body { font-family: Arial; padding-top: 50px !important; }
     color: white;
     padding-left: 0.5em;
     margin-bottom: 0.5em;
-    background: #CF3A2D;
+    background: #CF3A2D; 
     background: linear-gradient(left,#CF3A2D 30%,white 100%);
     background: -webkit-linear-gradient(left,#CF3A2D 30%,white 100%);
     background: -o-linear-gradient(left,#CF3A2D 30%,white 100%);
