@@ -189,9 +189,9 @@
 @media only screen and (min-width: 480px) and (max-width: 767px),
 	 only screen and (min-device-width: 480px) and (max-device-width: 767px) {
   body .stripe { display: none; }
-  .container-fluid { min-width: 90%; }
-  .container-fluid .content { margin-right: 0; }
-  .container-fluid .sidebar { position: static; width: 100%; }
+  body .container-fluid { min-width: 90%; }
+  body .container-fluid .content { margin-right: 0; }
+  body .container-fluid .sidebar { position: static; width: 100%; }
   html body { padding-top: 100px; }
   .container-fluid .input-xxlarge,
   .container-fluid input.xxlarge,
