@@ -25,3 +25,7 @@ def negate(val):
 @register.filter
 def filter_by_field(val, field):
     return filter(lambda w: getattr(w, field), val)
+
+@register.filter
+def in_group_of(val, k):
+    return None
