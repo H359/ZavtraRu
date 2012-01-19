@@ -14,13 +14,13 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    {% comment %}
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
-    {% comment %}
+    {% endcomment %}
     {% load compressed %}
     {% compressed_css 'main' %}
-    {% endcomment %}
     {% block css %}{% endblock %}
     {% block js_extra_head %}{% endblock %}
     <script>
@@ -178,6 +178,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 {%comment%}<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>{%endcomment%}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
+{% comment %}
 <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
 <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
@@ -186,7 +187,8 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <script src="{{ STATIC_URL }}js/core.js"></script>
 <script src="{{ STATIC_URL }}js/comments.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.tools.min.js"></script>
-<!--<script src="{{ STATIC_URL }}js/jquery.galleriffic.js"></script>-->
+{% endcomment %}
+{% compressed_js 'main' %}
 {%spaceless%}<script type="text/javascript">
 /*
 window.vkAsyncInit=function(){VK.Widgets.Group("vk_groups",{mode:1,width:"270",height:"290"},32969466);};

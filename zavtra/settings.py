@@ -198,7 +198,16 @@ PIPELINE_CSS = {
 }
 PIPELINE_JS = {
     'main': {
-	'source_filenames': ('js/comments.js', 'js/jquery.colorbox-min.js', 'js/jquery.tools.min.js'),
+	'source_filenames': (
+	    'js/jquery.cookie.js',
+	    'js/bootstrap-dropdown.js',
+	    'js/bootstrap-modal.js',
+	    'js/bootstrap-twipsy.js',
+	    'js/bootstrap-popover.js',
+	    'js/jquery.tools.min.js'
+	    'js/core.js',
+	    'js/comments.js'
+	),
 	'output_filename': 'js/compressed_js.r?.js',
     }
 }
