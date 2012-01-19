@@ -86,7 +86,6 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
   </blockquote>
 {% endwith %}</div>
 
-
 <div class="container-fluid">
   <div class="content smooth">
     <ul class="unstyled rubrics topbar-inner">
@@ -148,9 +147,25 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
     </div>
   </div>
 </div>
-
 {% endblock %}
-    
+
+<footer class="container-fluid">
+    <div class="row">
+	<div class="span4">
+	    <address>
+		<strong>Адрес редакции:</strong><br/>
+		119146, Москва, Фрунзенская наб., 18–60<br/>
+		Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
+		Телефон: (495) 726-54-83
+	    </address>
+	</div>
+	<div class="span8 last">
+	    <a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
+	    Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
+	</div>
+    </div>
+</footer>
+
 {% block javascript_library %}
 {% comment %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
