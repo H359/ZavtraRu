@@ -204,7 +204,7 @@ PIPELINE_JS = {
 	    'js/bootstrap-modal.js',
 	    'js/bootstrap-twipsy.js',
 	    'js/bootstrap-popover.js',
-	    'js/jquery.tools.min.js'
+	    'js/jquery.tools.min.js',
 	    'js/core.js',
 	    'js/comments.js'
 	),
