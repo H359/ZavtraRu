@@ -27,14 +27,16 @@
     <div class="span4 rubric last">
       {% if zavtra_tv %}
       <div class="specialitaet">
+        {% for item in zavtra_tv %}
         <figure>
-    	    <img src="http://img.youtube.com/vi/{{ zavtra_tv.get_video_id }}/0.jpg" />
+    	    <img src="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" />
     	    <figcaption>
     		<h3><a href="/content/rubric/zavtratv/">Завтра.LIVE:</a></h3>
-    		<h4><a href="{{ zavtra_tv.get_absolute_url }}">{{ zavtra_tv.title|safe }}</a></h4>
-    		<a href="{{ zavtra_tv.get_absolute_url }}#comments" class="pull-right">{{ zavtra_tv.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+    		<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
+    		<a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
     	    </figcatpion>
         </figure>
+        {% endfor %}
       </div>
       {% endif %}
 
@@ -45,7 +47,7 @@
       {% if special_project %}
       <h3><a href="/content/rubric/spetsproekt-2/">Спецпроект</a></h3>
       <div>
-	<a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a>
+	<h4><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></h4>
 	<div class="txt"><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></div>
       </div>
       {% endif %}
