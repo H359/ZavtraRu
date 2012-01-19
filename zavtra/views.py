@@ -83,8 +83,8 @@ def home(request):
         duration=60*60*4
     )
     zavtra_tv = cached(
-	lambda: get_latest_rubric(19 if settings.DEBUG else 44),
-	'zavtra-tv',
+	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=19 if settings.DEBUG else 44)[0:1],
+	'zavtra-tv2',
 	duration=60*60*4
     )
     special_project = cached(

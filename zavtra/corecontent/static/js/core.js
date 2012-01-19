@@ -33,7 +33,9 @@ $(function(){
 	});
 	rs = $('#red_stripe');
 	var rsw = pfp();
-	$('.scrollable', rs).width(rsw).show().scrollable({circular:true});
+	$('.scrollable', rs).width(rsw).show()
+	//$('.scrollable', 
+	$('.scrollable').scrollable({circular:true});
     })();
 });
 
