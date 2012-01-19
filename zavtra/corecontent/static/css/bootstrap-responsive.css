@@ -153,7 +153,7 @@
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 768px),
 	only screen and (max-device-width: 768px) and (orientation: portrait) {
-  body .stripe { display: none; }
+  body .row .stripe { display: none; }
   body .container-fluid { min-width: 90%; }
   body .container-fluid .content { margin-right: 0; }
   body .container-fluid .sidebar { position: static; width: 100%; }
@@ -188,7 +188,7 @@
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 @media only screen and (min-width: 480px) and (max-width: 767px),
 	 only screen and (min-device-width: 480px) and (max-device-width: 767px) {
-  body .stripe { display: none; }
+  body .row .stripe { display: none; }
   body .container-fluid { min-width: 90%; }
   body .container-fluid .content { margin-right: 0; }
   body .container-fluid .sidebar { position: static; width: 100%; }
@@ -202,7 +202,7 @@
 /* Larger than Mobile Landscape Size */
 @media only screen and (min-width: 480px),
 	only screen and (min-device-width: 480px) {
-  body .stripe { display: none; }
+  body .row .stripe { display: none; }
   body .container-fluid { min-width: 90%; }
   /*body .container-fluid .content { margin-right: 0; }
   body .container-fluid .sidebar { position: static; width: 100%; }
@@ -230,7 +230,7 @@
 /* Samller than Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px),
 	only screen and (max-device-width: 479px) {
-  body .stripe { display: none; }
+  body .row .stripe { display: none; }
   body .container-fluid { min-width: 90%; }
   body .container-fluid .content { margin-right: 0; }
   body .container-fluid .sidebar { position: static; width: 100%; }
