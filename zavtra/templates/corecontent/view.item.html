@@ -55,13 +55,14 @@
         </embed>
       </object>
     </div>
-    {% else %}{% if item.content|length > 1500 %}
+    {% else %}{% if item.content|length > 1500 %}<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}{% endif %}
     {% if item.kind == 'text' or item.kind == '' %}<article class="article-text">{{ item.content|safe }}</article>{% endif %}
     {% if item.tags.all|length %}
     <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}
+    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <footer>
       <div id="comments">{% get_comments_for item %}</div>
       {% comment %}<div style="width:100%;height:100px;line-height:100px;color:white;background:red;">[min 500xN]</div>{% endcomment %}
