@@ -1,10 +1,10 @@
-body { font-family: Arial; padding-top: 50px; }
+body { font-family: Arial; padding-top: 50px !important; }
 
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
-.topbar .brand { padding: 8px 20px 6px; }
+.topbar .brand { padding: 8px 20px 6px !important; }
 
 .top-illustration { padding: 0; margin: 0; position: relative; width: 100%; }
     .top-illustration img { width: 100%; display: block; }
@@ -26,9 +26,22 @@ body { font-family: Arial; padding-top: 50px; }
 .gazette .container-fluid .gstyle .row { background: url(/static/img/border2.png) repeat-y 67.3% 0; }
 .gazette h1 { margin-top: 8px; font-weight: 400; font-size: 36px; }
 
-#red_stripe .snav { width: 90px; height: 100px; cursor: pointer; }
+.stripe h3 {
+    color: white;
+    padding-left: 0.5em;
+    margin-bottom: 0.5em;
+    background: #CF3A2D;
+    background: linear-gradient(left,#CF3A2D 30%,white 100%);
+    background: -webkit-linear-gradient(left,#CF3A2D 30%,white 100%);
+    background: -o-linear-gradient(left,#CF3A2D 30%,white 100%);
+    background: -moz-linear-gradient(left,#CF3A2D 30%,white 100%);
+    background: -ms-linear-gradient(left,#CF3A2D 30%,white 100%);
+}
+
+#red_stripe .snav { width: 90px; height: 100px; cursor: pointer; margin-bottom: 8px; }
 #red_stripe .prev { float: left; background: url(orbit/left-arrow.png) no-repeat; }
 #red_stripe .next { float: right; background: url(orbit/right-arrow.png) no-repeat; }
+#red_stripe h4 { line-height: 18px; padding-right: 4px; padding-bottom: 4px; }
 .scrollable { position: relative; overflow: hidden; height: 160px; top: 0; display: none; }
     .scrollable .items { width: 2000em; position: absolute;  }
 	.scrollable .items .item { float: left; }
@@ -86,7 +99,7 @@ body { font-family: Arial; padding-top: 50px; }
     .rubrics li.last { border-right: none; margin-right: 0; padding-right: 0; }
     .rubrics a { color: white; font-size: 16px; }
 
-.featured { padding: 8px; }
+.featured { padding: 8px !important; }
     .featured li { display: inline; padding-right: 10px; margin-right: 8px; border-right: 1px solid #222; }
     .featured li.first { border-right: none; padding-right: 2px; margin-right: 2px; }
     .featured li.last { border-right: none; margin-right: 0; padding-right: 0; }
