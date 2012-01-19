@@ -193,7 +193,7 @@ PIPELINE_YUI_BINARY = '/usr/bin/yuicompressor'
 PIPELINE_CSS = {
     'main': {
 	'source_filenames': ('css/*.css',),
-	'output_filename': 'css/compressed_css.r?.css',
+	'output_filename': 'css/compressed_css.r2?.css',
     }
 }
 PIPELINE_JS = {
@@ -208,7 +208,7 @@ PIPELINE_JS = {
 	    'js/core.js',
 	    'js/comments.js'
 	),
-	'output_filename': 'js/compressed_js.r?.js',
+	'output_filename': 'js/compressed_js.r2?.js',
     }
 }
 
