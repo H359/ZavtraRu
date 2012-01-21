@@ -218,13 +218,13 @@ body {
 .container-fluid:after {
   clear: both;
 }
-.container-fluid > .sidebar {
+.container-fluid .sidebar {
   position: absolute;
   top: 0;
   right: 0;
   width: 240px;
 }
-.container-fluid > .content {
+.container-fluid .content.gstyle {
   margin-right: 240px;
 }
 a {

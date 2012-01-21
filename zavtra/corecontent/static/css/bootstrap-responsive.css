@@ -152,9 +152,9 @@
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 1020px) /*, only screen and (max-device-width: 768px) and (orientation: portrait)*/ {
   body .container-fluid { min-width: 90%; }
-  body .container-fluid > .sidebar { position: static; width: 100%; }
-  body .container-fluid > .sidebar .collapse { display: none; }
-  body .container-fluid > .content { margin-right: 0; }
+  body .container-fluid .sidebar { position: static; width: 100%; }
+  body .container-fluid .sidebar .collapse { display: none; }
+  body .container-fluid .content { margin-right: 0; }
 
   body .container-fluid .row, body {
     width: 100%;
