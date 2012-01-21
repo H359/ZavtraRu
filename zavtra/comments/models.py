@@ -22,7 +22,7 @@ class Comment(models.Model):
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    author         = models.ForeignKey(User, verbose_name=u'Автор')
+    author         = models.ForeignKey(User, verbose_name=u'Автор', related_name='comments')
     comment        = models.TextField(verbose_name=u'Текст комментария', max_length=8192, help_text=u'Максимум 8192 символа. Помните &mdash; это комментарий, а не статья.')
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())

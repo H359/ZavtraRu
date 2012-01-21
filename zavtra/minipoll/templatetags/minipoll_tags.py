@@ -17,7 +17,7 @@ def display_poll_result(poll):
 @register.inclusion_tag('minipoll/tags/last_poll.html', takes_context=True)
 def display_last_poll(context):
     try:
-	poll = Poll.published.latest('creation_date')
+	poll = Poll.batched.batch_select('choices').latest('creation_date')
     except ObjectDoesNotExist:
 	return {}
     try:

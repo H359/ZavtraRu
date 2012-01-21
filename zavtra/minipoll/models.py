@@ -5,7 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from minipoll.managers import PollPublishedManager
+from batch_select.models import BatchManager
+
 from minipoll.managers import DRAFT, PUBLISHED, ARCHIVED
 
 STATUS_CHOICES = ((DRAFT, _('draft')),
@@ -27,7 +28,7 @@ class Poll(models.Model):
     publication_date = models.DateTimeField(_('publication date'), default=datetime.now)
 
     objects = models.Manager()
-    published = PollPublishedManager()
+    batched = BatchManager()
 
     class Meta:
         ordering = ('-creation_date',)
@@ -48,7 +49,7 @@ class Poll(models.Model):
 
 class Choice(models.Model):
     """A choice for a poll"""
-    poll = models.ForeignKey(Poll, verbose_name=_('poll'))
+    poll = models.ForeignKey(Poll, verbose_name=_('poll'), related_name='choices')
     
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_('description'), blank=True)

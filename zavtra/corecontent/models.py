@@ -35,7 +35,12 @@ def tag_url(tag):
     return ('corecontent.view.items_by_tag', (), {'slug': tag.slug})
 Tag.get_absolute_url = tag_url
 
+@models.permalink
+def get_user_url(user):
+    return ('accounts.view.user', (), {'username': user.username})
+
 User.__unicode__ = lambda s: s.get_full_name() if s.first_name or s.last_name else s.username
+User.get_absolute_url = lambda s: get_user_url(s)
 
 class Rubric(models.Model):
     class Meta:

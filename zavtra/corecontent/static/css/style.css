@@ -88,9 +88,12 @@ body .topbar .brand { padding: 8px 20px 6px ; }
 .news li .txt { word-wrap: break-word; }
 
 .rubric .free h4, .rubric .free h5 { border: none; line-height: 36px; }
-    .rubric .free h4 small { float: none; }
+    .rubric .free h4 small { float: none; position: static; }
 
 .gazette .rubric h4 { border-bottom: 1px solid #444; }
+
+body .tabs { margin-bottom: 0; }
+body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
 
 .rubric { }
     .rubric h3, .rubric h4 { border-bottom: 1px solid #CF3A2D; }
@@ -128,6 +131,8 @@ body .topbar .brand { padding: 8px 20px 6px ; }
     	    .comment .inner .body .text { margin: 0; padding: 8px 0 0 0; font-size: 14px; }
 
     .comment .actions { padding: 0; margin: 4px 0; float: right; border-top: none; }
+
+.comment.avatarless { padding-left: 0; background: none; }
 
 .comment-form form, .comment-form fieldset { margin: 0; }
 .comment-form h4 { padding-left: 150px; }

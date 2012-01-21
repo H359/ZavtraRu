@@ -4,10 +4,10 @@ from django.views.generic.list_detail import object_list
 
 from minipoll.models import Poll
 
-poll_conf = {'queryset': Poll.published.all(),}
+poll_conf = {'queryset': Poll.objects.filter(status=1).all(),}
 
 def show_polls(request):
-    return object_list(request, queryset=Poll.published.all())
+    return object_list(request, queryset=Poll.objects.filter(status=1).all())
 
 urlpatterns = patterns('',
                        url(r'^$', show_polls, name='minipoll_poll_list'),

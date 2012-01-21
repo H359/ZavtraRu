@@ -101,22 +101,6 @@ def home(request):
 	'special_project': special_project
     }
 
-class UserView(ListView):
-    paginate_by = 15
-    paginator_class = DiggPaginator
-    template_name = 'user.html'
-    def get_queryset(self, **kwargs):
-	self.user = get_object_or_404(User, username=self.kwargs.get('username'))
-	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, authors__in = [self.user])
-
-    def get_context_data(self, **kwargs):
-	context = super(UserView, self).get_context_data(**kwargs)
-	context['ruser'] = self.user
-	return context
-
-user = UserView.as_view()
-
 def resolver(request, content_type_id, id):
     ctype = get_object_or_404(ContentType, id=content_type_id)
     obj = get_object_or_404(ctype.model_class(), id=id)

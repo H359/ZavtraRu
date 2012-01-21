@@ -1,7 +1,11 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import ListView
 
 from annoying.decorators import render_to
+from diggpaginator import DiggPaginator
 
 from models import SiteProfile
 from forms import RegistrationForm
@@ -22,3 +26,27 @@ def register(request):
     else:
 	form = RegistrationForm()
     return {'form': form}
+
+class UserView(ListView):
+    paginate_by = 15
+    paginator_class = DiggPaginator
+    template_name = 'siteuser/user.html'
+    def get_queryset(self):
+	self.user = get_object_or_404(User, username=self.kwargs.get('username'))
+	part = self.kwargs.get('part')
+	if part == 'comments':
+	    self.template_name = 'siteuser/comments.html'
+	    return self.user.comments.filter(enabled=True)
+	elif part == 'articles':
+	    self.template_name = 'siteuser/articles.html'
+	    now = datetime.now()
+	    return self.user.contentitems.filter(enabled=True, pub_date__lte = now)
+	else:
+	    return User.objects.none()
+
+    def get_context_data(self, **kwargs):
+	context = super(UserView, self).get_context_data(**kwargs)
+	context['ruser'] = self.user
+	return context
+
+user = UserView.as_view()

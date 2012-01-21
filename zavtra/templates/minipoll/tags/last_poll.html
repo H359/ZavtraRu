@@ -3,9 +3,9 @@
 {% load minipoll_tags %}
 {% if poll %}
     <h5>{{ poll.title }}</h5>
-    {% if user_has_vote %}
+    {% if user_has_vote %}{% cache 600 last_poll_results %}
     <ol class="unstyled">
-	{% for choice in poll.choice_set.all %}
+	{% for choice in poll.choices_all %}
         <li>{{ choice.title }}
         {% with percs=choice.percent %}
             <div style="width: {{ percs|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.percent|default:1|floatformat:"0" }}px solid #E6F0ED;">
@@ -16,11 +16,11 @@
         {% endfor %}
         <a href="{% url minipoll_poll_list %}">Другие слухи</a>
     </ol>
-    {% else %}
+    {% endcache %}{% else %}{% cache 600 last_poll_form %}
     <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
       {% csrf_token %}
       <div class="clearfix"><ul class="inputs-list">
-      {% for choice in poll.choice_set.all %}
+      {% for choice in poll.choices_all %}
       <li>
 	  <label for="poll-{{ poll.id }}-{{ choice.pk }}">
 	    <input type="radio"
@@ -34,5 +34,5 @@
       </ul></div>
     <div><input type="submit" class="btn small primary" value="Ответить"></div>
   </form>
-  {% endif %}
+  {% endcache %}{% endif %}
 {% endif %}

@@ -13,7 +13,7 @@ def poll_detail(request, slug, template_name='minipoll/poll_detail.html'):
     user_has_vote = poll.pk in request.session.get('poll', [])
     
     return object_detail(request, slug=slug,
-                         queryset=Poll.objects.all(),
+                         queryset=Poll.batched.batch_select('choices').all(),
                          template_name=template_name,
                          extra_context={'user_has_vote': user_has_vote})
 

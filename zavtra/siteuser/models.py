@@ -17,7 +17,7 @@ class SiteProfile(models.Model):
 	(1, u'Мужской'),
 	(2, u'Женский'),
     )
-    user       = models.OneToOneField(User)
+    user       = models.OneToOneField(User, related_name='profile')
     dob        = models.DateField(verbose_name=u'Дата рождения')
     gender     = models.IntegerField(choices=GENDER, verbose_name=u'Пол')
     location   = models.CharField(max_length=100, verbose_name=u'Страна, город', blank=True)
