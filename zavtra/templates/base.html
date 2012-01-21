@@ -23,6 +23,7 @@
     {% compressed_css 'main' %}
     {% block css %}{% endblock %}
     {% block js_extra_head %}{% endblock %}
+{% comment %}
     <script>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-27628875-1']);
@@ -33,6 +34,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
  })();
     </script>
+{% endcomment %}
 </head>
 
 <body class="{% block body_class %}{% endblock %}{% if request.COOKIES.news_collapsed == 'true' %} collapsed{% endif %}">
@@ -54,13 +56,23 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
       <ul class="nav">
         <!--<li><a href="/">Главная</a></li>-->
         <!--<li><a href="">Текущий выпуск</a></li>-->
-        <li><a href="/content/rubric/voprosyi-prohanovu/">Задать вопрос А. А. Проханову</a></li>
-        <li><a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a></li>
-        <li><a href="/denlit/index.html">Архив &laquo;Дня литературы&raquo;</a></li>
+        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
+        <li class="dropdown">
+	    <a href="#" class="dropdown-toggle">Архив</a>
+	    <ul class="dropdown-menu">
+		<li><a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a></li>
+		<li><a href="/denlit/index.html">Архив &laquo;Дня литературы&raquo;</a></li>
+	    </ul>
+	</li>
         {% if request.user.is_authenticated and request.user.is_staff %}
-        <li><a href="/editorial/">Редакционный блог</a></li>
-        <li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></li>
-        <li><a href="/?next_number=1">Новый номер (предпросмотр)</a></li>
+        <li class="dropdown">
+    	    <a href="#" class="dropdown-toggle">Редакционное</a>
+    	    <ul class="dropdown-menu">
+    		<li><a href="/editorial/">Редакционный блог</a></li>
+    		<li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></li>
+    		<li><a href="/?next_number=1">Новый номер</a></li>
+    	    </ul>
+    	</li>
         {% endif %}
       </ul>
       <form class="pull-left" action="{% url search %}">
@@ -182,6 +194,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg');</script>
 <![endif]-->
+{% comment %}
 <div style="display:none;"><script type="text/javascript"> 
 (function(w, c) { 
     (w[c] = w[c] || []).push(function() { 
@@ -195,6 +208,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script> 
 <noscript><div><img src="//mc.yandex.ru/watch/11286280" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
 <!-- /Yandex.Metrika counter --> 
+{% endcomment %}
 <div id="fb-root"></div><div id="vk-root"></div>
 {%comment%}<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?34"></script>{%endcomment%}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
@@ -228,6 +242,6 @@ $(function(){
   {% block javascript %}{% endblock %}
 });
 </script>{%endspaceless%}
-{% block banners_js %}{% endblock %}
+{% comment %}{% block banners_js %}{% endblock %}{% endcomment %}
 </body>
 </html>

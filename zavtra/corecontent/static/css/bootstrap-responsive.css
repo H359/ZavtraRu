@@ -142,21 +142,19 @@
 ================================================== */
 /* Larger than Tablet Portrait size */
 @media only screen and (min-width: 768px),
-	only screen and (min-device-width: 768px) {
+       only screen and (min-device-width: 768px) {
   .container-fluid .input-xxlarge,
   .container-fluid input.xxlarge,
   .container-fluid textarea.xxlarge,
   .container-fluid select.xxlarge {
     width: 530px; } }
 	
-*/
 /* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 768px),
-	only screen and (max-device-width: 768px) and (orientation: portrait) {
-  body .row .stripe { display: none; }
+@media only screen and (max-width: 1020px) /*, only screen and (max-device-width: 768px) and (orientation: portrait)*/ {
   body .container-fluid { min-width: 90%; }
-  body .container-fluid .content { margin-right: 0; }
-  body .container-fluid .sidebar { position: static; width: 100%; }
+  body .container-fluid > .sidebar { position: static; width: 100%; }
+  body .container-fluid > .sidebar .collapse { display: none; }
+  body .container-fluid > .content { margin-right: 0; }
 
   body .container-fluid .row, body {
     width: 100%;
@@ -187,12 +185,8 @@
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 @media only screen and (min-width: 480px) and (max-width: 767px),
-	 only screen and (min-device-width: 480px) and (max-device-width: 767px) {
-  body .row .stripe { display: none; }
-  body .container-fluid { min-width: 90%; }
-  body .container-fluid .content { margin-right: 0; }
-  body .container-fluid .sidebar { position: static; width: 100%; }
-  html body { padding-top: 100px; }
+       only screen and (min-device-width: 480px) and (max-device-width: 767px) {
+
   .container-fluid .input-xxlarge,
   .container-fluid input.xxlarge,
   .container-fluid textarea.xxlarge,
@@ -201,14 +195,7 @@
 	
 /* Larger than Mobile Landscape Size */
 @media only screen and (min-width: 480px),
-	only screen and (min-device-width: 480px) {
-  body .row .stripe { display: none; }
-  body .container-fluid { min-width: 90%; }
-  /*body .container-fluid .content { margin-right: 0; }
-  body .container-fluid .sidebar { position: static; width: 100%; }
-  body .topbar { height: 80px; overflow-y: scroll; }
-  html body { padding-top: 100px; }*/
-
+       only screen and (min-device-width: 480px) {
   .container-fluid .input-medium,
   .container-fluid input.medium,
   .container-fluid textarea.medium,
@@ -229,13 +216,7 @@
 	
 /* Samller than Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px),
-	only screen and (max-device-width: 479px) {
-  body .row .stripe { display: none; }
-  body .container-fluid { min-width: 90%; }
-  body .container-fluid .content { margin-right: 0; }
-  body .container-fluid .sidebar { position: static; width: 100%; }
-  body .topbar { height: 80px; overflow-y: scroll; }
-  html body { padding-top: 100px; }
+       only screen and (max-device-width: 479px) {
   
   .container-fluid .input-medium,
   .container-fluid input.medium,
