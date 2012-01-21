@@ -12,7 +12,7 @@
     <div class="span8 rubric">
       <figure class="top-illustration">
         <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" />
-        <figcaption><h3>&laquo;{{ illustration.title }}&raquo;, <a href="{% url corecontent.view.zhivotov_gallery %}">Геннадий Животов</a></h5></figcaption>
+        <figcaption><h3>&laquo;{{ illustration.title }}&raquo;, Геннадий Животов</h5></figcaption>
       </figure>
       <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</small></h1>
       {% for group in newsletter %}

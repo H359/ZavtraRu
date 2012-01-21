@@ -151,7 +151,8 @@ def get_dates(q):
     nums = 150
     curyear = q[0].year
     curmonth = q[0].month
-    local = datetime(year=curyear, month=1, day=1).date()
+    local = datetime(year=curyear, month=1, day=1)#.date()
+    span = 0
     for date in q:
 	#ndate = date - oneday*date.weekday()
 	if curmonth != date.month:
@@ -162,37 +163,38 @@ def get_dates(q):
 	    res.append( (curyear, year) )
 	    year = []
 	    curyear = date.year
-	    local = datetime(year=curyear, month=1, day=1).date()
+	    local = datetime(year=curyear, month=1, day=1)#.date()
 	ldate = 1 + (date-local).days / 7
 	if ldate not in month:
-	    month[ldate] = nums
+	    month[ldate] = (nums, date)
 	    nums += 1
+	span = max([span, len(month.keys())])
     year.append( (MONTH_NAMES[curmonth-1][1], [(k,month.get(k)) for k in sorted(month.keys())]) )
     res.append( (curyear, year) )
-    return reversed(res)
+    return (span, reversed(res))
 
 @render_to('corecontent/archive.html')
-def view_archive(request):
-    q = ContentItem.objects.filter(published=True, enabled=True).order_by('pub_date').values_list('pub_date', flat=True).distinct()
-    #start=Min('pub_date'), end=Max('pub_date'))
-    #start, end = q.get('start'), q.get('end')
-    return {'dates': get_dates(q)}
+def view_archive(request, new=False):
+    q = ContentItem.objects.filter(published=True, enabled=True).order_by('pub_date')
+    if new:
+	astart = datetime(hour=0,minute=0,second=0,year=2011,month=12,day=1)
+	q = q.filter(pub_date__gte = astart)
+    q = q.values_list('pub_date', flat=True).distinct()
+    span, dates = get_dates(q)
+    return {'dates': dates, 'span': span, 'new': new}
 
 @render_to('corecontent/issue.html')
-def view_issue(request, issue): 
-    issue = int(issue)
+def view_issue(request, year, month, day): 
+    date = datetime(hour=0,minute=0,second=0,year=int(year),month=int(month),day=int(day))
     oneweek = timedelta(days=7)
-    epoch = datetime(year=1996, month=10, day=15).date()
-    wstart = epoch + (issue-150)*oneweek
-    wend = wstart + oneweek
-    #print wstart, wend
+    wstart = date
+    wend = wstart+oneweek
     return {
-	'issue': issue,
-	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gte = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url')
+	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gte = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url'),
+	'issue': date
     }
 
 view_featured_index = FeaturedIndexView.as_view()
-
 view_item = ContentItemView.as_view()
 view_rubric = RubricView.as_view()
 view_news = NewsView.as_view()

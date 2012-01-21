@@ -5,6 +5,10 @@ from zavtra.utils import group_list
 register = Library()
 
 @register.filter
+def sub(val, k):
+    return val-k
+
+@register.filter
 def mul(val, k):
     return val*float(k)
 

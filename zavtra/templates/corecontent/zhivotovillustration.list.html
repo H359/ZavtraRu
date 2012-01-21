@@ -1,34 +1,19 @@
 {% extends base_template %}
 
 {% block javascript %}
-{{ block.super }}
-$('#thumbs').galleriffic({
-    imageContainerSel: '#slideshow', controlsContainerSel: '#controls',
-    playLinkText:              'Слайдшоу',
-    pauseLinkText:             'Пауза',
-    prevLinkText:              'Пред.',
-    nextLinkText:              'След.',
-    nextPageLinkText:          'След. &rsaquo;',
-    prevPageLinkText:          '&lsaquo; Пред.',
-});
+$('#featured').scrollable();
 {% endblock %}
+
 {% block content %}
 <div class="row">
-    <div class="span6 gallery">
-	<div id="slideshow"></div>
-	<div id="controls"></div>
-    </div>
-    <div class="span2">
-	<div id="thumbs"><ul class="thumbs noscript unstyled">
+    <div class="span8 gallery">
+	<div id="featured">
+	    <div class="items">
 	    {% for item in items %}
-	    <li>
-		<a href="{{ MEDIA_URL }}{{ item.original }}" title="{{ item.title }}" class="thumb">
-		    <img src="{{ MEDIA_URL }}{{ item.micro }}" />
-		</a>
-		<div class="caption">{{ item.title }}</div>
-	    </li>
+	    <a title="{{ item.title }}" href="#"><img src="{{ MEDIA_URL }}{{ item.micro }}" alt="{{ item.title }}" /></a>
 	    {% endfor %}
-	</ul></div>
+	    </div>
+	</div>
     </div>
     <div class="span4 last">{% include 'partials/rightside.html' %}</div>
 </div>

@@ -1,26 +1,34 @@
 {% extends base_template %}
 
+{% load utils %}
+
 {% block content %}
-<section class="container_16 container clearfix">
-    <article class="grid_8 alpha block">
-	<header><h1>Архив</h1></header>
+<div class="row">
+    <article class="span8 rubric">
+	<h3>Архив</h3>
+	{% if new %}
+	<p>Здесь вы видите те номера газеты, которые появились после перехода на новую версию сайта. Для просмотра старого архива, передйите по <a href="http://zavtra.ru/cgi//veil//data/zavtra/">этой ссылке</a>.</p>
+	{% endif %}
 	<div class="content archive">
 	    {% for year, months in dates %}
-	    <h2>{{ year }}</h2>
+	    <h5>{{ year }}</h5>
+	    <table class="zebra-striped">
 	    {% for month, days in months %}
-	    <table>
 		<tr>
 		    <th>{{ month }}</th>
 		    {% for localnum, globalnum in days %}
-		    <td><a href="{% url corecontent.view.issue_view globalnum %}">{{ localnum }} ({{ globalnum }})</a></td>
+		    <td{% if forloop.last and forloop.counter < span %} colspan="{{ span|sub:forloop.counter|add:1 }}"{% endif %}><a href="{% url corecontent.views.view_issue year=globalnum.1.year month=globalnum.1.month day=globalnum.1.day %}">{{ localnum }} ({{ globalnum.0 }})</a></td>
 		    {% endfor %}
 		</tr>
-	    </table>
 	    {% endfor %}
+	    </table>
 	    {% endfor %}
 	</div>
     </article>
-    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
-    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
-</section>
+    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
+</div>
+{% endblock %}
+
+{% block banners_js %}
+<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49095&div=DIV_DA_49095"></script>
 {% endblock %}
