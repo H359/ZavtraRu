@@ -224,7 +224,7 @@ body {
   right: 0;
   width: 240px;
 }
-.container-fluid .content.gstyle {
+.container-fluid > .content {
   margin-right: 240px;
 }
 a {

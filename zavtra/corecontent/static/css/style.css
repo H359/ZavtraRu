@@ -59,7 +59,7 @@ body .topbar .brand { padding: 8px 20px 6px ; }
     -ms-transition: all 0.5s ease-in-out;
 }
 
-.collapsed .sidebar { overflow: hidden; width: 40px; }
+.collapsed .container-fluid .sidebar { overflow: hidden; width: 40px; }
 .collapsed .sidebar .well { height: 300px; }
 .collapsed .sidebar h3 {
     transform: translatey(70px) rotate(-90deg);
