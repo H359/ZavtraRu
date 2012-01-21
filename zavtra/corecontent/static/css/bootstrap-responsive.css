@@ -155,6 +155,7 @@
   body .container-fluid .sidebar { position: static; width: 100%; }
   body .container-fluid .sidebar .collapse { display: none; }
   body .container-fluid > .content { margin-right: 0; }
+  body .container-fluid .content.gstyle { background: none; }
 
   body .container-fluid .row, body {
     width: 100%;
