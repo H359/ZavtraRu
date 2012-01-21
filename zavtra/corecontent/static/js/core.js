@@ -37,7 +37,12 @@ $(function(){
 	//$('.scrollable', 
 	$('.scrollable').scrollable({circular:true});
     })();
-    /*if ($.browser.msie && $.browser.version.substr(0,1)<7) $('body').addClass('ficking-ie6');*/
+    if ($.browser.msie){
+	if ($.browser.version.substr(0,1)<=7) {
+	    $('.topbar, body > .container-fluid').hide();
+	    CFInstall.check({mode:'overlay',destination:'http://zavtra.ru'});
+	}
+    }
 });
 
 $(window).resize(function(){ var rsw = pfp(); $('.scrollable', rs).width(rsw); });

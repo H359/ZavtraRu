@@ -8,6 +8,10 @@
     <meta name="author" content="{% block meta_author %}Редакция газеты Завтра{% endblock %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="yandex-verification" content="79bffe9a083206fe" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
+    <!--[if IE]>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <![endif]-->
     {% block meta_extra %}{% endblock %}
     <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru{% url corecontent.rss.latest %}" />
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
@@ -19,7 +23,10 @@
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
     {% endcomment %}
-    <script src="http://yandex.st/modernizr/2.0.6/modernizr.min.js"></script>
+    {%comment%}<script src="http://yandex.st/modernizr/2.0.6/modernizr.min.js"></script>{%endcomment%}
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     {% load compressed %}
     {% compressed_css 'main' %}
     {% block css %}{% endblock %}
@@ -103,7 +110,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 {% endwith %}</div>
 
 <div class="container-fluid">
-  <div class="content smooth">
+  <div class="content smooth ">
     <ul class="unstyled rubrics topbar-inner">
 	{% for item in top_rubrics %}
 	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
@@ -116,7 +123,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 	{% endfor %}
     </ul>
   </div>
-  <div class="content smooth">
+  <div class="content smooth ">
     <div class="row">
 	<div class="span12 last stripe">
 	    <h3>Красная строка</h3>
