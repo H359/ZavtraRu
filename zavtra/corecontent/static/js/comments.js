@@ -31,9 +31,13 @@
 	    if (data['status']) {
 		var p = this.formWrap.parents(this.settings.item);
 		this.resetForm();
-		this.formWrap.insertAfter(this.root);
 		if (p.size() == 0) p = $(this.settings.item + ':last-child', this.root);
-		$(data['html']).insertAfter(p);
+		if (p.size() == 0) {
+		    $(data['html']).appendTo(this.root);
+		} else {
+		    $(data['html']).insertAfter(p);
+		}
+		this.formWrap.insertAfter(this.root);
 	    } else {
 		$('.error', this.formWrap).fadeIn();
 		for (var i in data['errors']) {
