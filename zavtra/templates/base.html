@@ -19,6 +19,7 @@
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
     {% endcomment %}
+    <script src="http://yandex.st/modernizr/2.0.6/modernizr.min.js"></script>
     {% load compressed %}
     {% compressed_css 'main' %}
     {% block css %}{% endblock %}
@@ -182,7 +183,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 </footer>
 
 {% block javascript_library %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://yandex.st/jquery/1.7.1/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
 {% endblock %}
 <!--[if lt IE 7 ]>

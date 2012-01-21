@@ -37,6 +37,7 @@ $(function(){
 	//$('.scrollable', 
 	$('.scrollable').scrollable({circular:true});
     })();
+    /*if ($.browser.msie && $.browser.version.substr(0,1)<7) $('body').addClass('ficking-ie6');*/
 });
 
 $(window).resize(function(){ var rsw = pfp(); $('.scrollable', rs).width(rsw); });

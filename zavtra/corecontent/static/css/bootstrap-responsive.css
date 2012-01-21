@@ -47,9 +47,9 @@
   .container-fluid .row .span12 {
     width: 100%;
     float: left; }
-  .container-fluid .row .last, .container-fluid .row > :last-child {
+  body .container-fluid .row .last {
     margin-right: 0px; }
-  .container-fluid .row .first, .container-fluid .row > :first-child {
+  body .container-fluid .row .first {
     margin-left: 0px; }
   .container-fluid .row .offset1 {
     margin-left: 8.65%; }
@@ -155,7 +155,7 @@
   body .container-fluid .sidebar { position: static; width: 100%; }
   body .container-fluid .sidebar .collapse { display: none; }
   body .container-fluid > .content { margin-right: 0; }
-  body .container-fluid .content.gstyle { background: none; }
+  body .container-fluid .content.gstyle .row { background: none; }
 
   body .container-fluid .row, body {
     width: 100%;

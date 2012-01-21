@@ -3,6 +3,7 @@ html body { font-family: Arial; padding-top: 50px; }
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+* html body .clearfix { clear: both; }
 
 body .topbar .brand { padding: 8px 20px 6px ; }
 
@@ -88,8 +89,8 @@ body .topbar .brand { padding: 8px 20px 6px ; }
 
 .rubric { }
     .rubric h3, .rubric h4 { border-bottom: 1px solid #CF3A2D; }
-    .rubric h4 { line-height: 20px; }
-	.rubric h3 small, .rubric h4 small { float: right; margin-top: 4px; margin-right: 8px; }
+    .rubric h4 { line-height: 20px; position: relative;}
+	.rubric h3 small, .rubric h4 small { position: absolute; right: 0px; }
 	    .rubric h3 small a, .rubric h4 small a { text-decoration: underline; }
 	.rubric small.rss { margin-top: 14px; }
 	    .rubric small.rss a { background: url(/img/rss.gif) no-repeat; padding-left: 18px; }
