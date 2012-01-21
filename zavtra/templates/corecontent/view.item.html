@@ -36,7 +36,7 @@
   <article class="span8">
     <header>
       <h2>{{ item.title|safe }}<small>&nbsp;<time pubdate="pubdate" datetime="{{ item.pub_date }}">{{ item.pub_date|ru_strftime }}</time></small></h2>
-      {% if item.subtitle %}<h2>{{ item.subtitle|safe }}</h2>{% endif %}
+      {% if item.subtitle %}<h3>{{ item.subtitle|safe }}</h3>{% endif %}
       <h5>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h5>
     </header>
     {% if item.kind == 'video' %}
