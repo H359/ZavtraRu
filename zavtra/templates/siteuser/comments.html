@@ -19,7 +19,7 @@
 		{% for item in  object_list %}
 		<li>
 		    <article class="comment avatarless"><div class="inner"><div class="body">
-			<div class="author"><a href="/resolve/{{ item.content_type_id }}/{{ item.object_id }}/#comment-{{ item.id }}"><time datetime="{{ item.created_at }}">{{ item.created_at|distance_of_time }}<time></a>:</div>
+			<div class="author"><a href="/resolver/{{ item.content_type_id }}/{{ item.object_id }}/#comment-{{ item.id }}"><time datetime="{{ item.created_at }}">{{ item.created_at|distance_of_time }}<time></a>:</div>
 			<div class="text">{{ item.comment }}</div>
 		    </div></div></article>
 		</li>
