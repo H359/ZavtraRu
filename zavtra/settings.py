@@ -2,8 +2,15 @@
 # Django settings for zavtra project.
 import os, socket
 import pytils.translit
+
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = socket.gethostname() == 'myhost'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('zw0rk', 'ostronom@gmail.com'),
@@ -74,8 +81,7 @@ AUTH_PROFILE_MODULE = 'siteuser.SiteProfile'
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
-if not DEBUG:
-    SESSION_ENGINE = 'redis_sessions.session'
+SESSION_ENGINE = 'redis_sessions.session'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -225,8 +231,3 @@ VERSIONS = {
     'large': {'verbose_name': u'Большое изображение', 'width': 680, 'height': '', 'opts': ''},
 }
 """
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
