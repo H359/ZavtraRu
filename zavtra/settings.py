@@ -103,11 +103,6 @@ ROOT_URLCONF = 'zavtra.urls'
 TEMPLATE_DIRS = (
     os.path.join(SITE_DIR, 'templates'),
 )
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
