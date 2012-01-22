@@ -29,7 +29,7 @@
 {% block content %}
 <ul class="breadcrumb">
   <li><a href="/">Главная</a><span class="divider">/</span></li>
-  <li>{% if item.rubric %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}<a href="{% url corecontent.view.blog %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
+  <li>{% if item.rubric_id %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}<a href="{% url corecontent.view.blog %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
   <li class="active">{{ item.title|safe }}</li>
 </ul>
 <div class="row">
