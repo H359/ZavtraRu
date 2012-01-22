@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'haystack',
     'ajaxfields',
     'imagekit',
+    'debug_toolbar'
 )
 HAYSTACK_CONNECTIONS = {
     'default': {
