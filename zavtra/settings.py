@@ -149,9 +149,6 @@ HAYSTACK_CONNECTIONS = {
         'INCLUDE_SPELLING': True,
     }
 }
-if DEBUG:
-    INSTALLED_APPS = list(INSTALLED_APPS)
-    INSTALLED_APPS.append('debug_toolbar')
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 LOGGING = {
     'version': 1,
@@ -184,10 +181,6 @@ LOGGING = {
             'propagate': True,
         },
      }
-}
-#INTERNAL_IPS = ('127.0.0.1',)
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False
 }
 CONVERT_FILENAME = True
 FILEBROWSER_EXCLUDE = []

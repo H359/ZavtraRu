@@ -122,7 +122,7 @@ body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
 
 #comments { max-width: 52em; }
 
-.comment { padding-left: 40px; margin-bottom: 8px; background: url(/static/img/border.png) no-repeat 30px 20px; }
+.comment { padding-left: 40px; margin-bottom: 8px; background: url(/img/border.png) no-repeat 30px 20px; }
     .comment .avatar { float: left; margin-left: -40px; width: 36px; height: 36px; display: block; margin-top: 6px; }
     .comment .avatar a { display: block; }
     .comment .inner { padding: 3px; background-color: #eee; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; }
