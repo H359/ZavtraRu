@@ -21,12 +21,14 @@
 
 {% block javascript %}
 (function(){
-    var root = $('#comments'), updating = false, start = false;
+    var root = $('#comments'), updating = false, start = false, uh = null;
     $('#periodSelector li a').click(function(){
 	root.empty();
 	$('#periodSelector li').removeClass('active');
 	$(this).parents('li').addClass('active');
 	start = false;
+	if (uh) clearTimeout(uh);
+	updateComments();
     });
     if (window.location.hash.indexOf('#period') != -1) $('#periodSelector li a[href="'+window.location.hash+'"]').click();
     var updateComments=function(){
@@ -39,7 +41,7 @@
 	    updating = false;
 	    start = Math.floor(nStart.getTime()/1000);
 	});
-	setTimeout(updateComments, 60*1000);
+	uh = setTimeout(updateComments, 60*1000);
     }
     updateComments();
 })();
