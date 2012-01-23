@@ -173,6 +173,7 @@ class ContentItem(models.Model):
 	notypo = kwargs.get('notypo', False)
 	if notypo:
 	    del kwargs['notypo']
+	cache.delete('featured') #HACK?
         if not notypo and self.id is None:
             from typograph.RemoteTypograf import RemoteTypograf
             rt = RemoteTypograf()
@@ -185,7 +186,7 @@ class ContentItem(models.Model):
                 field_val = field_val.strip()
                 if len(field_val) < 32000:
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
-        super(ContentItem, self).save(*args, **kwargs)        
+        super(ContentItem, self).save(*args, **kwargs)
 
 class DailyQuote(models.Model):
     class Meta:
