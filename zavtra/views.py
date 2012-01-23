@@ -149,7 +149,7 @@ def live_update(request):
     else:
 	start = datetime.fromtimestamp(int(start))
     return {
-	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), Comment.objects.filter(enabled=True, created_at__lt = start+period, created_at__gte = start)),
+	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), Comment.objects.filter(enabled=True, created_at__lt = start+period, created_at__gte = start).order_by('-created_at')),
     }
 
 login_required
