@@ -77,11 +77,6 @@ def home(request):
 	'illustration',
 	duration=6000
     )
-    neuromir = cached(
-        lambda: get_latest_rubric(19),
-        'neuromir-latest',
-        duration=60*60*4
-    )
     zavtra_tv = cached(
 	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=19 if settings.DEBUG else 44)[0:1],
 	'zavtra-tv2',
@@ -96,7 +91,6 @@ def home(request):
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
-	'neuromir': neuromir,
 	'zavtra_tv': zavtra_tv,
 	'special_project': special_project
     }
