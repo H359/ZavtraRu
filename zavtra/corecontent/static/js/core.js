@@ -52,8 +52,8 @@ $(window).load(function(){
 	bscr.type='text/javascript';
 	bscr.charset='windows-1251';
 	/*bscr.async=true;*/
-	//bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id')+'&nnn='+bid+'&t='+Math.random();
-	bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id');
+	bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id')+'&nnn='+bid+'&t='+Math.random();
+	//bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id');
 	body.appendChild(bscr);
     });
 });
