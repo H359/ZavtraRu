@@ -35,7 +35,7 @@
 	var nStart = new Date();
 	updating = true;
 	$.get('/live/update/', {'period': period, 'start': start}, function(data){
-	    for (var i = 0, i$l = data['stream'].length; i < i$l; i++) $(data['stream'][i]).appendTo(root);
+	    for (var i = 0, i$l = data['stream'].length; i < i$l; i++) $(data['stream'][i]).prependTo(root);
 	    updating = false;
 	    start = Math.floor(nStart.getTime()/1000);
 	});
