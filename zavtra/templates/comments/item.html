@@ -4,7 +4,7 @@
 	<span class="avatar"><a href="#" rel="popover" data-content="Пользователь {{ comment.get_author }} с нами с {{ comment.author.date_joined|ru_strftime:"%d %B %Y" }} года." title="{{ comment.get_author }}"><img src="{{ comment.author.avatar }}" width="32" /></a></span>
 	<div class="inner">
 	    <div class="body clearfix">
-		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>:</div>
+		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>{% if stream %}, <a href="/resolver/{{ comment.content_type_id }}/{{ comment.object_id }}/#{{ comment.id }}">[ссылка]</a>{% endif %}:</div>
 		<div class="text">
 		{% if comment.enabled %}{% spaceless %}{{ comment.comment|slice:"0:1500" }}{% if commentlength > 1500 %}&#8230;<span class="hide">{{ comment.comment|slice:"1500:" }}</span>{% endif %}{% endspaceless %}
 		{% else %}<em>комментарий скрыт</em>

@@ -1,56 +1,46 @@
 {% extends base_template %}
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="grid_12 alpha block">
-	<header><h1>Живая лента</h1></header>
+<div class="row">
+    <article class="span8 rubric">
+	<h3>Живая лента</h3>
+	<ul class="pills" id="periodSelector">
+	    <li class="active"><a href="#period:1">За час</a></li>
+	    <li><a href="#period:4">За 4 часа</a></li>
+	    <li><a href="#period:12">За 12 часов</a></li>
+	    <li><a href="#period:24">За сутки</a></li>
+	</ul>
 	<div class="content">
-	    <p class="buttons"><a id="stream-refresh" class="button" href="#"><span class="icon icon157"></span><span class="label">Обновить</span></a></p>
 	    <div class="comments">
-		<ul id="comments-list">
-		    {% for comment in stream %}
-		    {% include 'comments/item.html' %}
-		    {% endfor %}
-		</ul>
+		<ul id="comments"></ul>
 	    </div>
 	</div>
     </article>
-    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
-</section>
+    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
+</div>
 {% endblock %}
 
 {% block javascript %}
 (function(){
-    var root = $('#comments-list'), period=15*1000;
-    var updater = function(){
-	btn.addClass('on');
-        var last_seen = $('li:first-child', root);
-        var last_seen_id = last_seen.attr('id').split('-')[1];
-        $.post('{% url live.update %}', {last_seen: last_seen_id}, function(data){
-    	    if (data['stream'] && data['stream'].length > 0) {
-        	var d = $(data['stream'].join(''));
-        	d.hide();
-        	d.insertBefore(last_seen);
-        	d.fadeIn('slow', function(){
-        	    setTimeout(updater, period);
-        	    btn.removeClass('on');
-    		});
-    	    } else {
-        	setTimeout(updater, period);
-        	btn.removeClass('on');
-    	    }
-        });
-    };
-    setTimeout(updater, period);
-    var removeComment = function(){
-	var cmnt = $(this).parents('li');
-	var id = cmnt.attr('id').split('-')[1];
-	console.log(id);
-	$.post('{% url comments.delete %}', {id: id}, function(){
-	    cmnt.html('скрыт');
+    var root = $('#comments'), updating = false, start = false;
+    $('#periodSelector li a').click(function(){
+	root.empty();
+	$('#periodSelector li').removeClass('active');
+	$(this).parents('li').addClass('active');
+	start = false;
+    });
+    if (window.location.hash.indexOf('#period') != -1) $('#periodSelector li a[href="'+window.location.hash+'"]').click();
+    var updateComments=function(){
+	if (updating) return;
+	var period = $('#periodSelector li.active a').attr('href').split(':')[1];
+	var nStart = new Date();
+	updating = true;
+	$.get('/live/update/', {'period': period, 'start': start}, function(data){
+	    for (var i = 0, i$l = data['stream'].length; i < i$l; i++) $(data['stream'][i]).appendTo(root);
+	    updating = false;
+	    start = Math.floor(nStart.getTime()/1000);
 	});
+	setTimeout(updateComments, 6000);
     }
-    root.on('click', 'li a.delete', removeComment);
-    var btn = $('#stream-refresh');
-    btn.click(function(){ updater(); return false; });
+    updateComments();
 })();
 {% endblock %}

@@ -165,7 +165,6 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
           <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
           <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
           <div class="txt">{{ item.description|safe }}</div>
-          <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
         </li>
         {% endfor %}
       </ul>
@@ -244,6 +243,5 @@ $(function(){
   {% block javascript %}{% endblock %}
 });
 </script>{%endspaceless%}
-{% block banners_js %}{% endblock %}
 </body>
 </html>

@@ -16,11 +16,10 @@ from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllus
 from taggit.models import Tag
 
 class ContentItemView(DetailView):
-    #queryset            = ContentItem.batched.batch_select('authors').filter(enabled=True)
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
     def get_object(self):
-	now = datetime.now()#.date()
+	now = datetime.now()
 	qs = ContentItem.batched.batch_select('authors').select_related().filter(enabled=True, pub_date__lte = now)
 	return super(ContentItemView, self).get_object(qs)
 

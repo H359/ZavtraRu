@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+import time
 from itertools import groupby
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.context_processors import PermWrapper
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.template.loader import render_to_string
 from django.utils.functional import lazy
@@ -134,19 +134,23 @@ def logged_in(request):
 
 @render_to('live.html')
 def live(request):
-    return {'stream': Comment.objects.filter(enabled=True).select_related().order_by('-id')[0:10]}
+    return {}
 
-@csrf_exempt
 @ajax_request
 def live_update(request):
-    last_seen = request.POST.get('last_seen')
-    qs = Comment.objects.filter(enabled=True).select_related().filter(pk__gt = last_seen).order_by('-id')[0:50]
-    if request.user.is_authenticated() and request.user.is_staff:
-	perms = lazy(lambda: PermWrapper(request.user), PermWrapper)()
+    hour = timedelta(hours=1)
+    period = int(request.GET.get('period',1))
+    start  = request.GET.get('start')
+    if period > 24:
+	period = 24
+    period = period*hour
+    if start is None or start == 'false':
+	start = datetime.now()-period
     else:
-	perms = None
-    rendered = [render_to_string('comments/item.html', {'comment': x, 'perms': perms, 'request': request, 'stream': True}) for x in qs]
-    return {'stream': rendered}
+	start = datetime.fromtimestamp(int(start))
+    return {
+	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), Comment.objects.filter(enabled=True, created_at__lt = start+period, created_at__gte = start)),
+    }
 
 login_required
 def vote(request):

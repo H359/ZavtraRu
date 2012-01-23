@@ -19,7 +19,7 @@
       {% if forloop.counter == 4 %}
       {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 500xN]</div>{% endcomment %}
       <h3>Реклама</h3>
-      <div id="DIV_DA_49096"></div>
+      <div class="bnrok" id="DIV_DA_49096"></div>
       {% endif %}
       {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
       {% endfor %}
@@ -42,7 +42,7 @@
 
       {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 232xN]</div>{% endcomment %}
       <h3>Реклама</h3>
-      <div id="DIV_DA_49094"></div>
+      <div class="bnrok" id="DIV_DA_49094"></div>
 
       {% if special_project %}
       <h3><a href="/content/rubric/spetsproekt-2/">Спецпроект</a></h3>
@@ -57,7 +57,7 @@
 
       {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 200px; height: 200px;">[min 232xN]</div>{% endcomment %}
       <h3>Реклама</h3>
-      <div id="DIV_DA_49095"></div>
+      <div class="bnrok" id="DIV_DA_49095"></div>
 
       {% comment %}
       <h3>Красная строка</h3>
@@ -74,11 +74,4 @@
       {% endcomment %}
     </div>
   </div>
-{% endblock %}
-
-{% block banners_js %}
-{{ block.super }}
-<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49094&div=DIV_DA_49094"></script>
-<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49095&div=DIV_DA_49095"></script>
-<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49096&div=DIV_DA_49096"></script>
 {% endblock %}

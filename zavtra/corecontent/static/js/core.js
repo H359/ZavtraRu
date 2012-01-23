@@ -45,4 +45,16 @@ $(function(){
     }
 });
 
+$(window).load(function(){
+    var body=$('body')[0];
+    $('.bnrok').each(function(){var self=$(this);
+	var bscr = document.createElement('script'), bid = self.attr('id').split('_')[2];
+	bscr.type='text/javascript';
+	bscr.charset='windows-1251';
+	/*bscr.async=true;*/
+	bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id')+'&nnn='+bid+'&t='+Math.random();
+	body.appendChild(bscr);
+    });
+});
+
 $(window).resize(function(){ var rsw = pfp(); $('.scrollable', rs).width(rsw); });

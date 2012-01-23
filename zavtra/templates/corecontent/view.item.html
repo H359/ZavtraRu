@@ -67,16 +67,9 @@
       <div id="comments">{% get_comments_for item %}</div>
       {% comment %}<div style="width:100%;height:100px;line-height:100px;color:white;background:red;">[min 500xN]</div>{% endcomment %}
       <h3>Реклама</h3>
-      <div id="DIV_DA_49096"></div>
+      <div class="bnrok" id="DIV_DA_49096"></div>
     </footer>
   </article>
   <div class="span4 last">{% include 'partials/rightside.html' %}</div>
 </div>
-{% endblock %}
-
-{% block banners_js %}
-{{ block.super }}
-<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
-<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49096&div=DIV_DA_49096"></script>
-<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=49095&div=DIV_DA_49095"></script>
 {% endblock %}
