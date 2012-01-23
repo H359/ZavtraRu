@@ -4,10 +4,10 @@
     <article class="span8 rubric">
 	<h3>Живая лента</h3>
 	<ul class="pills" id="periodSelector">
-	    <li class="active"><a href="#period:1">За час</a></li>
-	    <li><a href="#period:4">За 4 часа</a></li>
-	    <li><a href="#period:12">За 12 часов</a></li>
-	    <li><a href="#period:24">За сутки</a></li>
+	    <li class="active"><a href="#qty:20">20</a></li>
+	    <li><a href="#qty:50">50</a></li>
+	    <li><a href="#qty:100">100</a></li>
+	    <li><a href="#qty:200">200</a></li>
 	</ul>
 	<div class="content">
 	    <div class="comments">
@@ -21,13 +21,13 @@
 
 {% block javascript %}
 (function(){
-    var root = $('#comments'), updating = false, start = false, uh = null;
+    var root = $('#comments'), updating = false, uh = null, start = null;
     var updateComments=function(){
 	if (updating) return;
-	var period = $('#periodSelector li.active a').attr('href').split(':')[1];
-	var nStart = new Date();
+	var qty = $('#periodSelector li.active a').attr('href').split(':')[1];
+	nStart = new Date();
 	updating = true;
-	$.get('/live/update/', {'period': period, 'start': start}, function(data){
+	$.get('/live/update/', {'qty': qty, 'start': start}, function(data){
 	    for (var i = 0, i$l = data['stream'].length; i < i$l; i++) $(data['stream'][i]).prependTo(root);
 	    updating = false;
 	    start = Math.floor(nStart.getTime()/1000);
@@ -38,11 +38,11 @@
 	root.empty();
 	$('#periodSelector li').removeClass('active');
 	$(this).parents('li').addClass('active');
-	start = false;
+	start = null;
 	if (uh) clearTimeout(uh);
 	updateComments();
     });
-    if (window.location.hash.indexOf('#period') != -1) $('#periodSelector li a[href="'+window.location.hash+'"]').click();
+    if (window.location.hash.indexOf('#qty') != -1) $('#periodSelector li a[href="'+window.location.hash+'"]').click();
     else updateComments();
 })();
 {% endblock %}

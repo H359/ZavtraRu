@@ -138,18 +138,15 @@ def live(request):
 
 @ajax_request
 def live_update(request):
-    hour = timedelta(hours=1)
-    period = int(request.GET.get('period',1))
-    start  = request.GET.get('start')
-    if period > 24:
-	period = 24
-    period = period*hour
-    if start is None or start == 'false':
-	start = datetime.now()-period
+    qty = int(request.GET.get('qty', 20))
+    start = request.GET.get('start')
+    comments = Comment.objects.filter(enabled=True)
+    if start is None or start == 'null':
+	comments = comments.filter(created_at__gte = datetime.now() - timedelta(days=1))
     else:
-	start = datetime.fromtimestamp(int(start))
+	comments = comments.filter(created_ad__gte = datetime.fromtimestamp(int(start)))
     return {
-	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), Comment.objects.filter(enabled=True, created_at__lt = start+period, created_at__gte = start)),
+	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), comments[0:qty]),
     }
 
 login_required
