@@ -141,9 +141,7 @@ def live_update(request):
     qty = int(request.GET.get('qty', 20))
     start = request.GET.get('start')
     comments = Comment.objects.filter(enabled=True).order_by('id')
-    if start is None or start == 'null':
-	comments = comments.filter(created_at__gte = datetime.now() - timedelta(days=1))
-    else:
+    if start is not None and start != 'null':
 	comments = comments.filter(created_at__gte = datetime.fromtimestamp(int(start)))
     return {
 	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), comments[0:qty]),
