@@ -125,7 +125,15 @@ class ContentItem(models.Model):
     @property
     def comments_count(self):
         return self._comments_count
-    
+
+    def cached_comments_count(self):
+	key = 'contentitem-%d-comments' % self.id
+	res = cache.get(key)
+	if res is None:
+	    res = ContentItem.objects.get(id=self.id)._comments_count
+	    cache.set(key, res, 60*60*24)
+	return res
+
     def update_comments_count(self):
     	comments_count = Comment.objects.filter(
             content_type = contentitem_ctype_id,
@@ -133,20 +141,10 @@ class ContentItem(models.Model):
             enabled=True
     	).count()
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
-    	if self.should_be_on_main():
-    	    cache.delete('newsletter')
+    	cache.delete('contentitem-%d-comments' % self.id)
 
     def get_content_type_id(self):
 	return contentitem_ctype_id 
-
-    def should_be_on_main(self):
-	oneday = timedelta(days=1)
-	now = datetime.now().date()
-	wstart = now - oneday*(now.weekday()+5)
-	if now.weekday() >= 2:
-	    wstart += 7*oneday
-	wend = wstart + oneday*7
-	return (self.rubric is not None and self.rubric.on_main and (wstart <= self.pub_date.date() <  wend))
 
     @models.permalink
     def get_absolute_url(self):
@@ -190,7 +188,7 @@ class DailyQuote(models.Model):
     day    = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())
 
     def get_source(self):
-	return ContentItem.batched.batch_select('authors').get(pk=self.source_id)
+	return cached(lambda: ContentItem.batched.batch_select('authors').get(pk=self.source_id), 'quote-source', duration=60*60)
 
     def __unicode__(self):
 	return u'%s' % (self.quote[0:40])
@@ -256,6 +254,7 @@ class NewsItem(ContentItem):
     objects = NewsManager()
 
     def save(self, *args, **kwargs):
+	cache.delete('news2')
 	self.rubric = Rubric.objects.get(title=u'Новости')
 	self.kind = 'text'
 	super(NewsItem, self).save(*args, **kwargs)
@@ -272,25 +271,9 @@ class Video(ContentItem):
 	q = urlparse.urlparse(self.content).query
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
-    """
-    def load_thumbnail(self):
-	video_id = self.get_video_id()
-	yt_service = gdata.youtube.service.YouTubeService()
-	entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
-	self.content = cPickle.dumps(sorted([dict(x) for x in entry.media.thumbnail], key=lambda w: int(w.width)))
-	for thumbnail in thumbnails:
-	    try:
-		name = urlparse.urlparse(thumbnail.url).path.split('/')[-1]
-		content = ContentFile(urllib2.urlopen(thumbnail.url).read())
-		self.thumbnail.save(u'%s_%s' % (video_id, name), content, save=False)
-		break
-	    except urllib2.HTTPError:
-		pass
-    """
-
     def save(self, *args, **kwargs):
-    	super(Video, self).save(*args, **kwargs)
-        ContentItem.objects.filter(id=self.id).update(kind=self.media)
+	super(Video, self).save(*args, **kwargs)
+	ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
 class Image(ContentItem):
     class Meta:
