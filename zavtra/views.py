@@ -144,7 +144,7 @@ def live_update(request):
     if start is not None and start != 'null':
 	comments = comments.filter(created_at__gte = datetime.fromtimestamp(int(start)))
     return {
-	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), comments[0:qty]),
+	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), reversed(comments[0:qty])),
     }
 
 login_required
