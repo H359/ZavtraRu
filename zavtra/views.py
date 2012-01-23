@@ -140,7 +140,7 @@ def live(request):
 def live_update(request):
     qty = int(request.GET.get('qty', 20))
     start = request.GET.get('start')
-    comments = Comment.objects.filter(enabled=True)
+    comments = Comment.objects.filter(enabled=True).order_by('-id')
     if start is None or start == 'null':
 	comments = comments.filter(created_at__gte = datetime.now() - timedelta(days=1))
     else:
