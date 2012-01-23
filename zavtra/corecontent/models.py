@@ -126,6 +126,14 @@ class ContentItem(models.Model):
     def comments_count(self):
         return self._comments_count
 
+    def tags_all(self):
+	if hasattr(self, '__cached_tags'):
+	    return getattr(self, '__cached_tags')
+	else:
+	    tags = list(self.tags.all())
+	    setattr(self, '__cached_tags', tags)
+	    return tags
+
     def cached_comments_count(self):
 	key = 'contentitem-%d-comments' % self.id
 	res = cache.get(key)

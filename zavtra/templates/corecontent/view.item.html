@@ -1,6 +1,6 @@
 {% extends base_template %}
 
-{% block meta_keywords %}{{ block.super }},{% for tag in item.tags.all %}{{ tag }}{% if not forloop.last %},{% endif %}{% endfor %}{% endblock %}
+{% block meta_keywords %}{{ block.super }},{% for tag in item.tags_all %}{{ tag }}{% if not forloop.last %},{% endif %}{% endfor %}{% endblock %}
 
 {% block meta_author %}{% if item.authors_all %}{% for author in item.authors_all %}{{ author.get_full_name }}{% if not forloop.last %},{% endif %}{% endfor %}{% else %}{{ block.super }}{% endif %}{% endblock %}
 {% block meta_extra %}{{ block.super }}{% spaceless %}
@@ -39,7 +39,7 @@
       {% if item.subtitle %}<h3>{{ item.subtitle|safe }}</h3>{% endif %}
       <h5>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h5>
     </header>
-    <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
+    <div>{% for tag in item.tags_all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% if item.kind == 'video' %}
     <div class="text-center">
       <object width="425" height="344">
@@ -59,8 +59,8 @@
     {% else %}{% if item.content|length > 1500 %}<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     {% endif %}{% endif %}
     {% if item.kind == 'text' or item.kind == '' %}<article class="article-text">{{ item.content|safe }}</article>{% endif %}
-    {% if item.tags.all|length %}
-    <div>{% for tag in item.tags.all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
+    {% if item.tags_all|length %}
+    <div>{% for tag in item.tags_all %}<a rel="tag" class="label warning" href="{{ tag.get_absolute_url }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}</div>
     {% endif %}
     <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <footer>
