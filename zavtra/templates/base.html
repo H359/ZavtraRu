@@ -139,7 +139,11 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 			    {% for item in group %}
 			    <div class="third" data-link="{{ item.get_absolute_url }}">
 				<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
+				{% if item.kind == 'video' %}
+				<img src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jp" />
+				{% else %}
         			{{ item.description|safe }}
+        			{% endif %}
 			    </div>
 			    {% endfor %}
 			</div>
