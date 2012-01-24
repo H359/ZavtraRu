@@ -5,7 +5,7 @@
   {% for item in items %}
   <li class="span{% if not forloop.last %}{{ span.0 }}{% else %}{{ span.0|add:span.1 }} last{% endif %}">
     <h4><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
-    {% if item.authors_all %}<h6>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h6>{% endif %}
+    {% if item.authors_all %}<div><strong>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</strong></div>{% endif %}
     <div class="txt"><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
     <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
   </li>
