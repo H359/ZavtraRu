@@ -162,7 +162,11 @@ class ContentItem(models.Model):
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
     def save(self, *args, **kwargs):
-	cache.delete('red_string')
+	if self.rubric_id:
+	    if self.rubric_id == 1:
+		cache.delete('news2')
+	else:
+	    cache.delete('red_string')
 	notypo = kwargs.get('notypo', False)
 	if notypo:
 	    del kwargs['notypo']
@@ -255,7 +259,6 @@ class NewsItem(ContentItem):
     objects = NewsManager()
 
     def save(self, *args, **kwargs):
-	cache.delete('news2')
 	self.rubric = Rubric.objects.get(title=u'Новости')
 	self.kind = 'text'
 	super(NewsItem, self).save(*args, **kwargs)
