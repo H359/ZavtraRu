@@ -166,10 +166,6 @@ class ContentItem(models.Model):
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
     def save(self, *args, **kwargs):
-	if self.rubric_id is not None and self.rubric_id == 1:
-	    cache.delete('news2')
-	else:
-	    cache.delete('red_string')
 	notypo = kwargs.get('notypo', False)
 	if notypo:
 	    del kwargs['notypo']
@@ -186,6 +182,11 @@ class ContentItem(models.Model):
                 if len(field_val) < 32000:
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
         super(ContentItem, self).save(*args, **kwargs)
+	if self.rubric_id is not None and self.rubric_id == 1:
+	    cache.delete('news2')
+	else:
+	    cache.delete('red_string')
+
 
 class DailyQuote(models.Model):
     class Meta:
