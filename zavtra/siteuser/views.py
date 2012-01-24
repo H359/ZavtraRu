@@ -36,7 +36,7 @@ class UserView(ListView):
 	part = self.kwargs.get('part')
 	if part == 'comments':
 	    self.template_name = 'siteuser/comments.html'
-	    return self.user.comments.filter(enabled=True)
+	    return self.user.comments.filter(enabled=True).order_by('-created_at')
 	elif part == 'articles':
 	    self.template_name = 'siteuser/articles.html'
 	    now = datetime.now()
