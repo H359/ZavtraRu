@@ -90,7 +90,8 @@ body .topbar .brand { padding: 8px 20px 6px ; }
 .rubric .free h4, .rubric .free h5 { border: none; line-height: 36px; }
     .rubric .free h4 small { float: none; position: static; }
 
-.gazette .rubric h3 { border-bottom: 1px solid #444; }
+.gazette .rubric h3 { border-bottom: 1px solid #444; position: relative; }
+    .gazette .rubric h3 small { position: absolute; top: 12px; }
 .gazette .rubric h4 { border-bottom: none; margin-top: 6px; }
 
 body .tabs { margin-bottom: 0; }
