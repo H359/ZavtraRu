@@ -1,12 +1,16 @@
 <div id="poll_form_{{ poll.slug }}">
   <form action="{% url minipoll_poll_vote poll.slug %}" method="post" id="poll">
     {% csrf_token %}
+    <div class="clearfix"><ul class="inputs-list">
     {% for choice in poll.c_choices %}
-    <div class="clearfix">
-	<input type="radio" name="choice" value="{{ choice.pk }}" {% if not choice.is_active%}disabled="disabled"{% endif %} />
-	{% if choice.is_active %}{{ choice.title }}{% else %}<s>{{ choice.title }}</s>{% endif %}
-    </div>
+    <li>
+	<label for="poll-{{ poll.id }}-{{ choice.pk }}">
+	    <input id="poll-{{ poll.id }}-{{ choice.pk }}" type="radio" name="choice" value="{{ choice.pk }}" {% if not choice.is_active%}disabled="disabled"{% endif %} />
+	    <span>{% if choice.is_active %}{{ choice.title }}{% else %}<s>{{ choice.title }}</s>{% endif %}</span>
+	</label>
+    </li>
     {% endfor %}
+    </ul></div>
     <div><input type="submit" class="btn primary" value="Ответить" /></div>
   </form>
 </div>
