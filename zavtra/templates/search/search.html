@@ -8,10 +8,8 @@
 	<h3>Поиск</h3>
 	<div class="content">
 	    <form method="get" action="." class="clearfix search-form">
-    		<div class="buttons">
-    		    <input type="search" name="q"  value="{{ query }}" />
-    		    <button class="button" type="submit"><span class="icon icon198"></span><span class="label">Найти</span></button>
-    		</div>
+    		<input type="search" name="q"  value="{{ query }}" />
+    		<input class="btn small primary" type="submit" value="Найти" />
     	    </form>
 	    {% if query %}
 	    <div class="content"><ul class="unstyled free">
