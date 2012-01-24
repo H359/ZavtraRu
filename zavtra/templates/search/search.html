@@ -27,11 +27,11 @@
 	    {% if page.has_previous or page.has_next %}
 	    <footer class="pagination">
 	    <ul>
-		{% if not page_obj.has_previous %}<li class="prev"><a rel="page" href="?q={{query}}&amp;page={{ page_obj.previous_page_number }}">&larr; Позже</a></li>{% endif %}
-    		{% for p in page_obj.page_range %}
-    		<li{% if page_obj.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?q={{query}}&amp;page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
+		{% if not page.has_previous %}<li class="prev"><a rel="page" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">&larr; Позже</a></li>{% endif %}
+    		{% for p in page.page_range %}
+    		<li{% if page.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?q={{ query }}&amp;page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
     		{% endfor %}
-    		{% if not page_obj.has_next %}<li class="next"><a rel="page" href="?q={{query}}&amp;page={{ page_obj.next_page_number }}">Раньше &rarr;</a></li>{% endif %}
+    		{% if not page.has_next %}<li class="next"><a rel="page" href="?q={{ query }}&amp;page={{ page.next_page_number }}">Раньше &rarr;</a></li>{% endif %}
     	    </ul>
     	    </footer>
     	    {% endif %}

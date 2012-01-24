@@ -1,22 +1,17 @@
 {% extends base_template %}
 
-{% load utils %}
-{% load minipoll_tags %}
-{% load pytils_dt %}
-{% load pytils_numeral %}
-
 {% block page_title %}{{ block.super }} / Страница не обнаружена{% endblock %}
 
 {% block content %}
-  <div class="row">
+<div class="row">
     <div class="span8 rubric">
 	<div>
-	    <h3>Страница не обнаружена</h3>
+	    <h3>Страница не обнаружена</h3><br/>
 	    <p><img src="{{ STATIC_URL }}img/stalin_coolface.jpg" /></p>
-	    <p>Данная страница на сайте не сущетвует или репрессированна лично И. В. Сталиным. Попробуйте повторить запрос изменив условия.</p>
+	    <h4>Данная страница на сайте не сущетвует или репрессирована лично И. В. Сталиным. Попробуйте повторить запрос изменив условия.</h4>
 	</div>
 	<div class="bnrok" id="DIV_DA_49096"></div>
     </div>
     <div class="span4 last">{% include 'partials/rightside.hml' %}</div>
-  </div>
+</div>
 {% endblock %}
