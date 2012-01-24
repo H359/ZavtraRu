@@ -29,7 +29,7 @@ def common_pieces(request):
     current_items = cached(
 	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
 	'red_string',
-	duration=120
+	duration=60*60*24
     )
     return {
 	'news': news,
