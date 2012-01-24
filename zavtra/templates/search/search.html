@@ -14,28 +14,27 @@
     		</div>
     	    </form>
 	    {% if query %}
-	    <dl class="content">
+	    <div class="content"><ul class="unstyled free">
 	    {% for result in page.object_list %}
-		<dt{%if forloop.first%} class="some-top"{% endif%}><a href="{{ result.link }}">{{ result.title }}</a></dt>
-		<dd>{% highlight result.text with query html_tag "span" class "highlighted" %}</dd>
+		<li>
+		    <h4><a href="{{ result.link }}">{{ result.title }}</a></h4>
+		    <div class="txt">{% highlight result.text with query html_tag "span" class "highlighted" %}</div>
+		</li>
 	    {% empty %}
-		<dt class="some-top">По такому запросу мы ничего не смогли найти. Возможно, вы ошиблись?</dt>
+		<li>По такому запросу мы ничего не смогли найти. Возможно, вы ошиблись?</li>
 	    {% endfor %}
-	    </dl>
-            {% if page.has_previous or page.has_next %}
-	    <footer class="buttons">
-                {% if page.has_previous %}<a rel="page" class="button" href="?q={{query}}&amp;page={{ page_obj.previous_page_number }}"><span class="icon icon63"></span></a>{% endif %}
-                {% for p in page.page_range %}
-                {% if page.number == p %}
-                <div class="button on blue"><span class="label">{{ p }}</span></div>
-                {% else %}
-                {% if p %}<a class="button" rel="page" href="?q={{query}}&amp;page={{ p }}"><span class="label">{{ p }}</span></a>{% else %}<div class="button page_mimic">...</div>{% endif %}
-                {% endif %}
-                {% endfor %}
-                {% if page.has_next %}<a rel="page" class="button" href="?q={{query}}&amp;page={{ page.next_page_number }}"><span class="icon icon64"></span></a>{% endif %}
-            </footer>
-            {% endif %}
-            {% endif %}
+	    </ul></div>
+	    {% if page.has_previous or page.has_next %}
+	    <footer class="pagination">
+	    <ul>
+		<li class="prev {% if not page_obj.has_previous %}disabled{% endif %}"><a rel="page" href="?q={{query}}&amp;page={{ page_obj.previous_page_number }}">&larr; Позже</a></li>
+    		{% for p in page_obj.page_range %}
+    		<li{% if page_obj.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?q={{query}}&amp;page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
+    		{% endfor %}
+    		<li class="next {% if not page_obj.has_next %}disabled{% endif %}"><a rel="page" href="?q={{query}}&amp;page={{ page_obj.next_page_number }}">Раньше &rarr;</a></li>
+    	    </ul>
+    	    </footer>
+    	    {% endif %}
 	</div>
     </article>
     <article class="span4 last">{% include 'partials/rightside.html' %}</article>
