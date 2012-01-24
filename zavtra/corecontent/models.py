@@ -76,6 +76,10 @@ class FeaturedItems(models.Model):
     def __unicode__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+	cache.delete('featued')
+	super(FeatuedItems, self).save(*args, **kwargs)
+
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.featured', (), {'slug': self.slug})
