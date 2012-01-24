@@ -13,7 +13,7 @@
 		<li>
 		    <h5>
 			<a href="{{ object.get_absolute_url }}" alt="{{ object.title }}">{{ object.title }}</a>
-			<small>{{ object.publication_date|date:"d N Y" }}, {{ object.votes|get_plural:"голос,голоса,голосов" }}</small>
+			<small>{{ object.publication_date|date:"d N Y" }}, {{ object.total_votes|get_plural:"голос,голоса,голосов" }}</small>
 		    </h5>
 		</li>
   	        {% endfor %}

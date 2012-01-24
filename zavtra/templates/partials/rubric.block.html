@@ -7,7 +7,7 @@
     <h5><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h5>
     {% if item.authors_all %}<h6>{% for author in item.authors_all %}<a href="{{ author.get_absolute_url }}">{{ author.get_full_name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</h6>{% endif %}
     <div class="txt"><a href="{{ item.get_absolute_url }}">{{ item.description|safe }}</a></div>
-    <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.cached_comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+    <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
   </li>
   {% endfor %}
 </ul>

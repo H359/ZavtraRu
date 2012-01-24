@@ -3,26 +3,26 @@
 {% load pytils_numeral %}
 {% load comments %}
 
-{% block page_title %}{{ block.super }} / Слух &laquo;{{ object.title }}&raquo; / {% trans "Results" %}{% endblock %}
+{% block page_title %}{{ block.super }} / Слух &laquo;{{ poll.title }}&raquo; / {% trans "Results" %}{% endblock %}
 
-{% block description %}{{ object.description|striptags }}, {% trans "results" %}.{% endblock %}
+{% block description %}{{ poll.description|striptags }}, {% trans "results" %}.{% endblock %}
 
 {% block content %}
 <ul class="breadcrumb">
     <li><a href="/">Главная</a><span class="divider">/</span></li>
     <li><a href="{% url minipoll_poll_list %}">Слухи</a><span class="divider">/</span></li>
-    <li>{{ object.title }}</li>
+    <li>{{ poll.title }}</li>
 </ul>
 
 <div class="row">
     <article class="span8">
-	<h3>{{ object.title }}</h3>
+	<h3>{{ poll.title }}</h3>
 	<div class="content">
-	    {{ object.description|safe }}
-	    <div>{% display_poll_result object %}</div>
-	    <strong>Всего {{ object.votes|get_plural:"пользователь,пользователя,пользователей" }} приняли участие в этом опросе.</strong>
+	    {{ poll.description|safe }}
+	    <div>{% display_poll_result poll %}</div>
+	    <strong>Всего {{ poll.votes_count|get_plural:"пользователь,пользователя,пользователей" }} приняли участие в этом опросе.</strong>
 	</div>
-	<footer><div id="comments">{% get_comments_for object %}</div></footer>
+	<footer><div id="comments">{% get_comments_for poll %}</div></footer>
     </article>
     <article class="span4 last">{% include 'partials/rightside.html' %}</article>
 </div>

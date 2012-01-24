@@ -134,14 +134,6 @@ class ContentItem(models.Model):
 	    setattr(self, '__cached_tags', tags)
 	    return tags
 
-    def cached_comments_count(self):
-	key = 'contentitem-%d-comments' % self.id
-	res = cache.get(key)
-	if res is None:
-	    res = ContentItem.objects.get(id=self.id)._comments_count
-	    cache.set(key, res, 60*60*24)
-	return res
-
     def update_comments_count(self):
     	comments_count = Comment.objects.filter(
             content_type = contentitem_ctype_id,
@@ -170,10 +162,10 @@ class ContentItem(models.Model):
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
     def save(self, *args, **kwargs):
+	cache.delete('red_string')
 	notypo = kwargs.get('notypo', False)
 	if notypo:
 	    del kwargs['notypo']
-	cache.delete('featured') #HACK?
         if not notypo and self.id is None:
             from typograph.RemoteTypograf import RemoteTypograf
             rt = RemoteTypograf()
