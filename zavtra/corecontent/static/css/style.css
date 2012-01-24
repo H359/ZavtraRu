@@ -151,4 +151,4 @@ body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
     .socializm .fb-like-box { width: 270px; height: 600px; }
     .socializm #vk_groups { width: 270px; height:117px; }
 
-.scrollable .items .third img.real { float: none; }
+.scrollable .items .third img.real { float: none; width: auto; }
