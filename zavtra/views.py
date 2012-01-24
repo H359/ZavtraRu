@@ -30,7 +30,7 @@ oneday = timedelta(days=1)
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date()
+    now = datetime.now().date().replace(year=2011,month=12,day=15)
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
