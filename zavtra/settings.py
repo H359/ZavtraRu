@@ -77,8 +77,8 @@ SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 ACCOUNT_ACTIVATION_DAYS = 7
 AUTH_PROFILE_MODULE = 'siteuser.SiteProfile'
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = 25
 #SESSION_ENGINE = 'redis_sessions.session'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
