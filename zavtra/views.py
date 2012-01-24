@@ -42,7 +42,7 @@ def home(request):
     num = 1 + (wstart - datetime(year=wstart.year,day=1,month=1).date()).days / 7
     def get_illustration():
 	try:
-	    zh = ZhivotovIllustration.objects.latest('pub_date')
+	    zh = ZhivotovIllustration.objects.filter(pub_date__lte = wend).latest('pub_date')
 	except ZhivotovIllustration.DoesNotExist:
 	    zh = None
 	return zh
@@ -70,11 +70,14 @@ def home(request):
 	    return ContentItem.objects.filter(kind=kind, enabled=True, rubric=rubric).latest('pub_date')
 	except ContentItem.DoesNotExist:
 	    return None
-    illustration = cached(
-	get_illustration,
-	'illustration',
-	duration=6000
-    )
+    if not no_cache:
+	illustration = cached(
+	    get_illustration,
+	    'illustration',
+	    duration=6000
+	)
+    else:
+	illustration = get_illustration()
     zavtra_tv = cached(
 	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=19 if settings.DEBUG else 44)[0:1],
 	'zavtra-tv2',
