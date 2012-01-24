@@ -114,9 +114,9 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 <div class="container-fluid">
   <div class="content smooth ">
     <ul class="unstyled rubrics topbar-inner">
-	{% for item in top_rubrics %}
-	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
-	{% endfor %}
+	{% for item in rubrics %}{% if item.on_top and item.id != 1 %}
+	<li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+	{% endif %}{% endfor %}
     </ul>
     <ul class="unstyled featured well">
 	<li class="first"><a href="{% url corecontent.view.featured_index %}">Каждый день:</a></li>

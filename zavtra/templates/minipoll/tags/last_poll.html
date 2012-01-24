@@ -2,33 +2,33 @@
 {% load cache %}
 {% load minipoll_tags %}
 {% if poll %}
-    <h5>{{ poll.title }}</h5>
-    {% if user_has_vote %}
-    <ol class="unstyled">
-	{% for choice in poll.c_choices %}
-        <li>{{ choice.title }}
-        <div style="width: {{ choice.c_percent|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.c_percent|default:1|floatformat:"0" }}px solid #E6F0ED;">{{ choice.c_percent|floatformat:"0" }}%</div>
-        </li>
-        {% endfor %}
-        <a href="{% url minipoll_poll_list %}">Другие слухи</a>
-    </ol>
-    {% else %}
-    <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
-      {% csrf_token %}
-      <div class="clearfix"><ul class="inputs-list">
-      {% for choice in poll.c_choices %}
-      <li>
-	  <label for="poll-{{ poll.id }}-{{ choice.pk }}">
-	    <input type="radio"
-                   id="poll-{{ poll.id }}-{{ choice.pk }}" 
-                   name="choice"
-                   value="{{ choice.pk }}" {% if not choice.is_active%}disabled="disabled"{% endif %} />
-            <span>{% if choice.is_active %}{{ choice.title }}{% else %}<s>{{ choice.title }}</s>{% endif %}</span>
-          </label>
-      </li>
-      {% endfor %}
-      </ul></div>
+  <h5>{{ poll.title }}</h5>
+  {% if user_has_vote %}{% cache 600 latest_poll_results %}
+  <ol class="unstyled">
+    {% for choice in poll.c_choices %}
+    <li>{{ choice.title }}
+      <div style="width: {{ choice.c_percent|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.c_percent|default:1|floatformat:"0" }}px solid #E6F0ED;">{{ choice.c_percent|floatformat:"0" }}%</div>
+    </li>
+    {% endfor %}
+    <a href="{% url minipoll_poll_list %}">Другие слухи</a>
+  </ol>
+  {% endcache %}{% else %}{% cache 600 latest_poll_form %}
+  <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
+    {% csrf_token %}
+    <div class="clearfix"><ul class="inputs-list">
+    {% for choice in poll.c_choices %}
+    <li>
+	<label for="poll-{{ poll.id }}-{{ choice.pk }}">
+	<input type="radio"
+               id="poll-{{ poll.id }}-{{ choice.pk }}" 
+               name="choice"
+               value="{{ choice.pk }}" {% if not choice.is_active%}disabled="disabled"{% endif %} />
+        <span>{% if choice.is_active %}{{ choice.title }}{% else %}<s>{{ choice.title }}</s>{% endif %}</span>
+        </label>
+    </li>
+    {% endfor %}
+    </ul></div>
     <div><input type="submit" class="btn small primary" value="Ответить"></div>
   </form>
-  {% endif %}
+  {% endcache %}{% endif %}
 {% endif %}

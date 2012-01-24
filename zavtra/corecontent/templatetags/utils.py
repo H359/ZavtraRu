@@ -5,6 +5,10 @@ from zavtra.utils import group_list
 register = Library()
 
 @register.filter
+def get_rubric(val, k):
+    return filter(lambda w: w.id==val.rubric_id, k)[0]
+
+@register.filter
 def sub(val, k):
     return val-k
 

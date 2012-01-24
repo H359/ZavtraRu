@@ -19,7 +19,7 @@ def common_pieces(request):
 	base_template = 'base_ajax.html'
     else:
 	base_template = 'base.html'
-    top_rubrics  = cached(lambda: list(Rubric.objects.filter(on_top=True).exclude(title=u'Новости')), 'top_rubrics', duration=60*60*24)
+    rubrics  = cached(lambda: list(Rubric.objects.all()), 'rubrics', duration=60*60*24)
     featured = cached(lambda: list(FeaturedItems.objects.filter(is_active=True)), 'featured', duration=60*60*24)
     try:
 	quote = cached(lambda: DailyQuote.objects.filter(day=now.date()), 'quote', duration=60*60)[0]
@@ -34,7 +34,7 @@ def common_pieces(request):
     return {
 	'news': news,
 	'base_template': base_template,
-        'top_rubrics': top_rubrics,
+        'rubrics': rubrics,
         'featured': featured,
         'quote': quote,
         'current_items': current_items

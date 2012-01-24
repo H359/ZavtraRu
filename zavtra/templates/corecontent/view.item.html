@@ -20,16 +20,17 @@
 {% endspaceless %}
 {% endblock %}
 
+{% load utils %}
 {% load pytils_dt %}
 {% load comments %}
 
-{% block page_title %}{{ block.super }} / {% if item.rubric %}{{ item.rubric.title|safe }}{% else %}Блоги{% endif %} / {{ item.title|safe }}{% endblock %}
+{% block page_title %}{{ block.super }} / {% if item.rubric_id %}{% with rubric=item|get_rubric:rubrics %}{{ rubric.title|safe }}{% endwith %}{% else %}Блоги{% endif %} / {{ item.title|safe }}{% endblock %}
 {% block javascript_library %}{{ block.super }}<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>{% endblock %}
 
 {% block content %}
 <ul class="breadcrumb">
   <li><a href="/">Главная</a><span class="divider">/</span></li>
-  <li>{% if item.rubric_id %}<a href="{{ item.rubric.get_absolute_url }}">{{ item.rubric.title|safe }}</a>{% else %}<a href="{% url corecontent.view.blog %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
+  <li>{% if item.rubric_id %}{% with rubric=item|get_rubric:rubrics %}<a href="{{ rubric.get_absolute_url }}">{{ rubric.title|safe }}</a>{% endwith %}{% else %}<a href="{% url corecontent.view.blog %}">Блоги</a>{% endif %}<span class="divider">/</span></li>
   <li class="active">{{ item.title|safe }}</li>
 </ul>
 <div class="row">
