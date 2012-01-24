@@ -3,6 +3,8 @@ from django.template import Library
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 
+from utils import cached
+
 from minipoll.models import Poll
 
 register = Library()
@@ -17,7 +19,11 @@ def display_poll_result(poll):
 
 @register.inclusion_tag('minipoll/tags/last_poll.html', takes_context=True)
 def display_last_poll(context):
-    poll = Poll.objects.filter(status=1).annotate(total_votes=Count('vote')).latest('creation_date')
+    poll = cached(
+	lambda: Poll.objects.filter(status=1).annotate(total_votes=Count('vote')).latest('creation_date'),
+	'latest_poll_object',
+	duration=60*60
+    )
     try:
         session = context['request'].session
         user_has_vote = poll.pk in session.get('poll', [])
