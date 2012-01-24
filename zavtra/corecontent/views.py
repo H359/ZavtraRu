@@ -57,8 +57,8 @@ class NewsView(DetailView):
 	return super(NewsView, self).get_object(qs)
 
 class FeaturedView(ListView):
-    #paginate_by         = 15
-    #paginator_class     = DiggPaginator
+    paginate_by         = 15
+    paginator_class     = DiggPaginator
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
@@ -120,9 +120,9 @@ class GalleryView(ListView):
     """
 
 class FeaturedIndexView(ListView):
-    paginate_by         = 15
+    #paginate_by         = 15
     template_name       = 'corecontent/featured.index.html'
-    paginator_class     = DiggPaginator
+    #paginator_class     = DiggPaginator
     context_object_name = 'items'
     def get_queryset(self):
 	return FeaturedItems.objects.all()
