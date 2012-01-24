@@ -1,6 +1,6 @@
-{% load utils %}{% load cache %}{% load minipoll_tags %}
+{% load utils %}{% load minipoll_tags %}
 {% if poll %}
-  <h5>{{ poll.title }} 123</h5>
+  <h5>{{ poll.title }}</h5>
   {% if user_has_vote %}
   <ol class="unstyled">
     {% for choice in poll.c_choices %}
