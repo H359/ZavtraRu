@@ -150,3 +150,5 @@ body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
     .socializm .twy { width: 270px; overflow: hidden; }
     .socializm .fb-like-box { width: 270px; height: 600px; }
     .socializm #vk_groups { width: 270px; height:117px; }
+
+img.real { float: none; }

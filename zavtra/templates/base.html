@@ -140,7 +140,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
 			    <div class="third" data-link="{{ item.get_absolute_url }}">
 				<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
 				{% if item.kind == 'video' %}
-				<div class="text-center"><img src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" /></div>
+				<div class="text-center"><img class="real" src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" /></div>
 				{% else %}
         			{{ item.description|safe }}
         			{% endif %}
