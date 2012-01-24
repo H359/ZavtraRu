@@ -27,11 +27,11 @@
 	    {% if page.has_previous or page.has_next %}
 	    <footer class="pagination">
 	    <ul>
-		{% if not page.has_previous %}<li class="prev"><a rel="page" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">&larr; Позже</a></li>{% endif %}
+		{% if page.has_previous %}<li class="prev"><a rel="page" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">&larr; Позже</a></li>{% endif %}
     		{% for p in page.page_range %}
     		<li{% if page.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?q={{ query }}&amp;page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
     		{% endfor %}
-    		{% if not page.has_next %}<li class="next"><a rel="page" href="?q={{ query }}&amp;page={{ page.next_page_number }}">Раньше &rarr;</a></li>{% endif %}
+    		{% if page.has_next %}<li class="next"><a rel="page" href="?q={{ query }}&amp;page={{ page.next_page_number }}">Раньше &rarr;</a></li>{% endif %}
     	    </ul>
     	    </footer>
     	    {% endif %}
