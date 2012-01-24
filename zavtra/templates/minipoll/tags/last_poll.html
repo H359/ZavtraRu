@@ -3,7 +3,7 @@
 {% load minipoll_tags %}
 {% if poll %}
   <h5>{{ poll.title }}</h5>
-  {% if user_has_vote %}{% cache 600 latest_poll_results %}
+  {% if user_has_vote %}{% cache 600 latest_poll_results_nd %}
   <ol class="unstyled">
     {% for choice in poll.c_choices %}
     <li>{{ choice.title }}
@@ -12,7 +12,7 @@
     {% endfor %}
     <a href="{% url minipoll_poll_list %}">Другие слухи</a>
   </ol>
-  {% endcache %}{% else %}{% cache 600 latest_poll_form %}
+  {% endcache %}{% else %}{% cache 600 latest_poll_form_nd %}
   <form action="{% url minipoll_poll_vote poll.slug %}" method="post">
     {% csrf_token %}
     <div class="clearfix"><ul class="inputs-list">
