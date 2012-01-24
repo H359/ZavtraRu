@@ -20,15 +20,13 @@ def display_poll_result(poll):
 @register.inclusion_tag('minipoll/tags/last_poll.html', takes_context=True)
 def display_last_poll(context):
     poll = cached(
-	lambda: Poll.objects.filter(status=1).annotate(total_votes=Count('vote')).latest('creation_date'),
+	lambda: Poll.calculate(Poll.objects.filter(status=1).annotate(total_votes=Count('vote')).latest('creation_date')),
 	'latest_poll_object',
-	duration=60*60
+	duration=60
     )
     try:
         session = context['request'].session
         user_has_vote = poll.pk in session.get('poll', [])
     except KeyError:
         user_has_vote = False
-    if user_has_vote:
-	poll = Poll.calculate(poll)
     return {'poll': poll, 'user_has_vote': user_has_vote}
