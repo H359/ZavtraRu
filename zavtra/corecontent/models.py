@@ -162,9 +162,8 @@ class ContentItem(models.Model):
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
     def save(self, *args, **kwargs):
-	if self.rubric_id:
-	    if self.rubric_id == 1:
-		cache.delete('news2')
+	if self.rubric_id is not None and self.rubric_id == 1:
+	    cache.delete('news2')
 	else:
 	    cache.delete('red_string')
 	notypo = kwargs.get('notypo', False)
