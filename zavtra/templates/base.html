@@ -89,7 +89,7 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
       <ul class="nav secondary-nav">
         {% if request.user.is_authenticated %}
         <li class="dropdown">
-    	  <a href="#" class="dropdown-toggle">{{ request.user.get_full_name }}.</a>
+    	  <a href="#" class="dropdown-toggle">{{ request.user }}.</a>
     	  <ul class="dropdown-menu">
     	    <li><a href="{% url logout %}">Выйти</a></li>
     	  </ul>
