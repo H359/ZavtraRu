@@ -28,7 +28,7 @@ class EmailTemplate(models.Model):
 
     def save(self, *args, **kwargs):
 	super(EmailTemplate, self).save(*args, **kwargs)
-	cache.delete('email-template-%s' % key)
+	cache.delete('email-template-%s' % self.key)
 
     @staticmethod
     def get(key):
