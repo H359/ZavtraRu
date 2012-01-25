@@ -7,6 +7,27 @@
   <h3>Реклама</h3>
   {% comment %}<div style="width:100%;background:red;color:white;height:100px;line-height:100px;">[min 232xN]</div>{% endcomment %}
   <div class="bnrok" id="DIV_DA_49095"></div>
+  <!-- Яндекс.Директ -->
+  <div id="yandex_ad"></div>
+  <script type="text/javascript">
+    (function(w, d, n, s, t) {
+	w[n] = w[n] || [];
+	w[n].push(function() {
+	    Ya.Direct.insertInto(82666, "yandex_ad", {
+        	site_charset: "utf-8", ad_format: "direct", font_size: 1,
+        	type: "vertical", limit: 5, title_font_size: 3,
+        	site_bg_color: "FFFFFF", header_bg_color: "FEEAC7",
+        	title_color: "A4322F", url_color: "A4322F",
+        	all_color: "A4322F", text_color: "222222",
+        	hover_color: "CF3A2D", favicon: true
+    	    });
+	});
+	t = d.documentElement.firstChild; s = d.createElement("script");
+	s.type = "text/javascript"; s.src = "http://an.yandex.ru/system/context.js";
+	s.setAttribute("async", "true"); t.insertBefore(s, t.firstChild);
+    })(window, document, "yandex_context_callbacks");
+   </script>
+   <!-- /Яндекс.Директ -->
 </article>
 {% comment %}
 <article class="rubric">
