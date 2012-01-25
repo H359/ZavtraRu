@@ -152,3 +152,5 @@ body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
     .socializm #vk_groups { width: 270px; height:117px; }
 
 .scrollable .items .third img.real { float: none; width: auto; }
+
+.gazette .pdf { position: relative; top: -4px; }

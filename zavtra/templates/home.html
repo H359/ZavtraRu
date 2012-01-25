@@ -14,7 +14,7 @@
         <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" />
         <figcaption><h3>&laquo;{{ illustration.title }}&raquo;, Геннадий Животов</h5></figcaption>
       </figure>
-      <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}, <a href="{{ MEDIA_URL }}content/pdfs/4PDF.zip" class="btn small">PDF</a></small></h1>
+      <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</small><a href="{{ MEDIA_URL }}content/pdfs/4PDF.zip" class="btn primary pdf">PDF</a></h1>
       {% for group in newsletter %}
       {% if forloop.counter == 4 %}
       {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 500xN]</div>{% endcomment %}
