@@ -146,10 +146,19 @@ body .tab-content { border: 1px solid #ddd; border-top: none; padding: 8px; }
 .txt img { display: block; margin: 0 auto; }
 
 .text-center { text-align: center; }
-.socializm { padding: 0.5em; }
-    .socializm .twy { width: 270px; overflow: hidden; }
-    .socializm .fb-like-box { width: 270px; height: 600px; }
-    .socializm #vk_groups { width: 270px; height:117px; }
+
+.socializm { position: fixed; top: 120px; right: 0px; border: 1px solid #222; border-right: none; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; }
+    .socializm ul.unstyled { margin: 0; background: rgba(0,0,0,0.15); }
+    .socializm li { padding: 2px; }
+
+.social.social-b a { display: inline-block; }
+.social a { width: 32px; height: 32px; display: block; background: url(../img/social/soclager.png) no-repeat; }
+.social a.twitter { background-position: -32px 0px; }
+.social a.facebook { background-position: 0px 0px; }
+.social a.vkontakte { background-position: -64px 0px; }
+.social a.google-oauth { background-position: -96px 0px; }
+.social a.livejournal { background-position: -128px 0px; }
+    
 
 .scrollable .items .third img.real { float: none; width: auto; }
 

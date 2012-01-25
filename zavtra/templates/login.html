@@ -13,17 +13,17 @@
 <div class="row">
     <div class="span6 last">
 	<h4>Войдите с помощью социальной сети</h4>
-	<div class="content">
+	<div class="content social social-b">
 	{% for name in social_auth.backends.oauth %}
-    	    <a rel="nofollow" href="{% url socialauth_begin name %}"><img src="{{ STATIC_URL }}img/social/{{ name }}.png" /></a>
+    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
         {% endfor %}
         {% for name in social_auth.backends.oauth2 %}
-    	    <a rel="nofollow" href="{% url socialauth_begin name %}"><img src="{{ STATIC_URL }}img/social/{{ name }}.png" /></a>
+    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
         {% endfor %}
 	    {% for name in social_auth.backends.openid %}
 	    {% if name == "livejournal" %}
 	    <script>window.modal_bootstrap=function(){$('#livejournal-login-modal').modal({backdrop:true,keyboard:true});}</script>
-	    <a data-controls-modal="livejournal-login-modal" rel="nofollow" href="#"><img src="{{ STATIC_URL }}img/social/livejournal.png" /></a>
+	    <a class="{{ name }}" data-controls-modal="livejournal-login-modal" rel="nofollow" href="#"></a>
 	    <form action="{% url socialauth_begin "livejournal" %}" method="post" id="livejournal-login-modal" class="hide fade modal">
 		<div class="modal-header"><h3>Войти с помощью учетной записи Livejournal</h3></div>
 		<div class="modal-body">
