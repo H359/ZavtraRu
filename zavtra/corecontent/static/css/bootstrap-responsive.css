@@ -220,7 +220,7 @@
 @media only screen and (max-width: 640px) {
 
   html body { padding-top: 0 !important; }
-  body .topbar { position: static; margin-bottom: 24px; }
+  body .topbar { position: static; margin-bottom: 24px; height: auto; }
   html body .stripe.span12 { display: none; }
 
   .container-fluid .row .span1,
