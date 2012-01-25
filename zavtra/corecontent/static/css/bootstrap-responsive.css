@@ -221,7 +221,7 @@
 
   html body { padding-top: 0 !important; }
   body .topbar { position: static; margin-bottom: 24px; }
-  body .stripe { display: none; }
+  html body .stripe.span12 { display: none; }
 
   .container-fluid .row .span1,
   .container-fluid .row .span2,
