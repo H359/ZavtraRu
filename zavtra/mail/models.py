@@ -1,4 +1,6 @@
 #-*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.db import models
 from django.template import Template, Context
 from django.conf import settings
@@ -43,3 +45,7 @@ class EmailQueue(models.Model):
     body        = models.TextField()
     created_at  = models.DateTimeField(auto_now_add=True)
     sent_at     = models.DateTimeField(blank=True, null=True)
+    
+    def mark_sent(self):
+	self.sent_at = datetime.now()
+	self.save()

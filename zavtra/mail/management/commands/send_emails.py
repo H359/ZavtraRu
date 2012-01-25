@@ -14,3 +14,4 @@ class Command(BaseCommand):
 	for m in q:
 	    msg = EmailMessage(m.subject, m.body, m.from_field, [m.to_field], headers={'Content-Type': 'text/html'})
 	    msg.send()
+	    m.mark_sent()
