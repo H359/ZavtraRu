@@ -216,8 +216,7 @@
   .container-fluid select.xlarge {
     width: 270px; } }
 	
-/* Samller than Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 
   html body { padding-top: 0 !important; }
   body .topbar { position: static; margin-bottom: 24px; height: auto; }
