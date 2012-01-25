@@ -33,7 +33,7 @@
     	    <figcaption>
     		<h3><a href="/content/rubric/zavtratv/">Завтра.LIVE:</a></h3>
     		<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
-    		<a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+    		<a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.cached_comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
     	    </figcatpion>
         </figure>
         {% endfor %}
@@ -67,7 +67,7 @@
           <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
           <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
           <div class="txt">{{ item.description|safe }}</div>
-          <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
+          <a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.cached_comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
         </li>
         {% endfor %}
       </ul>
