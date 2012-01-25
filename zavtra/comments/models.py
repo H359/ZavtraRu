@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
+from mail.models import EmailTemplate
 from treebeard.mp_tree import MP_Node
 
 class Comment(models.Model):
@@ -46,6 +47,12 @@ class Comment(models.Model):
 	chunk[self.step_size - fill - 1] = self.alphabet[rem]
 	self.path = prev_path + ''.join(chunk)
 	super(Comment, self).save(*args, **kwargs)
+	if self.parent_id is not None:
+	    tpl = EmailTemplate.get('comments.reply_added')
+	    tpl.send(receivers=[self.author.email, data={
+		'original': self.parent,
+		'reply': self
+	    })
 
     def short_comment(self):
 	return ('-'*self.depth) + self.comment[0:50] + '...'
@@ -63,6 +70,10 @@ class Comment(models.Model):
 	    return author.get_full_name()
 	else:
 	    return author.username
+
+    @models.permalink
+    def get_absolute_url(self):
+	return ('resolve_content_object', (), {'content_type_id': self.content_type_id, 'id': self.object_id})
 
     @staticmethod
     def calculate_paths():

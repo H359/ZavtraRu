@@ -18,7 +18,6 @@
 
 .container-fluid .row {
   width: 100%;
-  /*max-width: 1140px;*/
   min-width: 755px;
   margin: 0 auto;
   overflow: hidden; }
@@ -163,27 +162,7 @@
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 0px;
-    padding-right: 0px; }
-
-  /*
-  .container-fluid .row .span1,
-  .container-fluid .row .span2,
-  .container-fluid .row .span3,
-  .container-fluid .row .span4,
-  .container-fluid .row .span5,
-  .container-fluid .row .span6,
-  .container-fluid .row .span7,
-  .container-fluid .row .span8,
-  .container-fluid .row .span9,
-  .container-fluid .row .span10,
-  .container-fluid .row .span11,
-  .container-fluid .row .span12 {
-    width: auto;
-    float: none;
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px; }*/ }
+    padding-right: 0px; } }
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 @media only screen and (min-width: 480px) and (max-width: 767px),

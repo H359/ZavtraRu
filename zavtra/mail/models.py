@@ -2,6 +2,7 @@
 from django.db import models
 from django.template import Template, Context
 from django.conf import settings
+from django.core.cache import cache
 
 class EmailTemplate(models.Model):
     class Meta:
@@ -25,7 +26,12 @@ class EmailTemplate(models.Model):
 
     @staticmethod
     def get(key):
-	return EmailTemplate.objects.get(key=key)
+	cache_key = 'email-template-%s' % key
+	res = cache.get(cache_key)
+	if res is None:
+	    res = EmailTemplate.objects.get(key=key)
+	    cache.set(cache_key, res, 60*60*24)
+	return res
 
 class EmailQueue(models.Model):
     class Meta:
