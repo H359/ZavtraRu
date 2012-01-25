@@ -26,6 +26,10 @@ class EmailTemplate(models.Model):
 		from_field=sender, to_field=receiver, subject=subject, body=body
 	    )
 
+    def save(self, *args, **kwargs):
+	super(EmailTemplate, self).save(*args, **kwargs)
+	cache.delete('email-template-%s' % key)
+
     @staticmethod
     def get(key):
 	cache_key = 'email-template-%s' % key
