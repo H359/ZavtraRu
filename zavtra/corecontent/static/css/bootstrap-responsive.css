@@ -165,6 +165,7 @@
     padding-left: 0px;
     padding-right: 0px; }
 
+  /*
   .container-fluid .row .span1,
   .container-fluid .row .span2,
   .container-fluid .row .span3,
@@ -182,7 +183,7 @@
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 0px;
-    padding-right: 0px; } }
+    padding-right: 0px; }*/ }
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 @media only screen and (min-width: 480px) and (max-width: 767px),
@@ -216,10 +217,30 @@
     width: 270px; } }
 	
 /* Samller than Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px),
-       only screen and (max-device-width: 479px) {
+@media only screen and (max-width: 640px) {
 
-  body .stripe h4 { font-size: 80%; }
+  html body { padding-top: 0 !important; }
+  body .topbar { position: static; margin-bottom: 24px; }
+  body .stripe { display: none; }
+
+  .container-fluid .row .span1,
+  .container-fluid .row .span2,
+  .container-fluid .row .span3,
+  .container-fluid .row .span4,
+  .container-fluid .row .span5,
+  .container-fluid .row .span6,
+  .container-fluid .row .span7,
+  .container-fluid .row .span8,
+  .container-fluid .row .span9,
+  .container-fluid .row .span10,
+  .container-fluid .row .span11,
+  .container-fluid .row .span12 {
+    width: auto;
+    float: none;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px; }
 
   .container-fluid .input-medium,
   .container-fluid input.medium,
