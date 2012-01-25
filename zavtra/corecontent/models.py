@@ -139,7 +139,7 @@ class ContentItem(models.Model):
 		object_id=self.id,
 		enabled=True
 	    ).count()
-	    cache.set(key, res, 600)
+	    cache.set(key, res, 60*60*24)
 	return res
 
     def tags_all(self):
@@ -157,7 +157,7 @@ class ContentItem(models.Model):
             enabled=True
     	).count()
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
-    	cache.delete('contentitem-%d-comments' % self.id)
+    	cache.delete('contentitem-%d-comments-count' % self.id)
 
     def get_content_type_id(self):
 	return contentitem_ctype_id 
