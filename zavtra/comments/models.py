@@ -49,10 +49,7 @@ class Comment(models.Model):
 	super(Comment, self).save(*args, **kwargs)
 	if self.parent_id is not None:
 	    tpl = EmailTemplate.get('comments.reply_added')
-	    tpl.send(receivers=[self.author.email, data={
-		'original': self.parent,
-		'reply': self
-	    })
+	    tpl.send(receivers=[self.author.email], data={'original': self.parent, 'reply': self})
 
     def short_comment(self):
 	return ('-'*self.depth) + self.comment[0:50] + '...'
