@@ -7,7 +7,7 @@ class EmailTemplateAdmin(admin.ModelAdmin):
 	return False
 
 class EmailQueueAdmin(admin.ModelAdmin):
-    list_display = ('to_field', 'subject', 'body', 'sent_at', 'created_at')
+    list_display = ('to_field', 'subject', 'sent_at', 'created_at')
     def has_delete_permission(self, request, obj=None):
 	return False
 
