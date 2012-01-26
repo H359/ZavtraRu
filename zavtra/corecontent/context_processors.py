@@ -23,6 +23,7 @@ def common_pieces(request):
     featured = cached(lambda: list(FeaturedItems.objects.filter(is_active=True)), 'featured', duration=60*60*24)
     try:
 	quote = cached(lambda: DailyQuote.objects.filter(day=now.date()), 'quote', duration=60*60)[0]
+	quote.recache()
     except IndexError:
 	quote = None
     news = cached(lambda: map(news_stripper, ContentItem.objects.filter(enabled=True, pub_date__lte=now, rubric__title=u'Новости')[0:10]), 'news2', duration=60*60*24)
