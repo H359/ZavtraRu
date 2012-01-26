@@ -6,10 +6,10 @@
 	    <div class="body clearfix">
 		<div class="author"><a href="{{ comment.author.get_absolute_url }}">{{ comment.get_author }}</a>, <time datetime="{{ comment.created_at }}">{{ comment.created_at|distance_of_time }}<time>{% if stream %}, <a href="/resolver/{{ comment.content_type_id }}/{{ comment.object_id }}/#comment-{{ comment.id }}">[ссылка]</a>{% endif %}:</div>
 		<div class="text">
-		{% if comment.enabled %}{% spaceless %}{{ comment.comment|slice:"0:1500" }}{% if commentlength > 1500 %}&#8230;<span class="hide">{{ comment.comment|slice:"1500:" }}</span>{% endif %}{% endspaceless %}
+		{% if comment.enabled %}{% spaceless %}{{ comment.comment|linebreaksbr|slice:"0:1500" }}{% if commentlength > 1500 %}&#8230;<span class="hide">{{ comment.comment|linebreaksbr|slice:"1500:" }}</span>{% endif %}{% endspaceless %}
 		{% else %}<em>комментарий скрыт</em>
 		    {% if request.user.is_authenticated and request.user.is_staff %}
-		    <br/>Текст:<br/>{{ comment.comment }}
+		    <br/>Текст:<br/>{{ comment.comment|linebreaksbr }}
 		    {% endif %}
 		{% endif %}
 		</div>
