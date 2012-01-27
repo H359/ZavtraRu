@@ -1,81 +1,66 @@
 {% extends base_template %}
 
+{% block page_title %}{{ block.super }} / Вход{% endblock %}
+
 {% block content %}
-<section class="container container_16 clearfix">
-    {% if login_fail %}
-    <article class="alpha omega grid_16">
+{% if login_fail %}
+<div class="row">
+    <div class="span12 last">
 	<div class="error">Ошибка!</div>
-    </article>
-    {% endif %}
-    <article class="alpha grid_8 block">
-	<header><h1>Войдите с помощью учётной записи в социальной сети:</h1></header>
-	<div class="content">
-	    <div class="clearfix">
-            {% for name in social_auth.backends.oauth %}
-        	<a rel="nofollow" href="{% url socialauth_begin name %}" class="auth-icon {{ name }}"></a>
-            {% endfor %}
-            {% for name in social_auth.backends.oauth2 %}
-        	<a rel="nofollow" href="{% url socialauth_begin name %}" class="auth-icon {{ name }}"></a>
-            {% endfor %}
-            </div>
+    </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="span6 last">
+	<h4>Войдите с помощью социальной сети</h4>
+	<div class="content social social-b">
+	{% for name in social_auth.backends.oauth %}
+    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
+        {% endfor %}
+        {% for name in social_auth.backends.oauth2 %}
+    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
+        {% endfor %}
 	    {% for name in social_auth.backends.openid %}
 	    {% if name == "livejournal" %}
-	    <form action="{% url socialauth_begin "livejournal" %}" method="post">
-		{% csrf_token %}
-    		<table class="auth-form">
-    		    <tr>
-        		<td><span class="auth-icon livejournal"></span></td>
-        		<td><label for="openid_lj_user">Пользователь ЖЖ:</label></td>
-        		<td><input id="openid_lj_user" type="text" value="" name="openid_lj_user" /></td>
-        		<td><button type="submit" class="button"><span class="label">Войти</span></button></td>
-        	    </tr>
-        	</table>
+	    <script>window.modal_bootstrap=function(){$('#livejournal-login-modal').modal({backdrop:true,keyboard:true});}</script>
+	    <a class="{{ name }}" data-controls-modal="livejournal-login-modal" rel="nofollow" href="#"></a>
+	    <form action="{% url socialauth_begin "livejournal" %}" method="post" id="livejournal-login-modal" class="hide fade modal">
+		<div class="modal-header"><h3>Войти с помощью учетной записи Livejournal</h3></div>
+		<div class="modal-body">
+	    	    {% csrf_token %}
+	    	    <div>
+	    		<input id="openid_lj_user" type="text" value="" placeholder="Пользователь ЖЖ" name="openid_lj_user" />
+			<input type="submit" value="Войти" class="btn primary" />
+		    </div>
+		</div>
     	    </form>
     	    {% endif %}
-    	    {% comment %}
-    	    {% if name == "openid" %}
-    	    <form action="{% url socialauth_begin "openid" %}" method="post">
-    		{% csrf_token %}
-    		<table class="auth-form">
-        	    <tr>
-        		<td><span class="auth-icon openid"></span></td>
-        		<td><label for="openid_identifier">Другой провайдер <a href="http://ru.wikipedia.org/wiki/OpenID">OpenID</a>:</label></td>
-            		<td><input id="openid_identifier" type="text" value="" name="openid_identifier" /></td>
-            		<td><button type="submit" class="button"><span class="label">Войти</span></button></td>
-            	    </tr>
-        	</table>
-    	    </form>
-    	    {% endif %}
-    	    {% endcomment %}
-    	    {% endfor %}
+    	{% endfor %}
     	</div>
-    </article>
-    <article class="omega grid_8 block">
-	<header><h1>...или воспользуйтесь учётной записью на сайте газеты</h1></header>
+    </div>
+    <div class="span6 last">
+	<h4>...или с помощью учётной записи на сайте</h4>
 	<div class="content">
     	    <form method="post" action="{% url login %}">
-    		<table class="auth-form">
-    		    <tr>
-    			<th><label for="login_username">Логин:</label></th>
-            		<td><input id="login_username" type="text" name="username" /></td>
-        	    </tr>
-            	    <tr>
-            		<th><label for="login_passwrod">Пароль</label></th>
-            		<td><input id="login_password" type="password" name="password" /></td>
-            	    </tr>
-            	    <tr>
-            		<th></th>
-            		<td>
-            		    {% csrf_token %}
-            		    <div class="buttons">
-            			<button type="submit" class="button">Войти</button>
-            			<a href="{% url accounts.register %}" class="button">Регистрация</a>
-            		    </div>
-            		</td>
-            	    </tr>
-            	</table>
+    		<div class="clearfix">
+    		    <label for="login_username">Логин:</label>
+    		    <div class="input">
+            		<input class="medium" id="login_username" type="text" name="username" /></td>
+        	    </div>
+        	</div>
+            	<div class="clearfix">
+            	    <label for="login_passwrod">Пароль</label>
+            	    <div class="input">
+            		<input class="medium" id="login_password" type="password" name="password" />
+            	    </div>
+            	</div>
+            	<div class="actions">
+            	    {% csrf_token %}
+            	    <input type="submit" class="btn primary" value="Войти" />
+            	    <a href="{% url accounts.register %}" class="button">Регистрация</a>
+            	</div>
     	    </form>
 	</div>
-    </article>
-</section>
+    </div>
+</div>
 {% endblock %}

@@ -2,8 +2,15 @@
 # Django settings for zavtra project.
 import os, socket
 import pytils.translit
+
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = socket.gethostname() == 'myhost'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('zw0rk', 'ostronom@gmail.com'),
@@ -37,11 +44,9 @@ STATICFILES_FINDERS = (
 )
 SECRET_KEY = 'ppkh78v9p3s$+5_p3+u3bdm@js&2!i$r9uy5&hg-p4$b0(yr&s'
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    ('django.template.loaders.cached.Loader', ('django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader')),
 )
-if not DEBUG:
-    TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', TEMPLATE_LOADERS),)
+TEMPLATE_CACHE=True
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -72,19 +77,17 @@ SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 ACCOUNT_ACTIVATION_DAYS = 7
 AUTH_PROFILE_MODULE = 'siteuser.SiteProfile'
 DEFAULT_FROM_EMAIL = 'noreply@zavtra.ru'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-if not DEBUG:
-    SESSION_ENGINE = 'redis_sessions.session'
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = 25
+#SESSION_ENGINE = 'redis_sessions.session'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
-if DEBUG:
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.media',
@@ -97,11 +100,6 @@ ROOT_URLCONF = 'zavtra.urls'
 TEMPLATE_DIRS = (
     os.path.join(SITE_DIR, 'templates'),
 )
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,6 +131,7 @@ INSTALLED_APPS = (
     'haystack',
     'ajaxfields',
     'imagekit',
+    #'debug_toolbar'
 )
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -142,9 +141,6 @@ HAYSTACK_CONNECTIONS = {
         'INCLUDE_SPELLING': True,
     }
 }
-if DEBUG:
-    INSTALLED_APPS = list(INSTALLED_APPS)
-    INSTALLED_APPS.append('debug_toolbar')
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
 LOGGING = {
     'version': 1,
@@ -178,28 +174,51 @@ LOGGING = {
         },
      }
 }
-#INTERNAL_IPS = ('127.0.0.1',)
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False
-}
 CONVERT_FILENAME = True
 FILEBROWSER_EXCLUDE = []
+
+DEBUG_TOOLBAR_PANELS = (
+    'debug_toolbar.panels.version.VersionDebugPanel',
+    'debug_toolbar.panels.timer.TimerDebugPanel',
+    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+    'debug_toolbar.panels.headers.HeaderDebugPanel',
+    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
+    'debug_toolbar.panels.template.TemplateDebugPanel',
+    'debug_toolbar.panels.sql.SQLDebugPanel',
+    'debug_toolbar.panels.signals.SignalDebugPanel',
+    'debug_toolbar.panels.logger.LoggingPanel',
+    'profiling.ProfilingPanel',
+)
 
 #PIPELINE = True
 PIPELINE_AUTO = False
 PIPELINE_VERSION = True
 PIPELINE_VERSIONING = 'pipeline.versioning.git.GitHeadRevVersioning'
+#PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.csstidy.CSSTidyCompressor'
+#PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.closure.ClosureCompressor'
+#PIPELINE_CSSTIDY_BINARY = '/usr/bin/csstidy'
+#PIPELINE_CLOSURE_BINARY = '/usr/bin/closure'
 PIPELINE_YUI_BINARY = '/usr/bin/yuicompressor'
 PIPELINE_CSS = {
     'main': {
 	'source_filenames': ('css/*.css',),
-	'output_filename': 'css/compressed_css.r?.css',
+	'output_filename': 'css/compressed_css.r2.?.css',
     }
 }
 PIPELINE_JS = {
     'main': {
-	'source_filenames': ('js/comments.js', 'js/jquery.colorbox-min.js', 'js/jquery.tools.min.js'),
-	'output_filename': 'js/compressed_js.r?.js',
+	'source_filenames': (
+	    'js/jquery.cookie.js',
+	    'js/bootstrap-dropdown.js',
+	    'js/bootstrap-modal.js',
+	    'js/bootstrap-twipsy.js',
+	    'js/bootstrap-popover.js',
+	    #'js/bootstrap-tabs.js',
+	    'js/jquery.tools.min.js',
+	    'js/core.js',
+	    'js/comments.js'
+	),
+	'output_filename': 'js/compressed_js.r2.?.js',
     }
 }
 
@@ -211,8 +230,3 @@ VERSIONS = {
     'large': {'verbose_name': u'Большое изображение', 'width': 680, 'height': '', 'opts': ''},
 }
 """
-
-try:
-    from local_settings import *
-except ImportError:
-    pass

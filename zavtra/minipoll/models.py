@@ -2,10 +2,12 @@
 from datetime import datetime
 
 from django.db import models
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from minipoll.managers import PollPublishedManager
+from batch_select.models import BatchManager
+
 from minipoll.managers import DRAFT, PUBLISHED, ARCHIVED
 
 STATUS_CHOICES = ((DRAFT, _('draft')),
@@ -27,7 +29,7 @@ class Poll(models.Model):
     publication_date = models.DateTimeField(_('publication date'), default=datetime.now)
 
     objects = models.Manager()
-    published = PollPublishedManager()
+    batched = BatchManager()
 
     class Meta:
         ordering = ('-creation_date',)
@@ -41,14 +43,28 @@ class Poll(models.Model):
     def get_absolute_url(self):
         return ('minipoll_poll_detail', (self.slug,))
 
-    def votes(self):        
-        return self.vote_set.count()
+    def votes(self):
+	self.vote_set.count()
     votes.short_description = _('votes')
+
+    @staticmethod
+    def calculate(poll):
+	choices_all = []
+	total_votes = float(poll.total_votes)
+	for choice in poll.choices.annotate(votes_count=Count('vote')).all():
+	    if choice.votes_count == 0:
+		percent = 0.0
+	    else:
+		percent = (float(choice.votes_count) / total_votes) * 100.0
+	    setattr(choice, 'c_percent', percent)
+	    choices_all.append(choice)
+	setattr(poll, 'c_choices', choices_all)
+	return poll
 
 
 class Choice(models.Model):
     """A choice for a poll"""
-    poll = models.ForeignKey(Poll, verbose_name=_('poll'))
+    poll = models.ForeignKey(Poll, verbose_name=_('poll'), related_name='choices')
     
     title = models.CharField(_('title'), max_length=250)
     description = models.TextField(_('description'), blank=True)
@@ -59,6 +75,8 @@ class Choice(models.Model):
     display_priority = models.IntegerField(_('display priority'), default=100,
                                            help_text=_('Used to ordonnate the choices.'))
 
+    objects = models.Manager()
+
     class Meta:
         ordering = ('-display_priority', 'creation_date',)
         verbose_name = _('Choice')
@@ -68,7 +86,8 @@ class Choice(models.Model):
         return self.title
 
     def votes(self):
-        return self.vote_set.count()
+	return self.vote_set.count()
+
     votes.short_description = _('votes')
 
     def percent(self):

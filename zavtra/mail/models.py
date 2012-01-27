@@ -1,7 +1,10 @@
 #-*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.db import models
 from django.template import Template, Context
 from django.conf import settings
+from django.core.cache import cache
 
 class EmailTemplate(models.Model):
     class Meta:
@@ -23,9 +26,18 @@ class EmailTemplate(models.Model):
 		from_field=sender, to_field=receiver, subject=subject, body=body
 	    )
 
+    def save(self, *args, **kwargs):
+	super(EmailTemplate, self).save(*args, **kwargs)
+	cache.delete('email-template-%s' % self.key)
+
     @staticmethod
     def get(key):
-	return EmailTemplate.objects.get(key=key)
+	cache_key = 'email-template-%s' % key
+	res = cache.get(cache_key)
+	if res is None:
+	    res = EmailTemplate.objects.get(key=key)
+	    cache.set(cache_key, res, 60*60*24)
+	return res
 
 class EmailQueue(models.Model):
     class Meta:
@@ -37,3 +49,7 @@ class EmailQueue(models.Model):
     body        = models.TextField()
     created_at  = models.DateTimeField(auto_now_add=True)
     sent_at     = models.DateTimeField(blank=True, null=True)
+    
+    def mark_sent(self):
+	self.sent_at = datetime.now()
+	self.save()

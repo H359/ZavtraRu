@@ -1,1 +1,26 @@
-404 :(
+{% extends base_template %}
+{% load minipoll_tags %}
+{% block page_title %}{{ block.super }} / Страница не обнаружена{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span8 rubric">
+	<div>
+	    <h3>Страница не обнаружена</h3><br/>
+	    <p class="text-center"><img src="{{ STATIC_URL }}img/stalin_coolface.jpg" /></p>
+	    <h4>Данная страница на сайте не существует или репрессирована лично И. В. Сталиным! Попробуйте повторить запрос, изменив условия.</h4>
+	</div>
+	<div class="bnrok" id="DIV_DA_49096"></div>
+    </div>
+    <div class="span4 last">
+	<article class="rubric">
+	    <h3>Рейтинг слухов</h3>
+	    <div>{% display_last_poll %}</div>
+	</article>
+	<article class="rubric">
+	    <h3>Реклама</h3>
+	    <div class="bnrok" id="DIV_DA_49095"></div>
+	</article>
+    </div>
+</div>
+{% endblock %}

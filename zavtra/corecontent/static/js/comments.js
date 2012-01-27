@@ -1,98 +1,97 @@
-$(document).ajaxSend(function(event, xhr, settings) {
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    function sameOrigin(url) {
-        // url could be relative or scheme relative or absolute
-        var host = document.location.host; // host + port
-        var protocol = document.location.protocol;
-        var sr_origin = '//' + host;
-        var origin = protocol + sr_origin;
-        // Allow absolute or scheme relative URLs to same origin
-        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            // or any other URL that isn't scheme relative or absolute i.e relative.
-            !(/^(\/\/|http:|https:).*/.test(url));
-    }
-    function safeMethod(method) {
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    if (!safeMethod(settings.type) && sameOrigin(settings.url)) { xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken')) };
-});
-
-var ThouMakethCommentsShine = function(num, box) {
-    var box = $(box), form = $('form', box), sbmt = $('button[type=submit]', box);
-
-    var state = true;
-    var toggle = function(){
-        sbmt.attr('disabled', state);
-        $('textarea', box).attr('disabled', state).val('');
-        state = !state;
-    }
-    
-    var handleFormSubmission = function(data){
-        if (!data['status']) {
-            // make errors shine
-        } else {
-    	    var root = $('#comment-' + $('input[name=parent]', form).val());
-    	    if (root.size() == 0) { 
-    		$('dl', box).append(data['html']);
-    	    } else {
-    		$(data['html']).insertAfter( $('#comment-' + $('input[name=parent]', form).val()) )
-    	    }
-            toggle();
-            form.insertAfter($('dl',box));
-        }
-    }
-    
-    var submitForm = function(){
-        $.post(form.attr('action'), form.serialize(), handleFormSubmission);
-        toggle();
-        return false;
+!function($){
+    var Comments = function(root, settings) {
+	this.settings = $.extend({}, $.fn.comments.defaults, settings);
+	this.root     = root;
+	this.formWrap = $(this.settings.form, this.element);
+	this.form     = $('form', this.formWrap);
+	this.root.delegate(this.settings.actions, 'click', $.proxy(this.action, this));
+	this.form.submit($.proxy(this.submit, this));
+	this.enabled = true;
     }
 
-    var moveForm = function(){
-	var self = $(this);
-	var li = self.parents('dt');
-	$('input[name=parent]', form).val(li.attr('id').split('-')[1]);
-	li.append(form);
-	return false;
+    Comments.prototype = {
+	submit: function(e){
+	    if (this.enabled){
+		this.enabled = false;
+		var data = this.form.serialize();
+		$('input,select,textarea,button,button', this.form).attr('disabled', true).addClass('disabled').removeClass('error');
+		$('span.error', this.form).fadeOut();
+		$('.error', this.formWrap).hide();
+		$(this.settings.fieldWrap, this.form).removeClass('error');
+		$.post(this.form.attr('action'), data, $.proxy(this.onSubmit, this));
+	    }
+	    return false;
+	},
+	resetForm: function(){
+	    $('textarea', this.form).val('');
+	    $(this.settings.parentField, this.form).val(null);
+	},
+	onSubmit: function(data){
+	    $('input,select,textarea,button,button', this.form).attr('disabled', false).removeClass('disabled');
+	    if (data['status']) {
+		var p = this.formWrap.parents(this.settings.item);
+		this.resetForm();
+		if (p.size() == 0) p = $(this.settings.item + ':last-child', this.root);
+		if (p.size() == 0) {
+		    $(data['html']).appendTo(this.root);
+		} else {
+		    $(data['html']).insertAfter(p);
+		}
+		this.formWrap.insertAfter(this.root);
+	    } else {
+		$('.error', this.formWrap).fadeIn();
+		for (var i in data['errors']) {
+		    var inp = $('*[name=' + i + ']', this.form).addClass('error'), parent = inp.parent();
+		    $('<span class="error help-inline">'+data['errors'][i].join('\n') + '</span>').appendTo(parent);
+		    parent.parents(this.settings.fieldWrap).addClass('error');
+		}
+	    }
+	    this.enabled = true;
+	},
+	hideComment: function(elt, id){
+	    $.post('/comments/delete/', {'id': id}, function(data){
+		elt.replaceWith($(data['html']));
+	    });
+	    
+	},
+	action: function(e){
+	    var target = $(e.target),
+		ops    = target.attr('href').split('#')[1].split(':'),
+		cmnt   = target.parents(this.settings.item),
+		prnt   = this.settings.parentExtractor(cmnt);
+	    switch (ops[0]) {
+		case 'reply':
+		    this.formWrap.appendTo(cmnt);
+		    $(this.settings.parentField, this.form).val(prnt);
+		    break;
+		case 'expand':
+		    var more  = $('span.hide', cmnt),
+			text  = more.html().trim(),
+			otext = $('.text', cmnt);
+		    more.remove();
+		    var ohtml = otext.html().trim();
+		    otext.html( ohtml.substring(0, ohtml.length-1) + text );
+		    target.remove();
+		    break;
+		case 'hide':
+		    this.hideComment(cmnt, prnt);
+		    break;
+	    }
+	    return false;
+	}
     }
 
-    var deleteComment = function(){
-	var self = $(this);
-	var li = self.parents('dt');
-	var root = li.attr('id').split('-')[1];
-	$.post('/comments/delete/', {id: root}, function(){
-	    li.html('скрыто');
-	});
-	return false;
+
+    $.fn.comments = function(settings){
+	new Comments(this, settings);
     }
 
-    $('.buttons a.reply', box).on('click', moveForm);
-    $('.buttons a.delete', box).on('click', deleteComment);
-    $('a.supress-long-toggle', box).on('click', function(){
-	var self = $(this);
-	$('span.supress-long', self.parent()).show();
-	self.prev('br').remove();
-	self.remove();
-	return false;
-    });
-
-    form.submit(submitForm);
-}
-$(document).ready(function(){
-  $('div.comments').each(ThouMakethCommentsShine);
-});
+    $.fn.comments.defaults = {
+	 form: 'article.comment-form'
+	,item: 'li'
+	,fieldWrap: 'div.clearfix'
+	,parentExtractor: function(elt) { return $(elt).attr('id').split('-')[1]; }
+	,parentField: '#id_parent'
+	,actions: 'article.comment div.actions a.btn'
+    }
+}( window.jQuery || window.ender );

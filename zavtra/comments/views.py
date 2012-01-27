@@ -30,7 +30,7 @@ def add_comment(request):
     	    """
     	    comment = Comment.objects.create(**data)
             res['status'] = True
-            res['html'] = render_to_string('comments/item.html', {'comment': comment})
+            res['html'] = render_to_string('comments/item.html', {'request': request, 'comment': comment})
         else:
             res['errors'] = dict( (k, map(unicode, v)) for (k,v) in form.errors.iteritems() )
     return res
@@ -38,7 +38,8 @@ def add_comment(request):
 @ajax_request
 @user_passes_test(lambda u: u.has_perm('comments.moderate'))
 def delete_comment(request):
-    pk = request.POST.get('id')
-    print pk
-    Comment.objects.filter(pk=pk).update(enabled=False)
-    return {'ok':True}
+    comment = Comment.objects.get(pk=request.POST.get('id'))
+    comment.enabled = not comment.enabled
+    comment.save()
+    permsFake = {'comments': {'moderate': True}}
+    return {'enabled': comment.enabled, 'html': render_to_string('comments/item.html', {'request': request, 'comment': comment, 'perms': permsFake})}

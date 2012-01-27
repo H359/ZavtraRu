@@ -3,41 +3,39 @@
 {% load pytils_dt %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="alpha grid_8 block">
+<div class="clearfix"><a class="btn info" href="{% url editorial.view.index %}">&larr;&nbsp;назад к списку тем</a></div>
+<div class="row">
+    <article class="span8 rubric">
 	<header>
-	    <h1>{{ root.title }}</h1>
-	    <h2>{{ root.author }}</h2>
-	    <div class="buttons"><a class="button red" href="{% url editorial.view.index %}"><span class="label">&larr;&nbsp;назад к списку тем</span></a></div>
-        </header>
-        <div class="content" style="font-size: 1.2em; border: 1px dashed #999; margin-bottom: 1.5em;">
-    	    {{ root.text|linebreaksbr }}
-        </div>
-	<dl class="content">
-	    <dt><h2>Ответы</h2></dt>
+	    <h3>{{ root.title }}</h3>
+	    <h5>{{ root.author }}</h5>
+	</header>
+        <div class="content" >{{ root.text|linebreaksbr }}</div>
+        <footer>
+	    <h4>Ответы</h4>
+	    <ul class="unstyled">
 	    {% for obj in object_list %}
-	    <dt><strong>{{ obj.author }} пишет {{ obj.created_at|ru_strftime:"%d %B %Y" }}:</strong></dt>
-	    <dd>{{ obj.text|linebreaks }}</dd>
+	    <li>
+		<strong>{{ obj.author }} пишет {{ obj.created_at|ru_strftime:"%d %B %Y" }}:</strong>
+		<div>{{ obj.text|linebreaks }}</div>
+	    </li>
 	    {% endfor %}
-	</dl>
-	<article>
-	    <form class="regform" method="post" action="{{ root.get_absolute_url }}">
+	    </ul>
+	    <form method="post" action="{{ root.get_absolute_url }}">
 	        {% csrf_token %}
-	        <div>
+	        <div class="clearfix">
 		    <label>Ответ:</label>
-		    <textarea name="text"></textarea>
+		    <div class="input"><textarea rows="6" class="xxlarge" name="text"></textarea></div>
 		</div>
-		<div class="buttons">
-		    <button type="submit" class="button green"><span class="label">Ответить</span></button>
-		    <button type="reset" class="button red"><span class="label">Сбросить</span></button>
+		<div class="actions">
+		    <input type="submit" class="btn primary" value="Ответить" />
+		    <input type="reset" class="btn danger" value="Сбросить" />
 		</div>
 	    </form>
-	</article>
+	</footer>
     </article>
-    <article class="omega grid_8 block">
-	<header><h1>Patria o muerte!</h1></header>
-	<div class="content"><em>Benedictus dominus, deus meus, qui docet manus meas ad proelium, et digitos meos ad bellum.</em></div>
-	<div class="content">Viva la Fidel!</div>
+    <article class="span4">
+	<h2>Patria o muerte!&nbsp;<small>Viva la Fidel!</small></h2>
     </article>
-</section>
+</div>
 {% endblock %}

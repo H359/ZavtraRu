@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
+from mail.models import EmailTemplate
 from treebeard.mp_tree import MP_Node
 
 class Comment(models.Model):
@@ -22,8 +23,8 @@ class Comment(models.Model):
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    author         = models.ForeignKey(User, verbose_name=u'Автор')
-    comment        = models.TextField(verbose_name=u'Текст комментария')
+    author         = models.ForeignKey(User, verbose_name=u'Автор', related_name='comments')
+    comment        = models.TextField(verbose_name=u'Текст комментария', max_length=8192, help_text=u'Максимум 8192 символа. Помните &mdash; это комментарий, а не статья.')
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())
     rating         = models.IntegerField(default=0)
@@ -46,6 +47,13 @@ class Comment(models.Model):
 	chunk[self.step_size - fill - 1] = self.alphabet[rem]
 	self.path = prev_path + ''.join(chunk)
 	super(Comment, self).save(*args, **kwargs)
+	if self.id and not self.enabled:
+	    return
+	if self.parent_id is not None:
+	    parent = self.parent
+	    if parent.author_id != self.author_id and len(parent.author.email) > 0:
+		tpl = EmailTemplate.get('comments.reply_added')
+		tpl.send(receivers=[parent.author.email], data={'original': self.parent, 'reply': self})
 
     def short_comment(self):
 	return ('-'*self.depth) + self.comment[0:50] + '...'
@@ -54,12 +62,19 @@ class Comment(models.Model):
     def depth(self):
 	return (len(self.path) / self.step_size) - 1
 
+    def depth_truncated(self):
+	return min([4, self.depth()])
+
     def get_author(self):
 	author = self.author
 	if author.first_name or author.last_name:
 	    return author.get_full_name()
 	else:
 	    return author.username
+
+    @models.permalink
+    def get_absolute_url(self):
+	return ('resolve_content_object', (), {'content_type_id': self.content_type_id, 'id': self.object_id})
 
     @staticmethod
     def calculate_paths():

@@ -1,16 +1,10 @@
 {% load utils %}
 <div id="poll_result_{{ poll.slug }}">
-  <table class="choices">
-  {% for choice in poll.choice_set.all %}
+  <table class="zebra-striped bordered-table">
+  {% for choice in poll.c_choices %}
   <tr>
     <td>{{ choice.title }}</td>
-    <td>
-	{% with percs=choice.percent %}
-        <div style="width: {{ percs|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.percent|default:1|floatformat:"0" }}px solid #E6F0ED;">
-            {{ percs|floatformat:"0" }}%
-        </div>
-        {% endwith %}
-    </td>
+    <td><div style="width: {{ choice.c_percent|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.c_percent|default:1|floatformat:"0" }}px solid #E6F0ED;">{{ choice.c_percent|floatformat:"0" }}%</div></td>
   </tr>
   {% endfor %}
   </table>

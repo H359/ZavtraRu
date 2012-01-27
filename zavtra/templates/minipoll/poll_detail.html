@@ -1,28 +1,32 @@
 {% extends "minipoll/base.html" %}
-{% load i18n minipoll_tags %}
+{% load minipoll_tags %}
+{% load pytils_numeral %}
 {% load comments %}
 
-{% block page_title %}{{ block.super }} / {{ object.title }}{% endblock %}
+{% block page_title %}{{ block.super }} / {{ poll.title }}{% endblock %}
 
 {% block content %}
-<section class="container container_16 clearfix">
-    <article class="grid_8 alpha block">
-	<header><h1>{{ object.title }}</h1></header>
+<ul class="breadcrumb">
+    <li><a href="/">Главная</a><span class="divider">/</span></li>
+    <li><a href="{% url minipoll_poll_list %}">Слухи</a><span class="divider">/</span></li>
+    <li>{{ poll.title }}</li>
+</ul>
+
+<div class="row">
+    <article class="span8">
+	<h3>{{ poll.title }}</h3>
 	<div class="content">
-	    {{ object.description|safe }}
+	    {{ poll.description|safe }}
 	    {% if user_has_vote %}
-	    <p>{% trans "You have already vote to this poll." %}</p>
-	    {% display_poll_result object %}
+	    <p>Вы уже принимали участие в этом опросе.</p>
+	    {% display_poll_result poll %}
 	    {% else %}
-	    {% display_poll_form object %}
-	    <p>{{ object.votes }} {% trans "votes" %}.
-    		<a href="{% url minipoll_poll_result object.slug %}">{% trans "View the results." %}</a>
-	    </p>
+	    {% display_poll_form poll %}
+	    <p>{{ poll.total_votes|get_plural:"голос,голоса,голосов" }}. <a href="{% url minipoll_poll_result poll.slug %}">Посмотреть результаты</a>.</p>
 	    {% endif %}
 	</div>
-	<div id="comments_block">{% get_comments_for object %}</div>
+	<footer><div id="comments_block">{% get_comments_for poll %}</div></footer>
     </article>
-    <article class="grid_4">{% include 'partials/centerside.html' %}</article>
-    <article class="grid_4 omega">{% include 'partials/rightside.html' %}</article>
-</section>
+    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+import time
 from itertools import groupby
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.context_processors import PermWrapper
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.template.loader import render_to_string
 from django.utils.functional import lazy
@@ -41,11 +41,11 @@ def home(request):
 	no_cache = True
     num = 1 + (wstart - datetime(year=wstart.year,day=1,month=1).date()).days / 7
     def get_illustration():
-	p = ZhivotovIllustration.objects.filter(pub_date__range = (wstart, wend))
 	try:
-	    return p[0]
-	except IndexError:
-	    return None
+	    zh = ZhivotovIllustration.objects.filter(pub_date__lte = wend).latest('pub_date')
+	except ZhivotovIllustration.DoesNotExist:
+	    zh = None
+	return zh
     def get_content():
         qs = ContentItem.batched.batch_select('authors').select_related('rubric').filter(
 	    enabled=True, rubric__on_main=True, pub_date__gte = wstart, pub_date__lt = wend, published=True
@@ -65,29 +65,22 @@ def home(request):
 	)
     else:
 	newsletter = get_content()
-    def get_latest_rubric(rubric):
+    def get_latest_rubric(rubric, kind='video'):
 	try:
-	    return ContentItem.objects.filter(enabled=True, rubric=rubric).latest('pub_date')
+	    return ContentItem.objects.filter(kind=kind, enabled=True, rubric=rubric).latest('pub_date')
 	except ContentItem.DoesNotExist:
 	    return None
-    illustration = cached(
-	get_illustration,
-	'illustration',
-	duration=6000
-    )
-    current_items = cached(
-	lambda: group_list(ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:15], 3),
-	'current_items',
-	duration=120
-    )
-    neuromir = cached(
-        lambda: get_latest_rubric(19),
-        'neuromir-latest',
-        duration=60*60*4
-    )
+    if not no_cache:
+	illustration = cached(
+	    get_illustration,
+	    'illustration',
+	    duration=6000
+	)
+    else:
+	illustration = get_illustration()
     zavtra_tv = cached(
-	lambda: get_latest_rubric(19 if settings.DEBUG else 44),
-	'zavtra-tv',
+	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=19 if settings.DEBUG else 44)[0:1],
+	'zavtra-tv2',
 	duration=60*60*4
     )
     special_project = cached(
@@ -99,27 +92,9 @@ def home(request):
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
-	'current': current_items,
-	'neuromir': neuromir,
 	'zavtra_tv': zavtra_tv,
 	'special_project': special_project
     }
-
-class UserView(ListView):
-    paginate_by = 15
-    paginator_class = DiggPaginator
-    template_name = 'user.html'
-    def get_queryset(self, **kwargs):
-	self.user = get_object_or_404(User, username=self.kwargs.get('username'))
-	now = datetime.now().date()
-	return ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now, authors__in = [self.user])
-
-    def get_context_data(self, **kwargs):
-	context = super(UserView, self).get_context_data(**kwargs)
-	context['ruser'] = self.user
-	return context
-
-user = UserView.as_view()
 
 def resolver(request, content_type_id, id):
     ctype = get_object_or_404(ContentType, id=content_type_id)
@@ -154,19 +129,18 @@ def logged_in(request):
 
 @render_to('live.html')
 def live(request):
-    return {'stream': Comment.objects.filter(enabled=True).select_related().order_by('-id')[0:10]}
+    return {}
 
-@csrf_exempt
 @ajax_request
 def live_update(request):
-    last_seen = request.POST.get('last_seen')
-    qs = Comment.objects.filter(enabled=True).select_related().filter(pk__gt = last_seen).order_by('-id')[0:50]
-    if request.user.is_authenticated() and request.user.is_staff:
-	perms = lazy(lambda: PermWrapper(request.user), PermWrapper)()
-    else:
-	perms = None
-    rendered = [render_to_string('comments/item.html', {'comment': x, 'perms': perms, 'request': request, 'stream': True}) for x in qs]
-    return {'stream': rendered}
+    qty = int(request.GET.get('qty', 20))
+    start = request.GET.get('start')
+    comments = Comment.objects.filter(enabled=True).order_by('-id')
+    if start is not None and start != 'null':
+	comments = comments.filter(created_at__gte = datetime.fromtimestamp(int(start)))
+    return {
+	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), reversed(comments[0:qty])),
+    }
 
 login_required
 def vote(request):

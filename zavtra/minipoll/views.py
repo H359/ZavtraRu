@@ -1,21 +1,23 @@
 """Views for minipoll"""
-from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, Http404, get_object_or_404
 from django.views.generic.list_detail import object_detail
+from django.db.models import Count
+
+from annoying.decorators import render_to
 
 from minipoll.models import Poll
 from minipoll.models import Choice
 from minipoll.models import Vote
 
-def poll_detail(request, slug, template_name='minipoll/poll_detail.html'):
-    """Detail for a poll"""
-    poll = get_object_or_404(Poll, slug=slug)
+@render_to('minipoll/poll_detail.html')
+def poll_detail(request, slug, detail=False):
+    try:
+	poll = Poll.objects.annotate(total_votes=Count('vote')).get(slug=slug)
+    except Poll.DoesNotExist:
+	raise Http404
     user_has_vote = poll.pk in request.session.get('poll', [])
-    
-    return object_detail(request, slug=slug,
-                         queryset=Poll.objects.all(),
-                         template_name=template_name,
-                         extra_context={'user_has_vote': user_has_vote})
+    poll = Poll.calculate(poll)
+    return {'user_has_vote': user_has_vote, 'poll': poll}
 
 def poll_vote(request, slug):
     """Vote for a poll"""

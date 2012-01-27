@@ -1,0 +1,29 @@
+{% extends base_template %}
+
+{% load pytils_dt %}
+
+{% block page_title %}{{ block.super }} / {% if ruser.is_staff %}Автор {{ ruser.get_full_name }}{% else %}Пользователь {{ ruser.username }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <article class="span8 rubric">
+	<h4>{% if ruser.is_staff %}Автор {{ ruser.get_full_name }}{% else %}Пользователь {{ ruser.username }}{% endif %}</h4>
+	<br/>
+	<ul class="tabs">
+	    <li class="active"><a href="{% url accounts.view.user username=ruser.username %}">Информация</a></li>
+	    {% if ruser.is_staff %}<li><a href="{% url accounts.view.user_articles username=ruser.username %}">Статьи</a></li>{% endif %}
+	    <li><a href="{% url accounts.view.user_comments username=ruser.username %}">Комментарии</a></li>
+	</ul>
+	<article class="tab-content">
+	    <p>Зарегистрирован на сайте {{ user.date_joined|ru_strftime:"%d %B %Y" }}.</p>
+	    {% with profile=ruser.profile %}{% if profile %}
+	    <p>Дата рождения: {{ profile.dob }}.</p>
+	    <p>Пол: {{ profile.get_gender_display }}.</p>
+	    {% if profile.location %}<p>Страна, город: {{ profile.location }}.</p>{% endif %}
+	    {% if profile.occupation %}<p>Род занятий: {{ profile.occupation }}.</p>{% endif %}
+	    {% endif %}{% endwith %}
+    	</article>
+    </article>
+    <div class="span4 last">{% include 'partials/rightside.html' %}</div>
+</div>
+{% endblock %}

@@ -35,7 +35,12 @@ def tag_url(tag):
     return ('corecontent.view.items_by_tag', (), {'slug': tag.slug})
 Tag.get_absolute_url = tag_url
 
+@models.permalink
+def get_user_url(user):
+    return ('accounts.view.user', (), {'username': user.username})
+
 User.__unicode__ = lambda s: s.get_full_name() if s.first_name or s.last_name else s.username
+User.get_absolute_url = lambda s: get_user_url(s)
 
 class Rubric(models.Model):
     class Meta:
@@ -71,6 +76,10 @@ class FeaturedItems(models.Model):
     def __unicode__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+	cache.delete('featured')
+	super(FeaturedItems, self).save(*args, **kwargs)
+
     @models.permalink
     def get_absolute_url(self):
         return ('corecontent.view.featured', (), {'slug': self.slug})
@@ -83,7 +92,6 @@ class ContentItem(models.Model):
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)
     rubric       = models.ForeignKey(Rubric, verbose_name=u'Рубрика', blank=True, null=True)
     description  = models.TextField(verbose_name=u'Анонс', blank=True)
-    #pub_date     = models.DateField(verbose_name=u'Дата публикации', default=datetime.now)
     pub_date     = models.DateTimeField(verbose_name=u'Дата публикации', default=datetime.now)
     authors      = models.ManyToManyField(User, verbose_name=u'Авторы', related_name='contentitems', blank=True, limit_choices_to={'is_staff': True})
     published    = models.BooleanField(verbose_name=u'Опубликовано в газете')
@@ -91,9 +99,9 @@ class ContentItem(models.Model):
     thumbnail    = models.ImageField(upload_to='content/thumbs', verbose_name=u'Эскиз / маленькое изображение', blank=True)
     kind         = models.CharField(max_length=200, editable=False)
     content      = models.TextField(verbose_name=u'Содержимое', blank=True)
-    old_url      = models.URLField(verify_exists=False, null=True, blank=True, verbose_name=u'URL на старом сайте')
-    exclusive    = models.BooleanField(verbose_name=u'Экслюзкив?', default=False)
-    
+    old_url      = models.CharField(null=True, blank=True, verbose_name=u'URL на старом сайте', max_length=250)
+    exclusive    = models.BooleanField(verbose_name=u'Экслюзив', default=False)
+
     _comments_count = models.IntegerField(default=0, editable=False)
     _base_rating = models.IntegerField(default=0, verbose_name=u'Базовый рейтинг')
     _rating = models.IntegerField(default=0, editable=False)
@@ -121,7 +129,27 @@ class ContentItem(models.Model):
     @property
     def comments_count(self):
         return self._comments_count
-    
+
+    def cached_comments_count(self):
+	key = 'contentitem-%d-comments-count' % self.pk
+	res = cache.get(key)
+	if res is None:
+	    res = Comment.objects.filter(
+		content_type = contentitem_ctype_id,
+		object_id=self.id,
+		enabled=True
+	    ).count()
+	    cache.set(key, res, 60*60*24)
+	return res
+
+    def tags_all(self):
+	if hasattr(self, '__cached_tags'):
+	    return getattr(self, '__cached_tags')
+	else:
+	    tags = list(self.tags.all())
+	    setattr(self, '__cached_tags', tags)
+	    return tags
+
     def update_comments_count(self):
     	comments_count = Comment.objects.filter(
             content_type = contentitem_ctype_id,
@@ -129,20 +157,10 @@ class ContentItem(models.Model):
             enabled=True
     	).count()
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
-    	if self.should_be_on_main():
-    	    cache.delete('newsletter')
+    	cache.delete('contentitem-%d-comments-count' % self.id)
 
     def get_content_type_id(self):
 	return contentitem_ctype_id 
-
-    def should_be_on_main(self):
-	oneday = timedelta(days=1)
-	now = datetime.now().date()
-	wstart = now - oneday*(now.weekday()+5)
-	if now.weekday() >= 2:
-	    wstart += 7*oneday
-	wend = wstart + oneday*7
-	return (self.rubric is not None and self.rubric.on_main and (wstart <= self.pub_date.date() < wend))
 
     @models.permalink
     def get_absolute_url(self):
@@ -175,7 +193,12 @@ class ContentItem(models.Model):
                 field_val = field_val.strip()
                 if len(field_val) < 32000:
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
-        super(ContentItem, self).save(*args, **kwargs)        
+        super(ContentItem, self).save(*args, **kwargs)
+	if self.rubric_id is not None and self.rubric_id == 1:
+	    cache.delete('news2')
+	else:
+	    cache.delete('red_string')
+
 
 class DailyQuote(models.Model):
     class Meta:
@@ -185,8 +208,14 @@ class DailyQuote(models.Model):
     source = models.ForeignKey(ContentItem, verbose_name=u'Источник цитаты')
     day    = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())
 
+    def recache(self):
+	cache.delete('quote-source')
+
+    def get_source(self):
+	return cached(lambda: ContentItem.batched.batch_select('authors').get(pk=self.source_id), 'quote-source', duration=60*60)
+
     def __unicode__(self):
-	return u'%s' % (self.quote)
+	return u'%s' % (self.quote[0:40])
 
     def get_absolute_url(self):
 	return self.source.get_absolute_url()
@@ -203,7 +232,7 @@ class ZhivotovIllustration(models.Model):
     micro     = ImageSpec([Adjust(contrast=1.2, sharpness=1.1), resize.Crop(160,80)],
 			  image_field='original', format='JPEG', pre_cache=True)
     for_main  = ImageSpec([resize.Fit(600, 262)],
-			  image_field='thumbnail', format='JPEG', pre_cache=True)
+			   image_field='thumbnail', format='JPEG', pre_cache=True)
 
     def __unicode__(self):
 	return u'%s %s' % (self.title, self.pub_date)
@@ -265,25 +294,9 @@ class Video(ContentItem):
 	q = urlparse.urlparse(self.content).query
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
 
-    """
-    def load_thumbnail(self):
-	video_id = self.get_video_id()
-	yt_service = gdata.youtube.service.YouTubeService()
-	entry = yt_service.GetYouTubeVideoEntry(video_id=video_id)
-	self.content = cPickle.dumps(sorted([dict(x) for x in entry.media.thumbnail], key=lambda w: int(w.width)))
-	for thumbnail in thumbnails:
-	    try:
-		name = urlparse.urlparse(thumbnail.url).path.split('/')[-1]
-		content = ContentFile(urllib2.urlopen(thumbnail.url).read())
-		self.thumbnail.save(u'%s_%s' % (video_id, name), content, save=False)
-		break
-	    except urllib2.HTTPError:
-		pass
-    """
-
     def save(self, *args, **kwargs):
-    	super(Video, self).save(*args, **kwargs)
-        ContentItem.objects.filter(id=self.id).update(kind=self.media)
+	super(Video, self).save(*args, **kwargs)
+	ContentItem.objects.filter(id=self.id).update(kind=self.media)
 
 class Image(ContentItem):
     class Meta:
