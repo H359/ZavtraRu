@@ -47,6 +47,8 @@ class Comment(models.Model):
 	chunk[self.step_size - fill - 1] = self.alphabet[rem]
 	self.path = prev_path + ''.join(chunk)
 	super(Comment, self).save(*args, **kwargs)
+	if self.id and not self.enabled:
+	    return
 	if self.parent_id is not None:
 	    parent = self.parent
 	    if parent.author_id != self.author_id and len(parent.author.email) > 0:
