@@ -1,119 +1,105 @@
-{% extends base_template %}
+<%! from random import randint %>\
+<%inherit file="base.html" />
+<%block name="body_class">gazette</%block>
+<%block name="page_title">OK!</%block>
 
-{% load utils %}
-{% load minipoll_tags %}
-{% load pytils_dt %}
-{% load pytils_numeral %}
-
-{% block body_class %}gazette{% endblock %}
-
-{% block content %}
-  <div class="row">
-    <div class="span8 rubric">
-      <figure class="top-illustration">
-        <img src="{{ MEDIA_URL }}{{ illustration.for_main }}" />
-        <figcaption><h3>&laquo;{{ illustration.title }}&raquo;, Геннадий Животов</h5></figcaption>
-      </figure>
-      <h1>Выпуск №{{ issue_info.num }}&nbsp;<small>от {{ issue_info.date|ru_strftime:"%d %B %Y" }}</small>&nbsp;&nbsp;&nbsp;<a href="{{ MEDIA_URL }}content/pdfs/4PDF.zip" class="btn primary pdf">PDF</a></h1>
-      {% for group in newsletter %}
-      {% if forloop.counter == 4 %}
-      {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 500xN]</div>{% endcomment %}
-      <h3>Реклама</h3>
-      <div class="bnrok" id="DIV_DA_49096"></div>
-      {% endif %}
-      {% if forloop.counter == 7 %}
-      <!-- Яндекс.Директ -->
-      <h3>Реклама</h3>
-      <div id="yandex_ad2"></div>
-      <script type="text/javascript">
-	(function(w, d, n, s, t) {
-	    w[n] = w[n] || [];
-	    w[n].push(function() {
-            Ya.Direct.insertInto(82666, "yandex_ad2", {
-	        site_charset: "utf-8",
-                ad_format: "direct",
-                font_size: 1,
-                type: "horizontal",
-                limit: 4,
-                title_font_size: 3,
-                site_bg_color: "FFFFFF",
-                header_bg_color: "FEEAC7",
-                title_color: "A4322F",
-                url_color: "A4322F",
-                all_color: "A4322F",
-                text_color: "222222",
-                hover_color: "CF3A2D",
-                favicon: true
-            });
-        });
-        t = d.documentElement.firstChild;
-        s = d.createElement("script");
-        s.type = "text/javascript";
-        s.src = "http://an.yandex.ru/system/context.js";
-        s.setAttribute("async", "true");
-        t.insertBefore(s, t.firstChild);
-        })(window, document, "yandex_context_callbacks");
-      </script>
-      {% endif %}
-      {% include 'partials/rubric.block.html' with rubric=group.rubric items=group.items %}
-      {% endfor %}
+<%def name="rubric_announce(group)">
+<h3>${ group['rubric'].title }&nbsp;<a href="${ group['rubric'].get_absolute_url() }">&raquo;</a></h3><% i, glen = 0, len(group['items']) %>\
+% while True:
+<%
+cslice = group['items'][i:i+3]
+lcslice = len(cslice)
+if lcslice == 0: break 
+row = 100 / lcslice
+noalign = False
+if row == 100:
+    row = 'box'
+    noalign = True
+%>\
+<div class="ym-grid ym-equalize">
+    % for num, item in enumerate(cslice):
+    <div class="ym-clearfix<% if not noalign: context.write(' ym-g%s ym-g%s' % (row, 'r' if num==lcslice-1 else 'l')) %>">
+	<% url = item.get_absolute_url() %>\
+	<h4><a href="${ url }">${ item.title }</a></h4>
+	<div data-clickable="${ url }" class="article-text">${ item.description }</div>
+	<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(item.cached_comments_count()) }</a></div>
     </div>
-    <div class="span4 rubric last">
-      {% if zavtra_tv %}
-      <div class="specialitaet">
-        {% for item in zavtra_tv %}
-        <figure>
-    	    <img src="http://img.youtube.com/vi/{{ item.get_video_id }}/0.jpg" />
-    	    <figcaption>
-    		<h3><a href="/content/rubric/zavtratv/">Завтра.LIVE:</a></h3>
-    		<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
-    		<a href="{{ item.get_absolute_url }}#comments" class="pull-right">{{ item.cached_comments_count|get_plural:"комментарий,комментария,комментариев" }}</a>
-    	    </figcatpion>
-        </figure>
-        {% endfor %}
-      </div>
-      {% endif %}
+    % endfor
+    <% i += 3 %>\
+</div>
+% endwhile
+</%def>
 
-      {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 100px; height: 100px;">[min 232xN]</div>{% endcomment %}
-      <h3>Реклама</h3>
-      <div class="bnrok" id="DIV_DA_49094"></div>
-
-      {% if special_project %}
-      <h3><a href="/content/rubric/spetsproekt-2/">Спецпроект</a></h3>
-      <div>
-	<h5><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.title|safe }}</a></h5>
-	<div class="txt"><a title="{{ special_projec.title }}" href="{{ special_project.get_absolute_url }}">{{ special_project.description|safe }}</a></div>
-      </div>
-      {% endif %}
-
-      <h3>Рейтинг слухов</h3>
-      <div>{% display_last_poll %}</div>
-
-      {% comment %}<div style="width:100%; background: red; color: white; text-align: center;; line-height: 200px; height: 200px;">[min 232xN]</div>{% endcomment %}
-      <h3>Реклама</h3>
-      <div class="bnrok" id="DIV_DA_49095"></div>
-
-  <!-- Яндекс.Директ -->
-  <div id="yandex_ad"></div>
-  <script type="text/javascript">
-    (function(w, d, n, s, t) {
-	w[n] = w[n] || [];
-	w[n].push(function() {
-	Ya.Direct.insertInto(82666, "yandex_ad", {
-    	    site_charset: "utf-8", ad_format: "direct", font_size: 1,
-    	    type: "vertical", limit: 5, title_font_size: 3,
-    	    site_bg_color: "FFFFFF", header_bg_color: "FEEAC7",
-    	    title_color: "A4322F", url_color: "A4322F",
-    	    all_color: "A4322F", text_color: "222222",
-    	    hover_color: "CF3A2D", favicon: true
-    	});
-	});
-	t = d.documentElement.firstChild; s = d.createElement("script");
-	s.type = "text/javascript"; s.src = "http://an.yandex.ru/system/context.js";
-	s.setAttribute("async", "true"); t.insertBefore(s, t.firstChild);
-    })(window, document, "yandex_context_callbacks");
-   </script>
-   <!-- /Яндекс.Директ -->
+<%block name="main_column">
+    <div class="text-over-image" id="gazette">
+	<%doc>TODO: Remove direct link to zavtra.ru</%doc>
+	<img src="http://zavtra.ru/media/${ illustration.for_main }" />
+	<div class="text"><h3><a href="#">&laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
     </div>
-  </div>
-{% endblock %}
+    <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right primary">скачать PDF</a></small></h2>
+    <% num, nlen = 0, len(newsletter) %>\
+    % while nlen > num:
+    <div class="ym-grid rubrics bordered">
+	% if len(newsletter[num]['items']) == 1 and nlen > num+1 and len(newsletter[num+1]['items']) == 1:
+	<div class="ym-g50 ym-gl"><div class="ym-gbox">${ rubric_announce(newsletter[num]) }</div></div>
+	<div class="ym-g50 ym-gr"><div class="ym-gbox">${ rubric_announce(newsletter[num+1]) }</div></div>
+	<% num += 2 %>\
+	% else:
+	<div class="ym-gbox">${ rubric_announce(newsletter[num]) }</div>
+	<% num += 1 %>\
+	% endif
+    </div>
+    % endwhile
+</%block>
+
+<%def name="video_cell(item,big=False)">
+<div class="bordered ${ 'notopmargin' if big else '' }"><div class="text-over-image">
+    <% url = item.get_absolute_url() %>\
+    <img data-clickable="${ url }" src="http://img.youtube.com/vi/${ item.get_video_id() }/${ '0' if big else unicode(randint(1,3)) }.jpg" />
+    <div class="text"><h4><a href="${ url }">${ item.title }</a></h4></div>
+</div></div>
+</%def>
+
+<%block name="side_column">
+% if zavtra_tv is not None:
+<div class="ym-grid">
+    % for num, item in enumerate(zavtra_tv):
+    % if num == 0:
+    <div class="ym-gbox">${ video_cell(item,big=True) }</div>
+    % else:
+    <div class="ym-g50 ym-g${ 'l' if num == 1 else 'r' }"><div class="ym-gbox">${ video_cell(item) }</div></div>
+    % endif
+    % endfor
+</div>
+% endif
+<div class="ym-grid linearize-level-1">
+    <div class="ym-gbox">
+	${parent.side_column()}
+    </div>
+    <div class="ym-g50 ym-gl"><div class="ym-gbox">
+	% if special_project is not None:
+	<h3>Спецпроект <a href="/content/rubric/spetsproekt-2/">&raquo;</a></h3>
+	<div class="ym-clearfix"><% url = special_project.get_absolute_url() %>
+	    <h4><a title="${ special_project.title }" href="${ url }">${ special_project.title }</a></h4>
+	    <div data-clickable="${ url }" class="article-text">${ special_project.description }</div>
+	    <div class="comments-count"><a href="${ url }#comments">${ self.comments_count(special_project.cached_comments_count()) }</a></div>
+	</div>
+	% endif
+	<h3>Реклама</h3>
+	<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+    </div></div>
+    <div class="ym-g50 ym-gr"><div class="ym-gbox">
+	<h3>Новости</h3>
+	<ul class="unstyled">
+	    % for item in news:
+	    <% url = item.get_absolute_url() %>\
+	    <li>
+		<h5><a href="${ url }">${ item.title }</a></h5>
+		<small>${ self.ru_date(item.pub_date) }</small>
+		<div data-clickable="${ url }" class="article-text">${ item.description }</div>
+	    </li>
+	    % endfor
+	</ul>
+    </div></div>
+</div>
+</%block>

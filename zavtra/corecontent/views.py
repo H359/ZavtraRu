@@ -10,12 +10,17 @@ from django.core.urlresolvers import reverse
 from django.db.models import Min, Max
 
 from diggpaginator import DiggPaginator
-from annoying.decorators import render_to
+#from annoying.decorators import render_to
+from utils import render_to, render_to_response
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
 from taggit.models import Tag
 
-class ContentItemView(DetailView):
+class MakoViewMixin(object):
+    def render_to_response(self, context, **kwargs):
+	return render_to_response(self.template_name, self.request, context)
+
+class ContentItemView(MakoViewMixin, DetailView):
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
     def get_object(self):
@@ -23,14 +28,14 @@ class ContentItemView(DetailView):
 	qs = ContentItem.batched.batch_select('authors').select_related().filter(enabled=True, pub_date__lte = now)
 	return super(ContentItemView, self).get_object(qs)
 
-class RubricView(ListView):
+class RubricView(MakoViewMixin, ListView):
     paginate_by         = 15
     paginator_class     = DiggPaginator
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
         self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
-        now = datetime.now()#.date()
+        now = datetime.now()
         return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lte = now)
     
     def get_context_data(self, **kwargs):
@@ -40,7 +45,7 @@ class RubricView(ListView):
         context['rss'] = reverse('corecontent.rss.rubric', kwargs={'slug': self.rubric.slug})
         return context
 
-class NewsView(DetailView):
+class NewsView(MakoViewMixin, DetailView):
     template_name       = 'corecontent/view.item.html'
     context_object_name = 'item'
     def get_object(self):
@@ -57,7 +62,7 @@ class NewsView(DetailView):
 	)
 	return super(NewsView, self).get_object(qs)
 
-class FeaturedView(ListView):
+class FeaturedView(MakoViewMixin, ListView):
     paginate_by         = 15
     paginator_class     = DiggPaginator
     template_name       = 'corecontent/view.collection.html'
@@ -76,10 +81,11 @@ class FeaturedView(ListView):
         context['rss'] = reverse('corecontent.rss.featured', kwargs={'slug': self.featured.slug})
         return context
 
-class TaggedItemsView(ListView):
+class TaggedItemsView(MakoViewMixin, ListView):
     paginate_by        = 15
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
+    paginator_class     = DiggPaginator
     def get_queryset(self):
         self.tag = get_object_or_404(Tag, slug=self.kwargs['slug'])
         now = datetime.now()#.date()
@@ -92,7 +98,7 @@ class TaggedItemsView(ListView):
         context['rss'] = reverse('corecontent.rss.tag', kwargs={'slug': self.tag.slug})
         return context
 
-class BlogView(ListView):
+class BlogView(MakoViewMixin, ListView):
     paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     paginator_class     = DiggPaginator
@@ -128,7 +134,7 @@ class FeaturedIndexView(ListView):
     def get_queryset(self):
 	return FeaturedItems.objects.all()
 
-class UnpublishedItemsView(ListView):
+class UnpublishedItemsView(MakoViewMixin, ListView):
     paginate_by         = 15
     template_name       = 'corecontent/view.collection.html'
     paginator_class     = DiggPaginator

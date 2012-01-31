@@ -16,7 +16,7 @@
 		var data = this.form.serialize();
 		$('input,select,textarea,button,button', this.form).attr('disabled', true).addClass('disabled').removeClass('error');
 		$('span.error', this.form).fadeOut();
-		$('.error', this.formWrap).hide();
+		$('div.error', this.formWrap).hide();
 		$(this.settings.fieldWrap, this.form).removeClass('error');
 		$.post(this.form.attr('action'), data, $.proxy(this.onSubmit, this));
 	    }
@@ -81,10 +81,7 @@
 	}
     }
 
-
-    $.fn.comments = function(settings){
-	new Comments(this, settings);
-    }
+    $.fn.comments = function(settings){ new Comments(this, settings); }
 
     $.fn.comments.defaults = {
 	 form: 'article.comment-form'

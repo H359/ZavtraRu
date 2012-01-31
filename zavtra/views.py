@@ -16,14 +16,14 @@ from django.template.loader import render_to_string
 from django.utils.functional import lazy
 from django.conf import settings
 
-from annoying.decorators import render_to, ajax_request
+#from annoying.decorators import render_to, ajax_request
 from diggpaginator import DiggPaginator
 
 from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
 from voting.models import Vote
 
-from utils import cached, group_list
+from utils import render_to, cached, group_list
 
 oneday = timedelta(days=1)
 
@@ -65,9 +65,12 @@ def home(request):
 	)
     else:
 	newsletter = get_content()
-    def get_latest_rubric(rubric, kind='video'):
+    def get_latest_rubric(rubric, **kwargs):
 	try:
-	    return ContentItem.objects.filter(kind=kind, enabled=True, rubric=rubric).latest('pub_date')
+	    qs = ContentItem.objects.filter(enabled=True, rubric=rubric)
+	    if kwargs:
+		qs = qs.filter(**kwargs)
+	    return qs.latest('pub_date')
 	except ContentItem.DoesNotExist:
 	    return None
     if not no_cache:
@@ -79,7 +82,7 @@ def home(request):
     else:
 	illustration = get_illustration()
     zavtra_tv = cached(
-	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=19 if settings.DEBUG else 44)[0:1],
+	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=44)[0:3],
 	'zavtra-tv2',
 	duration=60*60*4
     )
@@ -131,7 +134,7 @@ def logged_in(request):
 def live(request):
     return {}
 
-@ajax_request
+#@ajax_request
 def live_update(request):
     qty = int(request.GET.get('qty', 20))
     start = request.GET.get('start')
@@ -142,7 +145,7 @@ def live_update(request):
 	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), reversed(comments[0:qty])),
     }
 
-login_required
+@login_required
 def vote(request):
     if request.method == 'POST':
 	vote = {'up': 1, 'down': -1}[request.POST.get('vote')]

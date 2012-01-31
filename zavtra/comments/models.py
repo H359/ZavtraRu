@@ -63,7 +63,7 @@ class Comment(models.Model):
 	return (len(self.path) / self.step_size) - 1
 
     def depth_truncated(self):
-	return min([4, self.depth()])
+	return min([6, self.depth()])
 
     def get_author(self):
 	author = self.author

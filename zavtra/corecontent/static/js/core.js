@@ -17,45 +17,68 @@ $(document).ajaxSend(function(event, xhr, settings) {
     if (!safeMethod(settings.type) && sameOrigin(settings.url)) { xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken')) };
 });
 
-var rs = null;
-var pfp = function(){
-        var rsw = rs.width() - 90;
-	$('.item', rs).width(rsw);
-	return rsw;
+jQuery.reduce = function(arr, valueInitial, fnReduce){
+    jQuery.each(arr, function(i, value){ valueInitial = fnReduce.apply(value, [valueInitial, i, value]); });
+    return valueInitial;
+}
+
+$.fn.makethScroll = function(){
+    var that = $(this),
+	mouseCapture = false,
+	content = $('li', that),
+	content$width = $.reduce(content, 0, function(acc, num, item){ return acc + $(item).outerWidth(); }),
+	wrapper = that.parent('div').css({overflowX:'hidden'}),
+	wrapper$width = wrapper.width(),
+	scrollbar = $('<div class="scroller"></div>'),
+	handle = $('<div class="handle"></div>');
+    that.css({
+	position: 'relative',
+	width: content$width + 'px'
+    });
+    scrollbar.appendTo(wrapper);
+    handle.appendTo(scrollbar);
+    var handle$width = handle.width(),
+	k1 = (wrapper$width - handle$width) / wrapper$width,
+	k2 = (content$width - wrapper$width) / (wrapper$width - handle$width),
+	changePos = function(x){
+	    that.css({left: -Math.floor(k2*x) + 'px'});
+	    handle.css({left: Math.floor(k1*x) + 'px'});
+	},
+	getOffsetX = function(e){
+	    if (e.originalEvent && e.offsetX === undefined) return e.originalEvent.layerX;
+	    return e.offsetX;
+	};
+    $(window).resize(function(){
+	wrapper$width = wrapper.width();
+	handle$width = handle.width();
+	k1 = (wrapper$width - handle$width) / wrapper$width;
+	k2 = (content$width - wrapper$width) / (wrapper$width - handle$width);
+    });
+    scrollbar.click(function(e){
+	if (!mouseCapture && e.target == scrollbar[0]) changePos(getOffsetX(e));
+	return false;
+    }).mousemove(function(e){
+	if (mouseCapture && e.target == scrollbar[0]) changePos(getOffsetX(e));
+    }).mouseup(function(e){ 
+	if (mouseCapture && e.target == scrollbar[0]) changePos(getOffsetX(e));
+	mouseCapture = false;
+    })
+    handle.mousedown(function(e){ mouseCapture = true; });
 }
 
 $(function(){
-    (function(){
-	$('.sidebar .collapse').click(function(){
-	    var collapsed = $('body').toggleClass('collapsed').hasClass('collapsed');
-	    $.cookie('news_collapsed', collapsed, {expires:365});
-	    $(this).html( $(this).html() == '&gt;&gt;&gt;' ? '&lt;&lt;&lt;' : '&gt;&gt;&gt;' );
-	});
-	rs = $('#red_stripe');
-	var rsw = pfp();
-	$('.scrollable', rs).width(rsw).show()
-	//$('.scrollable', 
-	$('.scrollable').scrollable({circular:true});
-    })();
-    if ($.browser.msie){
-	if ($.browser.version.substr(0,1)<=7) {
-	    $('.topbar, body > .container-fluid').hide();
-	    CFInstall.check({mode:'overlay',destination:'http://zavtra.ru'});
-	}
-    }
-});
-
-$(window).load(function(){
+    $('ul.scrollable').makethScroll();
+    $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
+    if (window.comments_bootstrap) window.comments_bootstrap();
+    /*
     var body=$('body')[0];
     $('.bnrok').each(function(){var self=$(this);
 	var bscr = document.createElement('script'), bid = self.attr('id').split('_')[2];
 	bscr.type='text/javascript';
 	bscr.charset='windows-1251';
-	/*bscr.async=true;*/
 	bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id')+'&nnn='+bid+'&t='+Math.random();
 	//bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id');
 	body.appendChild(bscr);
     });
+    */
 });
-
-$(window).resize(function(){ var rsw = pfp(); $('.scrollable', rs).width(rsw); });

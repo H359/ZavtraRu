@@ -27,7 +27,6 @@ class SiteProfile(models.Model):
     can_blog   = models.BooleanField(verbose_name=u'Может писать в блоги', default=False)
     activation = models.CharField(max_length=32, editable=False, verbose_name=u'Код активации')
 
-    @property
     def avatar(self):
 	return self.user.avatar()
 

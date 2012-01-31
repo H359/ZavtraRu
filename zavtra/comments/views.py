@@ -2,6 +2,7 @@
 from django.db import models
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import user_passes_test, login_required
+from utils import templateLookup
 
 from annoying.decorators import ajax_request
 
@@ -22,15 +23,9 @@ def add_comment(request):
     	    data['parent_id'] = parent
     	    data['author'] = request.user
     	    data['ip'] = request.META.get('REMOTE_ADDR')
-    	    """
-    	    if parent is None:
-    		comment = Comment.add_root(**data)
-    	    else:
-    		comment = Comment.objects.get(id=parent).add_child(**data)
-    	    """
     	    comment = Comment.objects.create(**data)
             res['status'] = True
-            res['html'] = render_to_string('comments/item.html', {'request': request, 'comment': comment})
+            res['html'] = templateLookup.get_template('base.html').get_def('comment').render_unicode(item=comment, request=request)
         else:
             res['errors'] = dict( (k, map(unicode, v)) for (k,v) in form.errors.iteritems() )
     return res

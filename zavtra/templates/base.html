@@ -1,260 +1,206 @@
+<%!
+from pytils import numeral, dt
+from zavtra.comments.template_tags import get_comments_for
+%>\
+<%  %>
+<%def name="comment(item)">\
+<% author = item.get_author() %>
+<li id="comment-${ item.id }" style="padding-left: ${ item.depth_truncated()*40 }px">
+    <div class="comment">
+	<div class="avatar">
+	    <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>
+	</div>
+	<div class="inner">
+	    <div class="body ym-clearfix">
+		<div class="author"><a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <time datetime="${ item.created_at }">${ ru_date(item.created_at) }<time></div>
+		<div class="text">
+		% if item.enabled:
+		${ item.comment | h }
+		% else:
+		<em>комментарий скрыт</em>
+		    % if request.user.is_authenticated() and request.user.is_staff:
+		    <br/>Текст:<br/>${ item.comment | h }
+		    % endif
+		% endif
+		</div>
+		<div class="actions">
+		    % if request.user.is_authenticated() and request.user.is_active:
+			% if item.enabled:
+			<a href="#reply:${ item.id }" class="btn small primary">Ответить</a>
+			% endif
+			% if request.user.is_staff:
+			<%doc>and perms.comments.moderate</%doc>
+			    % if item.enabled:
+			    <a href="#hide:${ item.id }}" class="btn small danger">Скрыть</a>
+			    % else:
+			    <a href="#hide:${ item.id }}" class="btn small danger">Раскрыть</a>
+			    % endif 
+			% endif
+		    % endif
+		</div>
+	    </div>
+	</div>
+    </div>
+</li>
+</%def>\
+<%def name="comments_for(item)">\
+<% comments = get_comments_for(item) %>
+<div class="comments">
+    <h3>Комментарии</h3>
+    <div class="content"><ul id="comments" class="unstyled">
+	% for comment_item in comments['comments']:
+	${ comment(comment_item) }
+	% endfor
+    </ul></div>
+    % if request.user.is_authenticated():
+    <div class="comment-form comment ym-clearfix">
+	<div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>
+	<div class="avatar"><img src="${ request.user.avatar() }" width="32" /></div>
+	<form class="inner" method="post" action="/comments/add/">
+	    <fieldset class="body">
+		<h4>Прокомментировать</h4>
+		<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
+		% for field in comments['form']:
+		% if field.is_hidden:
+		<div>${ field }</div>
+		% else:
+		<div class="ym-clearfix">
+		    ${ field.label_tag() }
+		    <div class="input">
+			${ field }
+			% if field.help_text:
+			<span class="help-block">${ field.help_text }</span>
+			% endif
+		    </div>
+		</div>
+		% endif
+		% endfor
+		<div class="actions"><input type="submit" class="btn primary"  value="Отправить" /></div>
+	    </fieldset>
+	</form>
+    </div>
+    <script>window.comments_bootstrap=function(){$('#comments').comments();}</script>
+    % else:
+    <div class="comment"><div class="alert-message info">
+	<p>Чтобы иметь возможность оставлять комментарии, вам нужно <a href="/login/">войти в свою учетную запись</a> (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала) или <a href="/accounts/register/">зарегистрировать её</a>, если у вас таковой еще нет.</p>
+    </div></div>
+    % endif
+</div>
+</%def>\
+<%def name="ru_date(date, inflected=False, format=u'%d.%m.%Y')">${ dt.ru_strftime(date=date, inflected=inflected, format=format) }</%def>\
+<%def name="comments_count(num)">${ numeral.get_plural(num, (u'комментарий', u'комментария', u'комментариев'), u'нет комментариев') }</%def>\
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <title>{% block page_title %}Газета &laquo;Завтра&raquo;{% endblock %}</title>
-    <meta name="keywords" content="{% block meta_keywords %}проханов,свежий номер{% endblock %}" />
-    <meta name="description" content="{% block meta_description %}Сетевое представительство газеты Завтра{% endblock %}" />
-    <meta name="author" content="{% block meta_author %}Редакция газеты Завтра{% endblock %}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="yandex-verification" content="79bffe9a083206fe" />
-    <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
-    <!--[if IE]>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-    <![endif]-->
-    {% block meta_extra %}{% endblock %}
-    <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru{% url corecontent.rss.latest %}" />
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/zav_icon.gif" />
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    {% comment %}
-    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/orbit-1.3.0.css" rel="stylesheet" />
-    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
-    {% endcomment %}
-    {%comment%}<script src="http://yandex.st/modernizr/2.0.6/modernizr.min.js"></script>{%endcomment%}
-    <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    {% load compressed %}
-    {% compressed_css 'main' %}
-    {% block css %}{% endblock %}
-    {% block js_extra_head %}{% endblock %}
-    <script>
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-27628875-1']);
-_gaq.push(['_trackPageview']);
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
- })();
-    </script>
-</head>
-
-<body class="{% block body_class %}{% endblock %}{% if request.COOKIES.news_collapsed == 'true' %} collapsed{% endif %}">
-<!-- tns-counter.ru -->
-<script type="text/javascript">
-var img = new Image();
-img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);
-</script>
-<noscript>
-<img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt="">
-</noscript>
-<!--/ tns-counter.ru -->
-{% load utils %}{% load pytils_dt %}{% load pytils_numeral %}
-{% block body %}
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="container-fluid">
-      <a class="brand" href="/"><img src="{{ STATIC_URL }}img/logo_inv.png" /></a>
-      <ul class="nav">
-        <!--<li><a href="/">Главная</a></li>-->
-        <!--<li><a href="">Текущий выпуск</a></li>-->
-        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
-        <li class="dropdown">
-	    <a href="#" class="dropdown-toggle">Архив</a>
-	    <ul class="dropdown-menu">
-		<!--<li><a href="/cgi//veil//data/zavtra/">Архив &laquo;Завтра&raquo;</a></li>-->
-		<li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
-		<li><a href="/denlit/index.html">Архив &laquo;Дня литературы&raquo;</a></li>
-	    </ul>
-	</li>
-        {% if request.user.is_authenticated and request.user.is_staff %}
-        <li class="dropdown">
-    	    <a href="#" class="dropdown-toggle">Редакционное</a>
-    	    <ul class="dropdown-menu">
-    		<li><a href="/editorial/">Редакционный блог</a></li>
-    		<li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта zavtra.ru</a></li>
-    		<li><a href="/?next_number=1">Новый номер</a></li>
-    	    </ul>
-    	</li>
-        {% endif %}
-      </ul>
-      <form class="pull-left" action="{% url search %}">
-        <input type="text" name="q" placeholder="Поиск..." />
-      </form>
-      <ul class="nav secondary-nav">
-        {% if request.user.is_authenticated %}
-        <li class="dropdown">
-    	  <a href="#" class="dropdown-toggle">{{ request.user }}.</a>
-    	  <ul class="dropdown-menu">
-    	    <li><a href="{% url logout %}">Выйти</a></li>
-    	  </ul>
-    	</li>
-    	{% else %}
-        <li><a href="{% url login %}">Войти</a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div>{% with source=quote.get_source %}
-  <blockquote class="top-quote">
-    <a href="{{ source.get_absolute_url }}">{{ quote.quote }}</a>
-    {% if source.authors_all %}<small>{% for author in source.authors_all %}
-    {{ author.get_full_name }}{% if not forloop.last %}, {% endif %}
-    {% endfor %}</small>{% endif %}
-  </blockquote>
-{% endwith %}</div>
-
-<div class="container-fluid">
-  <div class="content smooth ">
-    <ul class="unstyled rubrics topbar-inner">
-	{% for item in rubrics %}{% if item.on_top and item.id != 1 %}
-	<li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
-	{% endif %}{% endfor %}
-    </ul>
-    <ul class="unstyled featured well">
-	<li class="first"><a href="{% url corecontent.view.featured_index %}">Каждый день:</a></li>
-	{% for item in featured %}
-	<li {% if forloop.last %}class="last"{% endif %}><a href="{{ item.get_absolute_url }}">{{ item.title|title }}</a></li>
-	{% endfor %}
-    </ul>
-  </div>
-  <div class="content smooth ">
-    <div class="row"><div class="span12 last"><h3>Реклама</h3><div class="bnrok" id="DIV_DA_50417"></div></div></div>
-    <div class="row">
-	<div class="span12 last stripe">
-	    <h3>Красная строка</h3>
-    	    <div id="red_stripe">
-    		<span class="snav prev"></span>
-    		<span class="snav next"></span>
-    		<div class="scrollable">
-    		    <div class="items">
-        		{% for group in current_items|in_groups_of:3 %}
-    			<div class="item">
-			    {% for item in group %}
-			    <div class="third" data-link="{{ item.get_absolute_url }}">
-				<h4><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h4>
-				{% if item.kind == 'video' %}
-				<div class="text-center"><img class="real" src="http://img.youtube.com/vi/{{ item.get_video_id }}/1.jpg" /></div>
-				{% else %}
-        			{{ item.description|safe }}
-        			{% endif %}
+    <head>
+	<meta charset="utf-8" />\
+	<title><%block name="page_title">Газета &laquo;Завтра&raquo;</%block></title>
+	<meta name="keywords" content="<%block name="meta_keywords">Россия,русский народ,проханов,свежий номер</%block>" />
+	<meta name="description" content="<%block name="meta_description">Сетевое представительство газеты Завтра</%block>" />
+	<meta name="author" content="<%block name="meta_author">Редакция газеты Завтра</%block>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<meta name="yandex-verification" content="79bffe9a083206fe" />\
+	<%block name="meta_extra"></%block>\
+	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/style.css" />
+	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru[% url corecontent.rss.latest %]" />
+	<link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />
+	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/iehacks.css" />
+	<script>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-27628875-1']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+    </head>
+    <body>
+	<!-- tns-counter.ru -->
+	<script type="text/javascript">var img = new Image();img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);</script>
+	<noscript><img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt=""></noscript>
+	<!--/ tns-counter.ru -->
+	<div>
+	    <div class="ym-hlist topbar">
+		<ul>
+		    <li><a href="/#gazette">Газета</a></li>
+		    <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
+		    <li>
+			<form action="/search/" method="get">
+			    <input class="nav-search" type="search" name="q" placeholder="Поиск..." />
+			    <input class="btn" type="submit" value="Искать" />
+			</form>
+		    </li>
+		</ul>
+		<div class="userbar">
+		    % if request.user.is_authenticated():
+		    Здравствуйте, ${ request.user.get_full_name() }. <a class="btn small" href="/logout/">Выйти</a>
+		    % else:
+		    <a class="btn" href="/login/">Войти</a>
+		    % endif
+		</div>
+	    </div>
+	</div>
+	<div id="main"><div class="ym-wrapper">
+	    <div class="ym-wbox">
+		<div class="ym-grid">
+		    <div class="ym-g75 ym-gl">
+			<div class="ym-gbox ym-clearfix">
+			    % if quote is not None:
+			    <blockquote><a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a></blockquote>
+			    % endif
+			    <div class="ym-hlist rubrics-list ym-clearfix"><ul>
+				% for item in filter(lambda w: w.on_top, rubrics):
+				<li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+				% endfor
+			    </ul></div>
+			    <div class="ym-hlist featured-list"><ul>
+				% for item in featured:
+				<li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+				% endfor
+			    </ul></div>
+			    <div class="red-stripe">
+				<h3>Красная строка</h3>
+				<div class="scrollee">
+				    <ul class="unstyled scrollable ym-clearfix">
+				    % for num,item in enumerate(current_items):
+				    <li${ " class='first'" if num == 0 else "" }>
+					<% url = item.get_absolute_url() %>\
+					<h4><a href="${ url }">${ item.title }</a></h4>
+					<div class="article-text" data-clickable="${ url }">${ item.description }</div>
+				    </li>
+				    % endfor
+				    </ul>
+				</div>
 			    </div>
-			    {% endfor %}
 			</div>
-    			{% endfor %}
-    		    </div>
-    		</div>
-    	    </div>
-	</div>
-    </div>
-  </div>
-  <div class="content smooth gstyle">{% block content %}{% endblock %}</div>
-  <div class="sidebar smooth">
-    {% if request.COOKIES.news_collapsed == 'true' %}
-    <a href="#" class="smooth collapse" title="свернуть">&lt;&lt;&lt;</a>
-    {% else %}
-    <a href="#" class="smooth collapse" title="свернуть">&gt;&gt;&gt;</a>
-    {% endif %}
-    <div class="well">
-      <h3 class="smooth"><a href="/content/rubric/novosti/">Новости</a></h3>
-      <ul class="unstyled smooth news rubric">
-        {% for item in news %}
-        <li>
-          <h5><a href="{{ item.get_absolute_url }}">{{ item.title|safe }}</a></h5>
-          <h6>{{ item.pub_date|ru_strftime:"%d %B %Y" }}</h6>
-          <div class="txt">{{ item.description|safe }}</div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-</div>
-{% endblock %}
-
-<footer class="container-fluid">
-    <div class="row">
-	<div class="span4">
-	    <address>
-		<strong>Адрес редакции:</strong><br/>
-		119146, Москва, Фрунзенская наб., 18–60<br/>
-		Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
-		Телефон: (495) 726-54-83
-	    </address>
-	</div>
-	<div class="span8 last">
-	    <a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
-	    Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
-	</div>
-    </div>
-</footer>
-
-<div class="socializm">
-    <ul class="unstyled social">
-	<li><a href="http://twitter.com/ZavtraRu" class="twitter"></a></li>
-	<li><a href="http://facebook.com/zavtraru" class="facebookr"></a></li>
-	<li><a href="http://vkontakte.ru/zavtraru" class="vkontakte"></a></li>
-    </ul>
-</div>
-
-{% block javascript_library %}
-<script src="http://yandex.st/jquery/1.7.1/jquery.min.js"></script>
-<script>!window.jQuery && document.write(unescape('%3Cscript src="{{ STATIC_URL }}js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
-{% endblock %}
-<!--[if lt IE 7 ]>
-<script src="{{ STATIC_URL }}js/dd_belatedpng.js"></script>
-<script> DD_belatedPNG.fix('img, .png_bg');</script>
-<![endif]-->
-<div style="display:none;"><script type="text/javascript"> 
-(function(w, c) { 
-    (w[c] = w[c] || []).push(function() { 
-        try { 
-            w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true, webvisor: true}); 
-        } 
-        catch(e) { } 
-    }); 
-})(window, "yandex_metrika_callbacks"); 
-</script></div> 
-<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script> 
-<noscript><div><img src="//mc.yandex.ru/watch/11286280" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
-<!-- /Yandex.Metrika counter --> 
-<div id="fb-root"></div><div id="vk-root"></div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<script>!window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery.1.7.min.js"%3E%3C/script%3E'))</script>
-{% comment %}
-<script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-twipsy.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
-<script src="{{ STATIC_URL }}js/core.js"></script>
-<script src="{{ STATIC_URL }}js/comments.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.tools.min.js"></script>
-{% endcomment %}
-{% compressed_js 'main' %}
-{%spaceless%}<script type="text/javascript">
-/*
-window.vkAsyncInit=function(){VK.Widgets.Group("vk_groups",{mode:1,width:"270",height:"290"},32969466);};
-setTimeout(function(){var el = document.createElement("script");el.type = "text/javascript";el.src = "http://vkontakte.ru/js/api/openapi.js";el.async = true;document.getElementById("vk-root").appendChild(el);}, 0);
-setTimeout(function(){(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=175357809210274";js.async=true;fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));}, 0);
-setTimeout(function(){(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();}, 0);
-setTimeout(function(){!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";js.async=true;fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");}, 0);
-window.___gcfg = {lang: 'ru'};
-*/
-$(function(){
-  //$('a[rel=inline]').colorbox({close:'Закрыть'});$('a.gallery').colorbox({close:'Закрыть'});
-  $('.topbar').dropdown();
-  $('a[rel=popover]').popover();
-  if (window.modal_bootstrap) window.modal_bootstrap();
-  if (window.comments_bootstrap) window.comments_bootstrap();
-  {% block javascript %}{% endblock %}
-});
-</script>{%endspaceless%}
-</body>
+		    </div>
+		    <div class="ym-g25 ym-gr">
+			<div class="ym-gbox ym-clearfix adv rubrics">
+			    <h3>Реклама</h3>
+			    <div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>\
+			</div>
+		    </div>
+		</div>
+		<div class="ym-grid">
+		    <div class="ym-g62 ym-gl"><div class="ym-gbox ym-clearfix"><%block name="main_column"></%block></div></div>
+		    <div class="ym-g38 ym-gr"><div class="ym-gbox ym-clearfix rubrics"><%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block></div></div>
+		    <div class="ym-gbox ym-gr rubrics">
+			<h3>Реклама</h3>
+			<div class="bnrok" id="DIV_DA_50417"></div><% banners_pool.append(50417) %>\
+		    </div>
+		    <div class="ym-g50 ym-gl"><div class="ym-gbox ym-clearfix">
+			<address>
+			    <strong>Адрес редакции:</strong><br/>
+			    119146, Москва, Фрунзенская наб., 18–60<br/>
+			    Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
+			    Телефон: (495) 726-54-83
+			</address>
+		    </dIv></div>
+		    <div class="ym-g50 ym-gr"><div class="ym-gbox ym-clearfix">
+			<a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
+			Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
+		    </div></div>
+		</div>
+	    </div>
+	</div></div>
+	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
+	<script src="${ STATIC_URL }js/jquery.cookie.js"></script>
+	<script src="${ STATIC_URL }js/comments.js"></script>
+	<script src="${ STATIC_URL }js/core.js"></script>
+	% for i in banners_pool:
+	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>\
+	% endfor
+    </body>
 </html>

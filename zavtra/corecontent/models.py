@@ -208,12 +208,6 @@ class DailyQuote(models.Model):
     source = models.ForeignKey(ContentItem, verbose_name=u'Источник цитаты')
     day    = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())
 
-    def recache(self):
-	cache.delete('quote-source')
-
-    def get_source(self):
-	return cached(lambda: ContentItem.batched.batch_select('authors').get(pk=self.source_id), 'quote-source', duration=60*60)
-
     def __unicode__(self):
 	return u'%s' % (self.quote[0:40])
 

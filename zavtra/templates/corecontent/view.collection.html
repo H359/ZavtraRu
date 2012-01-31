@@ -1,43 +1,67 @@
-{% extends base_template %}
+<%inherit file="../base.html" />
+<%block name="page_title">${ parent.page_title() } / ${ title }</%block>
 
-{% block page_title %}{{ block.super }} / {{ title|safe }}{% endblock %}
+<%block name="side_column">
+${ parent.side_column() }
+<h3>Реклама</h3>
+<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+</%block>
 
-{% block content %}
+<%block name="main_column">
 <ul class="breadcrumb">
     <li><a href="/">Главная</a><span class="divider">/</span></li>
-    <li>{{ title|safe }}</li>
+    <li>${ title }</li>
 </ul>
-
-<div class="row">
-    <article class="span8 rubric">
-    	<h3>{{ type }} &laquo;{{ title|safe }}&raquo;{% if rss %}<small class="rss">&nbsp;<a href="{{ rss }}">RSS</a></small>{% endif %}</h3>
-	<div class="content">
-	{% if title.id == 44 %}
+<div>
+    % if rss:
+    <div class="rss">&nbsp;<a href="${ rss }">RSS</a></div>\
+    % endif
+    <div class="content">
+	% if title.id == 44:
 	<p>Уважаемые друзья! Представляем вашему вниманию новую рубрику сайта &mdash; ЗАВТРА.LIVE. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.LIVE Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>
 	   Список вопросов будет формироваться в <a href="/content/rubric/voprosyi-prohanovu/">этом разделе</a> голосованием посетителей за отобранные модераторами вопросы. Задать свой вопрос А.А. Проханову можно там же.<br/>
 	   В дальнейшем, в рубрике ЗАВТРА.LIVE появятся и иные по формату видеоматериалы, в том числе репортажные.<br/>
 	   Спасибо за ваше участие!
 	</p>
-	{% endif %}
-	<ul class="unstyled free">
-	{% for item in items %}
-	{% include 'corecontent/list.item.announce.html' %}
-	{% endfor %}
+	% endif
+	<ul class="unstyled articles">
+	    % for item in items:
+	    <% url = item.get_absolute_url() %>\
+	    <li class="ym-clearfix">
+		<h4><a href="${ url }">${ item.title }</a></h4>
+		% if item.subtitle:
+		<h5><a href="${ url }">${ item.subtitle }</a></h5>
+		% endif
+		% if item.authors_all:
+		    % for num, author in enumerate(item.authors_all):
+		    % if num != 0:
+		    , \
+		    % endif
+		    <a class="author" href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
+		    % endfor
+		% endif
+		<div data-clickable="${ url }" class="article-text">${ item.description }</div>
+		<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(item.comments_count) }</a></div>
+	    </li>
+	    % endfor
 	</ul>
-	<h3>Реклама</h3>
-	<div class="bnrok" id="DIV_DA_49096"></div>
-        {% if is_paginated %}
-	<footer class="pagination">
+        % if is_paginated:
+	<div class="pagination">
 	    <ul>
-		<li class="prev {% if not page_obj.has_previous %}disabled{% endif %}"><a rel="page" href="?page={{ page_obj.previous_page_number }}">&larr; Позже</a></li>
-        	{% for p in page_obj.page_range %}
-        	<li{% if page_obj.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
-        	{% endfor %}
-        	<li class="next {% if not page_obj.has_next %}disabled{% endif %}"><a rel="page" href="?page={{ page_obj.next_page_number }}">Раньше &rarr;</a></li>
+		<li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
+        	% for p in page_obj.page_range:
+        	<li<% if page_obj.number == p: context.write(' class="active"') %>">
+        	% if p is not None:
+        	<a rel="page" href="?page=${ p }">${ p }</a>
+        	% else:
+        	<a>...</a>
+        	% endif:
+        	</li>
+        	% endfor
+        	<li class="next<% if not page_obj.has_next(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.next_page_number() }">Раньше &rarr;</a></li>
     	    </ul>
-        </footer>
-        {% endif %}
-    </article>
-    <div class="span4 last">{% include 'partials/rightside.html' %}</div>
+        </div>
+        % endif
+    </div>
 </div>
-{% endblock %}
+</%block>
