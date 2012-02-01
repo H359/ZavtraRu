@@ -41,7 +41,7 @@ if row == 100:
 <%block name="main_column">\
     <div class="text-over-image" id="gazette">
 	<%doc>TODO: Remove direct link to zavtra.ru</%doc>
-	<img src="http://zavtra.ru/media/${ illustration.for_main }" />
+	<img src="http://zavtra.ru/media/${ illustration.for_main }" class="bordered notopmargin" />
 	<div class="text"><h3><a href="#">&laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
     </div>
     <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right primary">скачать PDF</a></small></h2>

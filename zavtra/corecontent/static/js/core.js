@@ -102,8 +102,8 @@ $(function(){
 		handle$width = scrollPane$width - (proportion + scrollPane$width);
 	    },
 	    wrapper = scroller.parent('div'),
-	    leftBtn = $('<a class="btn" href="#">&larr;</a>'),
-	    rightBtn = $('<a class="btn pull-right" href="#">&rarr;</a>');
+	    leftBtn = $('<a class="small btn" href="#">&larr;</a>'),
+	    rightBtn = $('<a class="small btn pull-right" href="#">&rarr;</a>');
 	leftBtn.appendTo(wrapper);
 	rightBtn.appendTo(wrapper);
 	var slideTo = function(dir){
@@ -123,6 +123,27 @@ $(function(){
     })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
+    $('.yandex-direct').each(function(k,v){
+	var bid = $(this).attr('id').split('-')[1];
+	window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
+	window['yandex_context_callbacks'].push(function() {
+	Ya.Direct.insertInto(bid, v, {
+	    site_charset: "utf-8", ad_format: "direct", font_size: 1,
+	    type: "horizontal", limit: 4, title_font_size: 3,
+	    site_bg_color: "FFFFFF", header_bg_color: "FEEAC7",
+	    title_color: "A4322F", url_color: "A4322F",
+	    all_color: "A4322F", text_color: "222222",
+	    hover_color: "CF3A2D", favicon: true});
+	});
+    });
+    if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
+	t = document.documentElement.firstChild;
+	s = document.createElement("script");
+	s.type = "text/javascript";
+	s.src = "http://an.yandex.ru/system/context.js";
+	s.setAttribute("async", "true");
+	t.insertBefore(s, t.firstChild);
+    };
     /*
     var body=$('body')[0];
     $('.bnrok').each(function(){var self=$(this);

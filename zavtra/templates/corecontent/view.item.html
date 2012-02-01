@@ -13,19 +13,19 @@
 <%block name="meta_author">${ parent.meta_author() },${ u','.join(map(lambda w: w.get_full_name(), item.authors_all)) }</%block>\
 <%block name="meta_extra">\
 ${ parent.meta_extra() }\
-<meta property="og:title" content="${ item.title }" />
-<meta property="og:locale" content="ru_RU" />
+<meta property="og:title" content="${ item.title }" />\
+<meta property="og:locale" content="ru_RU" />\
 % if item.kind == 'video':
-<meta property="og:type" content="video.other" />
-<meta property="og:url" content="${ item.content|trim }" />
-<meta property="og:video" content="${ item.content|trim }" />
-<meta property="og:image" content="http://img.youtube.com/vi/${ item.get_video_id }/0.jpg" />
+<meta property="og:type" content="video.other" />\
+<meta property="og:url" content="${ item.content|trim }" />\
+<meta property="og:video" content="${ item.content|trim }" />\
+<meta property="og:image" content="http://img.youtube.com/vi/${ item.get_video_id }/0.jpg" />\
 % else:
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://zavtra.ru${ item.get_absolute_url() }" />
+<meta property="og:type" content="article" />\
+<meta property="og:url" content="http://zavtra.ru${ item.get_absolute_url() }" />\
 % endif
 % for author in item.authors_all:
-<meta property="og:article:author" content="${ author.get_full_name() }" />
+<meta property="og:article:author" content="${ author.get_full_name() }" />\
 % endfor
 </%block>\
 <%block name="page_title">${ parent.page_title() } / \
@@ -37,13 +37,15 @@ ${ item.rubric.title }\
 </%block>\
 <%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
 <%block name="side_column">\
-<div class="ym-grid linearize-level-1">
-    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
-    <div class="ym-g50 ym-gr"><div class="ym-gbox">
-${ parent.side_column() }
-<h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
-    </div></div>
-</div>
+<div class="ym-grid linearize-level-1">\
+    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>\
+    <div class="ym-g50 ym-gr"><div class="ym-gbox">\
+	${ parent.side_column() }\
+	<h3>Реклама</h3>\
+	<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+	<div class="bnrok yandex-direct" id="banner-82666"></div>
+    </div></div>\
+</div>\
 </%block>\
 <%block name="main_column">\
 <ul class="breadcrumb">

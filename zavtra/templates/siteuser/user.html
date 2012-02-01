@@ -33,7 +33,7 @@
 	profile = None
     %>\
     % if profile is not None:
-    <p>Дата рождения: ${ profile.dob }.</p>\
+    <p>Дата рождения: ${ profile.dob }</p>\
     <p>Пол: ${ profile.get_gender_display() }.</p>\
     % if profile.location is not None:
     <p>Страна, город: ${ profile.location | h }.</p>\
