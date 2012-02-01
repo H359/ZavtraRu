@@ -17,6 +17,17 @@ $(document).ajaxSend(function(event, xhr, settings) {
     if (!safeMethod(settings.type) && sameOrigin(settings.url)) { xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken')) };
 });
 
+var max = function(arr){
+    t = arr[0];
+    for (var i = 1, i$l = arr.length; i < i$l; i++) if (arr[i] > t) t = arr[i];
+    return t;
+}
+var min = function(arr){
+    t = arr[0];
+    for (var i = 1, i$l = arr.length; i < i$l; i++) if (arr[i] < t) t = arr[i];
+    return t;
+}
+
 jQuery.reduce = function(arr, valueInitial, fnReduce){
     jQuery.each(arr, function(i, value){ valueInitial = fnReduce.apply(value, [valueInitial, i, value]); });
     return valueInitial;
@@ -123,17 +134,35 @@ $(function(){
     })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
+    function(){
+	var hMain = $('#main').height(),
+	    defParams = {
+		'site_charset': "utf-8",
+		'ad_format': "direct",
+		'font_size': 1,
+		'type': "vertical",
+		'limit': 4,
+		'title_font_size': 3,
+		'site_bg_color': "FFFFFF",
+		'header_bg_color': "FEEAC7",
+		'title_color': "A4322F",
+		'url_color': "A4322F",
+		'all_color': "A4322F",
+		'text_color': "222222",
+		'hover_color': "CF3A2D",
+		'favicon': true
+	    };
     $('.yandex-direct').each(function(k,v){
-	var bid = $(this).attr('id').split('-')[1];
+	var that = $(this).parent(),
+	    off = that.offset(),
+	    w = that.width(),
+	    vSpaceLeft = hMain - off.top;
+	//console.log(hMain, off.top, w, vSpaceLeft);
+	var limit = min([Math.floor(vSpaceLeft / 100), 20]); 
 	window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
 	window['yandex_context_callbacks'].push(function() {
-	Ya.Direct.insertInto(bid, v, {
-	    site_charset: "utf-8", ad_format: "direct", font_size: 1,
-	    type: "horizontal", limit: 4, title_font_size: 3,
-	    site_bg_color: "FFFFFF", header_bg_color: "FEEAC7",
-	    title_color: "A4322F", url_color: "A4322F",
-	    all_color: "A4322F", text_color: "222222",
-	    hover_color: "CF3A2D", favicon: true});
+	    defParams['limit'] = limit;
+	    Ya.Direct.insertInto(82666, v, defParams);
 	});
     });
     if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
