@@ -2843,6 +2843,10 @@ ul.unstyled li {
   overflow: hidden;
   margin: 1em;
 }
+.red-stripe .scrollee .article-text p img {
+  float: left;
+  height: 60px;
+}
 .red-stripe h3 {
   margin: 0;
   padding: 0.5em;
