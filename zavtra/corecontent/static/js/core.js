@@ -134,7 +134,7 @@ $(function(){
     })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
-    function(){
+    (function(){
 	var hMain = $('#main').height(),
 	    defParams = {
 		'site_charset': "utf-8",
@@ -152,27 +152,27 @@ $(function(){
 		'hover_color': "CF3A2D",
 		'favicon': true
 	    };
-    $('.yandex-direct').each(function(k,v){
-	var that = $(this).parent(),
-	    off = that.offset(),
-	    w = that.width(),
-	    vSpaceLeft = hMain - off.top;
-	//console.log(hMain, off.top, w, vSpaceLeft);
-	var limit = min([Math.floor(vSpaceLeft / 100), 20]); 
-	window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
-	window['yandex_context_callbacks'].push(function() {
-	    defParams['limit'] = limit;
-	    Ya.Direct.insertInto(82666, v, defParams);
+	$('.yandex-direct').each(function(k,v){
+	    var that = $(this).parent(),
+		off = that.offset(),
+		w = that.width(),
+		vSpaceLeft = hMain - off.top,
+		limit = min([Math.floor(vSpaceLeft / 100), 20]); 
+	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
+	    window['yandex_context_callbacks'].push(function() {
+		defParams['limit'] = limit;
+		Ya.Direct.insertInto(82666, v, defParams);
+	    });
 	});
-    });
-    if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
-	t = document.documentElement.firstChild;
-	s = document.createElement("script");
-	s.type = "text/javascript";
-	s.src = "http://an.yandex.ru/system/context.js";
-	s.setAttribute("async", "true");
-	t.insertBefore(s, t.firstChild);
-    };
+	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
+	    t = document.documentElement.firstChild;
+	    s = document.createElement("script");
+	    s.type = "text/javascript";
+	    s.src = "http://an.yandex.ru/system/context.js";
+	    s.setAttribute("async", "true");
+	    t.insertBefore(s, t.firstChild);
+	}
+    })();
     /*
     var body=$('body')[0];
     $('.bnrok').each(function(){var self=$(this);
