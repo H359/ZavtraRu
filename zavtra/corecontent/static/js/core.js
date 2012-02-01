@@ -22,6 +22,7 @@ jQuery.reduce = function(arr, valueInitial, fnReduce){
     return valueInitial;
 }
 
+/*
 $.fn.makethScroll = function(){
     var that = $(this),
 	mouseCapture = false,
@@ -30,12 +31,16 @@ $.fn.makethScroll = function(){
 	wrapper = that.parent('div').css({overflowX:'hidden'}),
 	wrapper$width = wrapper.width(),
 	scrollbar = $('<div class="scroller"></div>'),
-	handle = $('<div class="handle"></div>');
+	handle = $('<div class="handle"></div>'),
+	leftArr = $('<input type="button" class="btn arrow left" value="&larr;" />'),
+	rightArr = $('<input type="button" class="btn arrow right" value="&rarr;" />');
     that.css({
 	position: 'relative',
 	width: content$width + 'px'
     });
     scrollbar.appendTo(wrapper);
+    leftArr.appendTo(wrapper);
+    rightArr.appendTo(wrapper);
     handle.appendTo(scrollbar);
     var handle$width = handle.width(),
 	k1 = (wrapper$width - handle$width) / wrapper$width,
@@ -62,12 +67,55 @@ $.fn.makethScroll = function(){
     }).mouseup(function(e){ 
 	if (mouseCapture && e.target == scrollbar[0]) changePos(getOffsetX(e));
 	mouseCapture = false;
+    });
+    rightArr.mousedown(function(){
     })
     handle.mousedown(function(e){ mouseCapture = true; });
 }
-
+*/
 $(function(){
-    $('ul.scrollable').makethScroll();
+    //$('ul.scrollable').makethScroll();
+    (function(){
+	var scrollContent = $('ul.scrollable'),
+	    scrollPane = scrollContent.parent('div'),
+	    scrollContent$width = $.reduce($('li', scrollContent), 0, function(acc,num,item){ return acc + $(item).outerWidth(); }),
+	    scrollPane$width = scrollPane.width(),
+	    diff = (scrollPane$width - scrollContent$width),
+	    proportion = diff / scrollContent$width,
+	    handle$width = scrollPane$width - (proportion + scrollPane$width),
+	    scroller = null;
+	scrollContent.width(scrollContent$width);
+	var slideFunc = function(e,ui){
+	    scrollContent.animate({left: Math.round(diff*ui.value/100) + 'px'});
+	};
+	scroller = $('#slider').slider({slide: slideFunc, animate: true});
+	scroller.find('ui-slider-handle').css({width: handle$width + 'px', marginLeft: (-handle$width/2) + 'px'});
+	var resetValues = function(){
+		scrollPane$width = scrollPane.width();
+		diff = (scrollPane$width - scrollContent$width);
+		proportion = diff / scrollContent$width;
+		handle$width = scrollPane$width - (proportion + scrollPane$width);
+	    },
+	    wrapper = scroller.parent('div'),
+	    leftBtn = $('<a class="btn" href="#">&larr;</a>'),
+	    rightBtn = $('<a class="btn pull-right" href="#">&rarr;</a>');
+	leftBtn.appendTo(wrapper);
+	rightBtn.appendTo(wrapper);
+	var slideTo = function(dir){
+	    return function(){
+		var val = scroller.slider('value'),
+		    newval = Math.round(val+dir);
+		if (newval >= 0 && newval <= 100) {
+		    scroller.slider('value', newval);
+		    slideFunc(null, {'value': newval});
+		}
+		return false;
+	    };
+	};
+	leftBtn.click(slideTo(-handle$width*10));
+	rightBtn.click(slideTo(handle$width*10));
+	$(window).resize(resetValues);
+    })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
     /*

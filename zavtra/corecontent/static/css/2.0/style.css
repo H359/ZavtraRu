@@ -2839,13 +2839,21 @@ ul.unstyled li {
   border: none;
   margin: 0 1em;
 }
-.red-stripe .scrollee {
-  overflow: hidden;
-  margin: 1em;
+.red-stripe .article-text {
+  text-align: left;
 }
-.red-stripe .scrollee .article-text p img {
+.red-stripe .article-text p img {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #bfbfbf;
   float: left;
   height: 60px;
+  margin-right: 0.5em;
+}
+.red-stripe .scrollee {
+  overflow: hidden;
+  margin: 1em 1em 0.5em 1em;
 }
 .red-stripe h3 {
   margin: 0;
@@ -2859,7 +2867,18 @@ ul.unstyled li {
   margin: 0;
 }
 .red-stripe .scrollable {
+  zoom: 1;
+  position: relative;
   width: 20000em;
+}
+.red-stripe .scrollable:before,
+.red-stripe .scrollable:after {
+  display: table;
+  content: "";
+  zoom: 1;
+}
+.red-stripe .scrollable:after {
+  clear: both;
 }
 .red-stripe .scrollable li {
   overflow-y: hidden;
@@ -2880,23 +2899,20 @@ ul.unstyled li {
   -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
-.red-stripe .scroller {
-  margin-top: 1em;
-  border: 1px solid #800;
+.ui-slider {
+  margin-top: 10px;
   background: #bfbfbf;
-  height: 0.5em;
+  height: 10px;
+  width: 100%;
+  cursor: pointer;
   position: relative;
-  cursor: pointer;
 }
-.red-stripe .scroller .handle {
-  cursor: pointer;
-  background: #800;
-  width: 4em;
-  height: 0.5em;
-  display: block;
+.ui-slider .ui-slider-handle {
   position: absolute;
-  left: 0;
-  top: 0;
+  display: block;
+  background: #800;
+  height: 10px;
+  width: 30px;
 }
 .comments-count {
   float: right;
@@ -2906,6 +2922,9 @@ ul.unstyled li {
   float: right;
   padding: 0.5em 0.5em 0.5em 0;
   color: white;
+}
+.pull-right {
+  float: right;
 }
 @media screen and (max-width: 1024px) {
   .linearize-level-1,
