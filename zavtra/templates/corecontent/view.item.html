@@ -1,5 +1,5 @@
-<%inherit file="../base.html" />
-<%def name="output_tags(item)">
+<%inherit file="../base.html" />\
+<%def name="output_tags(item)">\
 <div>
     % for num, tag in enumerate(item.tags_all()):
     % if num != 0:
@@ -8,10 +8,10 @@
     <a rel="tag" class="label warning" href="${ tag.get_absolute_url() }">${ tag.name }</a>
     % endfor
 </div>
-</%def>
-<%block name="meta_keywords">${ parent.meta_keywords() },${ u','.join(map(lambda w: w.name, item.tags_all())) }</%block>
-<%block name="meta_author">${ parent.meta_author() },${ u','.join(map(lambda w: w.get_full_name(), item.authors_all)) }</%block>
-<%block name="meta_extra">
+</%def>\
+<%block name="meta_keywords">${ parent.meta_keywords() },${ u','.join(map(lambda w: w.name, item.tags_all())) }</%block>\
+<%block name="meta_author">${ parent.meta_author() },${ u','.join(map(lambda w: w.get_full_name(), item.authors_all)) }</%block>\
+<%block name="meta_extra">\
 ${ parent.meta_extra() }\
 <meta property="og:title" content="${ item.title }" />
 <meta property="og:locale" content="ru_RU" />
@@ -27,17 +27,16 @@ ${ parent.meta_extra() }\
 % for author in item.authors_all:
 <meta property="og:article:author" content="${ author.get_full_name() }" />
 % endfor
-</%block>
+</%block>\
 <%block name="page_title">${ parent.page_title() } / \
 % if item.rubric_id is None:
 Блоги\
 % else:
 ${ item.rubric.title }\
 %endif
-</%block>
-<%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>
-
-<%block name="side_column">
+</%block>\
+<%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
+<%block name="side_column">\
 <div class="ym-grid linearize-level-1">
     <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
     <div class="ym-g50 ym-gr"><div class="ym-gbox">
@@ -45,9 +44,8 @@ ${ parent.side_column() }
 <h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
     </div></div>
 </div>
-</%block>
-
-<%block name="main_column">
+</%block>\
+<%block name="main_column">\
 <ul class="breadcrumb">
   <li><a href="/">Главная</a><span class="divider">/</span></li>
   % if item.rubric_id is None:
@@ -99,4 +97,4 @@ ${ parent.side_column() }
     <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <div id="comments">${ self.comments_for(item) }</div>
 </div>
-</%block>
+</%block>\

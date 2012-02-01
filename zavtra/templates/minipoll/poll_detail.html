@@ -1,42 +1,43 @@
-<%inherit file="../base.html" />
-<%block name="page_title">${ parent.page_title() } / ${ poll.title }</%block>
-
-<%block name="main_column">
-<ul class="breadcrumb">
-    <li><a href="/">Главная</a><span class="divider">/</span></li>
-    <li><a href="/polls/">Слухи</a><span class="divider">/</span></li>
-    <li>${ poll.title }</li>
-</ul>
-<h3>${ poll.title }</h3>
-<div class="content">
-    ${ poll.description }
-    % if poll.pk in request.session.get('poll', []):
-    <ul class="unstyled">
-	% for choice in current_poll.c_choices:
-	<li>
+<%inherit file="../base.html" />\
+<%block name="page_title">${ parent.page_title() } / ${ poll.title }</%block>\
+<%block name="main_column">\
+<ul class="breadcrumb">\
+    <li><a href="/">Главная</a><span class="divider">/</span></li>\
+    <li><a href="/polls/">Слухи</a><span class="divider">/</span></li>\
+    <li>${ poll.title }</li>\
+</ul>\
+<h3>${ poll.title }</h3>\
+<div class="content">\
+    ${ poll.description }\
+    % if (poll.pk in request.session.get('poll', [])) or force_result:
+    <div id="poll_result_${ poll.slug }">\
+	<table class="zebra-striped bordered-table">\
+	% for choice in poll.c_choices:
+	<tr>\
+	    <td>${ choice.title }</td>\
 	    <% iperc = int(choice.c_percent) %>\
-	    ${ choice.title }
-	    <div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
-	</li>
+	    <td><div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div></td>\
+	</tr>\
 	% endfor
-    </ul>
+	</table>\
+    </div>\
     % else:
-    <form action="/polls/${ current_poll.slug }/vote/" method="post">
-	<fieldset>
-	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
-	    <div class="inputs-list">
+    <form action="/polls/${ current_poll.slug }/vote/" method="post">\
+	<fieldset>\
+	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>\
+	    <div class="inputs-list">\
 	    % for choice in current_poll.c_choices:
-		<label for="poll-${ current_poll.id }-${ choice.pk }">
-		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">
-		    <span>${ choice.title }</span>
-		</label>
+		<label for="poll-${ current_poll.id }-${ choice.pk }">\
+		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">\
+		    <span>${ choice.title }</span>\
+		</label>\
 	    % endfor
-	    </div>
-	    <div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>
-	</fieldset>
-    </form>
+	    </div>\
+	    <div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>\
+	</fieldset>\
+    </form>\
     % endif
-</div>
-<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
-<div id="comments_block">${ self.comments_for(poll) }</div>
-</%block>
+</div>\
+<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>\
+<div id="comments_block">${ self.comments_for(poll) }</div>\
+</%block>\

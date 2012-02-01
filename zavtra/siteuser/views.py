@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView
 
-from annoying.decorators import render_to
+from utils import MakoViewMixin, render_to
 from diggpaginator import DiggPaginator
 
 from models import SiteProfile
@@ -27,7 +27,7 @@ def register(request):
 	form = RegistrationForm()
     return {'form': form}
 
-class UserView(ListView):
+class UserView(MakoViewMixin, ListView):
     paginate_by = 15
     paginator_class = DiggPaginator
     template_name = 'siteuser/user.html'

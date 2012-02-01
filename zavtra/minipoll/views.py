@@ -15,9 +15,12 @@ from minipoll.models import Vote
 class PollDetail(MakoViewMixin, DetailView):
     template_name = 'minipoll/poll_detail.html'
     context_object_name = 'poll'
+    def get_context_data(self, **kwargs):
+	context = super(PollDetail, self).get_context_data(**kwargs)
+	context['force_result'] = self.kwargs.get('result', False)
+	return context
     def get_object(self):
-	qs = Poll.objects.annotate(total_votes=Count('vote'))
-	return super(PollDetail, self).get_object(qs)
+	return Poll.calculate( Poll.objects.annotate(total_votes=Count('vote')).get(slug=self.kwargs['slug']) )
 
 class PollList(MakoViewMixin, ListView):
     paginate_by = 15
@@ -25,7 +28,6 @@ class PollList(MakoViewMixin, ListView):
     template_name = 'minipoll/poll_list.html'
     context_object_name = 'polls'
     def get_queryset(self):
-	print self.kwargs
 	return Poll.objects.annotate(total_votes=Count('vote')).filter(status=1)
 
 def poll_vote(request, slug):
