@@ -83,12 +83,17 @@ $(function(){
 	    diff = (scrollPane$width - scrollContent$width),
 	    proportion = diff / scrollContent$width,
 	    handle$width = scrollPane$width - (proportion + scrollPane$width),
+	    animating = false,
 	    scroller = null;
 	scrollContent.width(scrollContent$width);
 	var slideFunc = function(e,ui){
-	    scrollContent.animate({left: Math.round(diff*ui.value/100) + 'px'});
+	    if (animating) scrollContent.stop();
+	    animating = true;
+	    scrollContent.animate({left: Math.round(diff*ui.value/100) + 'px'}, {
+		complete: function() { animating = false; }
+	    });
 	};
-	scroller = $('#slider').slider({slide: slideFunc, animate: true});
+	scroller = $('#slider').slider({change: slideFunc, animate: true});
 	scroller.find('ui-slider-handle').css({width: handle$width + 'px', marginLeft: (-handle$width/2) + 'px'});
 	var resetValues = function(){
 		scrollPane$width = scrollPane.width();
