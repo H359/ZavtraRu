@@ -14,6 +14,18 @@ body {
     padding-top: 40px;
 }
 
+#logo {
+    margin-top: 10px;
+    float: left;
+}
+
+#main-cite {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 10px 0 0 290px;
+    min-height: 60px;
+}
+
 .topbar {
     position: fixed;
     top: 0;
@@ -29,6 +41,16 @@ body {
     }
 }
 * html .topbar { position: absolute; top: 0px; left: 0px; right: 0px; height: 40px; }
+
+ul.breadcrumb {
+    li {
+	&.rss {
+	    background: url(/static/img/rss.gif) no-repeat;
+	    padding-left: 16px;
+	    float: right;
+	}
+    }
+}
 
 .rubrics {
     h3 { border-bottom: 1px solid @socialistRed; padding-bottom: 0.3em; }

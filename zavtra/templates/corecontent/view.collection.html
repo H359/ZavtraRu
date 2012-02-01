@@ -2,20 +2,24 @@
 <%block name="page_title">${ parent.page_title() } / ${ title }</%block>
 
 <%block name="side_column">
-${ parent.side_column() }
-<h3>Реклама</h3>
-<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+<div class="ym-grid linearize-level-1">
+    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
+    <div class="ym-g50 ym-gr"><div class="ym-gbox">
+	${ parent.side_column() }
+	<h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+    </div></div>
+</div>
 </%block>
 
 <%block name="main_column">
 <ul class="breadcrumb">
     <li><a href="/">Главная</a><span class="divider">/</span></li>
     <li>${ title }</li>
+    % if rss:
+    <li class="rss">&nbsp;<a href="${ rss }">RSS</a></li>
+    % endif
 </ul>
 <div>
-    % if rss:
-    <div class="rss">&nbsp;<a href="${ rss }">RSS</a></div>\
-    % endif
     <div class="content">
 	% if title.id == 44:
 	<p>Уважаемые друзья! Представляем вашему вниманию новую рубрику сайта &mdash; ЗАВТРА.LIVE. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.LIVE Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>

@@ -2,7 +2,18 @@
 from pytils import numeral, dt
 from zavtra.comments.template_tags import get_comments_for
 %>\
-<%  %>
+<%def name="news_block(items)">\
+<h3>Новости</h3>
+<ul class="unstyled">
+% for item in items:
+<% url = item.get_absolute_url() %>\
+<li>
+    <h5><a href="${ url }">${ item.title }</a></h5>
+    <small>${ self.ru_date(item.pub_date) }</small>
+    <div data-clickable="${ url }" class="article-text">${ item.description }</div>
+</li>
+% endfor
+</%def>\
 <%def name="comment(item)">\
 <% author = item.get_author() %>
 <li id="comment-${ item.id }" style="padding-left: ${ item.depth_truncated()*40 }px">
@@ -58,7 +69,7 @@ from zavtra.comments.template_tags import get_comments_for
 	<div class="avatar"><img src="${ request.user.avatar() }" width="32" /></div>
 	<form class="inner" method="post" action="/comments/add/">
 	    <fieldset class="body">
-		<h4>Прокомментировать</h4>
+		<h4>Ваш комментарий:</h4>
 		<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
 		% for field in comments['form']:
 		% if field.is_hidden:
@@ -135,11 +146,14 @@ from zavtra.comments.template_tags import get_comments_for
 	<div id="main"><div class="ym-wrapper">
 	    <div class="ym-wbox">
 		<div class="ym-grid">
+		    <div class="ym-gbox ym-clearfix">
+			<div id="logo"><a href="/"><img src="${ STATIC_URL }img/logo.gif" /></a></div>
+			% if quote is not None:
+			<blockquote id="main-cite">&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
+			% endif
+		    </div>
 		    <div class="ym-g75 ym-gl">
 			<div class="ym-gbox ym-clearfix">
-			    % if quote is not None:
-			    <blockquote><a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a></blockquote>
-			    % endif
 			    <div class="ym-hlist rubrics-list ym-clearfix"><ul>
 				% for item in filter(lambda w: w.on_top, rubrics):
 				<li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>

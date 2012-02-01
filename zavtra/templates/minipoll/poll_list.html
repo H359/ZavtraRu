@@ -1,25 +1,28 @@
-{% extends "minipoll/base.html" %}
-{% load pytils_numeral %}
+<%inherit file="../base.html" />
+<%block name="page_title">${ parent.page_title() } / Cлухи</%block>
 
-{% block page_title %}{{ block.super }} / Cлухи{% endblock %}
-
-{% block content %}
-<div class="row">
-    <div class="span8 rubric">
-	<h3>Рейтинг слухов</h3></header>
-	<div class="content">
-	    <ul class="unstyled free">
-	        {% for object in object_list %}
-		<li>
-		    <h5>
-			<a href="{{ object.get_absolute_url }}" alt="{{ object.title }}">{{ object.title }}</a>
-			<small>{{ object.publication_date|date:"d N Y" }}, {{ object.total_votes|get_plural:"голос,голоса,голосов" }}</small>
-		    </h5>
-		</li>
-  	        {% endfor %}
-	    </ul>
-	</div>
-    </div>
-    <div class="span4 last">{% include 'partials/rightside.html' %}</div>
+<%block name="main_column">
+<h3>Рейтинг слухов</h3>
+<div class="content">
+    <ul class="unstyled articles">
+    % for poll in polls:
+    <li><h6><a href="${ poll.get_absolute_url() }">${ poll.title }</a></h6></li>
+    % endfor
+    </ul>
+    % if is_paginated:
+    <div class="pagination"><ul>
+	<li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
+        % for p in page_obj.page_range:
+        <li<% if page_obj.number == p: context.write(' class="active"') %>">
+        % if p is not None:
+        <a rel="page" href="?page=${ p }">${ p }</a>
+        % else:
+        <a>...</a>
+        % endif:
+        </li>
+        % endfor
+        <li class="next<% if not page_obj.has_next(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.next_page_number() }">Раньше &rarr;</a></li>
+    </ul></div>
+    % endif
 </div>
-{% endblock %}
+</%block>

@@ -11,14 +11,10 @@ from django.db.models import Min, Max
 
 from diggpaginator import DiggPaginator
 #from annoying.decorators import render_to
-from utils import render_to, render_to_response
+from utils import MakoViewMixin, render_to
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
 
 from taggit.models import Tag
-
-class MakoViewMixin(object):
-    def render_to_response(self, context, **kwargs):
-	return render_to_response(self.template_name, self.request, context)
 
 class ContentItemView(MakoViewMixin, DetailView):
     template_name       = 'corecontent/view.item.html'

@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     'comments',
     'minipoll',
     'editorial',
-    'pipeline',
+    #'pipeline',
     'haystack',
     'ajaxfields',
     'imagekit',

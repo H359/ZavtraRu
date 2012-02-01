@@ -1,7 +1,10 @@
 """Views for minipoll"""
 from django.shortcuts import redirect, Http404, get_object_or_404
-from django.views.generic.list_detail import object_detail
+from django.views.generic import DetailView, ListView
 from django.db.models import Count
+
+from utils import MakoViewMixin
+from diggpaginator import DiggPaginator
 
 from annoying.decorators import render_to
 
@@ -9,15 +12,21 @@ from minipoll.models import Poll
 from minipoll.models import Choice
 from minipoll.models import Vote
 
-@render_to('minipoll/poll_detail.html')
-def poll_detail(request, slug, detail=False):
-    try:
-	poll = Poll.objects.annotate(total_votes=Count('vote')).get(slug=slug)
-    except Poll.DoesNotExist:
-	raise Http404
-    user_has_vote = poll.pk in request.session.get('poll', [])
-    poll = Poll.calculate(poll)
-    return {'user_has_vote': user_has_vote, 'poll': poll}
+class PollDetail(MakoViewMixin, DetailView):
+    template_name = 'minipoll/poll_detail.html'
+    context_object_name = 'poll'
+    def get_object(self):
+	qs = Poll.objects.annotate(total_votes=Count('vote'))
+	return super(PollDetail, self).get_object(qs)
+
+class PollList(MakoViewMixin, ListView):
+    paginate_by = 15
+    paginator_class = DiggPaginator
+    template_name = 'minipoll/poll_list.html'
+    context_object_name = 'polls'
+    def get_queryset(self):
+	print self.kwargs
+	return Poll.objects.annotate(total_votes=Count('vote')).filter(status=1)
 
 def poll_vote(request, slug):
     """Vote for a poll"""
@@ -39,3 +48,6 @@ def poll_vote(request, slug):
         return redirect('minipoll_poll_result', slug=poll.slug)
 
     return redirect(poll)
+
+poll_detail = PollDetail.as_view()
+poll_list = PollList.as_view()

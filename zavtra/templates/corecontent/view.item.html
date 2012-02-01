@@ -38,9 +38,13 @@ ${ item.rubric.title }\
 <%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>
 
 <%block name="side_column">
+<div class="ym-grid linearize-level-1">
+    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
+    <div class="ym-g50 ym-gr"><div class="ym-gbox">
 ${ parent.side_column() }
-<h3>Реклама</h3>
-<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+<h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+    </div></div>
+</div>
 </%block>
 
 <%block name="main_column">

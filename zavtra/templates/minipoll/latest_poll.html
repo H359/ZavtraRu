@@ -1,15 +1,17 @@
 <h3>Рейтинг слухов</h3>
 <p><strong>${ current_poll.title }</strong></p>
 % if current_poll.pk in request.session.get('poll', []):
-<ol class="unstyled">
+<ul class="unstyled">
     % for choice in current_poll.c_choices:
-    <li>{{ choice.title }}
-      <div style="width: {{ choice.c_percent|negate|add:100 }}px; height: 15px; text-align: center; border-left: {{ choice.c_percent|default:1|floatformat:"0" }}px solid #E6F0ED;">{{ choice.c_percent|floatformat:"0" }}%</div>
+    <li>
+	<% iperc = int(choice.c_percent) %>\
+	${ choice.title }
+	<div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
     </li>
     % endfor
-</ol>
+</ul>
 % else:
-<form action="/poll/${ current_poll.slug }/vote/" method="post">
+<form action="/polls/${ current_poll.slug }/vote/" method="post">
     <fieldset>
 	<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
 	<div class="inputs-list">
@@ -22,5 +24,6 @@
 	</div>
 	<div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>
     </fieldset>
-  </form>
+</form>
 % endif
+<p><a href="/polls/">Другие слухи</a></p>

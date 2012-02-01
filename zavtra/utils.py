@@ -10,6 +10,10 @@ from django.utils.html import strip_tags
 from pytils.translit import slugify as original_slugify
 from mako.lookup import TemplateLookup
 
+class MakoViewMixin(object):
+    def render_to_response(self, context, **kwargs):
+	return render_to_response(self.template_name, self.request, context)
+
 # TODO: cache this
 templateLookup = TemplateLookup(
     directories=settings.TEMPLATE_DIRS,

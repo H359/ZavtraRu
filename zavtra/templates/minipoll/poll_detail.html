@@ -1,32 +1,42 @@
-{% extends "minipoll/base.html" %}
-{% load minipoll_tags %}
-{% load pytils_numeral %}
-{% load comments %}
+<%inherit file="../base.html" />
+<%block name="page_title">${ parent.page_title() } / ${ poll.title }</%block>
 
-{% block page_title %}{{ block.super }} / {{ poll.title }}{% endblock %}
-
-{% block content %}
+<%block name="main_column">
 <ul class="breadcrumb">
     <li><a href="/">Главная</a><span class="divider">/</span></li>
-    <li><a href="{% url minipoll_poll_list %}">Слухи</a><span class="divider">/</span></li>
-    <li>{{ poll.title }}</li>
+    <li><a href="/polls/">Слухи</a><span class="divider">/</span></li>
+    <li>${ poll.title }</li>
 </ul>
-
-<div class="row">
-    <article class="span8">
-	<h3>{{ poll.title }}</h3>
-	<div class="content">
-	    {{ poll.description|safe }}
-	    {% if user_has_vote %}
-	    <p>Вы уже принимали участие в этом опросе.</p>
-	    {% display_poll_result poll %}
-	    {% else %}
-	    {% display_poll_form poll %}
-	    <p>{{ poll.total_votes|get_plural:"голос,голоса,голосов" }}. <a href="{% url minipoll_poll_result poll.slug %}">Посмотреть результаты</a>.</p>
-	    {% endif %}
-	</div>
-	<footer><div id="comments_block">{% get_comments_for poll %}</div></footer>
-    </article>
-    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
+<h3>${ poll.title }</h3>
+<div class="content">
+    ${ poll.description }
+    % if poll.pk in request.session.get('poll', []):
+    <ul class="unstyled">
+	% for choice in current_poll.c_choices:
+	<li>
+	    <% iperc = int(choice.c_percent) %>\
+	    ${ choice.title }
+	    <div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
+	</li>
+	% endfor
+    </ul>
+    % else:
+    <form action="/polls/${ current_poll.slug }/vote/" method="post">
+	<fieldset>
+	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
+	    <div class="inputs-list">
+	    % for choice in current_poll.c_choices:
+		<label for="poll-${ current_poll.id }-${ choice.pk }">
+		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">
+		    <span>${ choice.title }</span>
+		</label>
+	    % endfor
+	    </div>
+	    <div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>
+	</fieldset>
+    </form>
+    % endif
 </div>
-{% endblock %}
+<div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
+<div id="comments_block">${ self.comments_for(poll) }</div>
+</%block>
