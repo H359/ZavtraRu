@@ -129,8 +129,9 @@ INSTALLED_APPS = (
     'comments',
     'minipoll',
     'editorial',
+    'djangosphinx',
     #'pipeline',
-    'haystack',
+    #'haystack',
     'ajaxfields',
     'imagekit',
     #'debug_toolbar'

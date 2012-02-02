@@ -1,0 +1,268 @@
+/*!
+ * Bootstrap v2.0.0
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+
+// CSS Reset
+@import "reset.less";
+
+// Core variables and mixins
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "mixins.less";
+
+// Grid system and page structure
+@import "scaffolding.less";
+@import "grid.less";
+@import "layouts.less";
+
+// Base CSS
+@import "type.less";
+@import "code.less";
+@import "forms.less";
+@import "tables.less";
+
+// Components: common
+@import "sprites.less";
+@import "dropdowns.less";
+@import "wells.less";
+@import "component-animations.less";
+@import "close.less";
+
+// Components: Buttons & Alerts
+@import "buttons.less";
+@import "button-groups.less";
+@import "alerts.less"; // Note: alerts share common CSS with buttons and thus have styles in buttons.less
+
+// Components: Nav
+@import "navs.less";
+@import "navbar.less";
+@import "breadcrumbs.less";
+@import "pagination.less";
+@import "pager.less";
+
+// Components: Popovers
+@import "modals.less";
+@import "tooltip.less";
+@import "popovers.less";
+
+// Components: Misc
+@import "thumbnails.less";
+@import "labels.less";
+@import "progress-bars.less";
+@import "accordion.less";
+@import "carousel.less";
+@import "hero-unit.less";
+
+@import "comments.less";
+
+// Utility classes
+@import "utilities.less"; // Has to be last to override when necessary
+
+body {
+    padding-top: 60px;
+}
+
+.articles {
+    li {
+	margin-bottom: 1em;
+	&:last-child {
+	    margin-bottom: 0;
+	}
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+li.rss {
+    float: right;
+    padding-left: 16px;
+    background: url(/static/img/rss.gif) no-repeat;
+}
+
+.ui-slider {
+    margin-top: 10px;
+    background: @grayLight;
+    height: 10px;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    .ui-slider-handle {
+	position: absolute;
+	display: block;
+	background: #800;
+	height: 10px;
+	width: 30px;
+    }
+}
+
+.red-stripe {
+    margin: 1em 0;
+    border: 1px solid @communistRed;
+    .border-radius(5px);
+    &.borderless {
+	border: none;
+	margin: 0 1em;
+    }
+    .article-text {
+	text-align: left;
+	p {
+	    img {
+		.border-radius(5px);
+		border: 1px solid @grayLight;
+		float: left;
+		height: 60px;
+		margin-right: 0.5em;
+	    }
+	}
+    }
+    .border-radius(5px);
+    .scrollee {
+	overflow: hidden;
+	margin: 1em 1em 0.5em 1em;
+    }
+    h3 {
+	margin: 0;
+	padding: 0.5em;
+	background: @socialistRed;
+	color: white;
+	font-size: 1.35em;
+	font-weight: bold;
+    }
+    h4 {
+	margin: 0;
+    }
+    .scrollable {
+	.clearfix();
+	position: relative;
+	width: 20000em;
+	li {
+	    overflow-y: hidden;
+	    float: left;
+	    height: 100px;
+	    width: 350px;
+	    padding-left: 20px;
+	    &.first {
+		padding-left: 0;
+	    }
+	    img {
+		float: left;
+		border: 2px solid white;
+		-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+		-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+		-o-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+		-ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+	    }
+	}
+    }
+}
+
+.rubrics-list {
+    background: #222;
+    margin: 0;
+    width: auto;
+    .border-radius(4px 4px 0 0);
+    border: 1px solid rgba(0,0,0,0.05);
+    border-bottom: none;
+    ul {
+	padding: 0.25em 0;
+	margin-left: 0.25em;
+	margin-bottom: 0;
+	li {
+	    padding: 0.2em 0;
+	    a {
+		color: white;
+		font-size: 1.2em;
+	    }
+	}
+    }
+}
+
+.featured-list {
+    background: whiteSmoke;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-top: none;
+    .border-radius(0 0 4px 4px);
+    margin: 0;
+    width: auto;
+    ul {
+	padding: 0.25em 0;
+	margin-left: 0.25em;
+	margin-bottom: 0;
+	li {
+	    padding: 0.2em 0;
+	    a {
+		color: @socialistRed;
+	    }
+	}
+    }
+}
+
+.rubrics {
+    h3 { border-bottom: 1px solid @socialistRed; padding-bottom: 0.3em; }
+    h4 { padding-top: 0.5em; }
+    .article-text {
+	margin-top: 0.5em;
+    }
+}
+
+.container-fluid {
+    .container-fluid { 
+	padding-left: 0; padding-right: 0;
+    }
+}
+
+.full-image {
+    width: 100%;
+}
+
+.carousel {
+    .item {
+	.carousel-caption {
+	    a {
+		color: white;
+	    }
+	}
+    }
+}
+
+.bordered {
+    .border-radius(5px);
+    .box-shadow(0 0 3px rgba(0, 0, 0, 0.25));
+    border: 1px solid @white;
+    padding: 0.5em;
+    margin-bottom: 0.75em;
+}
+
+.alert-important {
+    background: @communistRed;
+    border: 1px solid @socialistRed;
+    color: white;
+    text-shadow: none;
+    h3 {
+	border-bottom: 1px solid @white;
+    }
+    h3 , a {
+	color: white;
+    }
+    h4 {
+	a {
+	    color: #eee;
+	}
+    }
+}
+
+.bnrok {
+    padding-top: 0.5em;
+}
+
+.clearfixer {
+    .clearfix();
+}

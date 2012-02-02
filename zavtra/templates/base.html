@@ -3,16 +3,17 @@ from pytils import numeral, dt
 from zavtra.comments.template_tags import get_comments_for
 %>\
 <%def name="news_block(items)">\
-<h3>Новости</h3>\
-<ul class="unstyled">\
+<h3>Новости <a href="/content/rubric/novosti/">&raquo;</a></h3>\
+<dl class="unstyled">\
 % for item in items:
 <% url = item.get_absolute_url() %>\
-<li>\
-    <h5><a href="${ url }">${ item.title }</a></h5>\
-    <small>${ self.ru_date(item.pub_date) }</small>\
-    <div data-clickable="${ url }" class="article-text">${ item.description }</div>\
-</li>\
+    <dt><a href="${ url }">${ item.title }</a></dt>\
+    <dd>
+	<time datetime="datetime" pubdate="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time>\
+	<div data-clickable="${ url }" class="article-text">${ item.description }</div>\
+    </dd>
 % endfor
+</dl>
 </%def>\
 <%def name="comment(item)">\
 <% author = item.get_author() %>\
@@ -75,7 +76,7 @@ from zavtra.comments.template_tags import get_comments_for
 		% if field.is_hidden:
 		<div>${ field }</div>\
 		% else:
-		<div class="ym-clearfix">\
+		<div class="clearfix">\
 		    ${ field.label_tag() }
 		    <div class="input">\
 			${ field }
@@ -92,9 +93,9 @@ from zavtra.comments.template_tags import get_comments_for
     </div>\
     <script>window.comments_bootstrap=function(){$('#comments').comments();}</script>\
     % else:
-    <div class="comment"><div class="alert-message info">\
+    <div class="alert alert-info">\
 	<p>Чтобы иметь возможность оставлять комментарии, вам нужно <a href="/login/">войти в свою учетную запись</a> (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала) или <a href="/accounts/register/">зарегистрировать её</a>, если у вас таковой еще нет.</p>\
-    </div></div>\
+    </div>
     % endif
 </div>\
 </%def>\
@@ -111,7 +112,7 @@ from zavtra.comments.template_tags import get_comments_for
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />\
 	<meta name="yandex-verification" content="79bffe9a083206fe" />\
 	<%block name="meta_extra"></%block>\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/style.css" />\
+	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.css" />\
 	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru[% url corecontent.rss.latest %]" />\
 	<link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />\
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/iehacks.css" />\
@@ -122,101 +123,101 @@ from zavtra.comments.template_tags import get_comments_for
 	<script type="text/javascript">var img = new Image();img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);</script>\
 	<noscript><img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt=""></noscript>\
 	<!--/ tns-counter.ru -->\
-	<div>\
-	    <div class="ym-hlist topbar">\
-		<ul>\
-		    <li><a href="/#gazette">Газета</a></li>\
-		    <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>\
-		    <li>\
-			<form action="/search/" method="get">\
-			    <input class="nav-search" type="search" name="q" placeholder="Поиск..." />\
-			    <input class="btn" type="submit" value="Искать" />\
-			</form>\
-		    </li>\
-		</ul>\
-		<div class="userbar">\
-		    % if request.user.is_authenticated():
-		    Здравствуйте, ${ request.user.get_full_name() }. <a class="btn small" href="/logout/">Выйти</a>\
-		    % else:
-		    <a class="btn" href="/login/">Войти</a>\
-		    % endif
-		</div>\
-	    </div>\
-	</div>\
-	<div id="main"><div class="ym-wrapper">\
-	    <div class="ym-wbox">\
-		<div class="ym-grid">\
-		    <div class="ym-gbox ym-clearfix">\
-			<div id="logo"><a href="/"><img src="${ STATIC_URL }img/logo.gif" /></a></div>\
-			% if quote is not None:
-			<blockquote id="main-cite">&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>\
-			% endif
-		    </div>\
-		    <div class="ym-g75 ym-gl">\
-			<div class="ym-gbox ym-clearfix">\
-			    <div class="ym-hlist rubrics-list ym-clearfix"><ul>\
-				% for item in filter(lambda w: w.on_top, rubrics):
-				<li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>\
+	<div class="navbar navbar-fixed-top">
+	    <div class="navbar-inner">
+	        <div class="container-fluid">
+		    <ul class="nav">
+		        <li><a href="/#gazette">Газета</a></li>
+		        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
+		    </ul>
+		    <form action="/search/" method="get" class="navbar-search">
+		        <input class="search-query" type="search" name="q" placeholder="Поиск..." />
+		    </form>
+		    <ul class="nav pull-right">
+		        % if request.user.is_authenticated():
+		        <li><a>Здравствуйте, ${ request.user.get_full_name() }!</a></li>
+		        <li><a href="/logout/">Выйти</a></li>
+		        % else:
+		        <li><a href="/login/">Войти</a></li>
+		        % endif
+		    </ul>
+		</div>
+	    </div>
+	</div>
+	<div class="container-fluid">
+	    <div class="row-fluid">
+		<div id="logo"><a href="/"><img src="${ STATIC_URL }img/logo.gif" /></a></div>
+		% if quote is not None:
+		<blockquote id="main-cite">&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
+		% endif
+	    </div>
+	    <div class="row-fluid">
+		<div class="span10">
+		    <div class="rubrics-list">
+			<ul class="nav nav-pills">
+			    % for item in filter(lambda w: w.on_top, rubrics):
+			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+			    % endfor
+			</ul>
+		    </div>
+		    <div class="featured-list">
+			<ul class="nav nav-pills">
+			    % for item in featured:
+			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+			    % endfor
+			</ul>
+		    </div>
+		    <div class="red-stripe">
+			<h3>Красная строка</h3>
+			<div class="scrollee">
+			    <ul class="unstyled scrollable ym-clearfix">
+				% for num,item in enumerate(current_items):
+				<li${ " class='first'" if num == 0 else "" }>
+				    <% url = item.get_absolute_url() %>
+				    <h4><a href="${ url }">${ item.title }</a></h4>
+				    <div class="article-text" data-clickable="${ url }">${ item.description }</div>
+				</li>
 				% endfor
-			    </ul></div>\
-			    <div class="ym-hlist featured-list"><ul>\
-				% for item in featured:
-				<li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>\
-				% endfor
-			    </ul></div>\
-			    <div class="red-stripe">\
-				<h3>Красная строка</h3>\
-				<div class="scrollee">\
-				    <ul class="unstyled scrollable ym-clearfix">\
-				    % for num,item in enumerate(current_items):
-				    <li${ " class='first'" if num == 0 else "" }>\
-					<% url = item.get_absolute_url() %>\
-					<h4><a href="${ url }">${ item.title }</a></h4>\
-					<div class="article-text" data-clickable="${ url }">${ item.description }</div>\
-				    </li>\
-				    % endfor
-				    </ul>\
-				    <div id="slider"></div>
-				</div>\
-			    </div>\
-			</div>\
-		    </div>\
-		    <div class="ym-g25 ym-gr">\
-			<div class="ym-gbox ym-clearfix adv rubrics">\
-			    <h3>Реклама</h3>\
-			    <div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>\
-			</div>\
-		    </div>\
-		</div>\
-		<div class="ym-grid">\
-		    <div class="ym-g62 ym-gl"><div class="ym-gbox ym-clearfix"><%block name="main_column"></%block></div></div>\
-		    <div class="ym-g38 ym-gr"><div class="ym-gbox ym-clearfix rubrics"><%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block></div></div>\
-		    <div class="ym-gbox ym-gr rubrics">\
-			<h3>Реклама</h3>\
-			<div class="bnrok" id="DIV_DA_50417"></div><% banners_pool.append(50417) %>\
-		    </div>\
-		    <div class="ym-g50 ym-gl"><div class="ym-gbox ym-clearfix">\
-			<address>\
-			    <strong>Адрес редакции:</strong><br/>\
-			    119146, Москва, Фрунзенская наб., 18–60<br/>\
-			    Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>\
-			    Телефон: (495) 726-54-83\
-			</address>\
-		    </dIv></div>\
-		    <div class="ym-g50 ym-gr"><div class="ym-gbox ym-clearfix">\
-			<a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>\
-			Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.\
-		    </div></div>\
-		</div>\
-	    </div>\
-	</div></div>\
-	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>\
-	<script src="${ STATIC_URL }js/jquery.cookie.js"></script>\
-	<script src="${ STATIC_URL }js/jquery.ui.custom.js"></script>\
-	<script src="${ STATIC_URL }js/comments.js"></script>\
-	<script src="${ STATIC_URL }js/core.js"></script>\
+			    </ul>
+			    <div id="slider"></div>
+			</div>
+		    </div>
+		</div>
+		<div class="span2">
+		    <div class="adv rubrics">
+			<h3>Реклама</h3>
+			<div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>
+		    </div>
+		</div>
+	    </div>
+	    <div class="row-fluid">
+		<div class="span8"><%block name="main_column"></%block></div>
+		<div class="span4 rubrics"><%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block></div>
+	    </div>
+	    <div class="row-fluid">
+		<h3>Реклама</h3>
+		<div class="bnrok" id="DIV_DA_50417"></div><% banners_pool.append(50417) %>
+	    </div>
+	    <div class="row-fluid">
+		<address>
+		    <strong>Адрес редакции:</strong><br/>
+		    119146, Москва, Фрунзенская наб., 18–60<br/>
+		    Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
+		    Телефон: (495) 726-54-83
+		</address>
+		<a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
+		Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
+	    </div>
+	</div>
+	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
+	<script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
+	<script src="${ STATIC_URL }js/jquery.cookie.js"></script>
+	<script src="${ STATIC_URL }js/jquery.ui.custom.js"></script>
+	<script src="${ STATIC_URL }js/bootstrap-carousel.js"></script>
+	<script src="${ STATIC_URL }js/comments.js"></script>
+	<script src="${ STATIC_URL }js/core.js"></script>
 	% for i in banners_pool:
-	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>\
+	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
 	% endfor
-    </body>\
+    </body>
 </html>

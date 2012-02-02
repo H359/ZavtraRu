@@ -85,7 +85,6 @@ $.fn.makethScroll = function(){
 }
 */
 $(function(){
-    //$('ul.scrollable').makethScroll();
     (function(){
 	var scrollContent = $('ul.scrollable'),
 	    scrollPane = scrollContent.parent('div'),
@@ -134,6 +133,7 @@ $(function(){
     })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
+    /*
     (function(){
 	var hMain = $('#main').height(),
 	    defParams = {
@@ -173,15 +173,6 @@ $(function(){
 	    t.insertBefore(s, t.firstChild);
 	}
     })();
-    /*
-    var body=$('body')[0];
-    $('.bnrok').each(function(){var self=$(this);
-	var bscr = document.createElement('script'), bid = self.attr('id').split('_')[2];
-	bscr.type='text/javascript';
-	bscr.charset='windows-1251';
-	bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id')+'&nnn='+bid+'&t='+Math.random();
-	//bscr.src='http://www.directadvert.ru/show.cgi?adp='+bid+'&div='+self.attr('id');
-	body.appendChild(bscr);
-    });
     */
+    $('.carousel').carousel();
 });

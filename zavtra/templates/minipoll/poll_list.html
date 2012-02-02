@@ -2,15 +2,15 @@
 <%block name="page_title">${ parent.page_title() } / Cлухи</%block>
 
 <%block name="main_column">
-<h3>Рейтинг слухов</h3>
+<h3>Слухи</h3>
 <div class="content">
     <ul class="unstyled articles">
     % for poll in polls:
-    <li><h6><a href="${ poll.get_absolute_url() }">${ poll.title }</a></h6></li>
+    <li><h5><a href="${ poll.get_absolute_url() }">${ poll.title }</a></h5></li>
     % endfor
     </ul>
     % if is_paginated:
-    <div class="pagination"><ul>
+    <div class="pagination pagination-right"><ul>
 	<li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
         % for p in page_obj.page_range:
         <li<% if page_obj.number == p: context.write(' class="active"') %>">

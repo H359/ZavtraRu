@@ -1,6 +1,7 @@
 <%inherit file="../base.html" />\
 <%def name="output_tags(item)">\
 <div>
+    <i class="icon-tags"></i>
     % for num, tag in enumerate(item.tags_all()):
     % if num != 0:
     , \
@@ -37,15 +38,11 @@ ${ item.rubric.title }\
 </%block>\
 <%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
 <%block name="side_column">\
-<div class="ym-grid linearize-level-1">\
-    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>\
-    <div class="ym-g50 ym-gr"><div class="ym-gbox">\
-	${ parent.side_column() }\
-	<h3>Реклама</h3>\
-	<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
-	<div class="bnrok yandex-direct"></div>
-    </div></div>\
-</div>\
+${ parent.side_column() }\
+${ self.news_block(news) }
+<h3>Реклама</h3>\
+<div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+<div class="bnrok yandex-direct"></div>
 </%block>\
 <%block name="main_column">\
 <ul class="breadcrumb">
@@ -58,23 +55,21 @@ ${ item.rubric.title }\
   <li class="active">${ item.title }</li>
 </ul>
 <div>
-    <div>
-	<h2>${ item.title }</h2>
-	% if item.subtitle:
-	<h3>${ item.subtitle }</h3>
-	% endif
-	% if len(item.authors_all) > 0:
-	<h5>
-	% for num, author in enumerate(item.authors_all):
-	    % if num != 0:
-	    , \
-	    % endif
-	    <a href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
-	% endfor
-	% endif
-	</h5>
-	<h6><time pubdate="pubdate" datetime="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time></h6>
-    </div>
+    <h2>${ item.title }</h2>
+    % if item.subtitle:
+    <h3>${ item.subtitle }</h3>
+    % endif
+    % if len(item.authors_all) > 0:
+    <h5>
+    % for num, author in enumerate(item.authors_all):
+        % if num != 0:
+        , \
+        % endif
+        <a href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
+    % endfor
+    % endif
+    </h5>
+    <h6><time pubdate="pubdate" datetime="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time></h6>
     ${ output_tags(item) }
     % if item.kind == 'video':
     <div class="text-center">

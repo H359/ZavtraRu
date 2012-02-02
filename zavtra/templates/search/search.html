@@ -1,72 +1,70 @@
-{% extends base_template %}
+<%inherit file="../base.html" />
+<%block name="main_column">
+<h3>Поиск</h3>
+<div>
+    <ul class="breadcrumb">
+	<li><a href="/">Главная</a><span class="divider">/</span></li>
+	<li>Поиск</li>
+    </ul>
+    <form method="get" action="." class="clearfix search-form">
+	<fieldset>
+	    <div>
+		<input class="searchfield" type="search" name="q"  value="${ query | h }" />
+		<input class="btn small primary" type="submit" value="Найти" />
+	    </div>
+	    <div class="clearfix">
+		Искать по:
+		<div class="input">
+		    <div class="inputs-list">
+		    <label for="search-rank-phrase">
+			<input type="radio" name="rankmode" value="phrase" id="search-rank-phrase">
+			<span>по наличию целой фразы в статье</span>
+		    </label>
+		    <label for="search-rank-any">
+			<input type="radio" name="rankmode" value="any" id="search-rank-any">
+			<span>по наличию любого из слов в статье</span>
+		    </label>
+		    <label for="search-rank-all">
+			<input type="radio" name="rankmode" value="all" id="search-rank-all">
+			<span>по наличию всех слов в статье, невзирая на их расположение</span>
+		    </label>
+		    </div>
+		</div>
+	    </div>
+	</fieldset>
+    </form>
 
-{% load highlight %}
-
-{% block content %}
-<div class="row">
-    <article class="span8 rubric">
-	<!-- Яндекс.Директ -->
-	<div id="yandex_ad3"></div>
-	<script type="text/javascript">
-        (function(w, d, n, s, t) {
-            w[n] = w[n] || [];
-            w[n].push(function() {
-                Ya.Direct.insertInto(82666, "yandex_ad3", {
-                    site_charset: "utf-8",
-                    ad_format: "direct",
-                    font_size: 1,
-                    type: "horizontal",
-                    limit: 4,
-                    title_font_size: 3,
-                    site_bg_color: "FFFFFF",
-                    header_bg_color: "FEEAC7",
-                    title_color: "A4322F",
-                    url_color: "A4322F",
-                    all_color: "A4322F",
-                    text_color: "222222",
-                    hover_color: "CF3A2D",
-                    favicon: true
-                });
-            });
-            t = d.documentElement.firstChild;
-            s = d.createElement("script");
-            s.type = "text/javascript";
-            s.src = "http://an.yandex.ru/system/context.js";
-            s.setAttribute("async", "true");
-            t.insertBefore(s, t.firstChild);
-        })(window, document, "yandex_context_callbacks");
-	</script>
-	<h3>Поиск</h3>
-	<div class="content">
-	    <form method="get" action="." class="clearfix search-form">
-    		<input type="search" name="q"  value="{{ query }}" />
-    		<input class="btn small primary" type="submit" value="Найти" />
-    	    </form>
-	    {% if query %}
-	    <div class="content"><ul class="unstyled free">
-	    {% for result in page.object_list %}
-		<li>
-		    <h4><a href="{{ result.link }}">{{ result.title }}</a></h4>
-		    <div class="txt">{% highlight result.text with query html_tag "span" class "highlighted" %}</div>
-		</li>
-	    {% empty %}
-		<li>По такому запросу мы ничего не смогли найти. Возможно, вы ошиблись?</li>
-	    {% endfor %}
-	    </ul></div>
-	    {% if page.has_previous or page.has_next %}
-	    <footer class="pagination">
+    <div class="content">
+	<ul class="unstyled articles">
+	% for item in object_list:
+	    <% url = item.get_absolute_url() %>\
+	    <li class="ym-clearfix">
+		<h4><a href="${ url }">${ item.title }</a></h4>
+		% if item.subtitle:
+		<h5><a href="${ url }">${ item.subtitle }</a></h5>
+		% endif
+		<div data-clickable="${ url }" class="article-text">${ item.description }</div>
+		<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(item.comments_count) }</a></div>
+	    </li>
+	% endfor
+	</ul>
+	% if is_paginated:
+	<div class="pagination">
 	    <ul>
-		{% if page.has_previous %}<li class="prev"><a rel="page" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">&larr; Позже</a></li>{% endif %}
-    		{% for p in page.page_range %}
-    		<li{% if page.number == p %} class="active"{% endif %}">{% if p %}<a rel="page" href="?q={{ query }}&amp;page={{ p }}">{{ p }}</a>{% else %}<a>...</a>{% endif %}</li>
-    		{% endfor %}
-    		{% if page.has_next %}<li class="next"><a rel="page" href="?q={{ query }}&amp;page={{ page.next_page_number }}">Раньше &rarr;</a></li>{% endif %}
-    	    </ul>
-    	    </footer>
-    	    {% endif %}
-    	    {% endif %}
+	        <li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?q=${ query | h }&amp;page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
+		% for p in page_obj.page_range:
+		<li<% if page_obj.number == p: context.write(' class="active"') %>">
+		% if p:
+		<a rel="page" href="?q=${ query | h }&amp;page=${ p }">${ p }</a>
+		% else:
+		<a>...</a>
+		% endif:
+		</li>
+		% endfor
+		<li class="next<% if not page_obj.has_next(): context.write(' disabled') %>"><a rel="page" href="?q=${ query | h }&amp;page=${ page_obj.next_page_number() }">Раньше &rarr;</a></li>
+	    </ul>
 	</div>
-    </article>
-    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
+	% endif
+    </div>
 </div>
-{% endblock %}
+</%block>

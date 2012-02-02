@@ -1,0 +1,3 @@
+#!/bin/bash
+
+lessc bootstrap.less > style.css

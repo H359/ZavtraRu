@@ -2899,6 +2899,15 @@ ul.unstyled li {
   -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
+.specialitaet {
+  padding: 0 0.5em;
+  background: #404040;
+  color: white;
+}
+.specialitaet h3,
+.specialitaet a {
+  color: white;
+}
 .ui-slider {
   margin-top: 10px;
   background: #bfbfbf;

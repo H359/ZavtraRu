@@ -27,9 +27,9 @@
 	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>\
 	    <div class="inputs-list">\
 	    % for choice in current_poll.c_choices:
-		<label for="poll-${ current_poll.id }-${ choice.pk }">\
+		<label class="radio" for="poll-${ current_poll.id }-${ choice.pk }">\
 		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">\
-		    <span>${ choice.title }</span>\
+		    ${ choice.title }
 		</label>\
 	    % endfor
 	    </div>\

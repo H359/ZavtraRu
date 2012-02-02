@@ -2,8 +2,6 @@
 import urlparse
 import urllib2
 import random
-#import gdata.youtube.service
-#import cPickle
 
 from datetime import datetime, timedelta
 
@@ -25,6 +23,7 @@ from taggit_autosuggest.managers import TaggableManager
 from taggit.models import Tag
 from autoslug import AutoSlugField
 from pytils import dt
+from djangosphinx.models import SphinxSearch
 
 from utils import cached, cached_method
 
@@ -109,6 +108,16 @@ class ContentItem(models.Model):
     tags    = TaggableManager(blank=True)
     batched = BatchManager()
     objects = models.Manager()
+    search  = SphinxSearch(
+	weights={
+	    'title': 100,
+	    'subtitle': 80,
+	    'description': 75,
+	    'content': 50
+	},
+	mode='SPH_MATCH_PHRASE',
+	rankmode='SPH_RANK_PROXIMITY_BM25'
+    )
 
     def by_kind(self):
 	res = {}

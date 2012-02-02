@@ -1,29 +1,31 @@
-<h3>Рейтинг слухов</h3>
-<p><strong>${ current_poll.title }</strong></p>
-% if current_poll.pk in request.session.get('poll', []):
-<ul class="unstyled">
-    % for choice in current_poll.c_choices:
-    <li>
-	<% iperc = int(choice.c_percent) %>\
-	${ choice.title }
-	<div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
-    </li>
-    % endfor
-</ul>
-% else:
-<form action="/polls/${ current_poll.slug }/vote/" method="post">
-    <fieldset>
-	<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
-	<div class="inputs-list">
-	    % for choice in current_poll.c_choices:
-	    <label for="poll-${ current_poll.id }-${ choice.pk }">
-	        <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">
-	        <span>${ choice.title }</span>
-	    </label>
-	    % endfor
-	</div>
-	<div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>
-    </fieldset>
-</form>
-% endif
-<p><a href="/polls/">Другие слухи</a></p>
+<div class="alert alert-info">
+    <h3>Рейтинг слухов</h3>
+    <p><strong>${ current_poll.title }</strong></p>
+    % if current_poll.pk in request.session.get('poll', []):
+    <ul class="unstyled">
+	% for choice in current_poll.c_choices:
+	<li>
+	    <% iperc = int(choice.c_percent) %>\
+	    ${ choice.title }
+	    <div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
+	</li>
+	% endfor
+    </ul>
+    % else:
+    <form action="/polls/${ current_poll.slug }/vote/" method="post">
+	<fieldset>
+	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
+	    <div class="inputs-list">
+		% for choice in current_poll.c_choices:
+		<label class="radio" for="poll-${ current_poll.id }-${ choice.pk }">
+		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">
+		    ${ choice.title }
+		</label>
+		% endfor
+	    </div>
+	    <div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>
+	</fieldset>
+    </form>
+    % endif
+    <p><a href="/polls/">Другие слухи</a></p>
+</div>

@@ -23,14 +23,32 @@ from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
 from voting.models import Vote
 
-from utils import render_to, cached, group_list
+from utils import MakoViewMixin, render_to, cached, group_list
 
 oneday = timedelta(days=1)
+
+class SearchView(MakoViewMixin, ListView):
+    paginate_by = 15
+    paginator_class = DiggPaginator
+    template_name = 'search/search.html'
+    def get_queryset(self):
+	self.q = self.request.GET.get('q', '').strip()
+	if len(self.q) == 0:
+	    return ContentItem.objects.none()
+	else:
+	    return ContentItem.search.query(self.q)
+
+    def get_context_data(self, **kwargs):
+	context = super(SearchView, self).get_context_data(**kwargs)
+	context['query'] = self.q
+	return context
+
+search = SearchView.as_view()
 
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date()
+    now = datetime.now().date().replace(month=1,day=20)
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
