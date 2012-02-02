@@ -75,10 +75,12 @@ row = 12 / lcslice
 </%def>\
 <%block name="side_column">\
 % if zavtra_tv is not None:
-<div id="tv-carousel" class="carousel slide">
-    <div class="carousel-inner">${ ''.join(map(video_cell, enumerate(zavtra_tv))) }</div>
-    <a class="left carousel-control" href="#tv-carousel" data-slide="prev">&lsaquo;</a>
-    <a class="right carousel-control" href="#tv-carousel" data-slide="next">&rsaquo;</a>
+<div class="bordered">
+    <div id="tv-carousel" class="carousel slide">
+	<div class="carousel-inner">${ ''.join(map(video_cell, enumerate(zavtra_tv))) }</div>
+	<a class="left carousel-control" href="#tv-carousel" data-slide="prev">&lsaquo;</a>
+	<a class="right carousel-control" href="#tv-carousel" data-slide="next">&rsaquo;</a>
+    </div>
 </div>
 % endif
 <div>
