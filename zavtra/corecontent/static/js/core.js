@@ -185,5 +185,5 @@ $(function(){
     */
     $('.equalized .row-fluid').equalize();
     $('.carousel').carousel();
-    $('a[rel=facebox]').facebox();
+    $('a[rel=facebox]').lightBox();
 });
