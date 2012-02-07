@@ -20,7 +20,7 @@ class ExPaginator(Paginator):
             return super(ExPaginator, self).page(number)
         except InvalidPage, e:
             number = self._ensure_int(number, e)
-            if number > self.num_pages and softimit:
+            if number > self.num_pages and softlimit:
                 return self.page(self.num_pages, softlimit=False)
             else:
                 raise e
@@ -34,7 +34,7 @@ class DiggPaginator(ExPaginator):
         max_padding = int(math.ceil(self.body/2.0)-1)
         self.padding = kwargs.pop('padding', min(4, max_padding))
         if self.padding > max_padding:
-            raise ValueError('padding too large for body (max %d)'%max_padding)
+            raise ValueError('padding too large for body (max %d)' % max_padding)
         super(DiggPaginator, self).__init__(*args, **kwargs)
 
     def page(self, number, *args, **kwargs):

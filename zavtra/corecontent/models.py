@@ -139,18 +139,6 @@ class ContentItem(models.Model):
     def comments_count(self):
         return self._comments_count
 
-    def cached_comments_count(self):
-	key = 'contentitem-%d-comments-count' % self.pk
-	res = cache.get(key)
-	if res is None:
-	    res = Comment.objects.filter(
-		content_type = contentitem_ctype_id,
-		object_id=self.id,
-		enabled=True
-	    ).count()
-	    cache.set(key, res, 60*60*24)
-	return res
-
     def tags_all(self):
 	if hasattr(self, '__cached_tags'):
 	    return getattr(self, '__cached_tags')
@@ -166,7 +154,15 @@ class ContentItem(models.Model):
             enabled=True
     	).count()
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
-    	cache.delete('contentitem-%d-comments-count' % self.id)
+    	newsletter = cache.get('newsletter')
+    	if newsletter:
+    	    for group in newsletter:
+    		if group['rubric'].id == self.rubric_id:
+    		    for article in group['items']:
+    			if article.id == self.id:
+    			    article._comments_count = comments_count
+    			    cache.set('newsletter', newsletter, 60*60*4)
+    			    break
 
     def get_content_type_id(self):
 	return contentitem_ctype_id 

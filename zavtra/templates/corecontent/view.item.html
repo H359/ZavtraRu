@@ -1,14 +1,17 @@
 <%inherit file="../base.html" />\
 <%def name="output_tags(item)">\
+<% tags = item.tags_all() %>
+% if len(tags):
 <div>
     <i class="icon-tags"></i>
-    % for num, tag in enumerate(item.tags_all()):
+    % for num, tag in enumerate(tags):
     % if num != 0:
     , \
     % endif
-    <a rel="tag" class="label warning" href="${ tag.get_absolute_url() }">${ tag.name }</a>
+    <a rel="tag" class="label label-warning" href="${ tag.get_absolute_url() }">${ tag.name }</a>
     % endfor
 </div>
+% endif
 </%def>\
 <%block name="meta_keywords">${ parent.meta_keywords() },${ u','.join(map(lambda w: w.name, item.tags_all())) }</%block>\
 <%block name="meta_author">${ parent.meta_author() },${ u','.join(map(lambda w: w.get_full_name(), item.authors_all)) }</%block>\
@@ -20,7 +23,7 @@ ${ parent.meta_extra() }\
 <meta property="og:type" content="video.other" />\
 <meta property="og:url" content="${ item.content|trim }" />\
 <meta property="og:video" content="${ item.content|trim }" />\
-<meta property="og:image" content="http://img.youtube.com/vi/${ item.get_video_id }/0.jpg" />\
+<meta property="og:image" content="http://img.youtube.com/vi/${ item.get_video_id() }/0.jpg" />\
 % else:
 <meta property="og:type" content="article" />\
 <meta property="og:url" content="http://zavtra.ru${ item.get_absolute_url() }" />\
@@ -72,13 +75,14 @@ ${ self.news_block(news) }
     <h6><time pubdate="pubdate" datetime="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time></h6>
     ${ output_tags(item) }
     % if item.kind == 'video':
+    <% video_id = item.get_video_id() %>\
     <div class="text-center">
       <object width="425" height="344">
-        <param name="movie" value="http://youtube.com/v/${ item.get_video_id() }&version=3"</param>
+        <param name="movie" value="http://youtube.com/v/${ video_id }&version=3"</param>
         <param name="allowFullScreen" value="true"></param>
         <param name="allowScriptAccess" value="always"></param>
         <param name="wmode" value="transparent"></param>
-        <embed src="http://youtube.com/v/${ item.get_video_id() }&version=3"
+        <embed src="http://youtube.com/v/${ video_id }&version=3"
                type="application/x-shockwave-flash" 
                allowfullscreen="true"
                allowscriptaccess="always"
@@ -94,4 +98,5 @@ ${ self.news_block(news) }
     <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
     <div id="comments">${ self.comments_for(item) }</div>
 </div>
+<script>window.comments_bootstrap=function(){$('#comments').comments();}</script>\
 </%block>\

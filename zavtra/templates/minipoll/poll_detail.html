@@ -11,7 +11,7 @@
     ${ poll.description }\
     % if (poll.pk in request.session.get('poll', [])) or force_result:
     <div id="poll_result_${ poll.slug }">\
-	<table class="zebra-striped bordered-table">\
+	<table class="table table-striped table-bordered">\
 	% for choice in poll.c_choices:
 	<tr>\
 	    <td>${ choice.title }</td>\

@@ -2,12 +2,12 @@
     <h3>Рейтинг слухов</h3>
     <p><strong>${ current_poll.title }</strong></p>
     % if current_poll.pk in request.session.get('poll', []):
-    <ul class="unstyled">
+    <ul class="unstyled poll">
 	% for choice in current_poll.c_choices:
 	<li>
 	    <% iperc = int(choice.c_percent) %>\
 	    ${ choice.title }
-	    <div style="width: ${ 100-iperc }px; height: 15px; text-align: center; border-left: ${ iperc }px solid #E6F0ED;">${ iperc }%</div>
+	    <div class="poll-progress" style="width: ${ 100-iperc }px; border-left: ${ iperc }px solid #${ '%02x' % (2*iperc) }0000;">${ iperc }%</div>
 	</li>
 	% endfor
     </ul>
@@ -27,5 +27,5 @@
 	</fieldset>
     </form>
     % endif
-    <p><a href="/polls/">Другие слухи</a></p>
+    <p><a class="btn" href="/polls/">Другие слухи</a></p>
 </div>

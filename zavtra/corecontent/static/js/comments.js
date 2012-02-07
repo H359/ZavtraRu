@@ -84,11 +84,11 @@
     $.fn.comments = function(settings){ new Comments(this, settings); }
 
     $.fn.comments.defaults = {
-	 form: 'article.comment-form'
+	 form: 'div.comment-form'
 	,item: 'li'
 	,fieldWrap: 'div.clearfix'
 	,parentExtractor: function(elt) { return $(elt).attr('id').split('-')[1]; }
 	,parentField: '#id_parent'
-	,actions: 'article.comment div.actions a.btn'
+	,actions: 'div.comment div.btn-group a.btn'
     }
 }( window.jQuery || window.ender );

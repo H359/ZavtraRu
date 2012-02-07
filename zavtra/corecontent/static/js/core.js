@@ -33,6 +33,15 @@ jQuery.reduce = function(arr, valueInitial, fnReduce){
     return valueInitial;
 }
 
+$.fn.equalize = function(){
+    this.each(function(){
+	var row = $(this), spans = row.find('.column');
+	if (spans.size() <= 1) return;
+	var mh = max(spans.map(function(){ return $(this).height(); }));
+	spans.each(function(){ $(this).css({height: mh+'px'}); });
+    });
+}
+
 /*
 $.fn.makethScroll = function(){
     var that = $(this),
@@ -131,7 +140,7 @@ $(function(){
 	rightBtn.click(slideTo(handle$width*10));
 	$(window).resize(resetValues);
     })();
-    $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location =$(this).data('clickable');});
+    $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location = $(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
     /*
     (function(){
@@ -174,5 +183,6 @@ $(function(){
 	}
     })();
     */
+    $('.equalized .row-fluid').equalize();
     $('.carousel').carousel();
 });

@@ -76,6 +76,10 @@ body {
     }
 }
 
+.inside-article-text {
+    max-width: 52em;
+}
+
 .text-center {
     text-align: center;
 }
@@ -99,6 +103,30 @@ li.rss {
 	background: #800;
 	height: 10px;
 	width: 30px;
+    }
+}
+
+#zavtra_tv {
+    .item {
+	margin-bottom: 0.25em;
+	&:last-child {
+	    margin-bottom: 0;
+	}
+	position: relative;
+	img {
+	    width: 100%;
+	    display: block;
+	}
+	h2 { 
+	    position: absolute;
+	    bottom: 0px;
+	    padding: 0.5em;
+	    background: rgba(0,0,0,0.5);
+	    text-align: left;
+	    a {
+		color: white;
+	    }
+	}
     }
 }
 
@@ -180,6 +208,9 @@ li.rss {
 	    a {
 		color: white;
 		font-size: 1.2em;
+		&:hover {
+		    color: black;
+		}
 	    }
 	}
     }
@@ -210,6 +241,14 @@ li.rss {
     h4 { padding-top: 0.5em; }
     .article-text {
 	margin-top: 0.5em;
+    }
+    .bordered {
+	.row-fluid {
+	    margin-bottom: 0.5em;
+	    &:last-child {
+		margin-bottom: 0;
+	    }
+	}
     }
 }
 
@@ -256,6 +295,34 @@ li.rss {
 	a {
 	    color: #eee;
 	}
+    }
+}
+
+dl.unstyled {
+    margin: 0;
+    &.news {
+	dt {
+	    font-size: 1.1em;
+	    border-top: 1px solid @grayLight;
+	    padding-top: 0.5em;
+	    margin-top: 0.5em;
+	    &:first-child {
+		border-top: none;
+		margin-top: 0px;
+	    }
+	}
+    }
+}
+
+.poll {
+    li {
+	margin-bottom: 0.5em;
+	font-size: 1.1em;
+    }
+    .poll-progress {
+	height: 15px;
+	text-align: right;
+	.border-radius(5px);
     }
 }
 

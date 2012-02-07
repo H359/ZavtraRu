@@ -475,44 +475,16 @@ small {
 cite {
   font-style: normal;
 }
-code,
 pre {
-  padding: 0 3px 2px;
-  font-family: Menlo, Monaco, "Courier New", monospace;
-  font-size: 12px;
-  color: #333333;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-code {
-  padding: 3px 4px;
-  color: #d14;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 pre {
   display: block;
-  padding: 8.5px;
   margin: 0 0 9px;
-  font-size: 12px;
   line-height: 18px;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   white-space: pre;
   white-space: pre-wrap;
   word-break: break-all;
-}
-pre.prettyprint {
-  margin-bottom: 18px;
-}
-pre code {
-  padding: 0;
-  background-color: transparent;
 }
 form {
   margin: 0 0 18px;
@@ -3617,6 +3589,9 @@ body {
 .articles li:last-child {
   margin-bottom: 0;
 }
+.inside-article-text {
+  max-width: 52em;
+}
 .text-center {
   text-align: center;
 }
@@ -3639,6 +3614,27 @@ li.rss {
   background: #800;
   height: 10px;
   width: 30px;
+}
+#zavtra_tv .item {
+  margin-bottom: 0.25em;
+  position: relative;
+}
+#zavtra_tv .item:last-child {
+  margin-bottom: 0;
+}
+#zavtra_tv .item img {
+  width: 100%;
+  display: block;
+}
+#zavtra_tv .item h2 {
+  position: absolute;
+  bottom: 0px;
+  padding: 0.5em;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+#zavtra_tv .item h2 a {
+  color: white;
 }
 .red-stripe {
   margin: 1em 0;
@@ -3735,6 +3731,9 @@ li.rss {
   color: white;
   font-size: 1.2em;
 }
+.rubrics-list ul li a:hover {
+  color: black;
+}
 .featured-list {
   background: whiteSmoke;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -3765,6 +3764,12 @@ li.rss {
 }
 .rubrics .article-text {
   margin-top: 0.5em;
+}
+.rubrics .bordered .row-fluid {
+  margin-bottom: 0.5em;
+}
+.rubrics .bordered .row-fluid:last-child {
+  margin-bottom: 0;
 }
 .container-fluid .container-fluid {
   padding-left: 0;
@@ -3802,6 +3807,30 @@ li.rss {
 }
 .alert-important h4 a {
   color: #eee;
+}
+dl.unstyled {
+  margin: 0;
+}
+dl.unstyled.news dt {
+  font-size: 1.1em;
+  border-top: 1px solid #999999;
+  padding-top: 0.5em;
+  margin-top: 0.5em;
+}
+dl.unstyled.news dt:first-child {
+  border-top: none;
+  margin-top: 0px;
+}
+.poll li {
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+.poll .poll-progress {
+  height: 15px;
+  text-align: right;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .bnrok {
   padding-top: 0.5em;

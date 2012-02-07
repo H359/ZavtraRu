@@ -32,7 +32,7 @@ row = 12 / lcslice
     </div>
     % endif
     <div data-clickable="${ url }" class="article-text">${ item.description }</div>
-    <a href="${ url }#comments"><i class="icon-comment"></i> ${ self.comments_count(item.cached_comments_count()) }</a>
+    <a href="${ url }#comments"><i class="icon-comment"></i> ${ self.comments_count(item.comments_count) }</a>
 % if withrow:
 </div>
 % endif
@@ -51,12 +51,12 @@ row = 12 / lcslice
     </div>
     <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right primary">скачать PDF</a></small></h2>
     <% num, nlen = 0, len(newsletter) %>\
-    <div class="container-fluid rubrics">
+    <div class="container-fluid rubrics equalized">
 	% while nlen > num:
 	% if len(newsletter[num]['items']) == 1 and nlen > num+1 and len(newsletter[num+1]['items']) == 1:
 	<div class="row-fluid">
-	    <div class="span6"><div class="bordered">${ rubric_announce(newsletter[num], False) }</div></div>
-	    <div class="span6"><div class="bordered">${ rubric_announce(newsletter[num+1], False) }</div></div>
+	    <div class="span6"><div class="bordered column">${ rubric_announce(newsletter[num], False) }</div></div>
+	    <div class="span6"><div class="bordered column">${ rubric_announce(newsletter[num+1], False) }</div></div>
 	</div>
 	<% num += 2 %>\
 	% else:
@@ -70,17 +70,21 @@ row = 12 / lcslice
 <div class="item<% if item[0] == 0: context.write(' active') %>">
     <% url = item[1].get_absolute_url() %>\
     <img src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
-    <div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div>
+    <%doc><div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div></%doc>
+    <h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2>
 </div>
 </%def>\
 <%block name="side_column">\
 % if zavtra_tv is not None:
-<div class="bordered">
+<div id="zavtra_tv" class="bordered">
+    <%doc>
     <div id="tv-carousel" class="carousel slide">
 	<div class="carousel-inner">${ ''.join(map(video_cell, enumerate(zavtra_tv))) }</div>
 	<a class="left carousel-control" href="#tv-carousel" data-slide="prev">&lsaquo;</a>
 	<a class="right carousel-control" href="#tv-carousel" data-slide="next">&rsaquo;</a>
     </div>
+    </%doc>
+    ${ ''.join(map(video_cell, enumerate(zavtra_tv))) }
 </div>
 % endif
 <div>
@@ -91,7 +95,7 @@ row = 12 / lcslice
 	<% url = special_project.get_absolute_url() %>
 	<h4><a title="${ special_project.title }" href="${ url }">${ special_project.title }</a></h4>
 	<div data-clickable="${ url }" class="article-text">${ special_project.description }</div>
-	<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(special_project.cached_comments_count()) }</a></div>
+	<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(special_project.comments_count) }</a></div>
     </div>
     % endif
     <h3>Реклама</h3>

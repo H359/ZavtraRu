@@ -32,7 +32,7 @@
 	<ul class="unstyled articles">
 	    % for item in items:
 	    <% url = item.get_absolute_url() %>\
-	    <li>
+	    <li class="bordered">
 		<h4><a href="${ url }">${ item.title }</a></h4>
 		% if item.subtitle:
 		<h5><a href="${ url }">${ item.subtitle }</a></h5>

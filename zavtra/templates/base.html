@@ -4,7 +4,7 @@ from zavtra.comments.template_tags import get_comments_for
 %>\
 <%def name="news_block(items)">\
 <h3>Новости <a href="/content/rubric/novosti/">&raquo;</a></h3>\
-<dl class="unstyled">\
+<dl class="unstyled news">\
 % for item in items:
 <% url = item.get_absolute_url() %>\
     <dt><a href="${ url }">${ item.title }</a></dt>\
@@ -23,29 +23,29 @@ from zavtra.comments.template_tags import get_comments_for
 	    <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>\
 	</div>\
 	<div class="inner">\
-	    <div class="body ym-clearfix">\
+	    <div class="body clearfixer">\
 		<div class="author"><a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <time datetime="${ item.created_at }">${ ru_date(item.created_at) }<time></div>\
 		<div class="text">\
 		% if item.enabled:
-		${ item.comment | h }
+		<pre>${ item.comment | h }</pre>\
 		% else:
 		<em>комментарий скрыт</em>\
 		    % if request.user.is_authenticated() and request.user.is_staff:
-		    <br/>Текст:<br/>${ item.comment | h }\
+		    <br/>Текст:<br/><pre>${ item.comment | h }</pre>\
 		    % endif
 		% endif
 		</div>\
-		<div class="actions">\
+		<div class="btn-group pull-right">\
 		    % if request.user.is_authenticated() and request.user.is_active:
 			% if item.enabled:
-			<a href="#reply:${ item.id }" class="btn small primary">Ответить</a>\
+			<a href="#reply:${ item.id }" class="btn btn-success">Ответить</a>\
 			% endif
 			% if request.user.is_staff:
 			<%doc>and perms.comments.moderate</%doc>\
 			    % if item.enabled:
-			    <a href="#hide:${ item.id }}" class="btn small danger">Скрыть</a>\
+			    <a href="#hide:${ item.id }}" class="btn btn-danger">Скрыть</a>\
 			    % else:
-			    <a href="#hide:${ item.id }}" class="btn small danger">Раскрыть</a>\
+			    <a href="#hide:${ item.id }}" class="btn btn-danger">Раскрыть</a>\
 			    % endif 
 			% endif
 		    % endif
@@ -57,7 +57,7 @@ from zavtra.comments.template_tags import get_comments_for
 </%def>\
 <%def name="comments_for(item)">\
 <% comments = get_comments_for(item) %>\
-<div class="comments">\
+<div class="comments inside-article-text">\
     <h3>Комментарии</h3>\
     <div class="content"><ul id="comments" class="unstyled">\
 	% for comment_item in comments['comments']:
@@ -65,13 +65,16 @@ from zavtra.comments.template_tags import get_comments_for
 	% endfor
     </ul></div>\
     % if request.user.is_authenticated():
-    <div class="comment-form comment ym-clearfix">\
+    <div class="comment-form comment clearfixer">\
 	<div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>\
 	<div class="avatar"><img src="${ request.user.avatar() }" width="32" /></div>\
 	<form class="inner" method="post" action="/comments/add/">\
 	    <fieldset class="body">\
 		<h4>Ваш комментарий:</h4>\
-		<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>\
+		<div>
+		    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
+		    <input type="hidden" name="next" value="${ request.path }" />
+		</div>\
 		% for field in comments['form']:
 		% if field.is_hidden:
 		<div>${ field }</div>\
@@ -131,7 +134,7 @@ from zavtra.comments.template_tags import get_comments_for
 		        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
 		    </ul>
 		    <form action="/search/" method="get" class="navbar-search">
-		        <input class="search-query" type="search" name="q" placeholder="Поиск..." />
+		        <input class="search-query" type="search" name="query" placeholder="Поиск..." />
 		    </form>
 		    <ul class="nav pull-right">
 		        % if request.user.is_authenticated():

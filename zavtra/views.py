@@ -31,16 +31,24 @@ class SearchView(MakoViewMixin, ListView):
     paginate_by = 15
     paginator_class = DiggPaginator
     template_name = 'search/search.html'
+    MATCH_MODES = {
+	'phrase': 'SPH_MATCH_PHRASE',
+	'any': 'SPH_MATCH_ANY',
+	'all': 'SPH_MATCH_ALL'
+    }
+    INV_MATCH_MODES = dict((v,k) for k, v in MATCH_MODES.iteritems())
     def get_queryset(self):
-	self.q = self.request.GET.get('q', '').strip()
-	if len(self.q) == 0:
+	self.query = self.request.GET.get('query', '').strip()
+	self.mode  = self.MATCH_MODES.get(self.request.GET.get('mode'), 'SPH_MATCH_PHRASE')
+	if len(self.query) == 0:
 	    return ContentItem.objects.none()
 	else:
-	    return ContentItem.search.query(self.q)
+	    return ContentItem.search.query(self.query).set_options(mode=self.mode)
 
     def get_context_data(self, **kwargs):
 	context = super(SearchView, self).get_context_data(**kwargs)
-	context['query'] = self.q
+	context['mode'] = self.INV_MATCH_MODES.get(self.mode)
+	context['query'] = self.query
 	return context
 
 search = SearchView.as_view()
@@ -48,7 +56,7 @@ search = SearchView.as_view()
 @render_to('home.html')
 def home(request):
     no_cache = False
-    now = datetime.now().date().replace(month=1,day=20)
+    now = datetime.now().date()
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
 	wstart += 7*oneday
