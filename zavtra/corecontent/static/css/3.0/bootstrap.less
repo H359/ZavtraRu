@@ -58,7 +58,9 @@
 @import "carousel.less";
 @import "hero-unit.less";
 
+// Zavtra
 @import "comments.less";
+@import "facebox.less";
 
 // Utility classes
 @import "utilities.less"; // Has to be last to override when necessary
@@ -104,6 +106,10 @@ li.rss {
 	height: 10px;
 	width: 30px;
     }
+}
+
+#zhivotov-full .modal-body {
+    width: 80%;
 }
 
 #zavtra_tv {
@@ -260,6 +266,25 @@ li.rss {
 
 .full-image {
     width: 100%;
+}
+
+.text-over-image {
+    position: relative;
+    img {
+	display: block;
+    }
+    .text {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding: 0.5em;
+	text-align: right;
+	background: rgba(0,0,0,0.5);
+	a {
+	    color: white;
+	}
+    }
 }
 
 .carousel {
