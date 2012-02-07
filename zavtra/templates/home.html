@@ -44,10 +44,10 @@ row = 12 / lcslice
 % endwhile
 </%def>\
 <%block name="main_column">\
-    <div>
+    <div class="text-over-image bordered">
 	<%doc>TODO: Remove direct link to zavtra.ru</%doc>
-	<img src="http://zavtra.ru/media/${ illustration.for_main }" class="bordered full-image" />
-	<div class="text"><h3><a href="#">&laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
+	<img src="http://zavtra.ru/media/${ illustration.for_main }" class="full-image" />
+	<div class="text"><h3><a href="${ MEDIA_URL }${ illustration.original }" rel="facebox"><i class="icon-white icon-zoom-in"></i> &laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
     </div>
     <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right primary">скачать PDF</a></small></h2>
     <% num, nlen = 0, len(newsletter) %>\
@@ -69,9 +69,9 @@ row = 12 / lcslice
 <%def name="video_cell(item)">\
 <div class="item<% if item[0] == 0: context.write(' active') %>">
     <% url = item[1].get_absolute_url() %>\
-    <img src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
+    <img data-clickable="${ url }" src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
     <%doc><div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div></%doc>
-    <h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2>
+    <h2><a href="${ url }">${ item[1].title }<i class="icon-white icon-share-alt"></i></a></h2>
 </div>
 </%def>\
 <%block name="side_column">\
