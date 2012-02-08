@@ -2,47 +2,6 @@
 <%inherit file="base.html" />\
 <%block name="body_class">gazette</%block>\
 <%block name="page_title">${ parent.page_title() }</%block>\
-<%def name="rubric_announce(group, withrow)">\
-<% i, glen = 0, len(group['items']) %>\
-<h3>${ group['rubric'].title }&nbsp;<a href="${ group['rubric'].get_absolute_url() }">&raquo;</a></h3>
-% while True:
-<%
-cslice = group['items'][i:i+3]
-lcslice = len(cslice)
-if lcslice == 0: break 
-row = 12 / lcslice
-%>\
-% if withrow:
-<div class="row-fluid">
-% endif
-% for num, item in enumerate(cslice):
-<% url = item.get_absolute_url() %>
-% if withrow:
-<div class="span${ row }">
-% endif
-    <h4><a href="${ url }">${ item.title }</a></h4>
-    % if item.authors_all:
-    <div>
-	% for num, author in enumerate(item.authors_all):
-	% if num != 0:
-	, \
-	% endif
-	<a href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
-	% endfor
-    </div>
-    % endif
-    <div data-clickable="${ url }" class="article-text">${ item.description }</div>
-    <a href="${ url }#comments"><i class="icon-comment"></i> ${ self.comments_count(item.comments_count) }</a>
-% if withrow:
-</div>
-% endif
-% endfor
-% if withrow:
-</div>
-% endif
-<% i += 3 %>\
-% endwhile
-</%def>\
 <%block name="main_column">\
     <div class="text-over-image bordered">
 	<%doc>TODO: Remove direct link to zavtra.ru</%doc>
@@ -55,12 +14,12 @@ row = 12 / lcslice
 	% while nlen > num:
 	% if len(newsletter[num]['items']) == 1 and nlen > num+1 and len(newsletter[num+1]['items']) == 1:
 	<div class="row-fluid">
-	    <div class="span6"><div class="bordered column">${ rubric_announce(newsletter[num], False) }</div></div>
-	    <div class="span6"><div class="bordered column">${ rubric_announce(newsletter[num+1], False) }</div></div>
+	    <div class="span6"><div class="bordered column">${ self.rubric_announce(newsletter[num], False) }</div></div>
+	    <div class="span6"><div class="bordered column">${ self.rubric_announce(newsletter[num+1], False) }</div></div>
 	</div>
 	<% num += 2 %>\
 	% else:
-	<div class="bordered">${ rubric_announce(newsletter[num], True) }</div>
+	<div class="bordered">${ self.rubric_announce(newsletter[num], True) }</div>
 	<% num += 1 %>\
 	% endif
 	% endwhile

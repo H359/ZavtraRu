@@ -7,6 +7,7 @@ from pytils.dt import MONTH_NAMES
 from django.views.generic import ListView, DetailView
 from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.cache import cache
 from django.db.models import Min, Max
 
 from diggpaginator import DiggPaginator
@@ -191,8 +192,22 @@ def view_issue(request, year, month, day):
     oneweek = timedelta(days=7)
     wstart = date
     wend = wstart+oneweek
+    qs = ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gte = wstart, pub_date__lt = wend, enabled=True, published=True)
+    newsletter = {}
+    rubrics = cache.get('rubrics') # context processor loaded them already
+    def get_rubric(rubric_id):
+	for r in rubrics:
+	    if r.id == rubric_id:
+		return r
+	return None
+    for item in list(qs):
+	newsletter.setdefault(item.rubric_id, {'rubric': None, 'items': []})
+	if newsletter[item.rubric_id]['rubric'] is None:
+	    newsletter[item.rubric_id]['rubric'] = get_rubric(item.rubric_id)
+	newsletter[item.rubric_id]['items'].append(item)
+    newsletter = sorted(newsletter.values(), key=lambda p: p['rubric'].position)
     return {
-	'items': ContentItem.batched.batch_select('authors').select_related().filter(pub_date__gte = wstart, pub_date__lt = wend, enabled=True, published=True).order_by('old_url'),
+	'newsletter': newsletter,
 	'issue': date
     }
 

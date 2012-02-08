@@ -484,7 +484,6 @@ pre {
   line-height: 18px;
   white-space: pre;
   white-space: pre-wrap;
-  word-break: break-all;
 }
 form {
   margin: 0 0 18px;
@@ -3984,6 +3983,16 @@ dl.unstyled.news dt:first-child {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+}
+.archive-table {
+  margin: 0 auto;
+  width: auto;
+}
+.archive-table th {
+  width: 200px;
+}
+.archive-table td {
+  width: 100px;
 }
 .bnrok {
   padding-top: 0.5em;
