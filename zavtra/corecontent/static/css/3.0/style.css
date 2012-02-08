@@ -3536,6 +3536,14 @@ a.thumbnail:hover {
   padding: 8px 0 0 0;
   font-size: 14px;
 }
+.comment .inner .text h1,
+.comment .inner .text h2,
+.comment .inner .text h3,
+.comment .inner .text h4,
+.comment .inner .text h5,
+.comment .inner .text h6 {
+  font-size: 14px;
+}
 .comment .actions {
   padding: 0;
   margin: 4px 0;

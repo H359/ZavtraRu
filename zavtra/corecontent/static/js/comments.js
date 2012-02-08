@@ -72,11 +72,11 @@
 	    //console.log(data);
 	    $('a.comment-rating', this.votable).text(parseInt(data['rating']));
 	    if (data['vote'] == 1) {
-		$('.vote-minus', this.votable).removeClass('btn-disabled').addClass('btn-danger');
-		$('.vote-plus', this.votable).removeClass('btn-success').addClass('btn-disabled');
+		$('.vote-minus', this.votable).removeClass('disabled')
+		$('.vote-plus', this.votable).addClass('disabled');
 	    } else {
-		$('.vote-minus', this.votable).removeClass('btn-danger').addClass('btn-disabled');
-		$('.vote-plus', this.votable).removeClass('btn-disabled').addClass('btn-success');
+		$('.vote-minus', this.votable).addClass('disabled');
+		$('.vote-plus', this.votable).removeClass('disabled');
 	    }
 	    this.votable = null;
 	},

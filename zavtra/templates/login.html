@@ -1,26 +1,38 @@
-{% extends base_template %}
-
-{% block page_title %}{{ block.super }} / Вход{% endblock %}
-
-{% block content %}
-{% if login_fail %}
-<div class="row">
-    <div class="span12 last">
-	<div class="error">Ошибка!</div>
-    </div>
-</div>
-{% endif %}
-<div class="row">
-    <div class="span6 last">
-	<h4>Войдите с помощью социальной сети</h4>
-	<div class="content social social-b">
-	{% for name in social_auth.backends.oauth %}
-    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
-        {% endfor %}
-        {% for name in social_auth.backends.oauth2 %}
-    	    <a class="{{ name }}" rel="nofollow" href="{% url socialauth_begin name %}"></a>
-        {% endfor %}
-	    {% for name in social_auth.backends.openid %}
+<%inherit file="base.html" />
+<%block name="page_title">${ parent.page_title() } / Вход</%block>
+<%block name="main_column">
+% if login_fail:
+<div class="alert alert-block alert-error">Ошибка!</div>
+% endif
+<form method="post" action="/login/">
+    <fieldset>
+	<div class="controls-group">
+	    <label for="login_username">Логин:</label>
+	    <input class="span4" id="login_username" type="text" name="username" />
+	</div>
+	<div class="controls-group">
+	    <label for="login_passwrod">Пароль</label>
+	    <input class="span4" id="login_password" type="password" name="password" />
+	</div>
+	<div class="form-actions">
+	    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
+	    <div class="btn-group">
+		<input type="submit" class="btn btn-success" value="Войти" />
+		<a href="/accounts/register/" class="btn">Регистрация</a>
+	    </div>
+	</div>
+    </fieldset>
+</form>
+<%doc>
+<h3>Войдите с помощью социальной сети</h3>
+<div class="content social social-b">
+    % for name in social_auth.backends.oauth:
+    <a class="${ name }" rel="nofollow" href="{% url socialauth_begin name %}"></a>
+    % endfor
+    % for name in social_auth.backends.oauth2:
+    <a class="${ name }" rel="nofollow" href="{% url socialauth_begin name %}"></a>
+    % endfor
+    % for name in social_auth.backends.openid:
 	    {% if name == "livejournal" %}
 	    <script>window.modal_bootstrap=function(){$('#livejournal-login-modal').modal({backdrop:true,keyboard:true});}</script>
 	    <a class="{{ name }}" data-controls-modal="livejournal-login-modal" rel="nofollow" href="#"></a>
@@ -63,4 +75,5 @@
 	</div>
     </div>
 </div>
-{% endblock %}
+</%doc>
+</%block>

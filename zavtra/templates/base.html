@@ -76,21 +76,27 @@ row = 12 / lcslice
 		    % endif
 		% endif
 		</div>\
-		<div class="btn-group pull-right">\
-		    % if request.user.is_authenticated() and request.user.is_active:
+		% if request.user.is_authenticated() and request.user.is_active:
+		    <div class="btn-toolbar">\
 			% if item.enabled:
-			<a href="#vote:up:${ item.id }" class="vote-plus btn btn-small ${ 'btn-disabled' if vote == 1 else 'btn-success' }"><i class="icon-white icon-plus-sign"></i></a>
-			<a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
-			<a href="#vote:down:${ item.id }" class="vote-minus btn btn-small ${ 'btn-disabled' if vote == -1 else 'btn-danger' }"><i class="icon-white icon-minus-sign"></i></a>
-			<a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
+			<div class="btn-group">
+			    <a href="#vote:up:${ item.id }" class="vote-plus btn btn-small btn-info ${ 'disabled' if vote == 1 else '' }"><i class="icon-white icon-plus-sign"></i></a>
+			    <a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
+			    <a href="#vote:down:${ item.id }" class="vote-minus btn btn-small btn-info ${ 'disabled' if vote == -1 else '' }"><i class="icon-white icon-minus-sign"></i></a>
+			</div>
+			<div class="btn-group pull-right">
+			    <a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
+			</div>
 			% endif
 			% if request.user.is_staff:
-			<%doc>and perms.comments.moderate</%doc>\
+			<div class="btn-group pull-right">
+			    <%doc>and perms.comments.moderate</%doc>\
 			    % if item.enabled:
 			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
 			    % else:
 			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
-			    % endif 
+			    % endif
+			</div>
 			% endif
 		    % endif
 		</div>\
@@ -162,9 +168,8 @@ row = 12 / lcslice
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.css" />\
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/skins/simple/style.css" />\
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/sets/markdown/style.css" />\
-	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru[% url corecontent.rss.latest %]" />\
+	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru/content/rss/latest/" />\
 	<link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/iehacks.css" />\
 	<script>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-27628875-1']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>\
     </head>\
     <body>\

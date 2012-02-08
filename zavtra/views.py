@@ -147,7 +147,7 @@ def login(request):
 		return {'login_fail': True}
 	else:
 	    return {'login_fail': True}
-    return {}
+    return {'login_fail': False}
 
 def logout(request):
     auth_logout(request)

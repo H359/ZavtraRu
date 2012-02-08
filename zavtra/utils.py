@@ -45,6 +45,8 @@ templateLookup = TemplateLookup(
 )
 
 def render_to_response(filename, request, context_dict):
+    if not isinstance(context_dict, dict):
+	return context_dict
     context = RequestContext(request, context_dict)
     data = {}
     [data.update(d) for d in context]
