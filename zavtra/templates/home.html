@@ -30,7 +30,10 @@
     <% url = item[1].get_absolute_url() %>\
     <img data-clickable="${ url }" src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
     <%doc><div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div></%doc>
-    <h2><a href="${ url }">${ item[1].title }<i class="icon-white icon-share-alt"></i></a></h2>
+    <div class="text">
+	<h2><a href="${ url }">${ item[1].title }<i class="icon-white icon-share-alt"></i></a></h2>
+	<div><a href="${ url }"><i class="icon-white icon-comment"></i> ${ self.comments_count(item[1].comments_count) }</a></div>
+    </div>
 </div>
 </%def>\
 <%block name="side_column">\
@@ -54,7 +57,7 @@
 	<% url = special_project.get_absolute_url() %>
 	<h4><a title="${ special_project.title }" href="${ url }">${ special_project.title }</a></h4>
 	<div data-clickable="${ url }" class="article-text">${ special_project.description }</div>
-	<div class="comments-count"><a href="${ url }#comments">${ self.comments_count(special_project.comments_count) }</a></div>
+	<div class="comments-count"><a href="${ url }#comments"><i class="icon-white icon-comment"></i> ${ self.comments_count(special_project.comments_count) }</a></div>
     </div>
     % endif
     <h3>Реклама</h3>
