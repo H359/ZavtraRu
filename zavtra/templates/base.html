@@ -79,17 +79,17 @@ row = 12 / lcslice
 		<div class="btn-group pull-right">\
 		    % if request.user.is_authenticated() and request.user.is_active:
 			% if item.enabled:
-			<a href="#vote:up:${ item.id }" class="btn btn-success"><i class="icon-white icon-plus-sign"></i></a>
-			<a class="btn disabled comment-rating" title="рейтинг комментария">${ item.rating }</a>
-			<a href="#vote:down:${ item.id }" class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></a>
-			<a href="#reply:${ item.id }" class="btn btn-info">Ответить</a>\
+			<a href="#vote:up:${ item.id }" class="btn btn-small btn-success"><i class="icon-white icon-plus-sign"></i></a>
+			<a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
+			<a href="#vote:down:${ item.id }" class="btn btn-small btn-danger"><i class="icon-white icon-minus-sign"></i></a>
+			<a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
 			% endif
 			% if request.user.is_staff:
 			<%doc>and perms.comments.moderate</%doc>\
 			    % if item.enabled:
-			    <a href="#hide:${ item.id }}" class="btn btn-danger">Скрыть</a>\
+			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
 			    % else:
-			    <a href="#hide:${ item.id }}" class="btn btn-danger">Раскрыть</a>\
+			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
 			    % endif 
 			% endif
 		    % endif
