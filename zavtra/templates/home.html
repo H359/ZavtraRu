@@ -8,7 +8,7 @@
 	<img src="http://zavtra.ru/media/${ illustration.for_main }" class="full-image" />
 	<div class="text"><h3><a href="${ MEDIA_URL }${ illustration.original }" rel="facebox"><i class="icon-white icon-zoom-in"></i> &laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
     </div>
-    <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right primary">скачать PDF</a></small></h2>
+    <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/4PDF.zip" class="btn small pull-right btn-primary">скачать PDF</a></small></h2>
     <% num, nlen = 0, len(newsletter) %>\
     <div class="container-fluid rubrics equalized">
 	% while nlen > num:
@@ -31,7 +31,7 @@
     <img data-clickable="${ url }" src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
     <%doc><div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div></%doc>
     <div class="text">
-	<h2><a href="${ url }">${ item[1].title }<i class="icon-white icon-share-alt"></i></a></h2>
+	<h2><a href="/content/rubric/zavtratv/">Завтра.LIVE:</a> <a href="${ url }">${ item[1].title }<i class="icon-white icon-share-alt"></i></a></h2>
 	<div><a href="${ url }"><i class="icon-white icon-comment"></i> ${ self.comments_count(item[1].comments_count) }</a></div>
     </div>
 </div>

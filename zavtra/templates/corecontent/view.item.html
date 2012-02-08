@@ -76,21 +76,13 @@ ${ self.news_block(news) }
     ${ output_tags(item) }
     % if item.kind == 'video':
     <% video_id = item.get_video_id() %>\
-    <div class="text-center">
-      <object width="425" height="344">
-        <param name="movie" value="http://youtube.com/v/${ video_id }&version=3"</param>
-        <param name="allowFullScreen" value="true"></param>
-        <param name="allowScriptAccess" value="always"></param>
-        <param name="wmode" value="transparent"></param>
-        <embed src="http://youtube.com/v/${ video_id }&version=3"
-               type="application/x-shockwave-flash" 
-               allowfullscreen="true"
-               allowscriptaccess="always"
-               wmode="transparent"
-               width="425" height="344">
-        </embed>
-      </object>
-    </div>
+    <object width="425" height="344">
+	<param name="movie" value="http://youtube.com/v/${ video_id }&version=3"</param>
+	<param name="allowFullScreen" value="true"></param>
+	<param name="allowScriptAccess" value="always"></param>
+	<param name="wmode" value="transparent"></param>
+	<embed src="http://youtube.com/v/${ video_id }&version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" wmode="transparent" width="425" height="344"></embed>
+    </object>
     % elif item.kind == 'text' or item.kind == '':
     <div class="inside-article-text">${ item.content }</div>
     % endif
