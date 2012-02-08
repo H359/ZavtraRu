@@ -191,6 +191,6 @@ def vote(request):
 	    if hasattr(obj, 'recalculate_rating'):
 		obj.recalculate_rating()
 	if request.is_ajax():
-	    return {'rating': obj.rating }
+	    return {'rating': obj.rating, 'vote': vote}
 	else:
 	    return redirect(obj.get_absolute_url())

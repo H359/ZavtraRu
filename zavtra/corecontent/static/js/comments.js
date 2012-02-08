@@ -70,7 +70,14 @@
 	},
 	onCommentVoted: function(data){
 	    //console.log(data);
-	    $('a.comment-rating', this.votable).text(parseInt(data.rating));
+	    $('a.comment-rating', this.votable).text(parseInt(data['rating']));
+	    if (data['vote'] == 1) {
+		$('.vote-minus', this.votable).removeClass('btn-disabled').addClass('btn-danger');
+		$('.vote-plus', this.votable).removeClass('btn-success').addClass('btn-disabled');
+	    } else {
+		$('.vote-minus', this.votable).removeClass('btn-danger').addClass('btn-disabled');
+		$('.vote-plus', this.votable).removeClass('btn-disabled').addClass('btn-success');
+	    }
 	    this.votable = null;
 	},
 	action: function(e){
