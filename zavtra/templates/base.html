@@ -131,6 +131,8 @@ from zavtra.comments.template_tags import get_comments_for
 	        <div class="container-fluid">
 		    <ul class="nav">
 		        <li><a href="/#gazette">Газета</a></li>
+		        <li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
+		        <li><a href="/denlit/index.html">&laquo;День литературы&raquo;</a></li>
 		        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
 		    </ul>
 		    <form action="/search/" method="get" class="navbar-search">
@@ -148,10 +150,10 @@ from zavtra.comments.template_tags import get_comments_for
 	    </div>
 	</div>
 	<div class="container-fluid">
-	    <div class="row-fluid">
-		<div id="logo"><a href="/"><img src="${ STATIC_URL }img/logo.gif" /></a></div>
+	    <div id="logo">
+		<a href="/" id="mlogo"><img src="${ STATIC_URL }img/logo.gif" /></a>
 		% if quote is not None:
-		<blockquote id="main-cite">&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
+		<blockquote>&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
 		% endif
 	    </div>
 	    <div class="row-fluid">

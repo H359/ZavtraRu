@@ -59,6 +59,14 @@ class Rubric(models.Model):
     def get_absolute_url(self):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
 
+    def save(self, *args, **kwargs):
+	super(Rubric, self).save(*args, **kwargs)
+	cache.delete('rubrics')
+
+    def delete(self, *args, **kwargs):
+	super(Rubric, self).delete(*args, **kwargs)
+	cache.delete('rubrics')
+
 class FeaturedItems(models.Model):
     class Meta:
         verbose_name=u'Горячая тема'
@@ -76,8 +84,12 @@ class FeaturedItems(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-	cache.delete('featured')
 	super(FeaturedItems, self).save(*args, **kwargs)
+	cache.delete('featured')
+
+    def delete(self, *args, **kwargs):
+	super(FeaturedItems, self).delete(*args, **kwargs)
+	cache.delete('featured')
 
     @models.permalink
     def get_absolute_url(self):
@@ -181,6 +193,13 @@ class ContentItem(models.Model):
     def get_video_id(self):
 	q = urlparse.urlparse(self.content).query
 	return (urlparse.parse_qs(q).get('v')[0]).strip()
+
+    def delete(self, *args, **kwargs):
+	if self.rubric_id is not None and self.rubric_id == 1:
+	    cache.delete('news2')
+	else:
+	    cache.delete('red_string')
+	super(ContentItem, self).delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
 	notypo = kwargs.get('notypo', False)

@@ -1,3 +1,4 @@
 #!/bin/bash
 
 lessc bootstrap.less > style.css
+lessc responsive.less >> style.css
