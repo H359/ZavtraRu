@@ -3789,6 +3789,9 @@ li.rss {
   font-size: 1.35em;
   font-weight: bold;
 }
+.red-stripe h3 a {
+  color: white;
+}
 .red-stripe h4 {
   margin: 0;
 }
@@ -3843,6 +3846,7 @@ li.rss {
   padding: 0.2em 0;
 }
 .rubrics-list ul li a {
+  padding: 0.5em;
   color: white;
   font-size: 1.2em;
 }
@@ -3868,7 +3872,12 @@ li.rss {
   padding: 0.2em 0;
 }
 .featured-list ul li a {
-  color: #a4342f;
+  padding: 0.2em;
+  color: #cf3a2d;
+}
+.featured-list ul li a:hover {
+  background: #cf3a2d;
+  color: #ffffff;
 }
 .rubrics h3 {
   border-bottom: 1px solid #a4342f;

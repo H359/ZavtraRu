@@ -168,6 +168,9 @@ li.rss {
 	color: white;
 	font-size: 1.35em;
 	font-weight: bold;
+	a {
+	    color: white;
+	}
     }
     h4 {
 	margin: 0;
@@ -212,6 +215,7 @@ li.rss {
 	li {
 	    padding: 0.2em 0;
 	    a {
+		padding: 0.5em;
 		color: white;
 		font-size: 1.2em;
 		&:hover {
@@ -236,7 +240,12 @@ li.rss {
 	li {
 	    padding: 0.2em 0;
 	    a {
-		color: @socialistRed;
+		padding: 0.2em;
+		color: @communistRed;
+		&:hover {
+		    background: @communistRed;
+		    color: @white;
+		}
 	    }
 	}
     }

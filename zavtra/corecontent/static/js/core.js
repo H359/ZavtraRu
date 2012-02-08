@@ -184,6 +184,7 @@ $(function(){
     })();
     */
     $('.equalized .row-fluid').equalize();
-    $('.carousel').carousel();
+    //$('.carousel').carousel();
     $('a[rel=facebox]').lightBox();
+    $('a[rel=popover]').popover();
 });
