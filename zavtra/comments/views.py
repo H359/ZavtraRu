@@ -44,7 +44,7 @@ def delete_comment(request):
     comment.enabled = not comment.enabled
     Comment.objects.filter(pk=comment.pk).update(enabled=comment.enabled)
     #permsFake = {'comments': {'moderate': True}}
-    res['html'] = templateLookup.get_template('base.html').get_def('comment').render_unicode(item=comment, request=request)
+    res['html'] = templateLookup.get_template('base.html').get_def('comment').render_unicode(item=comment, request=request, vote=0)
     res['enabled'] = comment.enabled
     return res
     #return {'enabled': comment.enabled, 'html': render_to_string('comments/item.html', {'request': request, 'comment': comment, 'perms': permsFake})}
