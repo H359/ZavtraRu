@@ -101,7 +101,7 @@ row = 12 / lcslice
 </%def>\
 <%def name="comments_for(item)">\
 <% comments = get_comments_for(item, request.user) %>\
-<div class="comments inside-article-text">\
+<div class="comments">\
     <h3>Комментарии</h3>\
     <div class="content"><ul id="comments" class="unstyled">\
 	% for comment_item in comments['comments']:
