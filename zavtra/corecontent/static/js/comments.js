@@ -7,6 +7,15 @@
 	this.root.delegate(this.settings.actions, 'click', $.proxy(this.action, this));
 	this.form.submit($.proxy(this.submit, this));
 	this.enabled = true;
+	this.votable = null;
+	$('textarea', this.form).markItUp({
+	    markupSet: [
+		{name: 'Полужирный', key: 'B', openWith: '**', closeWith: '**'},
+		{name: 'Курсив', key: 'I', openWith: '_', closeWith: '_'},
+		{name: 'Ссылка', key: 'L', openWith: '[', closeWith: ']([![Url:!:http://]!] "[![Title]!]")', placeHolder: 'Cсылка'}
+	    ],
+	    onShiftEnter: {keepDefault: false, openWith: '\n\n'}
+	});
     }
 
     Comments.prototype = {
@@ -54,9 +63,20 @@
 	    });
 	    
 	},
+	voteComment: function(elt, params){
+	    if (this.votable) return;
+	    this.votable = elt;
+	    $.post('/vote/', {'vote': params[1], 'djct': 25, 'djoi': params[2]}, $.proxy(this.onCommentVoted, this));
+	},
+	onCommentVoted: function(data){
+	    //console.log(data);
+	    $('a.comment-rating', this.votable).text(parseInt(data.rating));
+	    this.votable = null;
+	},
 	action: function(e){
-	    var target = $(e.target),
-		ops    = target.attr('href').split('#')[1].split(':'),
+	    var target = $(e.target);
+	    if (e.target.nodeName != 'A') target = target.parents('a');
+	    var ops    = target.attr('href').split('#')[1].split(':'),
 		cmnt   = target.parents(this.settings.item),
 		prnt   = this.settings.parentExtractor(cmnt);
 	    switch (ops[0]) {
@@ -76,6 +96,9 @@
 		case 'hide':
 		    this.hideComment(cmnt, prnt);
 		    break;
+		case 'vote':
+		    this.voteComment(cmnt, ops);
+		    break;
 	    }
 	    return false;
 	}
@@ -85,7 +108,7 @@
 
     $.fn.comments.defaults = {
 	 form: 'div.comment-form'
-	,item: 'li'
+	,item: '#comments > li'
 	,fieldWrap: 'div.clearfix'
 	,parentExtractor: function(elt) { return $(elt).attr('id').split('-')[1]; }
 	,parentField: '#id_parent'

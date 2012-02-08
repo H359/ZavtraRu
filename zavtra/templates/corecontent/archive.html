@@ -1,7 +1,10 @@
 <%inherit file="../base.html" />
 <%block name="main_column">
 % if new:
-<p>Здесь вы видите те номера газеты, которые появились после перехода на новую версию сайта. Для просмотра старого архива, передйите по <a href="http://zavtra.ru/cgi//veil//data/zavtra/">этой ссылке</a>.</p>
+<div class="alert alert-block alert-error">
+    <h4 class="alert-heading">Новый архив!</h4>
+    <p>Здесь вы видите те номера газеты, которые появились после перехода на новую версию сайта. Для просмотра старого архива, передйите по <a href="http://zavtra.ru/cgi//veil//data/zavtra/">этой ссылке</a>.</p>
+</div>
 % endif
 <div class="content archive">
     % for year, months in dates:

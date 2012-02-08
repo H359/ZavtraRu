@@ -16,7 +16,7 @@ from django.template.loader import render_to_string
 from django.utils.functional import lazy
 from django.conf import settings
 
-#from annoying.decorators import render_to, ajax_request
+from annoying.decorators import ajax_request
 from diggpaginator import DiggPaginator
 
 from corecontent.models import ContentItem, ZhivotovIllustration
@@ -171,6 +171,7 @@ def live_update(request):
 	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), reversed(comments[0:qty])),
     }
 
+@ajax_request
 @login_required
 def vote(request):
     if request.method == 'POST':
@@ -187,7 +188,9 @@ def vote(request):
 	if v.vote != vote:
 	    v.vote = vote
 	    v.save()
+	    if hasattr(obj, 'recalculate_rating'):
+		obj.recalculate_rating()
 	if request.is_ajax():
-	    return HttpResponse()
+	    return {'rating': obj.rating }
 	else:
 	    return redirect(obj.get_absolute_url())

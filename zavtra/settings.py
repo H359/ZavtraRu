@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'minipoll',
     'editorial',
     'djangosphinx',
+    'shortener',
     #'pipeline',
     #'haystack',
     'ajaxfields',

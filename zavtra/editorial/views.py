@@ -6,18 +6,19 @@ from django.http import HttpResponseRedirect
 from django.db.models import Count
 
 from diggpaginator import DiggPaginator
+from utils import MakoViewMixin
 
 from forms import ThreadForm
 from models import Thread
 
-class EditorialViewIndex(ListView):
+class EditorialViewIndex(MakoViewMixin, ListView):
     paginate_by = 15
     paginator_class = DiggPaginator
     template_name = 'editorial/view.index.html'
     def get_queryset(self):
 	return Thread.get_root_nodes().order_by('-created_at','-id')
 
-class EditorialViewThread(ListView):
+class EditorialViewThread(MakoViewMixin, ListView):
     template_name = 'editorial/view.thread.html'
     def get_queryset(self):
 	self.thread = get_object_or_404(Thread, id=self.kwargs['id'])
@@ -34,7 +35,7 @@ class EditorialViewThread(ListView):
 	context['root'] = self.thread
 	return context
 
-class EditorialViewCreateThread(CreateView):
+class EditorialViewCreateThread(MakoViewMixin, CreateView):
     form_class = ThreadForm
     template_name = 'editorial/create.thread.html'
     def get_queryset(self):

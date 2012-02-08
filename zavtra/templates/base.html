@@ -68,18 +68,21 @@ row = 12 / lcslice
 		<div class="author"><a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <time datetime="${ item.created_at }">${ ru_date(item.created_at) }<time></div>\
 		<div class="text">\
 		% if item.enabled:
-		<pre>${ item.comment | h }</pre>\
+		${ item.comment_html }\
 		% else:
 		<em>комментарий скрыт</em>\
 		    % if request.user.is_authenticated() and request.user.is_staff:
-		    <br/>Текст:<br/><pre>${ item.comment | h }</pre>\
+		    <br/>Текст:<br/>${ item.comment_html }\
 		    % endif
 		% endif
 		</div>\
 		<div class="btn-group pull-right">\
 		    % if request.user.is_authenticated() and request.user.is_active:
 			% if item.enabled:
-			<a href="#reply:${ item.id }" class="btn btn-success">Ответить</a>\
+			<a href="#vote:up:${ item.id }" class="btn btn-success"><i class="icon-white icon-plus-sign"></i></a>
+			<a class="btn disabled comment-rating" title="рейтинг комментария">${ item.rating }</a>
+			<a href="#vote:down:${ item.id }" class="btn btn-danger"><i class="icon-white icon-minus-sign"></i></a>
+			<a href="#reply:${ item.id }" class="btn btn-info">Ответить</a>\
 			% endif
 			% if request.user.is_staff:
 			<%doc>and perms.comments.moderate</%doc>\
@@ -157,6 +160,8 @@ row = 12 / lcslice
 	<meta name="yandex-verification" content="79bffe9a083206fe" />\
 	<%block name="meta_extra"></%block>\
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.css" />\
+	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/skins/simple/style.css" />\
+	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/sets/markdown/style.css" />\
 	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru[% url corecontent.rss.latest %]" />\
 	<link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />\
 	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/2.0/iehacks.css" />\
@@ -174,6 +179,16 @@ row = 12 / lcslice
 		        <li><a href="/#gazette">Газета</a></li>
 		        <li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
 		        <li><a href="/denlit/index.html">&laquo;День литературы&raquo;</a></li>
+		        % if request.user.is_authenticated():
+		        <li class="dropdown" id="editorial">
+			    <a href="#editorial" data-toggle="dropdown" class="dropdown-toggle">Редакционное <b class="caret"></b></a>
+			    <ul class="dropdown-menu">
+				<li><a href="/editorial/">Редакционный блог</a></li>
+				<li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта@zavtra.ru</a></li>
+				<li><a href="/?next_number=1">Новый номер</a></li>
+			    </ul>
+			</li>
+		        % endif
 		        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
 		    </ul>
 		    <form action="/search/" method="get" class="navbar-search">
@@ -259,11 +274,14 @@ row = 12 / lcslice
 	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
 	<script src="${ STATIC_URL }js/jquery.lightbox-0.5.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
+	<script src="${ STATIC_URL }js/bootstrap-dropdown.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-tooltip.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-popover.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-carousel.js"></script>
 	<script src="${ STATIC_URL }js/jquery.cookie.js"></script>
 	<script src="${ STATIC_URL }js/jquery.ui.custom.js"></script>
+	<script src="${ STATIC_URL }js/markitup/jquery.markitup.js"></script>
+	<script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
 	<script src="${ STATIC_URL }js/comments.js"></script>
 	<script src="${ STATIC_URL }js/core.js"></script>
 	% for i in banners_pool:

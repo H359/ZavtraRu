@@ -44,6 +44,8 @@ urlpatterns = patterns('',
     url(r'^live/$', 'views.live', name='live'),
     url(r'^live/update/$', 'views.live_update', name='live.update'),
 
+    url(r'^shortener/go/(?P<short>[0-9A-Za-z]+)/$', 'shortener.views.expand', name='shortener.expand'),
+
     (r'^search/', 'zavtra.views.search'),
     #(r'^search/', include('haystack.urls')),
     #url(r'^search/', search_view_factory(view_class=CCSearchView), name = 'search'),

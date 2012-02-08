@@ -1,4 +1,6 @@
 #-*- coding: utf-8 -*-
+from markdown import markdown
+
 from datetime import datetime
 
 from django.conf import settings
@@ -7,6 +9,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
+from utils import LinkShortener
+from voting.models import Vote
 from mail.models import EmailTemplate
 from treebeard.mp_tree import MP_Node
 
@@ -19,18 +23,25 @@ class Comment(models.Model):
 	verbose_name=u'Комментарий'
 	verbose_name_plural=u'Комментарии'
     parent         = models.ForeignKey('self', null=True, blank=True, verbose_name=u'Родительский комментарий', related_name='children')
-    path          = models.CharField(max_length=1024)
+    path           = models.CharField(max_length=1024)
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     author         = models.ForeignKey(User, verbose_name=u'Автор', related_name='comments')
     comment        = models.TextField(verbose_name=u'Текст комментария', max_length=8192, help_text=u'Максимум 8192 символа. Помните &mdash; это комментарий, а не статья.')
+    comment_html   = models.TextField(editable=False)
     enabled        = models.BooleanField(default=True)
     created_at     = models.DateTimeField(editable=False, default=lambda: datetime.now())
     rating         = models.IntegerField(default=0)
     ip             = models.IPAddressField(verbose_name=u'IP отправителя', blank=True)
 
+    def recalculate_rating(self):
+	self.rating = Vote.objects.get_score(self).get('score', 0)
+	Comment.objects.filter(pk=self.pk).update(rating = self.rating)
+
     def save(self, *args, **kwargs):
+	linkShortener = LinkShortener()
+	self.comment_html = markdown(self.comment, safe_mode='escape', output_format='html5', extensions=['nl2br', linkShortener])
 	# TODO: bailout on present path?
 	lookup = {'content_type': self.content_type, 'object_id': self.object_id, 'parent': self.parent}
 	if self.pk is not None:

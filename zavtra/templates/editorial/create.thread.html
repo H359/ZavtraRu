@@ -1,19 +1,12 @@
-{% extends base_template %}
-
-{% load pytils_dt %}
-
-{% block content %}
-<section class="container container_16 clearfix">
-    <article class="alpha omega grid_16">
-	<div class="content">
-	    <form class="regform" method="post" action="">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<div class="buttons">
-		    <button type="submit" class="button green"><span class="label">Создать новую тему</span></button>
-		</div>
-	    </form>
+<%inherit file="../base.html" />
+<%block name="main_column">
+<form class="regform" method="post" action="">
+    <fieldset>
+	<div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>
+	${ form.as_p() }
+	<div class="btn-group">
+	    <button type="submit" class="btn btn-success">Это должны знать все!</button>
 	</div>
-    </article>
-</section>
-{% endblock %}
+    </fieldset>
+</form>
+</%block>

@@ -1,4 +1,6 @@
 #-*- coding: utf-8 -*-
+import markdown
+
 from functools import wraps
 
 from django.core.cache import cache
@@ -7,8 +9,28 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.utils.html import strip_tags
 
+from shortener.models import Link
+
 from pytils.translit import slugify as original_slugify
 from mako.lookup import TemplateLookup
+
+class LinkShortenerProcessor(markdown.treeprocessors.Treeprocessor):
+    def run(self, tree):
+	for x in tree.getiterator('a'):
+	    url = x.get('href')
+	    if len(url) > 0:
+		# get_or_create omits save call? :-/
+		try:
+		    link = Link.objects.get(original=url)
+		except Link.DoesNotExist:
+		    link = Link(original=url)
+		    link.save()
+		x.set("href", link.get_absolute_url())
+	return tree
+
+class LinkShortener(markdown.Extension):
+    def extendMarkdown(self, md, md_globals):
+	md.treeprocessors['shorten'] = LinkShortenerProcessor(md)
 
 class MakoViewMixin(object):
     def render_to_response(self, context, **kwargs):

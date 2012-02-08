@@ -25,6 +25,8 @@ from autoslug import AutoSlugField
 from pytils import dt
 from djangosphinx.models import SphinxSearch
 
+from typo import typography
+
 from utils import cached, cached_method
 
 from comments.models import Comment
@@ -205,6 +207,7 @@ class ContentItem(models.Model):
 	notypo = kwargs.get('notypo', False)
 	if notypo:
 	    del kwargs['notypo']
+	"""
         if not notypo and self.id is None:
             from typograph.RemoteTypograf import RemoteTypograf
             rt = RemoteTypograf()
@@ -217,6 +220,12 @@ class ContentItem(models.Model):
                 field_val = field_val.strip()
                 if len(field_val) < 32000:
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
+        """
+	self.title = typography(self.title)
+	self.description = typography(self.description)
+	self.subtitle = typography(self.subtitle)
+	if self.kind == 'text':
+	    self.content = typography(self.content)
         super(ContentItem, self).save(*args, **kwargs)
 	if self.rubric_id is not None and self.rubric_id == 1:
 	    cache.delete('news2')
