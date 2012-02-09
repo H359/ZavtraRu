@@ -188,7 +188,7 @@ row = 12 / lcslice
 		        <li><a href="/#gazette">Газета</a></li>
 		        <li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
 		        <li><a href="/denlit/index.html">&laquo;День литературы&raquo;</a></li>
-		        % if request.user.is_authenticated():
+		        % if request.user.is_authenticated() and request.user.is_staff:
 		        <li class="dropdown" id="editorial">
 			    <a href="#editorial" data-toggle="dropdown" class="dropdown-toggle">Редакционное <b class="caret"></b></a>
 			    <ul class="dropdown-menu">
