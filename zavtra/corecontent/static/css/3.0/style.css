@@ -3883,13 +3883,16 @@ li.rss {
   margin: 0;
   width: auto;
 }
+.featured-list .featured-list-itself {
+  font-size: 1.05em;
+}
 .featured-list ul {
   padding: 0.25em 0;
   margin-left: 0.25em;
   margin-bottom: 0;
 }
 .featured-list ul li {
-  padding: 0.2em 0;
+  padding: 0.2em;
 }
 .featured-list ul li a {
   padding: 0.2em;

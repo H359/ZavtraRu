@@ -44,6 +44,11 @@ User.__unicode__ = lambda s: s.get_full_name() if s.first_name or s.last_name el
 User.get_absolute_url = lambda s: get_user_url(s)
 
 class Rubric(models.Model):
+    CHILDREN_RENDER_TYPE = (
+	(0, u'Не отображать'),
+	(1, u'В левой колонке'),
+	(2, u'Плиткой')
+    )
     class Meta:
         verbose_name=u'Рубрика'
         verbose_name_plural=u'Рубрики'
@@ -55,6 +60,7 @@ class Rubric(models.Model):
     position    = models.PositiveIntegerField(verbose_name=u'Положение', default=lambda: Rubric.objects.count()+1)
     description = models.TextField(verbose_name=u'Описание')
     parent      = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Родительская рубрика')
+    children_render = models.IntegerField(choices=CHILDREN_RENDER_TYPE, default=0, verbose_name=u'Тип отображения подрубрик')
 
     def __unicode__(self):
         return self.title
