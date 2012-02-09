@@ -58,14 +58,17 @@ row = 12 / lcslice
 </%def>\
 <%def name="comment(item, vote=0, stream=False)">\
 <% author = item.get_author() %>\
-<li id="comment-${ item.id }" <% if not stream: context.write(u'style="padding-left: %dpx"' % (item.depth_truncated()*40)) %>>\
+<li id="comment-${ item.id }" <% if not stream: context.write(u'style="padding-left: %dpx;"' % (item.depth_truncated()*40)) %>>\
     <div class="comment">\
 	<div class="avatar">\
 	    <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>\
 	</div>\
 	<div class="inner">\
 	    <div class="body clearfixer">\
-		<div class="author"><a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <time datetime="${ item.created_at }">${ ru_date(item.created_at) }<time></div>\
+		<div class="author">
+		    <a href="${ item.author.get_absolute_url() }">${ item.author }</a>,
+		    <a href="/resolver/25/${ item.id }/#comment-${ item.id }"><time datetime="${ item.created_at }">${ ru_date(item.created_at, format=u'%d.%m.%Y %H:%M') }<time></a>
+		</div>\
 		<div class="text">\
 		% if item.enabled:
 		${ item.comment_html }\
@@ -77,29 +80,29 @@ row = 12 / lcslice
 		% endif
 		</div>\
 		% if request.user.is_authenticated() and request.user.is_active:
-		    <div class="btn-toolbar">\
-			% if item.enabled:
-			<div class="btn-group">
-			    <a href="#vote:up:${ item.id }" class="vote-plus btn btn-small btn-info ${ 'disabled' if vote == 1 else '' }"><i class="icon-white icon-plus-sign"></i></a>
-			    <a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
-			    <a href="#vote:down:${ item.id }" class="vote-minus btn btn-small btn-info ${ 'disabled' if vote == -1 else '' }"><i class="icon-white icon-minus-sign"></i></a>
-			</div>
-			<div class="btn-group pull-right">
-			    <a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
-			</div>
-			% endif
-			% if request.user.is_staff:
-			<div class="btn-group pull-right">
-			    <%doc>and perms.comments.moderate</%doc>\
-			    % if item.enabled:
-			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
-			    % else:
-			    <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
-			    % endif
-			</div>
-			% endif
+		<div class="btn-toolbar">\
+		    % if item.enabled:
+		    <div class="btn-group">
+			<a href="#vote:up:${ item.id }" class="vote-plus btn btn-small btn-info ${ 'disabled' if vote == 1 else '' }"><i class="icon-white icon-plus-sign"></i></a>
+			<a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
+			<a href="#vote:down:${ item.id }" class="vote-minus btn btn-small btn-info ${ 'disabled' if vote == -1 else '' }"><i class="icon-white icon-minus-sign"></i></a>
+		    </div>
+		    <div class="btn-group pull-right">
+			<a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
+		    </div>
 		    % endif
-		</div>\
+		    % if request.user.is_staff:
+		    <div class="btn-group pull-right">
+			<%doc>and perms.comments.moderate</%doc>\
+			% if item.enabled:
+			<a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
+			% else:
+			<a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
+			% endif
+		    </div>
+		    % endif
+		</div>
+		% endif
 	    </div>\
 	</div>\
     </div>\
