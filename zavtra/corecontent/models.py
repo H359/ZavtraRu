@@ -198,7 +198,7 @@ class ContentItem(models.Model):
 
     def delete(self, *args, **kwargs):
 	if self.rubric_id is not None and self.rubric_id == 1:
-	    cache.delete('news2')
+	    cache.delete('news')
 	else:
 	    cache.delete('red_string')
 	super(ContentItem, self).delete(*args, **kwargs)
@@ -230,7 +230,7 @@ class ContentItem(models.Model):
 	"""
         super(ContentItem, self).save(*args, **kwargs)
 	if self.rubric_id is not None and self.rubric_id == 1:
-	    cache.delete('news2')
+	    cache.delete('news')
 	else:
 	    cache.delete('red_string')
 
