@@ -1,25 +1,17 @@
-{% extends base_template %}
-{% block content %}
-<div class="row">
-    <article class="span8 rubric">
-	<h3>Живая лента</h3>
-	<ul class="pills" id="periodSelector">
-	    <li class="active"><a href="#qty:20">20</a></li>
-	    <li><a href="#qty:50">50</a></li>
-	    <li><a href="#qty:100">100</a></li>
-	    <li><a href="#qty:200">200</a></li>
-	</ul>
-	<div class="content">
-	    <div class="comments">
-		<ul id="comments"></ul>
-	    </div>
-	</div>
-    </article>
-    <article class="span4 last">{% include 'partials/rightside.html' %}</article>
-</div>
-{% endblock %}
-
-{% block javascript %}
+<%inherit file="base.html" />
+<%block name="main_column">
+<h3>Живая лента</h3>
+<ul class="nav nav-pills" id="periodSelector">
+    <li class="active"><a href="#qty:20">20</a></li>
+    <li><a href="#qty:50">50</a></li>
+    <li><a href="#qty:100">100</a></li>
+    <li><a href="#qty:200">200</a></li>
+</ul>
+<div class="comments"><ul id="comments" class="unstyled"></ul></div>
+</%block>
+<%block name="javascript_additional">
+${ parent.javascript_additional() }
+<script>
 (function(){
     var root = $('#comments'), updating = false, uh = null, start = null;
     var updateComments=function(){
@@ -45,4 +37,5 @@
     if (window.location.hash.indexOf('#qty') != -1) $('#periodSelector li a[href="'+window.location.hash+'"]').click();
     else updateComments();
 })();
-{% endblock %}
+</script>
+</%block>

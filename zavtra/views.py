@@ -12,7 +12,7 @@ from django.contrib.auth.context_processors import PermWrapper
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView
-from django.template.loader import render_to_string
+#from django.template.loader import render_to_string
 from django.utils.functional import lazy
 from django.conf import settings
 
@@ -23,7 +23,7 @@ from corecontent.models import ContentItem, ZhivotovIllustration
 from comments.models import Comment
 from voting.models import Vote
 
-from utils import MakoViewMixin, render_to, cached, group_list
+from utils import MakoViewMixin, templateLookup, render_to, cached, group_list
 
 oneday = timedelta(days=1)
 
@@ -160,15 +160,17 @@ def logged_in(request):
 def live(request):
     return {}
 
-#@ajax_request
+@ajax_request
 def live_update(request):
     qty = int(request.GET.get('qty', 20))
     start = request.GET.get('start')
     comments = Comment.objects.filter(enabled=True).order_by('-id')
     if start is not None and start != 'null':
 	comments = comments.filter(created_at__gte = datetime.fromtimestamp(int(start)))
+    cmnt = templateLookup.get_template('base.html').get_def('comment')
+    comments = comments[0:qty]
     return {
-	'stream': map(lambda c: render_to_string('comments/item.html', {'stream': True, 'comment':c}), reversed(comments[0:qty])),
+	'stream': list( reversed(map(lambda comment: cmnt.render_unicode(item=comment, request=request, vote=0, stream=True), comments)) )
     }
 
 @ajax_request

@@ -56,9 +56,9 @@ row = 12 / lcslice
 % endfor
 </dl>
 </%def>\
-<%def name="comment(item, vote)">\
+<%def name="comment(item, vote=0, stream=False)">\
 <% author = item.get_author() %>\
-<li id="comment-${ item.id }" style="padding-left: ${ item.depth_truncated()*40 }px">\
+<li id="comment-${ item.id }" <% if not stream: context.write(u'style="padding-left: %dpx"' % (item.depth_truncated()*40)) %>>\
     <div class="comment">\
 	<div class="avatar">\
 	    <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>\
@@ -289,6 +289,7 @@ row = 12 / lcslice
 	<script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
 	<script src="${ STATIC_URL }js/comments.js"></script>
 	<script src="${ STATIC_URL }js/core.js"></script>
+	<%block name="javascript_additional"></%block>
 	% for i in banners_pool:
 	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
 	% endfor
