@@ -222,7 +222,7 @@ class ContentItem(models.Model):
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
         """
 	self.title = typography(self.title)
-	self.description = typography(self.description)
+	#self.description = typography(self.description)
 	self.subtitle = typography(self.subtitle)
 	"""
 	if self.kind == 'text':
