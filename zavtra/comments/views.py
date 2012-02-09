@@ -28,7 +28,7 @@ def add_comment(request):
     	    data['ip'] = request.META.get('REMOTE_ADDR')
     	    comment = Comment.objects.create(**data)
             res['status'] = True
-            res['html'] = templateLookup.get_template('base.html').get_def('comment').render_unicode(item=comment, request=request)
+            res['html'] = templateLookup.get_template('base.html').get_def('comment').render_unicode(item=comment, request=request, vote=0)
         else:
             res['errors'] = dict( (k, map(unicode, v)) for (k,v) in form.errors.iteritems() )
     if not request.is_ajax():
