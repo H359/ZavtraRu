@@ -48,11 +48,13 @@ class Rubric(models.Model):
         verbose_name=u'Рубрика'
         verbose_name_plural=u'Рубрики'
         ordering = ['position', '-id']
-    title    = models.CharField(max_length=250, verbose_name=u'Заголовок')
-    slug     = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False, max_length=250)
-    on_main  = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
-    on_top   = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
-    position = models.PositiveIntegerField(verbose_name=u'Положение', default=lambda: Rubric.objects.count()+1)
+    title       = models.CharField(max_length=250, verbose_name=u'Заголовок')
+    slug        = AutoSlugField(populate_from=lambda instance: instance.title, unique=True, db_index=False, max_length=250)
+    on_main     = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
+    on_top      = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
+    position    = models.PositiveIntegerField(verbose_name=u'Положение', default=lambda: Rubric.objects.count()+1)
+    description = models.TextField(verbose_name=u'Описание')
+    parent      = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Родительская рубрика')
 
     def __unicode__(self):
         return self.title
