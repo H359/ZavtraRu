@@ -19,6 +19,9 @@ Russian typography
 """
 import re
 import os
+import html5lib
+from html5lib.filters import _base
+from html5lib.serializer import HTMLSerializer
 
 def _sub_patterns(patterns, text):
     """
@@ -149,7 +152,6 @@ def rl_quotes(x):
     """
     Replace quotes by typographic quotes
     """
-    
     patterns = (
         # открывающие кавычки ставятся обычно вплотную к слову слева
         # а закрывающие -- вплотную справа
@@ -166,7 +168,7 @@ def rl_quotes(x):
     
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue', 'quotes')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue') #, 'quotes')
 
 def _get_rule_by_name(name):
 
@@ -279,7 +281,7 @@ class Typography(object):
         except ValueError, e:
             raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
         return res
-    
+
     def apply(self, text):
         for rule in self.rules_names:
             text = self.apply_single_rule(rule, text)
@@ -288,11 +290,43 @@ class Typography(object):
     def __call__(self, text):
         return self.apply(text)
 
+class TypoFilter(_base.Filter):
+    typo = None
+    in_body = False
+    quotes_stack = 0
+    def __iter__(self):
+	for token in _base.Filter.__iter__(self):
+	    tname = token.get('name')
+	    ttype = token.get('type')
+	    if tname == 'body' and ttype == 'EndTag':
+	        self.in_body = False
+	    if self.in_body:
+		if ttype == 'Characters':
+		    token['data'] = self.typo.apply(token['data'])
+		    ndata = []
+		    for c in token['data']:
+			if c == '"':
+			    if self.quotes_stack % 2:
+				ndata.append(u'\xbb')
+				self.quotes_stack -= 1
+			    else:
+				ndata.append(u'\xab')
+				self.quotes_stack += 1
+			else:
+			    ndata.append(c)
+		    token['data'] = u''.join(ndata)
+		yield token
+	    if tname == 'body' and ttype == 'StartTag':
+		self.in_body = True
+
 def typography(text):
     t = Typography(STANDARD_RULES)
-    return t.apply(text)
-
-if __name__ == '__main__':
-    from pytils.test import run_tests_from_module, test_typo
-    run_tests_from_module(test_typo, verbosity=2)
-    
+    p = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder('dom'))
+    tree = p.parse(text)
+    walker = html5lib.treewalkers.getTreeWalker('dom')
+    stream = walker(tree)
+    cl_stream = TypoFilter(stream)
+    cl_stream.typo = t
+    serializer = HTMLSerializer(omit_optional_tags=False, inject_meta_charset=False, strip_whitespace=True)
+    output_generator = serializer.serialize(cl_stream)
+    return u''.join([item for item in output_generator])

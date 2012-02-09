@@ -222,12 +222,10 @@ class ContentItem(models.Model):
                     setattr(self, field, force_unicode(rt.processText(smart_str(field_val))))
         """
 	self.title = typography(self.title)
-	#self.description = typography(self.description)
+	self.description = typography(self.description)
 	self.subtitle = typography(self.subtitle)
-	"""
 	if self.kind == 'text':
 	    self.content = typography(self.content)
-	"""
         super(ContentItem, self).save(*args, **kwargs)
 	if self.rubric_id is not None and self.rubric_id == 1:
 	    cache.delete('news')
