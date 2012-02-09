@@ -168,7 +168,7 @@ def rl_quotes(x):
     
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue') #, 'quotes')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes') #, 'wordglue', 'quotes')
 
 def _get_rule_by_name(name):
 
