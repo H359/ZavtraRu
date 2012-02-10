@@ -196,3 +196,7 @@ def vote(request):
 	    return {'rating': obj.rating, 'vote': vote}
 	else:
 	    return redirect(obj.get_absolute_url())
+
+@render_to('404.html')
+def h404(request):
+    return {}

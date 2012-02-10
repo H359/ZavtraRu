@@ -67,3 +67,5 @@ if settings.DEBUG:
             'document_root': settings.MEDIA_ROOT,
         }),
    )
+
+handler404 = 'zavtra.views.h404'
