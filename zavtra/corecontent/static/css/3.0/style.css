@@ -3720,10 +3720,11 @@ body {
 }
 .inside-article-text p img {
   padding: 0.25em;
-  border: 1px solid #999999;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  margin: 0.5em 0;
+  border: 1px solid #eeeeee;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
 }
 .text-center {
   text-align: center;
