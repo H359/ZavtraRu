@@ -76,7 +76,7 @@ class ImageAdmin(ContentItemMediaMixin, admin.ModelAdmin):
 class RubricAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'on_main', 'on_top', 'position')
     list_editable = ('on_main', 'on_top', 'position')
-    
+
     def has_delete_permission(self, request, obj=None):
 	if obj is not None:
 	    return obj.title != u'Новости'

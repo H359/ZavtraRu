@@ -58,7 +58,7 @@ class Rubric(models.Model):
     on_main     = models.BooleanField(default=False, verbose_name=u'Выводить на главной')
     on_top      = models.BooleanField(default=False, verbose_name=u'Выводить в верхнем большом меню')
     position    = models.PositiveIntegerField(verbose_name=u'Положение', default=lambda: Rubric.objects.count()+1)
-    description = models.TextField(verbose_name=u'Описание')
+    description = models.TextField(verbose_name=u'Описание', default='', blank=True)
     parent      = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Родительская рубрика')
     children_render = models.IntegerField(choices=CHILDREN_RENDER_TYPE, default=0, verbose_name=u'Тип отображения подрубрик')
 
@@ -70,12 +70,19 @@ class Rubric(models.Model):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
 
     def save(self, *args, **kwargs):
+	self.description = typography(self.description)
 	super(Rubric, self).save(*args, **kwargs)
 	cache.delete('rubrics')
 
     def delete(self, *args, **kwargs):
 	super(Rubric, self).delete(*args, **kwargs)
 	cache.delete('rubrics')
+
+    def get_children(self):
+	if not hasattr(self, '__children_cache'):
+	    children = filter(lambda w: w.parent_id == self.id, cache.get('rubrics'))
+	    setattr(self, '__children_cache', children)
+	return getattr(self, '__children_cache')
 
 class FeaturedItems(models.Model):
     class Meta:
@@ -108,6 +115,10 @@ class FeaturedItems(models.Model):
 class ContentItem(models.Model):
     class Meta:
         ordering = ['-pub_date', '-id']
+        permissions = (
+	    ('socializm', u'Русский социалист'),
+        )
+
     title        = models.CharField(max_length=250, verbose_name=u'Заголовок')
     slug         = AutoSlugField(max_length=250, populate_from=lambda instance: instance.title, unique=True, db_index=False)
     subtitle     = models.CharField(max_length=250, verbose_name=u'Подзаголовок', blank=True)

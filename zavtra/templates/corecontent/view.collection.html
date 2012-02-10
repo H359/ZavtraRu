@@ -1,6 +1,63 @@
 <%inherit file="../base.html" />
 <%block name="page_title">${ parent.page_title() } / ${ title }</%block>
 
+<%def name="rubric_contents(items, is_paginated)">
+<ul class="unstyled articles">
+    % for item in items:
+    <% url = item.get_absolute_url() %>\
+    <li class="bordered">
+	<h4><a href="${ url }">${ item.title }</a></h4>
+	% if item.subtitle:
+	<h5><a href="${ url }">${ item.subtitle }</a></h5>
+	% endif
+	% if item.authors_all:
+	    % for num, author in enumerate(item.authors_all):
+	    % if num != 0:
+	    , \
+	    % endif
+	    <a class="author" href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
+	    % endfor
+	% endif
+	<div data-clickable="${ url }" class="article-text">
+	    % if item.kind == 'video':
+	    <div class="text-center">
+		<img src="http://img.youtube.com/vi/${ item.get_video_id() }/0.jpg" />
+	    </div>
+	    % endif
+	    ${ item.description }
+	</div>
+	<a href="${ url }#comments"><i class="icon-comment"></i> ${ self.comments_count(item.comments_count) }</a>
+    </li>
+    % endfor
+</ul>
+% if is_paginated:
+<div class="pagination pagination-right">
+    <ul>
+	<li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
+	% for p in page_obj.page_range:
+	<li<% if page_obj.number == p: context.write(' class="active"') %>">
+	% if p:
+	<a rel="page" href="?page=${ p }">${ p }</a>
+	% else:
+	<a>...</a>
+	% endif:
+	</li>
+	% endfor
+	<li class="next<% if not page_obj.has_next(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.next_page_number() }">Раньше &rarr;</a></li>
+    </ul>
+</div>
+% endif
+</%def>
+
+<%def name="sidebar(items)">
+<dl>
+    % for item in items:
+    <dt><h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4></dt>
+    <dd>${ item.description }</dd>
+    % endfor
+</ul>
+</%def>
+
 <%block name="side_column">
 <div class="ym-grid linearize-level-1">
     <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
@@ -21,59 +78,22 @@
     % endif
 </ul>
 <div>
-    <div class="content">
-	% if hasattr(title, 'id') and title.id == 44:
-	<p>Уважаемые друзья! Представляем вашему вниманию новую рубрику сайта &mdash; ЗАВТРА.LIVE. Эта рубрика является развитием газеты и сайта в новых информационных форматах. В рамках ЗАВТРА.LIVE Александр Андреевич Проханов будет еженедельно отвечать на вопросы посетителей сайта.<br/>
-	   Список вопросов будет формироваться в <a href="/content/rubric/voprosyi-prohanovu/">этом разделе</a> голосованием посетителей за отобранные модераторами вопросы. Задать свой вопрос А.А. Проханову можно там же.<br/>
-	   В дальнейшем, в рубрике ЗАВТРА.LIVE появятся и иные по формату видеоматериалы, в том числе репортажные.<br/>
-	   Спасибо за ваше участие!
-	</p>
-	% endif
-	<ul class="unstyled articles">
-	    % for item in items:
-	    <% url = item.get_absolute_url() %>\
-	    <li class="bordered">
-		<h4><a href="${ url }">${ item.title }</a></h4>
-		% if item.subtitle:
-		<h5><a href="${ url }">${ item.subtitle }</a></h5>
-		% endif
-		% if item.authors_all:
-		    % for num, author in enumerate(item.authors_all):
-		    % if num != 0:
-		    , \
-		    % endif
-		    <a class="author" href="${ author.get_absolute_url() }">${ author.get_full_name() }</a>
-		    % endfor
-		% endif
-		<div data-clickable="${ url }" class="article-text">
-		    % if item.kind == 'video':
-		    <div class="text-center">
-			<img src="http://img.youtube.com/vi/${ item.get_video_id() }/0.jpg" />
-		    </div>
-		    % endif
-		    ${ item.description }
-		</div>
-		<a href="${ url }#comments"><i class="icon-comment"></i> ${ self.comments_count(item.comments_count) }</a>
-	    </li>
-	    % endfor
-	</ul>
-        % if is_paginated:
-	<div class="pagination pagination-right">
-	    <ul>
-		<li class="prev<% if not page_obj.has_previous(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.previous_page_number() }">&larr; Позже</a></li>
-        	% for p in page_obj.page_range:
-        	<li<% if page_obj.number == p: context.write(' class="active"') %>">
-        	% if p:
-        	<a rel="page" href="?page=${ p }">${ p }</a>
-        	% else:
-        	<a>...</a>
-        	% endif:
-        	</li>
-        	% endfor
-        	<li class="next<% if not page_obj.has_next(): context.write(' disabled') %>"><a rel="page" href="?page=${ page_obj.next_page_number() }">Раньше &rarr;</a></li>
-    	    </ul>
-        </div>
-        % endif
+<%
+children = []
+if rubric and 0 < rubric.children_render:
+    children = rubric.get_children()
+%>
+% if len(children) == 0:
+${ rubric_contents(items, is_paginated) }
+% else:
+    <div class="row-fluid">
+    % if rubric.children_render == 1:
+    <div class="span4">${ sidebar(children) }</div>
+    <div class="span8">${ rubric_contents(items, is_paginated) }</div>
+    % else:
+    not ready
+    % endif
     </div>
+% endif
 </div>
 </%block>

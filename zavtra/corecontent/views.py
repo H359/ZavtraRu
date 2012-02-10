@@ -33,11 +33,16 @@ class RubricView(MakoViewMixin, ListView):
     def get_queryset(self):
         self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
         now = datetime.now()
-        return ContentItem.batched.batch_select('authors').filter(enabled=True, rubric=self.rubric, pub_date__lte = now)
+        qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
+        if self.rubric.children_render > 0:
+	    qs = qs.filter(rubric__in=self.rubric.get_children())
+	else:
+	    qs = qs.filter(rubric=self.rubric)
+        return qs
     
     def get_context_data(self, **kwargs):
         context = super(RubricView, self).get_context_data(**kwargs)
-        context['type']  = u'Рубрика'
+        context['rubric'] = self.rubric
         context['title'] = self.rubric
         context['rss'] = reverse('corecontent.rss.rubric', kwargs={'slug': self.rubric.slug})
         return context
@@ -73,7 +78,6 @@ class FeaturedView(MakoViewMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(FeaturedView, self).get_context_data(**kwargs)
-        context['type']  = u'Рубрика'
         context['title'] = self.featured
         context['rss'] = reverse('corecontent.rss.featured', kwargs={'slug': self.featured.slug})
         return context
@@ -90,7 +94,6 @@ class TaggedItemsView(MakoViewMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TaggedItemsView, self).get_context_data(**kwargs)
-        context['type']  = u'Всё по тегу'
         context['title'] = self.tag
         context['rss'] = reverse('corecontent.rss.tag', kwargs={'slug': self.tag.slug})
         return context
@@ -106,7 +109,6 @@ class BlogView(MakoViewMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BlogView, self).get_context_data(**kwargs)
-        context['type']  = u'Рубрика'
         context['title'] = u'Блоги'
         return context
 
@@ -123,7 +125,7 @@ class GalleryView(ListView):
 	return context
     """
 
-class FeaturedIndexView(ListView):
+class FeaturedIndexView(MakoViewMixin, ListView):
     #paginate_by         = 15
     template_name       = 'corecontent/featured.index.html'
     #paginator_class     = DiggPaginator
