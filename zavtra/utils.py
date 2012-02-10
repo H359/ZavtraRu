@@ -46,8 +46,6 @@ class NoStuffMarkdown(markdown.Extension):
 	del md.parser.blockprocessors['hashheader']
 	del md.parser.blockprocessors['setextheader']
 	del md.parser.blockprocessors['hr']
-	print md.inlinePatterns.keys()
-	print md.parser.blockprocessors.keys()
 
 class MakoViewMixin(object):
     def render_to_response(self, context, **kwargs):
