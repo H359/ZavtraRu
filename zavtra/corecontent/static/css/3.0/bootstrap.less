@@ -75,11 +75,25 @@ body {
 	&:last-child {
 	    margin-bottom: 0;
 	}
+	p {
+	    img {
+		padding: 0.25em;
+		border: 1px solid @grayLight;
+		.border-radius(5px);
+	    }
+	}
     }
 }
 
 .inside-article-text {
     max-width: 52em;
+    p {
+        img {
+	    padding: 0.25em;
+	    border: 1px solid @grayLight;
+	    .border-radius(5px);
+	}
+    }
 }
 
 .text-center {

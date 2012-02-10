@@ -3708,8 +3708,22 @@ body {
 .articles li:last-child {
   margin-bottom: 0;
 }
+.articles li p img {
+  padding: 0.25em;
+  border: 1px solid #999999;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 .inside-article-text {
   max-width: 52em;
+}
+.inside-article-text p img {
+  padding: 0.25em;
+  border: 1px solid #999999;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .text-center {
   text-align: center;
