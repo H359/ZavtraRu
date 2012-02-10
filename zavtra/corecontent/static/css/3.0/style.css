@@ -3709,7 +3709,7 @@ body {
   margin-bottom: 0;
 }
 .articles li p img {
-  padding: 0.25em;
+  padding: 0.5em;
   margin: 0.5em 0;
   border: 1px solid #eeeeee;
   -webkit-border-radius: 15px;
@@ -3720,7 +3720,7 @@ body {
   max-width: 52em;
 }
 .inside-article-text p img {
-  padding: 0.25em;
+  padding: 0.5em;
   margin: 0.5em 0;
   border: 1px solid #eeeeee;
   -webkit-border-radius: 15px;
