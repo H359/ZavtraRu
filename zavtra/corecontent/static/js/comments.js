@@ -12,7 +12,7 @@
 	    markupSet: [
 		{name: 'Полужирный', key: 'B', openWith: '**', closeWith: '**'},
 		{name: 'Курсив', key: 'I', openWith: '_', closeWith: '_'},
-		{name: 'Ссылка', key: 'L', openWith: '[', closeWith: ']([![Url:!:http://]!] "[![Title]!]")', placeHolder: 'Cсылка'}
+		{name: 'Ссылка', key: 'L', openWith: '[', closeWith: ']([![Url:!:http://]!] "[![Title]!]")', placeHolder: 'ссылка'}
 	    ],
 	    onShiftEnter: {keepDefault: false, openWith: '\n\n'}
 	});

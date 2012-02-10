@@ -32,6 +32,23 @@ class LinkShortener(markdown.Extension):
     def extendMarkdown(self, md, md_globals):
 	md.treeprocessors['shorten'] = LinkShortenerProcessor(md)
 
+class NoStuffMarkdown(markdown.Extension):
+    def extendMarkdown(self, md, md_globals):
+	del md.inlinePatterns['image_link']
+	del md.inlinePatterns['backtick']
+	del md.inlinePatterns['reference']
+	del md.inlinePatterns['short_reference']
+	del md.inlinePatterns['image_reference']
+	del md.inlinePatterns['automail']
+	del md.inlinePatterns['autolink']
+	del md.inlinePatterns['escape']
+	del md.parser.blockprocessors['code']
+	del md.parser.blockprocessors['hashheader']
+	del md.parser.blockprocessors['setextheader']
+	del md.parser.blockprocessors['hr']
+	print md.inlinePatterns.keys()
+	print md.parser.blockprocessors.keys()
+
 class MakoViewMixin(object):
     def render_to_response(self, context, **kwargs):
 	return render_to_response(self.template_name, self.request, context)

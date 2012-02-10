@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 
-from utils import LinkShortener
+from utils import LinkShortener, NoStuffMarkdown
 from voting.models import Vote
 from mail.models import EmailTemplate
 from treebeard.mp_tree import MP_Node
@@ -41,7 +41,8 @@ class Comment(models.Model):
 
     def save(self, *args, **kwargs):
 	linkShortener = LinkShortener()
-	self.comment_html = markdown(self.comment, safe_mode='escape', output_format='html5', extensions=['nl2br', linkShortener])
+	noStuff = NoStuffMarkdown()
+	self.comment_html = markdown(self.comment, safe_mode='escape', output_format='html5', extensions=['nl2br', linkShortener, noStuff])
 	# TODO: bailout on present path?
 	lookup = {'content_type': self.content_type, 'object_id': self.object_id, 'parent': self.parent}
 	if self.pk is not None:
