@@ -3709,23 +3709,23 @@ body {
   margin-bottom: 0;
 }
 .articles li p img {
-  padding: 0.5em;
+  padding: 0.75em;
   margin: 0.5em 0;
   border: 1px solid #eeeeee;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .inside-article-text {
   max-width: 52em;
 }
 .inside-article-text p img {
-  padding: 0.5em;
+  padding: 0.75em;
   margin: 0.5em 0;
   border: 1px solid #eeeeee;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 .text-center {
   text-align: center;
