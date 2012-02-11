@@ -22,18 +22,18 @@
 	</table>\
     </div>\
     % else:
-    <form action="/polls/${ current_poll.slug }/vote/" method="post">\
+    <form action="/polls/${ poll.slug }/vote/" method="post">\
 	<fieldset>\
 	    <div><input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" /></div>\
 	    <div class="inputs-list">\
-	    % for choice in current_poll.c_choices:
+	    % for choice in poll.c_choices:
 		<label class="radio" for="poll-${ current_poll.id }-${ choice.pk }">\
 		    <input type="radio" id="poll-${ current_poll.id }-${ choice.pk }" name="choice" value="${ choice.pk }">\
 		    ${ choice.title }
 		</label>\
 	    % endfor
 	    </div>\
-	    <div class="actions"><input type="submit" class="btn small primary" value="Ответить" /></div>\
+	    <div class="form-actions"><input type="submit" class="btn btn-small" value="Ответить" /></div>\
 	</fieldset>\
     </form>\
     % endif
