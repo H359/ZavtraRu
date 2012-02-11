@@ -187,15 +187,24 @@ class ContentItem(models.Model):
             enabled=True
     	).count()
     	ContentItem.objects.filter(id=self.pk).update(_comments_count=comments_count)
-    	newsletter = cache.get('newsletter')
-    	if newsletter:
-    	    for group in newsletter:
-    		if group['rubric'].id == self.rubric_id:
-    		    for article in group['items']:
-    			if article.id == self.id:
-    			    article._comments_count = comments_count
-    			    cache.set('newsletter', newsletter, 60*60*4)
-    			    break
+    	if self.published:
+    	    newsletter = cache.get('newsletter')
+    	    if newsletter:
+    		for group in newsletter:
+    		    if group['rubric'].id == self.rubric_id:
+    			for article in group['items']:
+    			    if article.id == self.id:
+    				article._comments_count = comments_count
+    				cache.set('newsletter', newsletter, 60*60*4)
+    				break
+    	else:
+    	    if self.rubric_id:
+    		if self.rubric_id == 44:
+    		    # todo lookup and change in place
+    		    cache.delete('zavtra-tv2')
+    		elif self.rubric_id == 47:
+    		    # todo lookup and change in place
+    		    cache.delete('special-project')
 
     def get_content_type_id(self):
 	return contentitem_ctype_id 
