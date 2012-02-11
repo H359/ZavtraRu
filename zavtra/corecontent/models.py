@@ -20,7 +20,7 @@ from batch_select.models import BatchManager
 from voting.models import Vote
 #from taggit.managers import TaggableManager
 from taggit_autosuggest.managers import TaggableManager
-from taggit.models import Tag
+from taggit.models import Tag, TaggedItem
 from autoslug import AutoSlugField
 from pytils import dt
 from djangosphinx.models import SphinxSearch
@@ -162,6 +162,15 @@ class ContentItem(models.Model):
 	    return Image(**res)
 	else:
 	    return Article(**res)
+
+    def get_to_read(self):
+	qs = ContentItem.objects.exclude(id=self.id)
+	tags = self.tags_all()
+	if tags:
+	    qs = qs.filter(pk__in = TaggedItem.objects.filter(content_type_id=contentitem_ctype_id, tag__in = tags).values('object_id'))
+	else:
+	    qs = qs.filter(rubric_id=self.rubric_id)
+	return list(qs[0:5])
 
     @property
     #@cached_method('contentitem-{id}-votes')

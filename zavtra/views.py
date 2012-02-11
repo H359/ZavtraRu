@@ -4,7 +4,7 @@ import time
 from itertools import groupby
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import F
+from django.db.models import F, Count
 from django.contrib.auth import logout as auth_logout, login as user_login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -19,7 +19,7 @@ from django.conf import settings
 from annoying.decorators import ajax_request
 from diggpaginator import DiggPaginator
 
-from corecontent.models import ContentItem, ZhivotovIllustration
+from corecontent.models import ContentItem, ZhivotovIllustration, contentitem_ctype_id
 from comments.models import Comment
 from voting.models import Vote
 
@@ -117,12 +117,23 @@ def home(request):
 	'special-project',
 	duration=60*60*4
     )
+    most_commented = cached(
+	lambda: list(
+	ContentItem.objects.filter(pk__in = 
+	    Comment.objects.filter(
+		created_at__gte = now, content_type_id = contentitem_ctype_id
+	    ).annotate(today_comments=Count('object_id')).values_list('object_id', flat=True).order_by()[0:5] 
+	)),
+	'most-commented',
+	duration=60*60*10
+    )
     return {
 	'issue_info': { 'date': wstart, 'num': num },
 	'newsletter': newsletter,
 	'illustration': illustration,
 	'zavtra_tv': zavtra_tv,
-	'special_project': special_project
+	'special_project': special_project,
+	'most_commented': most_commented
     }
 
 def resolver(request, content_type_id, id):

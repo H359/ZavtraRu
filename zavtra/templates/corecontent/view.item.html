@@ -39,7 +39,7 @@ ${ parent.meta_extra() }\
 ${ item.rubric.title }\
 %endif
 </%block>\
-<%block name="javascript_library">${ parent.javascript_library() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
+<%block name="javascript_additional">${ parent.javascript_additional() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
 <%block name="side_column">\
 ${ self.news_block(news) }
 <h3>Реклама</h3>\
@@ -84,10 +84,28 @@ ${ parent.side_column() }\
 	<embed src="http://youtube.com/v/${ video_id }&version=3" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" wmode="transparent" width="425" height="344"></embed>
     </object>
     % elif item.kind == 'text' or item.kind == '':
-    <div class="inside-article-text">${ item.content }</div>
+    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
+    <div class="inside-article-text">
+	${ item.content }
+    </div>
     % endif
     ${ output_tags(item) }
     <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="link" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,blogger,digg,greader,juick,liveinternet"></div>
+    <% toread = item.get_to_read() %>\
+    % if toread:
+    <div class="bordered">
+	<h5>Рекомендуем к прочтению:</h5>
+	<ul>
+	    % for tritem in toread:
+	    <li>
+	        <% url = tritem.get_absolute_url() %>\
+	        <a href="${ url }">${ tritem.title }</a>
+	    </li>
+	    % endfor
+	</ul>
+    </div>
+    % endif
+
     <div id="comments">${ self.comments_for(item) }</div>
 </div>
 <script>window.comments_bootstrap=function(){$('#comments').comments();}</script>\
