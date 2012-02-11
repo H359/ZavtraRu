@@ -121,7 +121,7 @@ def home(request):
 	lambda: list(
 	ContentItem.objects.filter(pk__in = 
 	    Comment.objects.filter(
-		created_at__gte = now, content_type_id = contentitem_ctype_id
+		created_at__gte = now, content_type = contentitem_ctype_id
 	    ).annotate(today_comments=Count('object_id')).values_list('object_id', flat=True).order_by()[0:5] 
 	)),
 	'most-commented',
