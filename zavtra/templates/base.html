@@ -252,9 +252,9 @@ row = 12 / lcslice
 		    <div class="red-stripe">
 			<h3>Красная строка <a href="/content/site-only/">&raquo;</a></h3>
 			<div class="scrollee">
-			    <ul class="unstyled scrollable ym-clearfix">
+			    <ul class="unstyled scrollable">
 				% for num,item in enumerate(current_items):
-				<li${ " class='first'" if num == 0 else "" }>
+				<li${ " class='first'" if num == 0 else "" }<% if item.kind=='video': context.write(" style='width: auto;'") %>>
 				    <% url = item.get_absolute_url() %>
 				    <h4><a href="${ url }">${ item.title }</a></h4>
 				    <div class="article-text" data-clickable="${ url }">\
