@@ -49,7 +49,8 @@
 % endif
 </%def>
 
-<%def name="sidebar(items)">
+<%def name="sidebar(parent, items)">
+<div>${ parent.description }</div>
 <dl>
     % for item in items:
     <dt><h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4></dt>
@@ -88,7 +89,7 @@ ${ rubric_contents(items, is_paginated) }
 % else:
     <div class="row-fluid">
     % if rubric.children_render == 1:
-    <div class="span4">${ sidebar(children) }</div>
+    <div class="span4">${ sidebar(rubric, children) }</div>
     <div class="span8">${ rubric_contents(items, is_paginated) }</div>
     % else:
     not ready
