@@ -64,6 +64,7 @@
     <div class="bnrok yandex-direct"></div>\
     ${ self.news_block(news) }
     <br/>
+    <%doc>
     <h3>Самое обсуждаемое сегодня</h3>
     <dl class="unstyled news">
 	% for item in most_commented:
@@ -79,6 +80,7 @@
 	% endfor
     </dl>
     <br/>
+    </%doc>
     ${ parent.side_column() }
 </div>
 </%block>\
