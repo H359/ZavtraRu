@@ -36,8 +36,12 @@ ${ parent.meta_extra() }\
 % if item.rubric_id is None:
 Блоги\
 % else:
-${ item.rubric.title }\
+ / ${ item.rubric.title }\
 %endif
+${ item.title }\
+% if item.subtitle
+ / ${ item.subtitle }
+% endif
 </%block>\
 <%block name="javascript_additional">${ parent.javascript_additional() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
 <%block name="side_column">\
