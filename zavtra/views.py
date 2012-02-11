@@ -125,7 +125,7 @@ def home(request):
     most_commented = cached(
 	get_most_commented,
 	'most-commented',
-	duration=60*60*10
+	duration=60*60
     )
     return {
 	'issue_info': { 'date': wstart, 'num': num },
