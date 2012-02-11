@@ -34,9 +34,9 @@ ${ parent.meta_extra() }\
 </%block>\
 <%block name="page_title">${ parent.page_title() } / \
 % if item.rubric_id is None:
-Блоги\
+Блоги / \
 % else:
- / ${ item.rubric.title }\
+${ item.rubric.title } / \
 %endif
 ${ item.title }\
 % if item.subtitle:
