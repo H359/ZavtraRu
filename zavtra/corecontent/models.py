@@ -167,7 +167,7 @@ class ContentItem(models.Model):
 	qs = ContentItem.objects.exclude(id=self.id)
 	tags = self.tags_all()
 	if tags:
-	    qs = qs.filter(pk__in = TaggedItem.objects.filter(content_type_id=contentitem_ctype_id, tag__in = tags).values('object_id'))
+	    qs = qs.filter(pk__in = TaggedItem.objects.filter(content_type=contentitem_ctype_id, tag__in = tags).values('object_id'))
 	else:
 	    qs = qs.filter(rubric_id=self.rubric_id)
 	return list(qs[0:5])
