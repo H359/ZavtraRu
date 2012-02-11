@@ -117,13 +117,13 @@ def home(request):
 	'special-project',
 	duration=60*60*4
     )
+    def get_most_commented():
+	from django.db import connection
+	cursor = connection.cursor()
+	cursor.execute("select object_id, count(id) as cmnt from comments_comment where content_type_id=%d and created_at >= date '%s' group by object_id order by cmnt limit 5" % (contentitem_ctype_id, now) )
+	return list(ContentItem.objects.filter(pk__in=map(lambda w: w[0], cursor.fetchall())))
     most_commented = cached(
-	lambda: list(
-	ContentItem.objects.filter(pk__in = 
-	    Comment.objects.filter(
-		created_at__gte = now, content_type = contentitem_ctype_id
-	    ).annotate(today_comments=Count('object_id')).values_list('object_id', flat=True).order_by()[0:5] 
-	)),
+	get_most_commented,
 	'most-commented',
 	duration=60*60*10
     )
