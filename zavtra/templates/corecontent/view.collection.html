@@ -50,11 +50,15 @@
 </%def>
 
 <%def name="sidebar(parent, items)">
+% if parent.description:
 <div>${ parent.description }</div>
-<dl>
+% endif
+<ul class="nav nav-pills nav-stacked">
     % for item in items:
-    <dt><h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4></dt>
-    <dd>${ sidebar(item, item.get_children(rubrics=rubrics)) }</dd>
+    <li>
+	<a href="${ item.get_absolute_url() }"><strong>${ item.title }</strong></a>
+	${ sidebar(item, item.get_children(rubrics=rubrics)) }
+    </li>
     % endfor
 </ul>
 </%def>
