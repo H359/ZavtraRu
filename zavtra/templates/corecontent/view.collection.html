@@ -54,7 +54,7 @@
 <div>${ parent.description }</div>
 % endif
 % if len(items):
-<ul class="nav nav-pills nav-stacked" style="padding-left: ${ level*5 }px;">
+<ul class="${ 'nav nav-pills nav-stacked' if level == 0 else 'unstyled' }" style="padding-left: ${ level*5 }px;">
     % for item in items:
     <li>
 	<a href="${ item.get_absolute_url() }"><strong>${ item.title }</strong></a>
