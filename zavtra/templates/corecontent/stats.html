@@ -6,11 +6,11 @@ ${ parent.javascript_additional() }
 <script src="${ STATIC_URL }js/d3.time.js"></script>
 <script>
 $(function(){
-    var chart = d3.select('#canvas').append('svg:svg').attr('width', 500).attr('height', 580),
+    var chart = d3.select('#canvas').append('svg:svg').attr('width', 1500).attr('height', 580),
 	cmnts = d3.scale.linear().domain([0, ${ max([int(i[1]) for i in items]) }]).range([0,450]),
-	dates = d3.scale.linear().domain([0, ${ max([i[0].day for i in items]) }]).range([0,500]);
+	dates = d3.scale.linear().domain([0, ${ len(items) ) }]).range([0,1500]);
 
-    var ddd = [${ ','.join(["'%s'" % i[0].strftime("%d.%m.%Y") for i in items]) }];
+    var ddd = [${ ','.join(["'%s'" % i[0].strftime("%d.%m.%Y %H:%S") for i in items]) }];
     var bars = chart.selectAll('g.bar')
 		    .data([${','.join( [str(i[1]) for i in items] )}])
 	       .enter().append('svg:g')
