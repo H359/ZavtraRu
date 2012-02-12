@@ -8,12 +8,13 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import Http404, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
-from django.db.models import Min, Max
+from django.db.models import Min, Max, Count
 
 from diggpaginator import DiggPaginator
 #from annoying.decorators import render_to
 from utils import MakoViewMixin, render_to
 from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllustration
+from comments.models import Comment
 
 from taggit.models import Tag
 
@@ -214,6 +215,15 @@ def view_issue(request, year, month, day):
 	'newsletter': newsletter,
 	'issue': date
     }
+
+@render_to('corecontent/stats.html')
+def stats(request):
+    now = datetime.now()
+    oneweek = timedelta(days=7)
+    qs = Comment.objects.annotate(cmnts=Count('id')).filter(created_at__gte = now-oneweek)
+    qs.query.group_by = ['date(created_at)']
+    qs.values('created_at')
+    return {'report': qs}
 
 view_featured_index = FeaturedIndexView.as_view()
 view_item = ContentItemView.as_view()

@@ -1,0 +1,6 @@
+<%inherit file="../base.html" />
+<%block name="main_column">
+% for item in report:
+<p>${ item.cmnts }, ${ item.created_at }</p>
+% endfor
+</%block>

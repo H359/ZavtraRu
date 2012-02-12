@@ -23,4 +23,6 @@ urlpatterns = patterns('',
     url(r'^rss/tag/(?P<slug>[-_A-Za-z0-9]+)/$', TagContentFeed(), name='corecontent.rss.tag'),
     url(r'^rss/featured/(?P<slug>[-_A-Za-z0-9]+)/$', FeaturedItemsContentFeed(), name='corecontent.rss.featured'),
     url(r'^rss/site-only/$', UnpublishedContentFeed(), name='corecontent.rss.unpublished'),
+
+    url(r'^statistic/', 'corecontent.views.stats', name='corecontent.view.stats'),
 )
