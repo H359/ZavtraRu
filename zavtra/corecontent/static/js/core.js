@@ -142,10 +142,8 @@ $(function(){
     })();
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location = $(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
-    /*
     (function(){
-	var hMain = $('#main').height(),
-	    defParams = {
+	var defParams = {
 		'site_charset': "utf-8",
 		'ad_format': "direct",
 		'font_size': 1,
@@ -162,11 +160,9 @@ $(function(){
 		'favicon': true
 	    };
 	$('.yandex-direct').each(function(k,v){
-	    var that = $(this).parent(),
-		off = that.offset(),
-		w = that.width(),
-		vSpaceLeft = hMain - off.top,
-		limit = min([Math.floor(vSpaceLeft / 100), 20]); 
+	    var that = $(this),
+		hght = that.parents('.row-fluid').children().height(),
+		limit = Math.floor( hght / 100 );
 	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
 	    window['yandex_context_callbacks'].push(function() {
 		defParams['limit'] = limit;
@@ -182,7 +178,6 @@ $(function(){
 	    t.insertBefore(s, t.firstChild);
 	}
     })();
-    */
     $('.equalized .row-fluid').equalize();
     //$('.carousel').carousel();
     $('a[rel=facebox]').lightBox();

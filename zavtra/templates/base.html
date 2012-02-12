@@ -274,13 +274,18 @@ row = 12 / lcslice
 		<div class="span2">
 		    <div class="bordered rubrics">
 			<h3>Реклама</h3>
-			<div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>
+			<div class="bnrok yandex-direct"></div>
 		    </div>
 		</div>
 	    </div>
 	    <div class="row-fluid">
 		<div class="span8"><%block name="main_column"></%block></div>
-		<div class="span4 rubrics"><%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block></div>
+		<div class="span4 rubrics">
+		    <%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block>
+		    <hr/>
+		    <h3>Реклама</h3>
+		    <div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>\
+		</div>
 	    </div>
 	    <div class="row-fluid">
 		<div class="bordered">
@@ -303,7 +308,7 @@ row = 12 / lcslice
 		</div>
 	    </div>
 	</div>
-	<%doc>\
+	<%doc>
 	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
 	<script src="${ STATIC_URL }js/jquery.lightbox-0.5.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
@@ -317,8 +322,8 @@ row = 12 / lcslice
 	<script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
 	<script src="${ STATIC_URL }js/comments.js"></script>
 	<script src="${ STATIC_URL }js/core.js"></script>
-	</%doc>\
-	<script src="${ STATIC_URL }js/scripts.combined.min.js"></script>
+	</%doc>
+	<script src="${ STATIC_URL }js/scripts.combined.min.2.js"></script>
 	<%block name="javascript_additional"></%block>
 	% for i in banners_pool:
 	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
