@@ -121,7 +121,7 @@ def home(request):
 	from django.db import connection
 	cursor = connection.cursor()
 	cursor.execute("select object_id, count(id) as cmnt from comments_comment where content_type_id=%d and created_at >= date '%s' group by object_id order by cmnt desc limit 5" % (contentitem_ctype_id, now) )
-	return list(ContentItem.objects.filter(pk__in=map(lambda w: w[0], cursor.fetchall())).order_by('-_comments_count'))
+	return list(ContentItem.objects.filter(pk__in=map(lambda w: w[0], cursor.fetchall())))
     most_commented = cached(
 	get_most_commented,
 	'most-commented',
