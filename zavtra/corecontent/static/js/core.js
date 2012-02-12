@@ -163,11 +163,14 @@ $(function(){
 	    var that = $(this),
 		hght = that.parents('.row-fluid').children().height(),
 		limit = Math.floor( hght / 100 );
+	    console.log(limit);
+	    /*
 	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
 	    window['yandex_context_callbacks'].push(function() {
 		defParams['limit'] = limit;
 		Ya.Direct.insertInto(82666, v, defParams);
 	    });
+	    */
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
 	    t = document.documentElement.firstChild;

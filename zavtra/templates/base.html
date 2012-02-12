@@ -308,7 +308,6 @@ row = 12 / lcslice
 		</div>
 	    </div>
 	</div>
-	<%doc>
 	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
 	<script src="${ STATIC_URL }js/jquery.lightbox-0.5.js"></script>
 	<script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
@@ -322,8 +321,7 @@ row = 12 / lcslice
 	<script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
 	<script src="${ STATIC_URL }js/comments.js"></script>
 	<script src="${ STATIC_URL }js/core.js"></script>
-	</%doc>
-	<script src="${ STATIC_URL }js/scripts.combined.min.2.js"></script>
+	<%doc><script src="${ STATIC_URL }js/scripts.combined.min.2.js"></script></%doc>
 	<%block name="javascript_additional"></%block>
 	% for i in banners_pool:
 	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
