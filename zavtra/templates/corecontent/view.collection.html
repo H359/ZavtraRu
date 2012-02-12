@@ -51,7 +51,7 @@
 
 <%def name="sidebar(parent, items, level=0)">
 % if level == 0 and parent.description and len(parent.description) > 0:
-<div>${ parent.description }</div>
+<div class="alert alert-block">${ parent.description }</div>
 % endif
 % if len(items):
 % if level == 0:
