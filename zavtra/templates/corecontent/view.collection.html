@@ -50,23 +50,21 @@
 </%def>
 
 <%def name="sidebar(parent, items, level=0)">
-% if parent.description and len(parent.description) > 0:
+% if level == 0 and parent.description and len(parent.description) > 0:
 <div>${ parent.description }</div>
 % endif
 % if len(items):
 % if level == 0:
-<div class="well">
+<div class="well"><ul class="nav nav-tabs nav-stacked">
 % endif
-<ul class="${ 'nav nav-pills nav-stacked' if level == 0 else 'unstyled nav-pills nav-stacked' }" style="padding-left: ${ level*5 }px;">
-    % for item in items:
-    <li>
-	<a href="${ item.get_absolute_url() }"><strong>${ item.title }</strong></a>
-	${ sidebar(item, item.get_children(rubrics=rubrics), level=level+1) }
-    </li>
-    % endfor
-</ul>
+% for item in items:
+<li style="margin-left: ${ level*8 }px;">
+    <a href="${ item.get_absolute_url() }"><strong>${ item.title }</strong></a>
+    ${ sidebar(item, item.get_children(rubrics=rubrics), level=level+1) }
+</li>
+% endfor
 % if level == 0:
-</div>
+</ul></div>
 % endif
 % endif
 </%def>
