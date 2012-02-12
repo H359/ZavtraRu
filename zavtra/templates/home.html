@@ -63,7 +63,7 @@
     <div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
     <div class="bnrok yandex-direct"></div>\
     ${ self.news_block(news) }
-    <br/>
+    <hr />
     <h3>Самое обсуждаемое сегодня</h3>
     <dl class="unstyled news">
 	% for item in most_commented:
@@ -78,7 +78,7 @@
 	</dd>
 	% endfor
     </dl>
-    <br/>
+    <hr />
     ${ parent.side_column() }
 </div>
 </%block>\
