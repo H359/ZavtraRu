@@ -32,17 +32,21 @@ class RubricView(MakoViewMixin, ListView):
     template_name       = 'corecontent/view.collection.html'
     context_object_name = 'items'
     def get_queryset(self):
-        self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
-        now = datetime.now()
-        qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
-        if self.rubric.children_render > 0:
-    	    subs = self.rubric.get_children(till_leafs=True)
-    	    subs.append(self.rubric)
-	    qs = qs.filter(rubric__in=subs)
-	else:
-	    qs = qs.filter(rubric=self.rubric)
+	try:
+	    self.rubric = Rubric.objects.get(slug=self.kwargs['slug'])
+	except Rubric.DoesNotExist:
+	    self.rubric = None
+	now = datetime.now()
+	qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
+	if self.rubric is not None:
+	    self.rubric.children_render > 0:
+		subs = self.rubric.get_children(till_leafs=True)
+		subs.append(self.rubric)
+		qs = qs.filter(rubric__in=subs)
+	    else:
+		qs = qs.filter(rubric=self.rubric)
         return qs
-    
+
     def get_context_data(self, **kwargs):
         context = super(RubricView, self).get_context_data(**kwargs)
         context['rubric'] = self.rubric
