@@ -222,7 +222,7 @@ def stats(request):
     oneday = timedelta(days=1)
     from django.db import connection
     cursor = connection.cursor()
-    cursor.execute("select date_trunc('hour', created_at) as hourly, count(id) from comments_comment where created_at > date '%s' group by hourly order by hourly desc" % (now-oneday).date())
+    cursor.execute("select date_trunc('hour', created_at) as hourly, count(id) from comments_comment where created_at > date '%s' group by hourly order by hourly asc" % (now-oneday).date())
     return {'items': cursor.fetchall()}
 
 view_featured_index = FeaturedIndexView.as_view()
