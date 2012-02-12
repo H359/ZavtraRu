@@ -55,7 +55,7 @@ ${ parent.side_column() }\
 <ul class="breadcrumb">
   <li><a href="/">Главная</a><span class="divider">/</span></li>
   % if item.rubric_id is None:
-  <li><a href="/blogs/">Блоги</a><span class="divider">/</span></li>
+  <li><a href="/content/rubric/blogs/">Блоги</a><span class="divider">/</span></li>
   % else:
   <li><a href="${ item.rubric.get_absolute_url() }">${ item.rubric.title }</a><span class="divider">/</span></li>
   % endif
