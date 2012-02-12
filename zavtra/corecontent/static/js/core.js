@@ -162,11 +162,12 @@ $(function(){
 		'favicon': true
 	    });});
 	};
+	var sq = 230*132;
 	$('.yandex-direct').each(function(k,v){
 	    var that = $(this),
 		hght = that.parents('.row-fluid').children().height(),
 		wdth = that.width(),
-		limit = min([9, Math.ceil( hght / (0.1+wdth) )]);
+		limit = min([9, max([1, Math.floor((hght*wdth) / sq)])]);
 	    pyad(limit, that.attr('id'));
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
