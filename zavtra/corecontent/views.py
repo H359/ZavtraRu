@@ -219,10 +219,10 @@ def view_issue(request, year, month, day):
 @render_to('corecontent/stats.html')
 def stats(request):
     now = datetime.now()
-    oneweek = timedelta(days=7)
+    oneday = timedelta(days=1)
     from django.db import connection
     cursor = connection.cursor()
-    cursor.execute("select date_trunc('hour', created_at) as hourly, count(id) from comments_comment where created_at > date '%s' group by hourly" % (now-oneweek).date())
+    cursor.execute("select date_trunc('hour', created_at) as hourly, count(id) from comments_comment where created_at > date '%s' group by hourly" % (now-oneday).date())
     return {'items': cursor.fetchall()}
 
 view_featured_index = FeaturedIndexView.as_view()
