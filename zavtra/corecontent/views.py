@@ -220,10 +220,10 @@ def view_issue(request, year, month, day):
 def stats(request):
     now = datetime.now()
     oneweek = timedelta(days=7)
-    qs = Comment.objects.annotate(cmnts=Count('id')).filter(created_at__gte = now-oneweek)
-    qs.query.group_by = ['date(created_at)']
-    qs.values('created_at')
-    return {'report': qs}
+    from django.db import connection
+    cursor = connection.cursor()
+    cursor.execute("select date_trunc('hour', created_at) as hourly, count(id) from comments_comment where created_at > date '%s' group by hourly" % (now-oneweek).date())
+    return {'items': cursor.fetchall()}
 
 view_featured_index = FeaturedIndexView.as_view()
 view_item = ContentItemView.as_view()

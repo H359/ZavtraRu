@@ -1,6 +1,49 @@
 <%inherit file="../base.html" />
+<%block name="javascript_additional">
+${ parent.javascript_additional() }
+<script src="${ STATIC_URL }js/d3.js"></script>
+<script src="${ STATIC_URL }js/d3.layout.js"></script>
+<script src="${ STATIC_URL }js/d3.time.js"></script>
+<script>
+$(function(){
+    var chart = d3.select('#canvas').append('svg:svg').attr('width', 500).attr('height', 580),
+	cmnts = d3.scale.linear().domain([0, ${ max([int(i[1]) for i in items]) }]).range([0,450]),
+	dates = d3.scale.linear().domain([0, ${ max([i[0].day for i in items]) }]).range([0,500]);
+
+    var ddd = [${ ','.join(["'%s'" % i[0].strftime("%d.%m.%Y") for i in items]) }];
+    var bars = chart.selectAll('g.bar')
+		    .data([${','.join( [str(i[1]) for i in items] )}])
+	       .enter().append('svg:g')
+	    	    .attr('class', 'bar')
+	    	    .attr('transform', function(d,i){ return 'translate(' + i*50 + ')'; });
+    bars.append('svg:rect')
+	.attr('width', 1)
+	.attr('height', 0)
+	.style('fill', '#aad')
+	.attr('x', 10)
+	.attr('y', function(d,i){ return 500 - cmnts(d); })
+    .transition()
+	.duration(300)
+	.attr('height', function(d,i) { return cmnts(d); })
+    .transition()
+	.delay(300)
+	.duration(300)
+	.attr('width', 15);
+    var lbls = chart.selectAll('text.label')
+		    .data([${','.join( [str(i[1]) for i in items] )}])
+		.enter().append('svg:text')
+		    .attr('class', 'label')
+		    .attr('transform', function(d,i) { return 'translate(' + (i*50+15) + ', ' + (490-cmnts(d)) + ')'; })
+		    .text(function(d,i){ return d; });
+    var days = chart.selectAll('text.day')
+		    .data([${','.join([str(i[0].day) for i in items]) }])
+		.enter().append('svg:text')
+		    .attr('class', 'day')
+		    .attr('transform', function(d,i) { return 'translate(' + (i*50 + 15) + ', 510) rotate(40)'; })
+		    .text(function(d,i){ return ddd[i];});
+});
+</script>
+</%block>
 <%block name="main_column">
-% for item in report:
-<p>${ item.cmnts }, ${ item.created_at }</p>
-% endfor
+<div id="canvas"></div>
 </%block>
