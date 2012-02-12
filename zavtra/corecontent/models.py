@@ -70,7 +70,7 @@ class Rubric(models.Model):
         return ('corecontent.view.rubric', (), {'slug': self.slug})
 
     def save(self, *args, **kwargs):
-	self.description = typography(self.description)
+	#self.description = typography(self.description)
 	super(Rubric, self).save(*args, **kwargs)
 	cache.delete('rubrics')
 
