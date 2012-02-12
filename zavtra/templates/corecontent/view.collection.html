@@ -53,6 +53,7 @@
 % if parent.description and len(parent.description) > 0:
 <div>${ parent.description }</div>
 % endif
+% if len(items):
 <ul class="nav nav-pills nav-stacked" style="padding-left: ${ level*5 }px;">
     % for item in items:
     <li>
@@ -61,6 +62,7 @@
     </li>
     % endfor
 </ul>
+% endif
 </%def>
 
 <%block name="side_column">
