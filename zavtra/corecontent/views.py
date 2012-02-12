@@ -35,7 +35,7 @@ class RubricView(MakoViewMixin, ListView):
         now = datetime.now()
         qs = ContentItem.batched.batch_select('authors').filter(enabled=True, pub_date__lte = now)
         if self.rubric.children_render > 0:
-	    qs = qs.filter(rubric__in=self.rubric.get_children())
+	    qs = qs.filter(rubric__in=self.rubric.get_children(till_leafs=True))
 	else:
 	    qs = qs.filter(rubric=self.rubric)
         return qs

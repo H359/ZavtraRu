@@ -54,7 +54,7 @@
 <dl>
     % for item in items:
     <dt><h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4></dt>
-    <dd>${ sidebar(item, item.get_children()) }</dd>
+    <dd>${ sidebar(item, item.get_children(rubrics=rubrics)) }</dd>
     % endfor
 </ul>
 </%def>
@@ -82,7 +82,7 @@
 <%
 children = []
 if rubric and 0 < rubric.children_render:
-    children = rubric.get_children()
+    children = rubric.get_children(rubrics=rubrics)
 %>
 % if len(children) == 0:
 ${ rubric_contents(items, is_paginated) }

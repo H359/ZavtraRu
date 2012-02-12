@@ -78,11 +78,16 @@ class Rubric(models.Model):
 	super(Rubric, self).delete(*args, **kwargs)
 	cache.delete('rubrics')
 
-    def get_children(self):
-	if not hasattr(self, '__children_cache'):
-	    children = filter(lambda w: w.parent_id == self.id, cache.get('rubrics'))
-	    setattr(self, '__children_cache', children)
-	return getattr(self, '__children_cache')
+    def get_children(self, till_leafs=False, rubrics=None):
+	if rubrics is None:
+	    rubrics = cache.get('rubrics')
+	children = filter(lambda w: w.parent_id == self.id, rubrics)
+	if till_leafs:
+	    sub_children = []
+	    for x in children:
+		sub_children.extend( x.get_children(till_leafs=till_leafs, rubrics=rubrics) )
+	    children.extend(sub_children)
+	return children
 
 class FeaturedItems(models.Model):
     class Meta:
