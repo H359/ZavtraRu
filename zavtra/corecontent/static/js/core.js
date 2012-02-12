@@ -143,12 +143,14 @@ $(function(){
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location = $(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
     (function(){
-	var defParams = {
+	var pyad = function(limit,id){
+	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
+	    window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, id, {
 		'site_charset': "utf-8",
 		'ad_format': "direct",
 		'font_size': 1,
 		'type': "vertical",
-		'limit': 4,
+		'limit': limit,
 		'title_font_size': 3,
 		'site_bg_color': "FFFFFF",
 		'header_bg_color': "FEEAC7",
@@ -158,11 +160,7 @@ $(function(){
 		'text_color': "222222",
 		'hover_color': "CF3A2D",
 		'favicon': true
-	    };
-	var pyad = function(limit,id){
-	    var params = $.extend({'limit':limit}, defParams);
-	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
-	    window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, id, params);});
+	    });});
 	};
 	$('.yandex-direct').each(function(k,v){
 	    var that = $(this),
