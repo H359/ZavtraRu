@@ -6,7 +6,7 @@ ${ parent.javascript_additional() }
 <script src="${ STATIC_URL }js/d3.time.js"></script>
 <script>
 $(function(){
-    var chart = d3.select('#canvas').append('svg:svg').attr('width', 1500).attr('height', 580),
+    var chart = d3.select('#canvas').append('svg:svg').attr('width', 1600).attr('height', 580),
 	cmnts = d3.scale.linear().domain([0, ${ max([int(i[1]) for i in items]) }]).range([0,450]),
 	dates = d3.scale.linear().domain([0, ${ len(items) }]).range([0,1500]);
 
