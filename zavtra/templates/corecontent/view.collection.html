@@ -49,15 +49,15 @@
 % endif
 </%def>
 
-<%def name="sidebar(parent, items)">
-% if parent.description:
+<%def name="sidebar(parent, items, level=0)">
+% if parent.description and len(parent.description) > 0:
 <div>${ parent.description }</div>
 % endif
-<ul class="nav nav-pills nav-stacked">
+<ul class="nav nav-pills nav-stacked" style="padding-left: ${ level*5 }px;">
     % for item in items:
     <li>
 	<a href="${ item.get_absolute_url() }"><strong>${ item.title }</strong></a>
-	${ sidebar(item, item.get_children(rubrics=rubrics)) }
+	${ sidebar(item, item.get_children(rubrics=rubrics), level=level+1) }
     </li>
     % endfor
 </ul>
