@@ -15,7 +15,7 @@ $(function(){
 		    .data([${','.join( [str(i[1]) for i in items] )}])
 	       .enter().append('svg:g')
 	    	    .attr('class', 'bar')
-	    	    .attr('transform', function(d,i){ return 'translate(' + i*50 + ')'; });
+	    	    .attr('transform', function(d,i){ return 'translate(' + dates(i) + ')'; });
     bars.append('svg:rect')
 	.attr('width', 1)
 	.attr('height', 0)
@@ -33,13 +33,13 @@ $(function(){
 		    .data([${','.join( [str(i[1]) for i in items] )}])
 		.enter().append('svg:text')
 		    .attr('class', 'label')
-		    .attr('transform', function(d,i) { return 'translate(' + (i*50+15) + ', ' + (490-cmnts(d)) + ')'; })
+		    .attr('transform', function(d,i) { return 'translate(' + (dates(i)+15) + ', ' + (490-cmnts(d)) + ')'; })
 		    .text(function(d,i){ return d; });
     var days = chart.selectAll('text.day')
 		    .data([${','.join([str(i[0].day) for i in items]) }])
 		.enter().append('svg:text')
 		    .attr('class', 'day')
-		    .attr('transform', function(d,i) { return 'translate(' + (i*50 + 15) + ', 510) rotate(40)'; })
+		    .attr('transform', function(d,i) { return 'translate(' + (dates(i) + 15) + ', 510) rotate(40)'; })
 		    .text(function(d,i){ return ddd[i];});
 });
 </script>
