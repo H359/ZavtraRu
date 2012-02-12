@@ -67,7 +67,7 @@ row = 12 / lcslice
 	<div class="inner">\
 	    <div class="body clearfixer">\
 		<div class="author">
-		    <a href="${ item.author.get_absolute_url() }">${ item.author }</a>,
+		    <a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <% if not item.author.enabled: context.write(u' [деактивирован]') %>\
 		    <a href="/resolver/25/${ item.id }/#comment-${ item.id }"><time datetime="${ item.created_at }">${ ru_date(item.created_at, format=u'%d.%m.%Y %H:%M') }<time></a>
 		</div>\
 		<div class="text">\
