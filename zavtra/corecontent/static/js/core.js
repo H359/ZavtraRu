@@ -159,14 +159,17 @@ $(function(){
 		'hover_color': "CF3A2D",
 		'favicon': true
 	    };
+	var pyad = function(limit,id){
+	    var params = $.extend({'limit':limit}, defParams);
+	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
+	    window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, id, params);});
+	};
 	$('.yandex-direct').each(function(k,v){
 	    var that = $(this),
 		hght = that.parents('.row-fluid').children().height(),
-		limit = min([9, Math.floor( hght / 130 )]);
-	    (function(params,v){
-		window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
-		window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, v.id, params);});
-	    })($.extend({limit:limit}, defParams), v);
+		wdth = that.width(),
+		limit = min([9, Math.ceil( hght / (0.1+wdth) )]);
+	    pyad(limit, that.attr('id'));
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
 	    t = document.documentElement.firstChild;
