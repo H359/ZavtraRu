@@ -50,9 +50,11 @@ class RubricView(MakoViewMixin, ListView):
     def get_context_data(self, **kwargs):
 	context = super(RubricView, self).get_context_data(**kwargs)
 	context['rubric'] = self.rubric
-	context['title'] = self.rubric
 	if self.rubric is not None:
+	    context['title'] = self.rubric
 	    context['rss'] = reverse('corecontent.rss.rubric', kwargs={'slug': self.rubric.slug})
+	else:
+	    context['title'] = u'Блоги'
 	return context
 
 class NewsView(MakoViewMixin, DetailView):
