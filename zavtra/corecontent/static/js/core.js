@@ -162,15 +162,11 @@ $(function(){
 	$('.yandex-direct').each(function(k,v){
 	    var that = $(this),
 		hght = that.parents('.row-fluid').children().height(),
-		limit = Math.floor( hght / 100 );
-	    console.log(limit);
-	    /*
-	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
-	    window['yandex_context_callbacks'].push(function() {
-		defParams['limit'] = limit;
-		Ya.Direct.insertInto(82666, v, defParams);
-	    });
-	    */
+		limit = min([9, Math.floor( hght / 100 )]);
+	    (function(params,v){
+		window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
+		window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, v, params);});
+	    })($.extend({limit:limit}, defParams), v);
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
 	    t = document.documentElement.firstChild;
