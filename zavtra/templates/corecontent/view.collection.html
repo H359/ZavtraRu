@@ -111,6 +111,7 @@ children = []
 if rubric and 0 < rubric.children_render:
     children = rubric.get_children(rubrics=rubrics)
 %>
+<div class="bnrok" id="DIV_DA_49096"></div><% banners_pool.append(49096) %>\
 % if len(children) == 0:
 ${ rubric_contents(items, is_paginated) }
 % else:
@@ -123,5 +124,6 @@ ${ rubric_contents(items, is_paginated) }
     % endif
     </div>
 % endif
+<div class="bnrok" id="DIV_DA_55241"></div><% banners_pool.append(55241) %>\
 </div>
 </%block>
