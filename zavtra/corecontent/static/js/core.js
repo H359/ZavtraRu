@@ -143,13 +143,13 @@ $(function(){
     $('[data-clickable]').css({cursor:'pointer'}).click(function(){window.location = $(this).data('clickable');});
     if (window.comments_bootstrap) window.comments_bootstrap();
     (function(){
-	var pyad = function(limit,id){
+	var pyad = function(limit,id,direction){
 	    window['yandex_context_callbacks'] = window['yandex_context_callbacks'] || [];
 	    window['yandex_context_callbacks'].push(function(){Ya.Direct.insertInto(82666, id, {
 		'site_charset': "utf-8",
 		'ad_format': "direct",
 		'font_size': 1,
-		'type': "vertical",
+		'type': direction,
 		'limit': limit,
 		'title_font_size': 3,
 		'site_bg_color': "FFFFFF",
@@ -165,10 +165,11 @@ $(function(){
 	var sq = 230*132;
 	$('.yandex-direct').each(function(k,v){
 	    var that = $(this),
+		direction = that.hasClass('yandex-direct-horizontal') ? 'horizontal' : 'vertical',
 		hght = that.parents('.row-fluid').children().height(),
 		wdth = that.width(),
 		limit = min([9, max([1, Math.floor((hght*wdth) / sq)])]);
-	    pyad(limit, that.attr('id'));
+	    pyad(limit, that.attr('id'), direction);
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
 	    t = document.documentElement.firstChild;
