@@ -168,7 +168,7 @@ $(function(){
 		direction = that.hasClass('yandex-direct-horizontal') ? 'horizontal' : 'vertical',
 		hght = that.parents('.row-fluid').children().height(),
 		wdth = that.width(),
-		limit = min([direction == 'vertical' ? 9 : 4, max([1, Math.floor((hght*wdth) / sq)])]);
+		limit = direction == 'horizontal' ? 4 : min([9, max([1, Math.floor((hght*wdth) / sq)])]);
 	    pyad(limit, that.attr('id'), direction);
 	});
 	if (window['yandex_context_callbacks'] && window['yandex_context_callbacks'].length) {
