@@ -116,14 +116,6 @@ row = 12 / lcslice
     <div class="content"><ul id="comments" class="unstyled">\
 	% for num, comment_item in enumerate(comments['comments']):
 	${ comment(comment_item, comments['votes'].get(comment_item.id, 0)) }
-	<%doc>\
-	% if num == 30:
-	<li><div class="bordered rubrics">
-	    <h3 style="border-top: none">Реклама</h3>
-	    <div class="bnrok" id="DIV_DA_55241"></div><% banners_pool.append(55241) %>\
-	</div></li>
-	% endif
-	<%/doc>\
 	% if (num == 20) or (num == 50):
 	<li><div class="bordered rubrics">
 	    <h3 style="border-top:none">Реклама</h3>
