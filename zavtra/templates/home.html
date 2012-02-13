@@ -9,7 +9,7 @@
 	<div class="text"><h3><a href="${ MEDIA_URL }${ illustration.original }" rel="facebox"><i class="icon-white icon-zoom-in"></i> &laquo;${ illustration.title }&raquo;, Геннадий Животов</a></h3></div>
     </div>
     <h2>Выпуск №${ issue_info['num'] }&nbsp;<small>от ${ self.ru_date(issue_info['date'],inflected=True,format=u'%d %B %Y') } <a href="/media/content/pdfs/${ issue_info['num'] }PDF.zip" class="btn small pull-right btn-primary">скачать PDF</a></small></h2>
-    <% num, nlen = 0, len(newsletter) %>\
+    <% bc, num, nlen = 0, 0, len(newsletter) %>\
     <div class="container-fluid rubrics equalized">
 	% while nlen > num:
 	% if len(newsletter[num]['items']) == 1 and nlen > num+1 and len(newsletter[num+1]['items']) == 1:
@@ -17,13 +17,21 @@
 	    <div class="span6"><div class="bordered column">${ self.rubric_announce(newsletter[num], False) }</div></div>
 	    <div class="span6"><div class="bordered column">${ self.rubric_announce(newsletter[num+1], False) }</div></div>
 	</div>
-	<% num += 2 %>\
+	<%
+	num += 2
+	bc += 1
+	%>\
 	% else:
 	<div class="bordered">${ self.rubric_announce(newsletter[num], True) }</div>
-	<% num += 1 %>\
+	<%
+	num += 1
+	bc += 1
+	%>\
 	% endif
-	% if num == 4:
+	% if bc == 2:
 	<div class="bnrok" id="DIV_DA_49096"></div><% banners_pool.append(49096) %>\
+	% elif bc == 5:
+	<div class="bnrok" id="DIV_DA_55241"></div><% banners_pool.append(55241) %>\
 	% endif
 	% endwhile
     </div>
