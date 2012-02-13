@@ -114,14 +114,8 @@ row = 12 / lcslice
 <div class="comments">\
     <h3>Комментарии</h3>\
     <div class="content"><ul id="comments" class="unstyled">\
-	% for num, comment_item in enumerate(comments['comments']):
+	% for comment_item in comments['comments']:
 	${ comment(comment_item, comments['votes'].get(comment_item.id, 0)) }
-	% if (num == 20) or (num == 50):
-	<li><div class="bordered rubrics">
-	    <h3 style="border-top:none">Реклама</h3>
-	    <div id="oomph1488_${ num }" class="bnrok yandex-direct yandex-direct-horizontal"></div>
-	</div></li>
-	% endif
 	% endfor
     </ul></div>\
     % if request.user.is_authenticated():
