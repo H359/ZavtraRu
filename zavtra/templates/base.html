@@ -275,15 +275,17 @@ row = 12 / lcslice
 		    </div>
 		</div>
 		<div class="span3 rubrics">
-		    <h3>Новости</h3>
-		    <ul class="unstyled">
-			% for item in news[0:4]:
-			<li>
-			    <h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4>
-			    <div data-clickable="${ item.get_absolute_url() }">${ item.description }</div>
-			</li>
-			% endfor
-		    </ul>
+		    <div class="bordered" style="overflow-y: scroll; height: 330px;">
+			<h3>Новости</h3>
+			<ul class="unstyled">
+			    % for item in news[0:3]:
+			    <li>
+				<h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4>
+				<div data-clickable="${ item.get_absolute_url() }">${ item.description }</div>
+			    </li>
+			    % endfor
+			</ul>
+		    </div>
 		</div>
 	    </div>
 	    <div class="row-fluid">
