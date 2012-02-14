@@ -218,14 +218,14 @@ row = 12 / lcslice
 	    </div>
 	</div>
 	<div class="container-fluid">
-	    <div id="logo">
+	    <div id="logo" class="clearfixer">
 		<a href="/" id="mlogo"><img src="${ STATIC_URL }img/logo.gif" /></a>
 		% if quote is not None:
 		<blockquote>&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
 		% endif
 	    </div>
 	    <div class="row-fluid">
-		<div class="span12">
+		<div class="span9">
 		    <div class="rubrics-list">
 			<ul class="nav nav-pills">
 			    % for item in filter(lambda w: w.on_top, rubrics):
@@ -240,6 +240,7 @@ row = 12 / lcslice
 			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
 			    % endfor
 			</ul>
+			<%doc>\
 			<ul class="nav nav-pills">
 			    <li><a href="/content/rubric/novosti/"><strong>Каждый час</strong>:</a></li>
 			    % for num,rand_news in enumerate(random.sample(news, 4)):
@@ -249,6 +250,7 @@ row = 12 / lcslice
 			    <li><a href="${ rand_news.get_absolute_url() }">${ rand_news.title }</a></li>
 			    % endfor
 			</ul>
+			</%doc>\
 		    </div>
 		    <div class="red-stripe">
 			<h3>Красная строка <a href="/content/site-only/">&raquo;</a></h3>
@@ -272,12 +274,17 @@ row = 12 / lcslice
 			</div>
 		    </div>
 		</div>
-		<%doc>
-		<div class="span2 rubrics">
-		    <h3>Реклама</h3>
-		    <div id="oomph1" class="bnrok yandex-direct"></div>
+		<div class="span3 rubrics">
+		    <h3>Новости</h3>
+		    <ul class="unstyled">
+			% for item in news[0:4]:
+			<li>
+			    <h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4>
+			    <div data-clickable="${ item.get_absolute_url() }">${ item.description }</div>
+			</li>
+			% endfor
+		    </ul>
 		</div>
-		</%doc>
 	    </div>
 	    <div class="row-fluid">
 		<div class="span8"><%block name="main_column"></%block></div>

@@ -70,13 +70,10 @@
 </%def>
 
 <%block name="side_column">
-<div class="ym-grid linearize-level-1">
-    <div class="ym-g50 ym-gl"><div class="ym-gbox">${ self.news_block(news) }</div></div>
-    <div class="ym-g50 ym-gr"><div class="ym-gbox">
-	${ parent.side_column() }
-	<h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
-	<div id="oomph3" class="bnrok yandex-direct"></div>\
-    </div></div>
+${ parent.side_column() }
+<h3>Реклама</h3><div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
+${ self.news_block(news) }
+<div id="oomph3" class="bnrok yandex-direct"></div>\
 </div>
 </%block>
 
