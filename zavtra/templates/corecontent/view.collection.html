@@ -110,15 +110,21 @@ if rubric and 0 < rubric.children_render:
 %>
 <div class="bnrok" id="DIV_DA_49096"></div><% banners_pool.append(49096) %>\
 % if len(children) == 0:
-    % if rubric.id == 55:
-    <div><img src="${ STATIC_URL }img/ns.jpg" class="pull-left" /><h1>Стратегия: новый социализм</h1><h3>Информационно-дискуссионная площадка</h3></div>
-    % endif
 ${ rubric_contents(items, is_paginated) }
 % else:
     <div class="row-fluid">
     % if rubric.children_render == 1:
     <div class="span4">${ sidebar(rubric, children) }</div>
-    <div class="span8">${ rubric_contents(items, is_paginated) }</div>
+    <div class="span8">
+	% if rubric.id == 55:
+	<div>
+	    <img src="${ STATIC_URL }img/ns.jpg" class="pull-left" />
+	    <h1>Стратегия: новый социализм</h1>
+	    <h3>Информационно-дискуссионная площадка</h3>
+	</div>
+	% endif
+	${ rubric_contents(items, is_paginated) }
+    </div>
     % else:
     not ready
     % endif
