@@ -45,10 +45,10 @@ ${ item.title }\
 </%block>\
 <%block name="javascript_additional">${ parent.javascript_additional() }<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script></%block>\
 <%block name="side_column">\
+${ self.news_block(news) }
 <h3>Реклама</h3>\
 <div class="bnrok" id="DIV_DA_49095"></div><% banners_pool.append(49095) %>\
 ${ parent.side_column() }\
-${ self.news_block(news) }
 <div id="oomph4" class="bnrok yandex-direct"></div>
 </%block>\
 <%block name="main_column">\
