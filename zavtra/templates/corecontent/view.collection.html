@@ -103,6 +103,9 @@ if rubric and rubric.parent_id is not None:
     % endif
 </ul>
 <div>
+% if rubric_id == 55:
+<p><img src="${ STATIC_URL }img/ns.jpg" class="pull-left" /><h4>Стратегия: новый социализм</h4><h5>Информационно-дискуссионная площадка</h5></p>
+% endif
 <%
 children = []
 if rubric and 0 < rubric.children_render:
