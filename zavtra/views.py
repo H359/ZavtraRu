@@ -84,11 +84,7 @@ def home(request):
 	    newsletter[item.rubric_id]['items'].append(item)
 	return sorted(newsletter.values(), key=lambda p: p['rubric'].position)
     if not no_cache:
-	newsletter = cached(
-	    get_content,
-	    'newsletter',
-	    duration=60*60*4
-	)
+	newsletter = cached(get_content, 'newsletter', duration=60*60*4)
     else:
 	newsletter = get_content()
     def get_latest_rubric(rubric, **kwargs):
@@ -100,18 +96,15 @@ def home(request):
 	except ContentItem.DoesNotExist:
 	    return None
     if not no_cache:
-	illustration = cached(
-	    get_illustration,
-	    'illustration',
-	    duration=6000
-	)
+	illustration = cached(get_illustration, 'illustration', duration=6000)
     else:
 	illustration = get_illustration()
-    zavtra_tv = cached(
-	lambda: ContentItem.objects.filter(kind='video', enabled=True, rubric=44)[0:3],
-	'zavtra-tv2',
-	duration=60*60*4
-    )
+    def get_zavtra_tv():
+	qs = ContentItem.objects.filter(kind='video', rubric_id=44)
+	most_commented = qs.order_by('-_comments_count')[0]
+	top = list(qs.order_by('-pub_date').exclude(id = most_commented.id)[0:2])
+	return [top[0], most_commented, top[1]]
+    zavtra_tv = cached(get_zavtra_tv, 'zavtra-tv', duration=60*60*4)
     special_project = cached(
 	lambda: get_latest_rubric(47),
 	'special-project',

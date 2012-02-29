@@ -180,7 +180,16 @@ $(function(){
 	    t.insertBefore(s, t.firstChild);
 	}
     })();
+    /*
+    var soc = $('.social');
+    if (soc.size() > 0) {
+	var openId = $('.openid', soc),
+	    lj     = $('.livejournal', soc);
+	console.log(openId, lj);
+    }
+    */
     $('.equalized .row-fluid').equalize();
+    //$('.collapse').collapse();
     //$('.carousel').carousel();
     $('a[rel=facebox]').lightBox();
     $('a[rel=popover]').popover();

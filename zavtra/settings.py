@@ -65,7 +65,7 @@ AUTHENTICATION_BACKENDS = (
     #'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-SOCIAL_AUTH_ENABLED_BACKENDS = ('google-oauth', 'openid', 'livejournal', 'twitter', 'facebook')
+SOCIAL_AUTH_ENABLED_BACKENDS = ('google-oauth', 'livejournal', 'twitter', 'facebook')
 LOGIN_URL          = '/login/'
 LOGIN_REDIRECT_URL = '/' #logged-in/'
 LOGIN_ERROR_URL    = '/' #login-error/'

@@ -9,6 +9,8 @@ closure --charset utf8 \
 --js bootstrap-tooltip.js \
 --js bootstrap-popover.js \
 --js bootstrap-carousel.js \
+--js bootstrap-collapse.js \
+--js bootstrap-modal.js \
 --js jquery.cookie.js \
 --js jquery.ui.custom.js \
 --js markitup/jquery.markitup.js \

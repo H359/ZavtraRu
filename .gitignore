@@ -8,6 +8,8 @@
 *.egg
 *.egg-info
 *.gz
+sphinx.conf
+_mako
 zavtra/static
 dist
 build

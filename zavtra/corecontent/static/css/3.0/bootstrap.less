@@ -54,7 +54,7 @@
 //@import "thumbnails.less";
 @import "labels.less";
 //@import "progress-bars.less";
-//@import "accordion.less";
+@import "accordion.less";
 @import "carousel.less";
 //@import "hero-unit.less";
 
@@ -405,4 +405,42 @@ dl.unstyled {
 
 .clearfixer {
     .clearfix();
+}
+
+.socializm { 
+    position: fixed;
+    top: 120px;
+    right: 0px;
+    border: 1px solid #222;
+    border-right: none;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+
+    ul.unstyled {
+margin: 0;
+background: rgba(0,0,0,0.15);
+    }
+
+    li {
+padding: 2px;
+    }
+}
+
+.social.social-b a { display: inline-block; }
+.social {
+    a {
+	width: 32px;
+	height: 32px;
+	display: block;
+	background: url(/static/img/social/soclager.png) no-repeat;
+    }
+    a.twitter { background-position: -32px 0px; }
+    a.facebook { background-position: 0px 0px; }
+    a.vkontakte { background-position: -64px 0px; }
+    a.google-oauth { background-position: -96px 0px; }
+    a.livejournal { background-position: -128px 0px; }
+    a.openid { background-position: -160px 0px; }
 }

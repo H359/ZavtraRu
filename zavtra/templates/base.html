@@ -225,7 +225,7 @@ row = 12 / lcslice
 		% endif
 	    </div>
 	    <div class="row-fluid">
-		<div class="span9">
+		<div class="span12">
 		    <div class="rubrics-list">
 			<ul class="nav nav-pills">
 			    % for item in filter(lambda w: w.on_top, rubrics):
@@ -272,19 +272,6 @@ row = 12 / lcslice
 			    </ul>
 			    <div id="slider"></div>
 			</div>
-		    </div>
-		</div>
-		<div class="span3 rubrics">
-		    <div class="bordered" style="overflow-y: scroll; height: 330px;">
-			<h3>Новости</h3>
-			<ul class="unstyled">
-			    % for item in news[0:3]:
-			    <li>
-				<h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4>
-				<div data-clickable="${ item.get_absolute_url() }">${ item.description }</div>
-			    </li>
-			    % endfor
-			</ul>
 		    </div>
 		</div>
 	    </div>
