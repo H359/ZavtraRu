@@ -36,10 +36,14 @@ class UserView(MakoViewMixin, ListView):
 	part = self.kwargs.get('part')
 	if part == 'comments':
 	    self.template_name = 'siteuser/comments.html'
+	    if self.request.GET.get('page') == '0':
+		self.kwargs['page'] = 1
 	    return self.user.comments.filter(enabled=True).order_by('-created_at')
 	elif part == 'articles':
 	    self.template_name = 'siteuser/articles.html'
 	    now = datetime.now()
+	    if self.request.GET.get('page') == '0':
+		self.kwargs['page'] = 1
 	    return self.user.contentitems.filter(enabled=True, pub_date__lte = now)
 	else:
 	    return User.objects.none()
