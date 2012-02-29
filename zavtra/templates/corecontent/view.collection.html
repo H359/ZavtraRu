@@ -112,19 +112,17 @@ if rubric and 0 < rubric.children_render:
 % if len(children) == 0:
 ${ rubric_contents(items, is_paginated) }
 % else:
+    % if rubric.id == 55:
+    <div class="clearfix">
+        <img src="${ STATIC_URL }img/ns.jpg" class="pull-left" />
+        <h1>&nbsp;Стратегия: новый социализм</h1>
+        <h3>&nbsp;Информационно-дискуссионная площадка</h3>
+    </div>
+    % endif
     <div class="row-fluid">
     % if rubric.children_render == 1:
     <div class="span4">${ sidebar(rubric, children) }</div>
-    <div class="span8">
-	% if rubric.id == 55:
-	<div>
-	    <img src="${ STATIC_URL }img/ns.jpg" class="pull-left" />
-	    <h1>Стратегия: новый социализм</h1>
-	    <h3>Информационно-дискуссионная площадка</h3>
-	</div>
-	% endif
-	${ rubric_contents(items, is_paginated) }
-    </div>
+    <div class="span8">${ rubric_contents(items, is_paginated) }</div>
     % else:
     not ready
     % endif
