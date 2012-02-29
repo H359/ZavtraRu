@@ -103,9 +103,6 @@ if rubric and rubric.parent_id is not None:
     % endif
 </ul>
 <div>
-% if rubric and rubric.id == 55:
-<p><img src="${ STATIC_URL }img/ns.jpg" class="pull-left" /><h4>Стратегия: новый социализм</h4><h5>Информационно-дискуссионная площадка</h5></p>
-% endif
 <%
 children = []
 if rubric and 0 < rubric.children_render:
@@ -113,6 +110,9 @@ if rubric and 0 < rubric.children_render:
 %>
 <div class="bnrok" id="DIV_DA_49096"></div><% banners_pool.append(49096) %>\
 % if len(children) == 0:
+    % if rubric.id == 55:
+    <div><img src="${ STATIC_URL }img/ns.jpg" class="pull-left" /><h1>Стратегия: новый социализм</h1><h3>Информационно-дискуссионная площадка</h3></div>
+    % endif
 ${ rubric_contents(items, is_paginated) }
 % else:
     <div class="row-fluid">
