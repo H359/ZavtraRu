@@ -100,7 +100,7 @@ def home(request):
     else:
 	illustration = get_illustration()
     def get_zavtra_tv():
-	qs = ContentItem.objects.filter(kind='video', rubric_id=44)
+	qs = ContentItem.objects.filter(kind='video', rubric=44)
 	most_commented = qs.order_by('-_comments_count')[0]
 	top = list(qs.order_by('-pub_date').exclude(id = most_commented.id)[0:2])
 	return [top[0], most_commented, top[1]]
