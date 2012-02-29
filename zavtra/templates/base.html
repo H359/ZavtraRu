@@ -240,7 +240,6 @@ row = 12 / lcslice
 			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
 			    % endfor
 			</ul>
-			<%doc>\
 			<ul class="nav nav-pills">
 			    <li><a href="/content/rubric/novosti/"><strong>Каждый час</strong>:</a></li>
 			    % for num,rand_news in enumerate(random.sample(news, 4)):
@@ -250,7 +249,6 @@ row = 12 / lcslice
 			    <li><a href="${ rand_news.get_absolute_url() }">${ rand_news.title }</a></li>
 			    % endfor
 			</ul>
-			</%doc>\
 		    </div>
 		    <div class="red-stripe">
 			<h3>Красная строка <a href="/content/site-only/">&raquo;</a></h3>
