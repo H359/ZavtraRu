@@ -215,7 +215,7 @@ class ContentItem(models.Model):
     	    if self.rubric_id:
     		if self.rubric_id == 44:
     		    # todo lookup and change in place
-    		    cache.delete('zavtra-tv2')
+    		    cache.delete('zavtra-tv')
     		elif self.rubric_id == 47:
     		    # todo lookup and change in place
     		    cache.delete('special-project')
