@@ -47,6 +47,9 @@
 	<div><a href="${ url }"><i class="icon-white icon-comment"></i> ${ self.comments_count(item[1].comments_count) }</a></div>
     </div>
 </div>
+% if item[1].description:
+<div class="alert alert-block alert-info">${ item[1].description }</div>
+% endif
 </%def>\
 <%block name="side_column">\
 % if zavtra_tv is not None:

@@ -79,6 +79,7 @@ ${ parent.side_column() }\
     <h6><time pubdate="pubdate" datetime="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time></h6>
     ${ output_tags(item) }
     % if item.kind == 'video':
+    <p>${ item.description }</p>
     <% video_id = item.get_video_id() %>\
     <object width="425" height="344">
 	<param name="movie" value="http://youtube.com/v/${ video_id }&version=3"</param>
