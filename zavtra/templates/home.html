@@ -38,8 +38,8 @@
     <div id="horoomph1" class="bnrok yandex-direct yandex-direct-horizontal"></div>\
 </%block>\
 <%def name="video_cell(item)">\
+<% url = item[1].get_absolute_url() %>\
 <div class="item<% if item[0] == 0: context.write(' active') %>">
-    <% url = item[1].get_absolute_url() %>\
     <img data-clickable="${ url }" src="http://img.youtube.com/vi/${ item[1].get_video_id() }/0.jpg" class="full-image" />
     <%doc><div class="carousel-caption"><h2><a href="${ url }">${ item[1].title }<i class="icon-share-alt"></i></a></h2></div></%doc>
     <div class="text">
@@ -48,7 +48,7 @@
     </div>
 </div>
 % if item[1].description:
-<div class="alert alert-block alert-info">${ item[1].description }</div>
+<div data-clickable="${ url }" class="alert alert-block alert-info">${ item[1].description }</div>
 % endif
 </%def>\
 <%block name="side_column">\
