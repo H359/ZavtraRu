@@ -100,10 +100,11 @@ def home(request):
     else:
 	illustration = get_illustration()
     def get_zavtra_tv():
-	qs = ContentItem.objects.filter(kind='video', rubric=44)
-	most_commented = qs.order_by('-_comments_count')[0]
-	top = list(qs.order_by('-pub_date').exclude(id = most_commented.id)[0:2])
-	return [top[0], most_commented, top[1]]
+	return list( ContentItem.objects.filter(kind='video', rubric=44).order_by('-pub_date')[0:3] )
+	#qs = ContentItem.objects.filter(kind='video', rubric=44)
+	#most_commented = qs.order_by('-_comments_count')[0]
+	#top = list(qs.order_by('-pub_date').exclude(id = most_commented.id)[0:2])
+	#return [top[0], most_commented, top[1]]
     zavtra_tv = cached(get_zavtra_tv, 'zavtra-tv', duration=60*60*4)
     special_project = cached(
 	lambda: get_latest_rubric(47),
