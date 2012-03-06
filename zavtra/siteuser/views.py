@@ -27,6 +27,10 @@ def register(request):
 	form = RegistrationForm()
     return {'form': form}
 
+@render_to('registration/registration_complete.html')
+def complete(request):
+    return {}
+
 class UserView(MakoViewMixin, ListView):
     paginate_by = 15
     paginator_class = DiggPaginator
