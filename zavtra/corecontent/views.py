@@ -191,9 +191,11 @@ def get_dates(q):
 @render_to('corecontent/archive.html')
 def view_archive(request, new=False):
     q = ContentItem.objects.filter(published=True, enabled=True).order_by('pub_date')
+    """
     if new:
 	astart = datetime(hour=0,minute=0,second=0,year=2011,month=12,day=1)
 	q = q.filter(pub_date__gte = astart)
+    """
     q = q.values_list('pub_date', flat=True).distinct()
     span, dates = get_dates(q)
     return {'dates': dates, 'span': span, 'new': new}
