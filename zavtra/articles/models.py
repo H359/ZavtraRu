@@ -9,10 +9,12 @@ from markitup.fields import MarkupField
 
 from model_utils import TitledSlugEntry, WithDenormalizedStats
 
-class Rubric(TitledSlugEntry, MPTTModel):
+class Rubric(MPTTModel, TitledSlugEntry):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
 class Article(TitledSlugEntry, WithDenormalizedStats):
+    class Meta:
+	abstract = False
     sub_title = models.CharField(max_length=1024, blank=True)
     authors   = models.ManyToManyField(User)
     pub_date  = models.DateTimeField()

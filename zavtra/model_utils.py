@@ -15,9 +15,9 @@ class WithDenormalizedStats(models.Model):
     class Meta:
 	abstract = True
 	app_label = 'ABSTRACT'
-    rating = models.BigIntegerField(default=0, verbose_name=u'Рейтинг', editable=False)
-    views_count     = models.BigIntegerField(default=0, verbose_name=u'Кол-во просмотров', editable=False)
-    comments_count  = models.BigIntegerField(default=0, verbose_name=u'Кол-во комментариев', editable=False)
+    rating         = models.BigIntegerField(default=0, verbose_name=u'Рейтинг', editable=False)
+    views_count    = models.BigIntegerField(default=0, verbose_name=u'Кол-во просмотров', editable=False)
+    comments_count = models.BigIntegerField(default=0, verbose_name=u'Кол-во комментариев', editable=False)
 
 def get_content_type(obj):
     # TODO: cache whole content-type mapping
