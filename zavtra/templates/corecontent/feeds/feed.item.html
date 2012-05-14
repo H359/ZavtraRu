@@ -1,3 +1,0 @@
-{% if obj.kind == 'video' %}<img src="http://img.youtube.com/vi/{{ obj.get_video_id }}/0.jpg" />{% endif %}
-{% if obj.kind == 'image' %}<p style="text-align:center"><img src="{{ MEDIA_URL }}{{ obj.thumbnail }}" /></p>{% endif %}
-{% if obj.kind == 'text' or obj.kind == '' %}{{ obj.content|safe }}{% endif %}

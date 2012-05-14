@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cat ../../js/markitup/skins/simple/style.css >> style.css
-cat ../../js/markitup/sets/markdown/style.css >> style.css
-yuicompressor --type css --charset utf8 -o style.min.css style.css 
