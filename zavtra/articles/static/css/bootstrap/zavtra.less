@@ -1,0 +1,140 @@
+body {
+    background: url('/static/img/topback.png') repeat-y center top;
+    padding-top: 50px;
+}
+
+.page-in {
+    width: 990px;
+    margin: 0 auto;
+}
+
+.tcenter {
+    text-align: center;
+}
+
+.text-over-image {
+    position: relative;
+    .text {
+	position: absolute;
+	bottom: 20px;
+	left: 30px;
+	right: 20px;
+	background: rgba(0,0,0,0.3);
+	padding: 10px;
+	color: @white;
+	font-size: 28px;
+	text-shadow: @gray 1px 1px 4px;
+	font-weight: bold;
+	line-height: 1.2em;
+	font-family: 'Didact Gothic', sans-serif;
+	text-align: right;
+	a {
+		color: @white;
+	}
+    }
+}
+
+header {
+    a {
+	line-height: 1.2em;
+    }
+    .quote {
+	font-family: 'Didact Gothic', sans-serif;
+	blockquote {
+	    a {
+		color: @white;
+	    }
+	    height: 30px;
+	    border: 1px solid darken(@gray, 15%);
+	    display: block;
+	    font-size: 12px;
+	    font-weight: bold;
+	    line-height: 1.2em;
+	    padding: 15px;
+	    background: @grayLight;
+	    .border-radius(5px);
+	}
+    }
+}
+
+.menu {
+    background: #c61313;
+    margin-bottom: 0;
+    li {
+	&.title a:hover {
+	    background: transparent; 
+	}
+	a {
+	    .border-radius(0);
+	    color: @white;
+	    font-size: 16px;
+	    &:hover {
+		background: @warningText;
+	    }
+	}
+    }
+}
+
+.columnists {
+    padding: 0 15px;
+    margin-bottom: 0;
+    li {
+	&.last {
+	    border-right: none;
+	    margin-right: 0;
+	    width: 182px;
+	}
+	width: 181px;
+	border-right: 1px dotted @grayDark;
+	margin-right: 10px;
+	padding: 15px 2px 5px 0;
+	.photo {
+	    float: left;
+	    display: block;
+	    width: 50px;
+	}
+	.info {
+	    margin-left: 55px;
+	    p {
+		line-height: 1.2em;
+	    }
+	}
+    }
+}
+
+.submenu {
+    .menu;
+    background: darken(#c61313, 5%);
+    a:hover {
+	background: darken(@warningText, 5%);
+    }
+}
+
+.main-block {
+    margin-bottom: 16px;
+    width: 150px;
+}
+
+.video-block {
+    .row {
+	margin-bottom: 10px;
+	border-bottom: 1px dotted @grayLight;
+	padding-bottom: 8px;
+	&:last-child {
+	    border-bottom: none;
+	    margin-bottom: 0;
+	    padding-bottom: 0;
+	}
+    }
+    .description {
+	font-style: italic;
+	font-size: 10px;
+	text-align: right;
+	line-height: 1.2em;
+	padding: 5px 0 0 0;
+    }
+}
+
+.page-inner {
+    margin-top: 10px;
+}

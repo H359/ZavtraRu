@@ -1,0 +1,42 @@
+<%inherit file="base.html" />
+<%!
+from django.contrib.webdesign.lorem_ipsum import words
+from random import randint
+%>
+
+<%block name="content">
+<div class="row">
+	<div class="span64">
+		% for x in range(8):
+		% if x % 4 == 0:
+		<div class="row">
+		% endif
+			<div class="span16">
+				<div class="main-block">
+					<a class="tcenter" href="#"><img src="${ STATIC_URL }img/test/brei.jpg" width="150" /></a>
+					<h4><a href="#">${ words(common=False, count=randint(1,4)) }</a></h4>
+				</div>
+			</div>
+		% if x % 4 == 3:
+		</div>
+		% endif
+		% endfor
+		<div class="row">
+		бложики текстики выпуск
+		</div>
+	</div>
+	<div class="offset2 span30 video-block">
+		% for _ in range(3):
+		<div class="row">
+			<div class="text-over-image">
+				<img src="${ STATIC_URL }img/test/brei.jpg" width="300">
+				<div class="text"><a href="#">Нацизм для самых маленьких</a></div>
+			</div>
+			<div class="description">
+				Маэстро Андерс Брейвик делится впечатлениями о лодочных прогулках, спортивному ориентированию и охоте.
+			</div>
+		</div>
+		% endfor
+	</div>
+</div>
+</%block>

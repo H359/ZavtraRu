@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from model_utils import TitledSlugEntry, WithDenormalizedStats
+from utils.models import TitledSlugEntry, WithDenormalizedStats
 
 class Gallery(TitledSlugEntry, WithDenormalizedStats):
     owner  = models.ForeignKey(User)
@@ -9,5 +9,5 @@ class Gallery(TitledSlugEntry, WithDenormalizedStats):
 
 class Image(TitledSlugEntry, WithDenormalizedStats):
     gallery  = models.ForeignKey(Gallery)
-    image    = models.ImageField()
+    image    = models.ImageField(upload_to='images/')
     pub_date = models.DateTimeField()

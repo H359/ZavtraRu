@@ -4,11 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from model_utils import TitledSlugEntry
+from utils.models import TitledSlugEntry
 
 class Poll(TitledSlugEntry):
-    class Meta:
-	abstract = False
     content_type   = models.ForeignKey(ContentType, null=True)
     object_id      = models.IntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
