@@ -2,6 +2,8 @@
 import urllib2
 import urlparse
 
+from datetime import datetime
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -16,8 +18,13 @@ class Rubric(MPTTModel, TitledSlugEntry):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
 
     def get_absolute_url(self):
-	return ''
+        return ''
 
+class ArchiveArticlesManager(models.Manager):
+    def get_query_set(self):
+        now = datetime.now()
+        return super(ArchiveArticlesManager, self).get_query_set().filter(pub_date__lte = now, enabled=True)
+        
 class Article(TitledSlugEntry, WithDenormalizedStats):
     sub_title = models.CharField(max_length=1024, blank=True)
     authors   = models.ManyToManyField(User)
@@ -30,6 +37,9 @@ class Article(TitledSlugEntry, WithDenormalizedStats):
 
     # compiled from parts
     content   = models.TextField(editable=False)
+    
+    objects = models.Manager()
+    archive = ArchiveArticlesManager()
 	
 class ArticlePart(models.Model):
     class Meta:
