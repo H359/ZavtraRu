@@ -3,10 +3,8 @@
 <%block name="content">
 <div class="row">
 	<div class="span64">
-		% for num, article in enumerate(articles):
-		% if num % 4 == 0:
 		<div class="row">
-		% endif
+			% for article in articles:
 			<div class="span16">
 				<div class="main-block">
 					<a class="tcenter" href="#">
@@ -15,10 +13,8 @@
 					<h4><a href="#">${ article.title }</a></h4>
 				</div>
 			</div>
-		% if num % 4 == 3:
+			% endfor
 		</div>
-		% endif
-		% endfor
 	</div>
 	<div class="offset2 span30 video-block">
 		% for _ in range(3):
