@@ -5,6 +5,10 @@ from django.contrib.auth.models import User as ContribUser
 from utils.models import WithDenormalizedStats
 
 class User(ContribUser, WithDenormalizedStats):
+    GENDER = (
+        (1, u'Мужской'),
+        (2, u'Женский'),
+    )
     dob          = models.DateField(verbose_name=u'Дата рождения')
     gender       = models.IntegerField(choices=GENDER, verbose_name=u'Пол')
     location     = models.CharField(max_length=100, verbose_name=u'Страна, город', blank=True)

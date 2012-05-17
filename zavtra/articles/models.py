@@ -56,7 +56,7 @@ class MarkdownText(models.Model):
         return markdown(self.text)
 
 class HTMLText(models.Model):
-    text = models.TextFIeld()
+    text = models.TextField()
     
     def render_html(self):
         return self.text
