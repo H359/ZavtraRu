@@ -2,7 +2,6 @@
 from django.db import models
 from django.contrib.auth.models import User as ContribUser
 
-from articles.models import Rubric
 from utils.models import WithDenormalizedStats
 
 class User(ContribUser, WithDenormalizedStats):
