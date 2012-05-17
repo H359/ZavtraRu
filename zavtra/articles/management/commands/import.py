@@ -50,7 +50,7 @@ class Command(BaseCommand):
             h = HTMLText.objects.create(text=pd['content'])
             article = Article.objects.create(
                 title=pd['title'],
-                sub_title=pd['sub_title'],
+                sub_title=pd.get('sub_title', ''),
                 published=pd['published'],
                 enabled=pd['enabled'],
                 exclusive=pd['exclusive'],
@@ -63,10 +63,10 @@ class Command(BaseCommand):
         self.connection = psycopg2.connect("dbname=zavtra user=zavtra")
         self.cursor = self.connection.cursor()
         try:
-            print 'Migrating users'
-            self.migrate_users()
-            print 'Migrating rubrics'
-            self.migrate_rubrics()
+            #print 'Migrating users'
+            #self.migrate_users()
+            #print 'Migrating rubrics'
+            #self.migrate_rubrics()
             #self.migrate_tags()
             print 'Migrating articles'
             self.migrate_articles()
