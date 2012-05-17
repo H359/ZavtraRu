@@ -6,13 +6,13 @@ from autoslug import AutoSlugField
 
 class TitledSlugEntry(models.Model):
     class Meta:
-	abstract = True
+        abstract = True
     title = models.CharField(max_length=1024, verbose_name=u'Название')
     slug  = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from='title')
 
 class WithDenormalizedStats(models.Model):
     class Meta:
-	abstract = True
+        abstract = True
     rating         = models.BigIntegerField(default=0, verbose_name=u'Рейтинг', editable=False)
     views_count    = models.BigIntegerField(default=0, verbose_name=u'Кол-во просмотров', editable=False)
     comments_count = models.BigIntegerField(default=0, verbose_name=u'Кол-во комментариев', editable=False)

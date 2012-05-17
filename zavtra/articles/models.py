@@ -3,12 +3,12 @@ import urllib2
 import urlparse
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from mptt.models import MPTTModel
 from markdown import markdown
+from users.models import User
 
 from utils.models import TitledSlugEntry, WithDenormalizedStats
 
@@ -55,6 +55,12 @@ class MarkdownText(models.Model):
     def render_html(self):
         return markdown(self.text)
 
+class HTMLText(models.Model):
+    text = models.TextFIeld()
+    
+    def render_html(self):
+        return self.text
+        
 class YoutubeVideo(models.Model):
     url = models.URLField()
 
