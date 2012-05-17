@@ -11,6 +11,6 @@ class User(ContribUser, WithDenormalizedStats):
     location     = models.CharField(max_length=100, verbose_name=u'Страна, город', blank=True)
     occupation   = models.CharField(max_length=200, verbose_name=u'Род занятий', blank=True)
     about        = models.TextField(blank=True, verbose_name=u'О себе')
-    avatar       = 
+    #avatar       = 
 
-    avatar_50    =
+    #avatar_50    =
