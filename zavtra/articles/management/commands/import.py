@@ -51,6 +51,7 @@ class Command(BaseCommand):
             article = Article.objects.create(
                 title=pd['title'],
                 sub_title=pd.get('sub_title', ''),
+                pub_date=pd['pub_date'],
                 published=pd['published'],
                 enabled=pd['enabled'],
                 exclusive=pd['exclusive'],
