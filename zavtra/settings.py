@@ -146,6 +146,7 @@ HAYSTACK_CONNECTIONS = {
     }
 }
 AUTOSLUG_SLUGIFY_FUNCTION = 'zavtra.utils.slugify'
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -153,8 +154,15 @@ LOGGING = {
         'simple': {
             'format': '%(levelname)s %(message)s'
         },
-     },    
-     'handlers': {
+    },    
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda r: not DEBUG
+
+        }
+     },
+    'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
@@ -164,8 +172,8 @@ LOGGING = {
             'class':'logging.StreamHandler',
             'formatter': 'simple'
         },
-     },
-     'loggers': {
+    },
+    'loggers': {
         'social_auth.views': {
             'handlers': ['console'],
             'level': 'INFO',
@@ -176,8 +184,9 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-     }
+    }
 }
+"""
 CONVERT_FILENAME = True
 FILEBROWSER_EXCLUDE = []
 
