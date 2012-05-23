@@ -32,9 +32,9 @@ def common_pieces(request):
     news     = cached(lambda: map(news_stripper, ContentItem.objects.filter(enabled=True, pub_date__lte=now, rubric__title=u'Новости')[0:10]), 'news', duration=60*60*24)
     poll     = cached(lambda: get_latest_poll(date), 'latest_poll_object', duration=5*60)
     current_items = cached(
-	lambda: ContentItem.batched.batch_select('authors').select_related().exclude(rubric = 1).filter(enabled=True, published=False)[0:12],
-	'red_string',
-	duration=60*60*24
+	   lambda: ContentItem.batched.batch_select('authors').select_related().filter(rubric = None).filter(enabled=True, published=False)[0:5],
+	   'red_string',
+	   duration=60*60*24
     )
     return {
 	'news':          news,

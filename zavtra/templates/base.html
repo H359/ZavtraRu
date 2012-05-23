@@ -51,8 +51,8 @@ row = 12 / lcslice
 <% url = item.get_absolute_url() %>\
     <dt><a href="${ url }">${ item.title }</a></dt>\
     <dd>
-	<time datetime="datetime" pubdate="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time>\
-	<div data-clickable="${ url }" class="article-text">${ item.description }</div>\
+    <time datetime="datetime" pubdate="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time>\
+    <div data-clickable="${ url }" class="article-text">${ item.description }</div>\
     </dd>
 % endfor
 </dl>
@@ -61,51 +61,51 @@ row = 12 / lcslice
 <% author = item.get_author() %>\
 <li id="comment-${ item.id }" <% if not stream: context.write(u'style="padding-left: %dpx;"' % (item.depth_truncated()*40)) %>>\
     <div class="comment">\
-	<div class="avatar">\
-	    <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>\
-	</div>\
-	<div class="inner">\
-	    <div class="body clearfixer">\
-		<div class="author">
-		    <a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <% if not item.author.is_active: context.write(u' [деактивирован]') %>\
-		    <a href="/resolver/25/${ item.id }/#comment-${ item.id }"><time datetime="${ item.created_at }">${ ru_date(item.created_at, format=u'%d.%m.%Y %H:%M') }<time></a>
-		</div>\
-		<div class="text">\
-		% if item.enabled:
-		${ item.comment_html }\
-		% else:
-		<em>комментарий скрыт</em>\
-		    % if request.user.is_authenticated() and request.user.is_staff:
-		    <br/>Текст:<br/>${ item.comment_html }\
-		    % endif
-		% endif
-		</div>\
-		% if request.user.is_authenticated() and request.user.is_active:
-		<div class="btn-toolbar">\
-		    % if item.enabled:
-		    <div class="btn-group">
-			<a href="#vote:up:${ item.id }" class="vote-plus btn btn-small btn-info ${ 'disabled' if vote == 1 else '' }"><i class="icon-white icon-plus-sign"></i></a>
-			<a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
-			<a href="#vote:down:${ item.id }" class="vote-minus btn btn-small btn-info ${ 'disabled' if vote == -1 else '' }"><i class="icon-white icon-minus-sign"></i></a>
-		    </div>
-		    <div class="btn-group pull-right">
-			<a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
-		    </div>
-		    % endif
-		    % if request.user.is_staff:
-		    <div class="btn-group pull-right">
-			<%doc>and perms.comments.moderate</%doc>\
-			% if item.enabled:
-			<a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
-			% else:
-			<a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
-			% endif
-		    </div>
-		    % endif
-		</div>
-		% endif
-	    </div>\
-	</div>\
+    <div class="avatar">\
+        <a href="#" rel="popover" data-content="Пользователь ${ author } с нами с ${ ru_date(item.author.date_joined,inflected=True,format=u'%d %B %Y') }" title="${ author }"><img src="${ item.author.avatar() }" width="32" /></a>\
+    </div>\
+    <div class="inner">\
+        <div class="body clearfixer">\
+        <div class="author">
+            <a href="${ item.author.get_absolute_url() }">${ item.author }</a>, <% if not item.author.is_active: context.write(u' [деактивирован]') %>\
+            <a href="/resolver/25/${ item.id }/#comment-${ item.id }"><time datetime="${ item.created_at }">${ ru_date(item.created_at, format=u'%d.%m.%Y %H:%M') }<time></a>
+        </div>\
+        <div class="text">\
+        % if item.enabled:
+        ${ item.comment_html }\
+        % else:
+        <em>комментарий скрыт</em>\
+            % if request.user.is_authenticated() and request.user.is_staff:
+            <br/>Текст:<br/>${ item.comment_html }\
+            % endif
+        % endif
+        </div>\
+        % if request.user.is_authenticated() and request.user.is_active:
+        <div class="btn-toolbar">\
+            % if item.enabled:
+            <div class="btn-group">
+            <a href="#vote:up:${ item.id }" class="vote-plus btn btn-small btn-info ${ 'disabled' if vote == 1 else '' }"><i class="icon-white icon-plus-sign"></i></a>
+            <a class="btn btn-disabled btn-small comment-rating" title="рейтинг комментария">${ item.rating }</a>
+            <a href="#vote:down:${ item.id }" class="vote-minus btn btn-small btn-info ${ 'disabled' if vote == -1 else '' }"><i class="icon-white icon-minus-sign"></i></a>
+            </div>
+            <div class="btn-group pull-right">
+            <a href="#reply:${ item.id }" class="btn btn-small btn-info">Ответить</a>\
+            </div>
+            % endif
+            % if request.user.is_staff:
+            <div class="btn-group pull-right">
+            <%doc>and perms.comments.moderate</%doc>\
+            % if item.enabled:
+            <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Скрыть</a>\
+            % else:
+            <a href="#hide:${ item.id }}" class="btn btn-small btn-danger">Раскрыть</a>\
+            % endif
+            </div>
+            % endif
+        </div>
+        % endif
+        </div>\
+    </div>\
     </div>\
 </li>\
 </%def>\
@@ -114,44 +114,44 @@ row = 12 / lcslice
 <div class="comments">\
     <h3>Комментарии</h3>\
     <div class="content"><ul id="comments" class="unstyled">\
-	% for comment_item in comments['comments']:
-	${ comment(comment_item, comments['votes'].get(comment_item.id, 0)) }
-	% endfor
+    % for comment_item in comments['comments']:
+    ${ comment(comment_item, comments['votes'].get(comment_item.id, 0)) }
+    % endfor
     </ul></div>\
     % if request.user.is_authenticated():
     <div class="comment-form comment clearfixer">\
-	<div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>\
-	<div class="avatar"><img src="${ request.user.avatar() }" width="32" /></div>\
-	<form class="inner" method="post" action="/comments/add/">\
-	    <fieldset class="body">\
-		<h4>Ваш комментарий:</h4>\
-		<div>
-		    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
-		    <input type="hidden" name="next" value="${ request.path }" />
-		</div>\
-		% for field in comments['form']:
-		% if field.is_hidden:
-		<div>${ field }</div>\
-		% else:
-		<div class="clearfix">\
-		    ${ field.label_tag() }
-		    <div class="input">\
-			${ field }
-			% if field.help_text:
-			<span class="help-block">${ field.help_text }</span>\
-			% endif
-		    </div>\
-		</div>\
-		% endif
-		% endfor
-		<div><input type="submit" class="btn btn-small btn-success"  value="Отправить" /></div>\
-	    </fieldset>\
-	</form>\
+    <div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>\
+    <div class="avatar"><img src="${ request.user.avatar() }" width="32" /></div>\
+    <form class="inner" method="post" action="/comments/add/">\
+        <fieldset class="body">\
+        <h4>Ваш комментарий:</h4>\
+        <div>
+            <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
+            <input type="hidden" name="next" value="${ request.path }" />
+        </div>\
+        % for field in comments['form']:
+        % if field.is_hidden:
+        <div>${ field }</div>\
+        % else:
+        <div class="clearfix">\
+            ${ field.label_tag() }
+            <div class="input">\
+            ${ field }
+            % if field.help_text:
+            <span class="help-block">${ field.help_text }</span>\
+            % endif
+            </div>\
+        </div>\
+        % endif
+        % endfor
+        <div><input type="submit" class="btn btn-small btn-success"  value="Отправить" /></div>\
+        </fieldset>\
+    </form>\
     </div>\
     <script>window.comments_bootstrap=function(){$('#comments').comments();}</script>\
     % else:
     <div class="alert alert-info">\
-	<p>Чтобы иметь возможность оставлять комментарии, вам нужно <a href="/login/">войти в свою учетную запись</a> (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала) или <a href="/accounts/register/">зарегистрировать её</a>, если у вас таковой еще нет.</p>\
+    <p>Чтобы иметь возможность оставлять комментарии, вам нужно <a href="/login/">войти в свою учетную запись</a> (на сайте существует возможность зайти под учетной записи Twitter, Facebook и Живого Журнала) или <a href="/accounts/register/">зарегистрировать её</a>, если у вас таковой еще нет.</p>\
     </div>
     % endif
 </div>\
@@ -161,180 +161,223 @@ row = 12 / lcslice
 <!DOCTYPE html>
 <html lang="ru">\
     <head>\
-	<meta charset="utf-8" />\
-	<title><%block name="page_title">Газета &laquo;Завтра&raquo;</%block></title>\
-	<meta name="keywords" content="<%block name="meta_keywords">Россия,русский народ,проханов,свежий номер</%block>" />\
-	<meta name="description" content="<%block name="meta_description">Сетевое представительство газеты Завтра</%block>" />\
-	<meta name="author" content="<%block name="meta_author">Редакция газеты Завтра</%block>" />\
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />\
-	<meta name="yandex-verification" content="79bffe9a083206fe" />\
-	<%block name="meta_extra"></%block>\
-	<%doc>\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.css" />\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/skins/simple/style.css" />\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/sets/markdown/style.css" />\
-	</%doc>\
-	<link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.min.css" />\
-	<link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru/content/rss/latest/" />\
-	<link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />\
-	<script>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-27628875-1']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>\
+    <meta charset="utf-8" />\
+    <title><%block name="page_title">Газета &laquo;Завтра&raquo;</%block></title>\
+    <meta name="keywords" content="<%block name="meta_keywords">Россия,русский народ,проханов,свежий номер</%block>" />\
+    <meta name="description" content="<%block name="meta_description">Сетевое представительство газеты Завтра</%block>" />\
+    <meta name="author" content="<%block name="meta_author">Редакция газеты Завтра</%block>" />\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />\
+    <meta name="yandex-verification" content="79bffe9a083206fe" />\
+    <%block name="meta_extra"></%block>\
+    <%doc>\
+    <link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.css" />\
+    <link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/skins/simple/style.css" />\
+    <link rel="stylesheet" type="text/css" href="${ STATIC_URL }js/markitup/sets/markdown/style.css" />\
+    </%doc>\
+    <style>
+    table.columnists {
+        border: 1px solid whiteSmoke;
+        background: whiteSmoke;
+        border-top: 1px solid #999;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .columnists td {
+        vertical-align: top;
+        border: 1px solid #cecccc;
+        border-top: none;
+        padding: 6px;
+        width: 20%;
+    }
+    .columnists img {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    </style>
+    <link rel="stylesheet" type="text/css" href="${ STATIC_URL }css/3.0/style.min.css" />\
+    <link rel="alternate" type="application/rss+xml" title="Газета Завтра" href="http://zavtra.ru/content/rss/latest/" />\
+    <link rel="shortcut icon" href="${ STATIC_URL }img/zav_icon.gif" />\
+    <script>var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-27628875-1']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>\
     </head>\
     <body>\
-	<!-- tns-counter.ru -->\
-	<script type="text/javascript">var img = new Image();img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);</script>\
-	<noscript><img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt=""></noscript>\
-	<!--/ tns-counter.ru -->\
-	<div class="navbar navbar-fixed-top">
-	    <div class="navbar-inner">
-	        <div class="container-fluid">
-		    <ul class="nav">
-		        <li><a href="/#gazette">Газета</a></li>
-		        <li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
-		        <li><a href="/denlit/index.html">&laquo;День литературы&raquo;</a></li>
-		        % if request.user.is_authenticated() and request.user.is_staff:
-		        <li class="dropdown" id="editorial">
-			    <a href="#editorial" data-toggle="dropdown" class="dropdown-toggle">Редакционное <b class="caret"></b></a>
-			    <ul class="dropdown-menu">
-				<li><a href="/editorial/">Редакционный блог</a></li>
-				<li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта@zavtra.ru</a></li>
-				<li><a href="/?next_number=1">Новый номер</a></li>
-			    </ul>
-			</li>
-		        % endif
-		        <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
-		    </ul>
-		    <form action="/search/" method="get" class="navbar-search">
-		        <input class="search-query" type="search" name="query" placeholder="Поиск..." />
-		    </form>
-		    <ul class="nav pull-right">
-		        % if request.user.is_authenticated():
-		        <li><a>Здравствуйте, ${ request.user.get_full_name() }!</a></li>
-		        <li><a href="/logout/">Выйти</a></li>
-		        % else:
-		        <li><a href="/login/">Войти</a></li>
-		        % endif
-		    </ul>
-		</div>
-	    </div>
-	</div>
-	<div class="container-fluid">
-	    <div id="logo" class="clearfixer">
-		<a href="/" id="mlogo"><img src="${ STATIC_URL }img/logo.gif" /></a>
-		% if quote is not None:
-		<blockquote>&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
-		% endif
-	    </div>
-	    <div class="row-fluid">
-		<div class="span12">
-		    <div class="rubrics-list">
-			<ul class="nav nav-pills">
-			    % for item in filter(lambda w: w.on_top, rubrics):
-			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
-			    % endfor
-			</ul>
-		    </div>
-		    <div class="featured-list">
-			<ul class="nav nav-pills featured-list-itself">
-			    <li><a href="/content/featured/"><strong>Каждый день</strong>:</a></li>
-			    % for item in featured:
-			    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
-			    % endfor
-			</ul>
-			<ul class="nav nav-pills">
-			    <li><a href="/content/rubric/novosti/"><strong>Каждый час</strong>:</a></li>
-			    % for num,rand_news in enumerate(random.sample(news, 4)):
-			    % if num > 0:
-			    <li>|</li>
-			    % endif
-			    <li><a href="${ rand_news.get_absolute_url() }">${ rand_news.title }</a></li>
-			    % endfor
-			</ul>
-		    </div>
-		    <div class="red-stripe">
-			<h3>Красная строка <a href="/content/site-only/">&raquo;</a></h3>
-			<div class="scrollee">
-			    <ul class="unstyled scrollable">
-				% for num,item in enumerate(current_items):
-				<li${ " class='first'" if num == 0 else "" }<% if item.kind=='video': context.write(" style='width: auto;'") %>>
-				    <% url = item.get_absolute_url() %>
-				    <h4><a href="${ url }">${ item.title }</a></h4>
-				    <div class="article-text" data-clickable="${ url }">\
-				    % if item.kind == 'video':
-				    <img src="http://img.youtube.com/vi/${ item.get_video_id() }/${ random.randint(1,3) }.jpg" width="120" height="90" class="bordered" />
-				    % else:
-				    ${ item.description }\
-				    % endif
-				    </div>
-				</li>
-				% endfor
-			    </ul>
-			    <div id="slider"></div>
-			</div>
-		    </div>
-		</div>
-	    </div>
-	    <div class="row-fluid">
-		<div class="span8"><%block name="main_column"></%block></div>
-		<div class="span4 rubrics">
-		    <%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block>
-		    <hr/>
-		    <h3>Реклама</h3>
-		    <div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>\
-		</div>
-	    </div>
-	    <div class="row-fluid">
-		<div class="bordered">
-		    <h3>Реклама</h3>
-		    <div class="bnrok" id="DIV_DA_50417"></div><% banners_pool.append(50417) %>
-		</div>
-	    </div>
-	    <div class="row-fluid">
-		<div class="span4">
-		    <address>
-			<strong>Адрес редакции:</strong><br/>
-			<i class="icon-envelope"></i> 119146, Москва, Фрунзенская наб., 18–60<br/>
-			<i class="icon-inbox"></i> Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
-			Телефон: (916) 502-49-86<br/>
-			Служба рекламы: (903) 131-53-97
-		    </address>
-		</div>
-		<div class="span8">
-		    <i class="icon-warning-sign"></i> <a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
-		    <i class="icon-inbox"></i> Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
-		</div>
-	    </div>
-	</div>
-	<%doc>\
-	<script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
-	<script src="${ STATIC_URL }js/jquery.lightbox-0.5.js"></script>
-	<script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
-	<script src="${ STATIC_URL }js/bootstrap-dropdown.js"></script>
-	<script src="${ STATIC_URL }js/bootstrap-tooltip.js"></script>
-	<script src="${ STATIC_URL }js/bootstrap-popover.js"></script>
-	<script src="${ STATIC_URL }js/bootstrap-carousel.js"></script>
-	<script src="${ STATIC_URL }js/jquery.cookie.js"></script>
-	<script src="${ STATIC_URL }js/jquery.ui.custom.js"></script>
-	<script src="${ STATIC_URL }js/markitup/jquery.markitup.js"></script>
-	<script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
-	<script src="${ STATIC_URL }js/comments.js"></script>
-	<script src="${ STATIC_URL }js/core.js"></script>
-	</%doc>\
-	<script src="${ STATIC_URL }js/scripts.combined.min.7.js"></script>
-	<%block name="javascript_additional"></%block>
-	% for i in banners_pool:
-	<script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
-	% endfor
-	<div style="display:none;"><script type="text/javascript"> 
-	(function(w, c) { 
-	    (w[c] = w[c] || []).push(function() { 
-	        try { 
-	            w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true, webvisor: true}); 
-	        } 
-	        catch(e) { } 
-	    }); 
-	})(window, "yandex_metrika_callbacks"); 
-	</script></div> 
-	<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script> 
-	<noscript><div><img src="//mc.yandex.ru/watch/11286280" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+    <!-- tns-counter.ru -->\
+    <script type="text/javascript">var img = new Image();img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/g,'%2a') + '*zavtra_ru/ru/UTF-8/tmsec=zavtra_total/' + Math.round(Math.random() * 1000000000);</script>\
+    <noscript><img src="http://www.tns-counter.ru/V13a****zavtra_ru/ru/UTF-8/tmsec=zavtra_total/" width="1" height="1" alt=""></noscript>\
+    <!--/ tns-counter.ru -->\
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+            <ul class="nav">
+                <li><a href="/#gazette">Газета</a></li>
+                <li><a href="/content/narchive/">Архив &laquo;Завтра&raquo;</a></li>
+                <li><a href="/denlit/index.html">&laquo;День литературы&raquo;</a></li>
+                % if request.user.is_authenticated() and request.user.is_staff:
+                <li class="dropdown" id="editorial">
+                <a href="#editorial" data-toggle="dropdown" class="dropdown-toggle">Редакционное <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                <li><a href="/editorial/">Редакционный блог</a></li>
+                <li><a href="http://mail.yandex.ru/for/zavtra.ru/">Почта@zavtra.ru</a></li>
+                <li><a href="/?next_number=1">Новый номер</a></li>
+                </ul>
+            </li>
+                % endif
+                <li><a href="/content/rubric/voprosyi-prohanovu/">Вопросы Проханову</a></li>
+            </ul>
+            <form action="/search/" method="get" class="navbar-search">
+                <input class="search-query" type="search" name="query" placeholder="Поиск..." />
+            </form>
+            <ul class="nav pull-right">
+                % if request.user.is_authenticated():
+                <li><a>Здравствуйте, ${ request.user.get_full_name() }!</a></li>
+                <li><a href="/logout/">Выйти</a></li>
+                % else:
+                <li><a href="/login/">Войти</a></li>
+                % endif
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="logo" class="clearfixer">
+        <a href="/" id="mlogo"><img src="${ STATIC_URL }img/logo.gif" /></a>
+        % if quote is not None:
+        <blockquote>&laquo;<a href="${ quote.source.get_absolute_url() }">${ quote.quote }</a>&raquo;</blockquote>
+        % endif
+        </div>
+        <div class="row-fluid">
+        <div class="span12">
+            <div class="featured-list">
+                <ul class="nav nav-pills featured-list-itself">
+                    <li><a href="/content/featured/"><strong>Каждый день</strong>:</a></li>
+                    % for item in featured:
+                    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+                    % endfor
+                </ul>
+            </div>
+            <div class="rubrics-list">
+                <ul class="nav nav-pills">
+                    % for item in filter(lambda w: w.on_top, rubrics):
+                    <li><a href="${ item.get_absolute_url() }">${ item.title }</a></li>
+                    % endfor
+                </ul>
+            </div>
+            <div class="featured-list">
+                <ul class="nav nav-pills">
+                    <li><a href="/content/rubric/novosti/"><strong>Каждый час</strong>:</a></li>
+                    % for num,rand_news in enumerate(random.sample(news, 4)):
+                    % if num > 0:
+                    <li>|</li>
+                    % endif
+                    <li><a href="${ rand_news.get_absolute_url() }">${ rand_news.title }</a></li>
+                    % endfor
+                </ul>
+            </div>
+
+            <div class="row-fluid">
+                <table class="columnists"><tr>
+                % for item in current_items:
+                <td>
+                    <h4><a href="${ item.get_absolute_url() }">${ item.title }</a></h4>
+                    % if item.kind == 'video':
+                    <figure>
+                        <img src="http://img.youtube.com/vi/${ item.get_video_id() }/${ random.randint(1,3) }.jpg" />
+                    </figure>
+                    % endif
+                    <p><a href="${ item.get_absolute_url() }">${ item.description }</a></p>
+                </td>
+                % endfor
+                </tr></table>
+            </div>
+
+            <%doc>
+            <div class="red-stripe">
+            <h3>Красная строка <a href="/content/site-only/">&raquo;</a></h3>
+            <div class="scrollee">
+                <ul class="unstyled scrollable">
+                % for num,item in enumerate(current_items):
+                <li${ " class='first'" if num == 0 else "" }<% if item.kind=='video': context.write(" style='width: auto;'") %>>
+                    <% url = item.get_absolute_url() %>
+                    <h4><a href="${ url }">${ item.title }</a></h4>
+                    <div class="article-text" data-clickable="${ url }">\
+                    % if item.kind == 'video':
+                    <img src="http://img.youtube.com/vi/${ item.get_video_id() }/${ random.randint(1,3) }.jpg" width="120" height="90" class="bordered" />
+                    % else:
+                    ${ item.description }\
+                    % endif
+                    </div>
+                </li>
+                % endfor
+                </ul>
+                <div id="slider"></div>
+            </div>
+            </div>
+            </%doc>
+        </div>
+        </div>
+        <div class="row-fluid">
+        <div class="span8"><%block name="main_column"></%block></div>
+        <div class="span4 rubrics">
+            <%block name="side_column"><%include file="minipoll/latest_poll.html" /></%block>
+            <hr/>
+            <h3>Реклама</h3>
+            <div class="bnrok" id="DIV_DA_49094"></div><% banners_pool.append(49094) %>\
+        </div>
+        </div>
+        <div class="row-fluid">
+        <div class="bordered">
+            <h3>Реклама</h3>
+            <div class="bnrok" id="DIV_DA_50417"></div><% banners_pool.append(50417) %>
+        </div>
+        </div>
+        <div class="row-fluid">
+        <div class="span4">
+            <address>
+            <strong>Адрес редакции:</strong><br/>
+            <i class="icon-envelope"></i> 119146, Москва, Фрунзенская наб., 18–60<br/>
+            <i class="icon-inbox"></i> Электронная почта: <a href="mailto:zavtra@zavtra.ru">zavtra@zavtra.ru</a><br/>
+            Телефон: (916) 502-49-86<br/>
+            Служба рекламы: (903) 131-53-97
+            </address>
+        </div>
+        <div class="span8">
+            <i class="icon-warning-sign"></i> <a href="http://zavtra.ru/content/rubric/tehnicheskij-blog/">Технический блог</a><br/>
+            <i class="icon-inbox"></i> Электронная почта технического отдела <a href="mailto:web@zavtra.ru">web@zavtra.ru</a>.
+        </div>
+        </div>
+    </div>
+    <%doc>\
+    <script src="${ STATIC_URL }js/jquery.1.7.min.js"></script>
+    <script src="${ STATIC_URL }js/jquery.lightbox-0.5.js"></script>
+    <script src="${ STATIC_URL }js/bootstrap-transition.js"></script>
+    <script src="${ STATIC_URL }js/bootstrap-dropdown.js"></script>
+    <script src="${ STATIC_URL }js/bootstrap-tooltip.js"></script>
+    <script src="${ STATIC_URL }js/bootstrap-popover.js"></script>
+    <script src="${ STATIC_URL }js/bootstrap-carousel.js"></script>
+    <script src="${ STATIC_URL }js/jquery.cookie.js"></script>
+    <script src="${ STATIC_URL }js/jquery.ui.custom.js"></script>
+    <script src="${ STATIC_URL }js/markitup/jquery.markitup.js"></script>
+    <script src="${ STATIC_URL }js/markitup/sets/markdown/set.js"></script>
+    <script src="${ STATIC_URL }js/comments.js"></script>
+    <script src="${ STATIC_URL }js/core.js"></script>
+    </%doc>\
+    <script src="${ STATIC_URL }js/scripts.combined.min.7.js"></script>
+    <%block name="javascript_additional"></%block>
+    % for i in banners_pool:
+    <script charset="windows-1251" type="text/javascript" src="http://www.directadvert.ru/show.cgi?adp=${ i }&div=DIV_DA_${ i }"></script>
+    % endfor
+    <div style="display:none;"><script type="text/javascript"> 
+    (function(w, c) { 
+        (w[c] = w[c] || []).push(function() { 
+            try { 
+                w.yaCounter11286280 = new Ya.Metrika({id:11286280, enableAll: true, webvisor: true}); 
+            } 
+            catch(e) { } 
+        }); 
+    })(window, "yandex_metrika_callbacks"); 
+    </script></div> 
+    <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script> 
+    <noscript><div><img src="//mc.yandex.ru/watch/11286280" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
     </body>
 </html>
