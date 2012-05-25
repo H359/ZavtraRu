@@ -188,11 +188,11 @@ class ContentItem(models.Model):
 
     def tags_all(self):
         if hasattr(self, '__cached_tags'):
-            return getattr(self, '__cached_tags')
+          return getattr(self, '__cached_tags')
         else:
-            tags = list(self.tags.all())
-            setattr(self, '__cached_tags', tags)
-            return tags
+          tags = list(self.tags.all())
+          setattr(self, '__cached_tags', tags)
+          return tags
 
     def update_comments_count(self):
         comments_count = Comment.objects.filter(
@@ -260,7 +260,7 @@ class ContentItem(models.Model):
        if self.rubric_id is not None:
            if self.rubric_id == 1:
                cache.delete('news')
-           elif self.rubric_i == 44:
+           elif self.rubric_id == 44:
                cache.delete('zavtra-tv')
        else:
            cache.delete('red_string')
