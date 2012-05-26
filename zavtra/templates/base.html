@@ -248,7 +248,6 @@ row = 12 / lcslice
         </div>
         <div class="row-fluid">
         <div class="span12">
-            <%doc>
             <div class="featured-list">
                 <ul class="nav nav-pills featured-list-itself">
                     <li><a href="/content/featured/"><strong>Каждый день</strong>:</a></li>
@@ -257,7 +256,7 @@ row = 12 / lcslice
                     % endfor
                 </ul>
             </div>
-            </%doc>
+            <%doc>
             <div class="rubrics-list">
                 <ul class="nav nav-pills">
                     % for item in filter(lambda w: w.on_top, rubrics):
@@ -265,6 +264,7 @@ row = 12 / lcslice
                     % endfor
                 </ul>
             </div>
+            </%doc>
             <div class="featured-list">
                 <ul class="nav nav-pills">
                     <li><a href="/content/rubric/novosti/"><strong>Каждый час</strong>:</a></li>
