@@ -60,7 +60,7 @@ def home(request):
     wstart = now - oneday*(now.weekday()+5)
     if now.weekday() >= 2:
         wstart += 7*oneday
-        wend = wstart + 7*oneday
+    wend = wstart + 7*oneday
     if request.user.is_authenticated() and request.user.is_staff and request.GET.get('next_number'):
         wstart += 7*oneday
         wend += 7*oneday
