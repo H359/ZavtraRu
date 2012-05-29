@@ -332,7 +332,7 @@ class NewsItem(ContentItem):
     class Meta:
        verbose_name=u'Новость'
        verbose_name_plural=u'Новости'
-    proxy=True
+       proxy = True
 
     objects = NewsManager()
 
