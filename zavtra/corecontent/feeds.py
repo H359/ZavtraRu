@@ -85,7 +85,7 @@ class RubricContentFeed(Feed):
         return u'Газета Завтра - рубрика %s' % obj.title
 
     def items(self, obj):
-        now = datetime.now().date()
+        now = datetime.now()
         return ContentItem.batched.batch_select('authors').filter(rubric=obj, enabled=True, pub_date__lte = now)[0:10]
 
     def link(self, obj):
