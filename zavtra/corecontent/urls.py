@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^narchive/$', 'corecontent.views.view_archive', kwargs={'new': True}),
     url(r'^archive/$', 'corecontent.views.view_archive', name='corecontent.view.archive_view'),
     url(r'^archive/(?P<year>[0-9]+)/(?P<month>[0-9]+)/(?P<day>[0-9]+)/$', 'corecontent.views.view_issue', name='corecontent.view.issue_view'),
-    
+    url(r'^shift/$', 'corecontent.views.shift_issue'),
+
     url(r'^rss/ynews/$', ExclusiveNewsFeed(), name='corecontent.rss.exclusive_news'),
     url(r'^rss/latest/$', LatestContentFeed(), name='corecontent.rss.latest'),
     url(r'^rss/ynews/$', ExclusiveNewsFeed(), name='corecontent.rss.news_exclusive'),

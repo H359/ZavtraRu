@@ -76,6 +76,16 @@ ${ parent.side_column() }\
     % endfor
     % endif
     </h5>
+    % if item.published and request.user and request.user.is_authenticated() and request.user.is_superuser:
+    <form action="/content/shift/" method="post">
+        <p>Сдвиг на <input type="text" name="count" /> дней.</p>
+        <p>
+            <input type="hidden" name="item-id" value="${ item.id }" />
+            <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
+            <input type="submit" value="ok" />
+        </p>
+    </form>
+    % endif
     <h6><time pubdate="pubdate" datetime="${ item.pub_date }">${ self.ru_date(item.pub_date) }</time></h6>
     ${ output_tags(item) }
     % if item.kind == 'video':

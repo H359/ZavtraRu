@@ -5,7 +5,7 @@ from math import ceil
 from pytils.dt import MONTH_NAMES
 
 from django.views.generic import ListView, DetailView
-from django.shortcuts import Http404, get_object_or_404
+from django.shortcuts import Http404, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.db.models import Min, Max, Count
@@ -17,6 +17,22 @@ from corecontent.models import Rubric, FeaturedItems, ContentItem, ZhivotovIllus
 from comments.models import Comment
 
 from taggit.models import Tag
+
+def shift_issue(request):
+    if request.method != 'POST':
+        raise Http404
+    item = get_object_or_404(ContentItem, pk=request.POST.get('item-id'), kind='text', published=True)
+    shift = int(request.POST.get('count'))*timedelta(days=1)
+    newdate = item.pub_date+shift
+    updated = ContentItem.objects.filter(
+        published = True,
+        pub_date__year = item.pub_date.year,
+        pub_date__month = item.pub_date.month,
+        pub_date__day = item.pub_date.day,
+        kind = 'text'
+    ).update(pub_date = newdate)
+    return redirect('corecontent.view.issue_view', year=newdate.year, month=newdate.month, day=newdate.day)
+
 
 class ContentItemView(MakoViewMixin, DetailView):
     template_name       = 'corecontent/view.item.html'
