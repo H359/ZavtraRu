@@ -9,6 +9,7 @@ from django.shortcuts import Http404, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.db.models import Min, Max, Count
+from django.contrib.auth.decorators import user_passes_test
 
 from diggpaginator import DiggPaginator
 #from annoying.decorators import render_to
@@ -18,6 +19,7 @@ from comments.models import Comment
 
 from taggit.models import Tag
 
+@user_passes_test(lambda u: u.is_superuser)
 def shift_issue(request):
     if request.method != 'POST':
         raise Http404
