@@ -1,0 +1,79 @@
+User
+  -- fields
+  email     Text
+  password  Text Maybe
+  verkey    Text Maybe
+  verified  Bool
+  firstname Text Maybe
+  lastname  Text Maybe
+  birthDate UTCTime Maybe
+  isStaff   Bool -- Zavtra staff member
+  isMember  Bool -- Zavtra Readers Club member
+  joined    UTCTime
+  lastLogin UTCTime Maybe
+  gender    Gender Maybe
+  about     Text Maybe
+  -- constraints
+  UniqueEmail email
+
+ContentItem
+  -- fields
+  title       Text
+  slug        Slug
+  subtitle    Text
+  announce    Text
+  pubDate     UTCTime
+  isPublished Bool
+  isEnabled   Bool
+  content     Text
+  -- constraints
+  UniqueSlug slug
+
+ContentItemAuthor
+  -- fields
+  userId        UserId
+  contentItemId ContentItemId
+  -- constraints
+  UniqueContentItemAuthor userId contentItemId
+
+ContentItemPart
+  -- fields
+  contentItemId ContentItemId Eq
+  partType      Int
+  partId        Int
+  extractedFrom ContentItemId Maybe -- item is extraction from other content item 
+                                    -- quotation of another article, for example
+TextSnippet
+  -- fields
+  rawText   Text
+  cleanText Text
+  format    SupportedTextFormat
+
+Image
+  -- fields
+  title  Text
+  author Text
+  src    Text
+  height Int Maybe
+  width  Int Maybe
+
+Video
+  -- fields
+  title Text
+  src   Text
+
+Tag
+  -- fields
+  title Text
+
+TagsBundle
+  -- fields
+  title Text
+  isHot Bool
+
+TagsBundleTag
+  -- fields
+  tagsBundleId TagsBundleId
+  tagId        TagId
+  -- constraints
+  UniqueTagsBundleTag tagsBundleId tagId

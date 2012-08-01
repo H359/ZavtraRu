@@ -1,0 +1,19 @@
+$doctype 5
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>#{pageTitle pc}
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    ^{pageHead pc}
+    <body>
+      <div .container>
+        <header>
+          <h1>Газета &laquo;Завтра&raquo;
+          <nav>
+            <ul>
+              $forall hotBundle <- map entityVal hotBundles
+                <li>
+                  <a href=/>#{tagsBundleTitle hotBundle}
+          <blockquote>Тут цитата
+        <div role="main">
+          ^{pageBody pc}

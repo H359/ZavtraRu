@@ -1,0 +1,4 @@
+source :rubygems
+
+gem 'compass'
+gem 'oily_png'

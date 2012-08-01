@@ -1,3 +1,0 @@
-The Bootstrap Typeahead file in the extras/js folder is an alternate from the default bootstrap js.
-
-This file provides a number of useful features for the typeahead function, described here: https://gist.github.com/1866577

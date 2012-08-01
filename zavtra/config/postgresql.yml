@@ -1,0 +1,24 @@
+Default: &defaults
+  user: zavtra
+  password: zavtra
+  host: localhost
+  port: 5432
+  database: yzavtra
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: yzavtra_test
+  <<: *defaults
+
+Staging:
+  database: yzavtra_staging
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: yzavtra_production
+  poolsize: 100
+  <<: *defaults
