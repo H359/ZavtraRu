@@ -266,7 +266,7 @@
                 </span>
               </div>
               <div class="main_person_pic_small">
-                <a href="/blogs/" class="dark dark_link">avatar</a>
+                <a href="/blogzz/" class="dark dark_link">avatar</a>
               </div>
             </div>
             {% endfor %}
