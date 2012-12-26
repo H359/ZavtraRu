@@ -1,34 +1,41 @@
-#-*- coding: utf-8 -*-
-import urllib, md5
-
+# -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
 
-default_avatar = 'http://zavtra.ru/static/img/anon.jpg'
+from model_utils import Choices
+from siteuser.managers import UserManager, ColumnistsManager
 
-def email2avatar(email):
-    return u'http://www.gravatar.com/avatar/%s?%s' % (
-        md5.new(email.lower()).hexdigest(),
-        urllib.urlencode({'d': default_avatar, 's': str(32)})
-    )
 
-class SiteProfile(models.Model):
-    GENDER = (
-	(1, u'Мужской'),
-	(2, u'Женский'),
-    )
-    user       = models.OneToOneField(User, related_name='profile')
-    dob        = models.DateField(verbose_name=u'Дата рождения')
-    gender     = models.IntegerField(choices=GENDER, verbose_name=u'Пол')
-    location   = models.CharField(max_length=100, verbose_name=u'Страна, город', blank=True)
-    occupation = models.CharField(max_length=200, verbose_name=u'Род занятий', blank=True)
-    about      = models.TextField(blank=True, verbose_name=u'О себе')
-    rating     = models.IntegerField(default=0)
-    can_blog   = models.BooleanField(verbose_name=u'Может писать в блоги', default=False)
-    activation = models.CharField(max_length=32, editable=False, verbose_name=u'Код активации')
+class User(AbstractBaseUser):
+  USER_LEVELS = Choices(
+    (0, 'ordinary',  u'Обычный'),
+    (1, 'trusted',   u'Доверенный'),
+    (2, 'columnist', u'Колумнист'),
+    (3, 'staff',     u'Сотрудник'),
+  )
 
-    @property
-    def avatar(self):
-	return self.user.avatar()
+  email = models.EmailField(max_length=254, unique=True)  
+  first_name = models.CharField(max_length=250, verbose_name=u'Имя')
+  mid_name = models.CharField(max_length=250, verbose_name=u'Отчество')
+  last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
+  level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
 
-setattr(User, 'avatar', lambda s: email2avatar(s.email))
+  USERNAME_FIELD = 'email'
+
+  objects = UserManager()
+  columnists = ColumnistsManager()
+
+  @property
+  def is_staff(self):
+    return self.level >= self.USER_LEVELS.staff
+
+  def has_module_perms(self, app_label):
+    # stub
+    return self.is_staff
+
+  def has_perm(self, permission):
+    return self.is_staff
+
+  def __unicode__(self):
+    names = filter(lambda w: len(w) > 0, [self.first_name, self.mid_name, self.last_name])
+    return u' '.join(names)

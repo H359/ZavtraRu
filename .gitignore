@@ -24,3 +24,5 @@ pip-log.txt
 .tox
 .mr.developer.cfg
 local_settings.py
+*.sublime-project
+*.sublime-workspace

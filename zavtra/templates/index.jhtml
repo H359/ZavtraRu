@@ -1,0 +1,439 @@
+{% extends "app_base.jhtml" %}
+
+{% block header %}
+<div class="row">
+  <div class="span4_5">
+    <div class="row">
+      <div class="span4_5">
+        <div style="height: 1em;" id="main_header_links">
+          <a href="#" class="main_header_link">День Лит</a>
+          <a href="#" class="main_header_link">День ТВ</a>
+          <a href="#" class="main_header_link">Архив "Завтра"</a>
+        </div>
+        <img class="block" style="width: 22.5em;" src="{{ STATIC_URL }}img/red_line_gradient.png" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4_5">
+        <div id="main_header_social_networks">
+          <a href="http://www.facebook.com/zavtraru" target="_blank">
+            <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+          </a>
+          <a href="http://vk.com/zavtraru" target="_blank">
+            <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+          </a>
+          <a href="https://twitter.com/ZavtraRu" target="_blank">
+            <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="row">
+      <div class="span4 center_align" >
+        <a href="index.html">
+          <img src="{{STATIC_URL}}img/logo_white_med.jpg" class="block center_align" id="main_zavtra_logo" alt="Газета Завтра">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="span4_5">
+    <div class="row">
+      <div class="span4_5 right_align">
+        <div id="main_header_login" style="height: 1em; width: 22.5em;" class="pull-right">
+          <span class="main_header_login_text">Сообщество:</span>
+          <a href="#" class="main_header_login_link">Вход</a>
+          <span class="main_header_login_text"> &bull; </span>
+          <a href="#" class="main_header_login_link">Регистрация</a>
+        </div>
+        <img class="block" style="width: 22.5em;" src="{{STATIC_URL}}img/red_line_gradient_right.png">
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4_5">
+        <div id="main_header_search">
+          <i class="icon-search inline"> </i>
+          <form action="/search/" method="get" class="navbar-search inline">
+            <input class="search-query" type="search" name="query" placeholder="Поиск...">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="main_gray_line"></div>
+<div class="container">
+  <div class="row">
+    <div class="span9">
+      <div class="row">
+        <div class="relative span3">
+          <div class="row">
+            <div class="span3" id="events_block">
+              <div id="main_events_box">
+                <div class="main_upper_boxes_header">
+                  <h2 class="white">
+                    <a href="{{ events_rubrics[0].get_absolute_url() }}" class="gray gray_link no_underline">
+                      <span class="main_header_category">События:</span>
+                    </a>
+                  </h2>
+                </div>
+                <div class="relative" id="main_events_story">
+                  <div class="absolute" style="top: 12em; width: 100%; height: 1.5em; opacity:.75; background-color: #FFF; z-index: 2;"></div>
+                  <div class="absolute center_align" style="top: 12em; z-index: 3; width: 100%;">
+                    <ul class="block no_margin no_padding"></ul>
+                  </div>
+                  {% for event in events %}
+                  {% if loop.first %}
+                  {% if event.cover_for_eventbox %}
+                  <a href="/materials/news/121201001">
+                    <img src="{{ event.cover_for_eventbox.url }}" style="height: 13.5em;">
+                  </a>
+                  {% endif %}
+                  <div style="box-sizing: border-box; background-color: #444; padding: .25em .75em; height: 4.5em; border: 1px solid #AAA;">
+                    <h5>
+                      <a href="#" class="white white_link">{{ event.title }}</a>
+                    </h5>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span6">
+          <img src="{{ STATIC_URL }}img/article_shadow1.png" class="wod-block-shadow" />
+          <div id="main_wod_box">
+            <div class="main_upper_boxes_header">
+              <h2 style="color: white;">
+                <a href="{{ wod.rubric.get_absolute_url() }}" class="gray gray_link no_underline">
+                  <span class="main_header_category">Слово Дня:</span> {{ wod.title }}
+                </a>
+              </h2>
+            </div>
+            <a href="wod/2012/12/01/">
+              <img src="pic/articles/wod.jpg" id="main_wod_img" style="width: 28.5em; height: 12em;">
+            </a>
+            <div id="main_wod_content" style="background-color: white;">
+              <h5 class="white left_align" style="background-color: #555; padding-left: 1em; line-height: 1.75em; border-top: 1px solid #888; border-bottom: 1px solid #444;">ТОЧКИ ЗРЕНИЯ</h5>
+              <div id="main_wod_opinions" style="margin: .25em .75em; height: 3em;" class="average_padding_vertical">
+                <div class="center_align">
+                  <a href="#" class="largetext person_name">Андрей Смирнов</a> &bull; <a href="#" class="largetext person_name">Игорь Дьяков</a> &bull; <a href="#" class="largetext person_name">Сергей Угольников</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span9">
+          <div id="main_news_box">
+            <a href="#" class="no_underline">
+              <div id="main_news_box_header">
+                <h3>Здесь и Сейчас</h3>
+              </div>
+            </a>
+            <div id="main_news_box_content">
+              <a href="#" class="dark dark_link mediumtext"><span class="black no_underline">12:45 - </span>В квартире режиссера Павла Костомарова идет обыск</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span9">
+          <div id="main_navigation">
+            <a href="newspaper.html" class="nav_item nav_item_border">ГАЗЕТА</a>
+            <a href="news.html" class="nav_item nav_item_border">СОБЫТИЯ</a>
+            <a href="wod.html" class="nav_item nav_item_border">СЛОВО ДНЯ</a>
+            <a href="articles.html" class="nav_item nav_item_border">СТАТЬИ</a>
+            <a href="community.html" class="nav_item">СООБЩЕСТВО</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span9">
+          <div id="main_subjects">
+            <a href="/category/today" class="subject_nav_item bold">сегодня</a>
+            <a href="/category/politics" class="subject_nav_item">политика</a>
+            <a href="/category/culture" class="subject_nav_item">культура</a>
+            <a href="/category/society" class="subject_nav_item">общество</a>
+            <a href="/category/economics" class="subject_nav_item">экономика</a>    
+            <a href="/category/army" class="subject_nav_item">армия</a>
+            <a href="/category/accidents" class="subject_nav_item">происшествия</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span9">
+          <div class="main_editor_container">
+            <img src="{{ STATIC_URL }}img/editor_shadow.png" class="editor-block-shadow" />
+            <div class="main_editor_message">
+              <a href="#" class="no_underline">
+                <img src="pic/people/editor/andrey_prohanov.jpeg" class="main_editor_message_img" />
+                <div class="main_editor_message_header">
+                  <h3>Колонка Редактора</h3>
+                </div>
+                <div class="main_editor_message_text">
+                  <h5>"Прошу Приветствовать - Наш Новый Сайт!"</h5>
+                  <h5 class="right_align dark">Андрей Фефелов</h5>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% for article in columns %}
+      {% if loop.index == 1 or loop.index == 4 %}<div class="row">{% endif %}
+        <div class="span3">
+          <div class="main_article_container">
+            <img src="{{ STATIC_URL }}img/article_shadow2.png" class="article-block-shadow">
+            {% if article.cover_for_main %}
+            <a href="{{ article.get_absolute_url() }}" class="no_underline">
+              <img class="main_article_image" src="{{ article.cover_for_main.url }}">
+            </a>
+            {% endif %}
+            <div class="main_article_header">
+              {% if article.authors.count() > 0 %}
+              <div class="main_article_author">
+                {% for author in article.authors.all() %}
+                <span class="person_name largetext">{{ author }}</span>{% if not loop.last %}, {% endif %}{% endfor %}:
+              </div>
+              {% endif %}
+              <div class="main_article_name">
+                <h6>
+                  <a href="{{ article.get_absolute_url() }}" class="no_underline">{{ article.title }}</a>
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% if loop.index == 3 or loop.index == 6 %}</div>{% endif %}
+      {% endfor %}
+
+      <div class="span4">
+        <div class="main_box_frame">
+          <div>
+            <div class="relative main_box_header">
+              <h4 class="white inline">
+                <a href="#" class="gray gray_link">БЛОГИ</a>
+              </h4>
+              <h6 class="white inline" id="main_add_entry_button">
+                <a href="#" class="gray gray_link no_underline">+ Добавить Запись</a>
+              </h6>
+            </div>
+            <ul class="nav nav-tabs no_margin" id="main_blog_selector">
+              <li class="active main_tab" id="main_blogs_new_switch">
+                <a class="main_tab_link" href="#"><h6>Новое</h6></a>
+              </li>
+              <li class="main_tab" id="main_blogs_polemics_switch">
+                <a href="#" class="main_tab_link"><h6>Полемика</h6></a>
+              </li>
+              <li class="main_tab" id="main_blogs_favorite_switch">
+                <a href="#" class="main_tab_link"><h6>Любимые Авторы</h6></a>
+              </li>
+            </ul>
+          </div>
+          <div class="average_padding_vertical relative" id="main_blogs_new">
+            {% for article in blogs %}
+            <div class="main_blog_entry">
+              <div class="right_align light_padding_vertical main_blog_entry_date_box">
+                <span class="main_blog_entry_date_content">{{ article.published_at|ru_dt_distance }}</span>
+              </div>
+              <div class="main_blog_entry_box light_padding_vertical">
+                <span class="no_margin block black black_link largetext italic average_padding_vertical">
+                  {% for author in article.authors.all() %}
+                  <a href="#" class="person_name largetext">{{ author }}</a>
+                  {% endfor %}
+                </span>
+                <h5>
+                  <a href="{{ article.get_absolute_url() }}" class="black black_link">{{ article.title }}</a>
+                </h5>
+              </div>
+              <div class="right_align">
+                <i class="icon-eye-open"> </i>
+                <span class="smalltext">
+                  <a href="#" class="dark dark_link">0</a>
+                </span>
+                &nbsp;
+                <i class="icon-comment"> </i>
+                <span class="smalltext">
+                  <a href="#" class="dark dark_link">0</a>
+                </span>
+              </div>
+              <div class="main_person_pic_small">
+                <a href="/blogs/" class="dark dark_link">avatar</a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span5">
+          <div class="main_box_frame">
+            <div class="main_box_header">
+              <img src="{{ STATIC_URL }}img/specproekt.png" />
+              <h3 class="beige right_align">Современное Искусство</h3>
+            </div>
+            <div class="accordion" id="accordion2">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    <h5>Премьера Фильма "Покаяние"</h5>
+                  </a>
+                </div>
+                <div id="collapseOne" class="accordion-body in collapse" style="height: auto;">
+                  <div class="accordion-inner">
+                    <div class="center_align big_padding_vertical">
+                      <img src="pic/articles/yabuduriadom.jpg" class="img-polaroid main_special_project_img"/>
+                    </div>
+                    <p>12 ноября в Центральном Доме Кино состоялась долгожданная премьера нового фильм Павла Руминова "Я Буду Рядом". Картина с глубоким нравственным и религиозным содержанием готовилась два года, в ней снялись ряд очень известных отечественных и зарубежных актеров. На премьере присутствовала наш специальный корреспондент Анна Евсеева.</p>
+                    <h6 class="right_align italic average_padding_vertical"><a href="#" class="brown brown_link">продолжение статьи ></a></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                    <h5>Выставка работ Ле Корбюзье</h5>
+                  </a>
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse" style="height: 0;">
+                  <div class="accordion-inner">
+                    <div class="center_align big_padding_vertical">
+                      <img src="pic/articles/lecorbusier.jpg" class="img-polaroid main_special_project_img"/>
+                    </div>
+                    <p>Среди наиболее значимых фигур мировой культуры XX века Ле Корбюзье (1887-1965) занимает особое место. Создатель «мира, который жаждет родиться», автор радикальных архитектурных и градостроительных идей, он достиг подлинных высот совершенства во многих областях творческой деятельности и создал более 400 проектов, 75 из которых были осуществлены в двенадцати странах мира.</p>
+                    <h6 class="right_align italic average_padding_vertical"><a href="#" class="brown brown_link">продолжение статьи ></a></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                    <h5>Какое-то еще событие</h5>
+                  </a>
+                </div>
+                <div id="collapseThree" class="accordion-body collapse" style="height: 0;">
+                  <div class="accordion-inner">
+                    <div class="center_align big_padding_vertical">
+                      <img src="pic/articles/lecorbusier.jpg" class="img-polaroid main_special_project_img" />
+                    </div>
+                    <p>Среди наиболее значимых фигур мировой культуры XX века Ле Корбюзье (1887-1965) занимает особое место. Создатель «мира, который жаждет родиться», автор радикальных архитектурных и градостроительных идей, он достиг подлинных высот совершенства во многих областях творческой деятельности и создал более 400 проектов, 75 из которых были осуществлены в двенадцати странах мира.</p>
+                    <h6 class="right_align italic average_padding_vertical"><a href="#" class="brown brown_link">продолжение статьи ></a></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="relative main_box_footer">
+              <h5><a href="/newspaper/20121012_38/" class="dark dark_link">Другие Проекты</a></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="row">
+        <div class="span4">
+          <div class="relative" style="z-index: 4;" id="main_newspaper_box">
+            <div class="main_upper_boxes_header">
+              <h2 class="center_align">
+                <a href="/gazette/{{ current_number }}/" class="gray gray_link no_underline">
+                  <span class="main_header_category">Газета:</span> Выпуск №{{ current_number }}
+                </a>
+                <a href="materials/newspaper/pdf/20121201_38.zip" class="pull-right">
+                  <img src="{{ STATIC_URL }}img/PDF_Download.png" id="main_newspaper_pdf_link">
+                </a>
+              </h2>
+            </div>
+            <a href="/gazette/{{ current_number }}/">
+              <img src="" id="main_newspaper_img"  style="z-index: 4;" alt="читать газету Завтра - выпуск №{{ current_number }}" />
+            </a>
+
+            {% for group, articles in gazette.iteritems() %}
+            <div class="main_box_header">
+              <h5>
+                <a class="white bright_link" href="#">{{ group }}</a>
+              </h5>
+            </div>
+            <div class="main_newspaper_block">
+              {% for article in articles %}
+              <h4 class="right_align">
+                <a href="{{ article.get_absolute_url() }}" class="black black_link">{{ article.title }}</a>
+              </h4>
+              {% if article.authors.count() > 0 %}
+              <p class="right_align big_padding_vertical no_margin">
+                {% for author in article.authors.all() %}
+                <a href="#" class="person_name largetext">{{ author }}</a>
+                {% if not loop.first %}, {% endif %}
+                {% endfor %}
+              </p>
+              {% endif %}
+              <a href="{{ article.get_absolute_url() }}" class="black black_link article_text no_underline">{{ article.announce }}</a>
+              <h6 class="right_align italic average_padding_vertical">
+                <a href="#" class="brown brown_link">продолжение статьи &raquo;</a>
+              </h6>
+              {% if not loop.last %}
+              <div class="center_align">
+                <img src="{{ STATIC_URL }}img/gradient_grayscale_line.png" class="big_padding_vertical onepxline" />
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endfor %}
+            <div class="relative" id="main_newspaper_footer">
+              <h5>
+                <a href="#" class="dark dark_link">Все материалы выпуска</a>
+              </h5>
+              <h5>
+                <a href="#" class="dark dark_link">Архив</a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <div class="main_box_frame">
+            <div class="relative main_box_header">
+              <h4><a href="#" class="white white_link">ВИДЕО</a></h4>
+              <div id="main_video_dentv_link"><a href="http://www.dentv.ru" target="_blank"><img src="pic/dentv.png"/></a></div>
+            </div>
+            <div id="main_video_selected">
+              <div id="main_video_selected_media">
+                <a href="#" class="no_underline"><img src="pic/video/video.jpg" id="main_video_selected_video" /></a>
+              </div>
+              <div id="main_video_selected_header_bg"></div>
+              <div id="main_video_selected_header">
+                <h5><a href="#" class="white white_link">Это Заголовок этого видео Это Заголовок этого Это Заголовок этого видео Это Заголовок этого</a></h5>
+                <div id="main_video_selected_header_stats"><i class="icon-white icon-comment"></i> <span class="smalltext"><a href="#" class="gray gray_link">14 комментариев</a></span></div>
+                <div id="main_video_selected_header_restriction"><span class="largetext beige">18+</span></div>
+              </div>
+            </div>
+            <div id="main_video_selected_description_container">
+              <span class="smalltext bold">Участники:</span> <span class="mediumtext"><a href="#" class="person_name largetext">Иван Иванов</a>, <a href="#" class="person_name largetext">Петр Петров</a></span><br />
+              <span class="smalltext bold">Обсуждается:</span> <span class="mediumtext">Назначение нового Министра Обороны</span><br />
+            </div>
+            <div id="main_video_selection">
+              <ul class="no_margin no_padding center_align block">
+                <li class="inline no_margin no_padding"><a href="#"><img src="pic/black_arrow_left.png" class="main_video_selection_arrow" /></a></li>
+                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
+                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img half_opacity" /></a></li>
+                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
+                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
+                <li class="inline no_margin no_padding"><a href="#"><img src="pic/black_arrow_right.png" class="main_video_selection_arrow" /></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

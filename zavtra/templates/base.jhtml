@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block page_title %}&laquo;Завтра&raquo; &mdash; еженедельная газета{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap_zavtra.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/{% block pagestyle %}design{% endblock %}.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext">
+  </head>
+  <body>
+    {% block app_header %}{% endblock %}
+    {% block app_content %}{% endblock %}
+    {% block app_footer %}{% endblock %}
+  </body>
+</html>
