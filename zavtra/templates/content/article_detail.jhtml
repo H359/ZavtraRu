@@ -10,7 +10,8 @@
           <span class="divider">/</span>
         </li>
         <li>
-          <a href="/">Еще что-то</a>
+          <a href="{{ object.rubric.get_absolute_url() }}">{{ object.rubric.title }}</a>
+          <span class="divider">/</span>
         </li>
       </ul>
     </div>

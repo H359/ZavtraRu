@@ -56,5 +56,5 @@ function switchMainTabs(which) {
 			$('#main_blogs_polemics').css('display', 'none');
 		break
 	}
-
+	return false;
 }

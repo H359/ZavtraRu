@@ -47,7 +47,7 @@
     <div class="row">
       <div class="span9">
         <div id="navigation_items">
-          <a href="newspaper.html" class="nav_item">ГАЗЕТА</a>
+          <a href="/" class="nav_item">Газета</a>
           <a href="{{ events_rubrics[0].get_absolute_url() }}" class="nav_item">{{ events_rubrics[0].title }}</a>
           <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="nav_item">{{ wod_rubrics[0].title }}</a>
           <a href="articles.html" class="nav_item">СТАТЬИ</a>
