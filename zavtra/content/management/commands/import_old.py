@@ -27,7 +27,7 @@ class Command(BaseCommand):
       'special_project': Rubric.objects.create(title=u'Спецпроект')
     }
     Rubric.objects.create(title=u'Колонки', slug='columns', parent=self.top_rubrics['site'])
-    self.conn = psycopg2.connect("dbname=old_zavtra user=root")
+    self.conn = psycopg2.connect("dbname=%s user=%s" % args)
     self.migrate_rubrics()
     self.migrate_authors()
     self.migrate_topics()
