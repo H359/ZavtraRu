@@ -20,11 +20,13 @@ class HomeView(TemplateView):
   def get_context_data(self, **kwargs):
     context = {
       'current_number': Article.get_current_issue_number(),
+      'current_range': Article.get_current_issue_date_range(),
       'events': Article.news.select_related()[0:10],
       'gazette': self.group_for_main(Article.get_current_issue().select_related()[0:5]),
       'columns': Article.columns.select_related()[0:6],
       'blogs': Article.blogs.select_related()[0:5],
-      'wod': Article.wod.latest('published_at')
+      'editorial': Article.editorial.select_related().latest('published_at'),
+      'wod': Article.wod.select_related().latest('published_at')
     }
     return context
 

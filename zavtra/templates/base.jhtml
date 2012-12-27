@@ -11,5 +11,8 @@
     {% block app_header %}{% endblock %}
     {% block app_content %}{% endblock %}
     {% block app_footer %}{% endblock %}
+    <script src="http://yandex.st/jquery/1.8.3/jquery.min.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/zavtra.js"></script>
   </body>
 </html>

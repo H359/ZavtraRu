@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
+from datetime import datetime
 from pytils.translit import slugify
 
 from django.db import models
@@ -13,9 +13,10 @@ from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit
 
-from managers import PublishedArticlesManager, GazetteManager, BlogsManager,\
-                     NewsManager, ColumnsManager, WODManager
-from zavtra.utils import cached
+from managers import PublishedArticlesManager, ZeitungManager, BlogsManager,\
+                     NewsManager, ColumnsManager, WODManager, EditorialManager
+from zavtra.utils import cached, oneday
+
 
 
 class ZhivotovIllustration(models.Model):
@@ -49,7 +50,12 @@ class Rubric(MPTTModel):
     return ('content.views.rubric', (), {'slug': self.slug})
 
   def __unicode__(self):
-    return u'%s' % self.title
+    return u'%s %s' % ('-'*self.level, self.title)
+
+  @property
+  def zeitung_rubric(self):
+    zeitung = Rubric.fetch_rubric('zeitung')
+    return self.pk in map(lambda w: w.pk, zeitung)
 
   @staticmethod
   def fetch_rubric(slug):
@@ -72,6 +78,10 @@ class Topic(models.Model):
   def __unicode__(self):
     return u'%s' % self.title
 
+  @models.permalink
+  def get_absolute_url(self):
+    return ('content.views.topic', (), {'slug': self.slug})
+
 
 class Article(models.Model):
   STATUS = Choices(('draft', u'Черновик'), ('ready', u'Готово к публикации'))
@@ -83,26 +93,30 @@ class Article(models.Model):
   status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20)
   type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20)
   published_at = models.DateTimeField(verbose_name=u'Время публикации')
-  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика')
-  authors = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=u'Авторы')
+  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
+  authors = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=u'Авторы', blank=True)
   announce = models.TextField(verbose_name=u'Анонс (краткое содержание)')
   cover_source = models.ImageField(upload_to='articles/covers', verbose_name=u'Обложка')
   content = models.TextField(verbose_name=u'Текст', default='')
+  topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True)
 
   # managers
   objects = PublishedArticlesManager()
-  gazette = GazetteManager()
+  zeitung = ZeitungManager()
   blogs = BlogsManager()
   news = NewsManager()
   columns = ColumnsManager()
+  editorial = EditorialManager()
   wod = WODManager()
 
+  # old `objects` manager
   everything = models.Manager()
 
-  # Covers
+  # covers
   cover_for_main = ImageSpec([ResizeToFit(200, 120, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  cover_for_dayheadline = ImageSpec([ResizeToFit(428, 180, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_wod = ImageSpec([ResizeToFit(428, 180, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFit(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_list = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
@@ -117,16 +131,43 @@ class Article(models.Model):
     return u'%s' % self.title
 
   @property
+  def from_zeitung(self):
+    return self.rubric.zeitung_rubric
+
+  @property
+  def issue_number(self):
+    if self.from_zeitung:
+      pt = self.published_at.date()
+      npt = pt - oneday*(pt.weekday() + 5)
+      if pt.weekday() >= 2:
+        npt += 7*oneday
+      return 1 + (npt - datetime(year=npt.year,day=1,month=1).date()).days / 7
+    return None
+
+  @property
+  def issue_date(self):
+    pt = self.published_at.date()
+    npt = pt - oneday*(pt.weekday() + 5)
+    if pt.weekday() >= 2:
+      npt += 7*oneday
+    return npt
+
+  @property
   def other_authors_articles(self):
     return Article.objects.\
            filter(authors__in = self.authors.all()).\
            exclude(pk = self.pk)
 
+  @property
+  def other_issue_articles(self):
+    pdate = self.published_at.date()
+    return Article.zeitung.exclude(pk = self.pk).\
+           filter(published_at__range = (pdate, pdate + oneday))
+
   @staticmethod
   def get_current_issue_date_range():
-    oneday = timedelta(days=1)
-    now = datetime.now().date() - timedelta(days=14) # DEBUG
-    wstart = now - oneday*(now.weekday()+5)
+    now = datetime.now().date() - 14 * oneday # DEBUG
+    wstart = now - oneday*(now.weekday() + 5)
     if now.weekday() >= 2:
       wstart += 7*oneday
     wend = wstart + 7*oneday
@@ -139,6 +180,6 @@ class Article(models.Model):
 
   @staticmethod
   def get_current_issue():
-    return Article.gazette.\
+    return Article.zeitung.\
            filter(published_at__range = Article.get_current_issue_date_range()).\
            order_by('rubric__position','-published_at')

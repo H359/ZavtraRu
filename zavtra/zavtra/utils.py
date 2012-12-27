@@ -1,4 +1,8 @@
+from datetime import timedelta
 from django.core.cache import cache
+
+
+oneday = timedelta(days=1)
 
 
 def cached(func, key, duration=60):

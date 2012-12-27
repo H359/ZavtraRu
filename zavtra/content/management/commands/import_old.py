@@ -2,7 +2,7 @@
 import psycopg2
 from django.core.management.base import BaseCommand
 
-from content.models import Rubric, Article
+from content.models import Rubric, Article, Topic
 from siteuser.models import User
 
 
@@ -11,28 +11,27 @@ def dictify(desc, data):
 
 
 class Command(BaseCommand):
-  known_rubrics = {}
-  known_authors = {}
+  rubrics = {}
+  authors = {}
+  topics = {}
   top_rubrics = {}
 
   def handle(self, *args, **kwargs):
-    self.top_rubrics = {
-      'gazette': Rubric.objects.create(title=u'Газета'),
+    self.cleanup()
+    self.top_rubrics = {      
+      'gazette': Rubric.objects.create(title=u'Газета', slug='zeitung'),
       'site': Rubric.objects.create(title=u'Сайт'),
       'blogs': Rubric.objects.create(title=u'Блоги'),
       'word_of_day': Rubric.objects.create(title=u'Слово дня', slug='wod'),
       'editorial': Rubric.objects.create(title=u'Колонка редактора', slug='editorial'),
       'special_project': Rubric.objects.create(title=u'Спецпроект')
     }
+    Rubric.objects.create(title=u'Колонки', slug='columns', parent=self.top_rubrics['site'])
     self.conn = psycopg2.connect("dbname=old_zavtra user=root")
-    cursor = self.conn.cursor()
-    [self.migrate_article(r) for r in self.simple_sql("""
-      SELECT c.* FROM corecontent_contentitem AS c
-      LEFT JOIN corecontent_rubric AS r
-      ON r.id = c.rubric_id
-      ORDER BY r.position
-    """)]
-    cursor.close()
+    self.migrate_rubrics()
+    self.migrate_authors()
+    self.migrate_topics()
+    self.migrate_articles()
     self.conn.close()
 
   def simple_sql(self, sql):
@@ -42,43 +41,86 @@ class Command(BaseCommand):
       yield dictify(cursor.description, record)
     cursor.close()
 
-  def get_rubric(self, id):
-    if id in self.known_rubrics:
-      return self.known_rubrics[id]
-    r = list(self.simple_sql("SELECT * FROM corecontent_rubric WHERE id=%d" % id))
-    published = list(self.simple_sql("SELECT COUNT(id) as cnt FROM corecontent_contentitem WHERE rubric_id=%d AND published=true" % id))[0]
-    if published['cnt'] == 0:
-      parent = self.top_rubrics['site']
-    else:
-      parent = self.top_rubrics['gazette']
-    self.known_rubrics[id] = Rubric.objects.create(parent=parent, title=r[0]['title'], position=r[0]['position'])
-    return self.known_rubrics[id]
+  def cleanup(self):
+    Rubric.objects.all().delete()
+    User.objects.all().delete()
+    Article.objects.all().delete()
+    Topic.objects.all().delete()
 
-  def get_author(self, id):
-    if id in self.known_authors:
-      return self.known_authors[id]
-    a = list(self.simple_sql("SELECT * FROM auth_user WHERE id=%d AND is_staff=True" % id))[0]
-    email = a['email']
-    if email is None or len(email) == 0:
-      email = 'fakeuseremail_%d@zavtra.ru' % id
-    self.known_authors[id] = User.objects.create(first_name=a['first_name'], last_name=a['last_name'], level=User.USER_LEVELS.staff, email=email)
-    return self.known_authors[id]
+  def migrate_rubrics(self):
+    for r in self.simple_sql("""
+      SELECT r.*, COUNT(c.id) as is_gazette
+      FROM corecontent_rubric AS r
+      LEFT JOIN corecontent_contentitem AS c
+      ON (c.rubric_id = r.id AND c.published = true)
+      GROUP BY r.id
+      ORDER BY r.position
+    """):
+      if r['is_gazette'] > 0:
+        parent = self.top_rubrics['gazette']
+      elif r['title'] in [u'90-е', u'Врезка']:
+        parent = self.top_rubrics['special_project']
+      else:
+        parent = self.top_rubrics['site']
+      self.rubrics[r['id']] = Rubric.objects.create(
+        title=r['title'],
+        position=r['position'],
+        slug=r['slug'],
+        parent=parent
+      )
 
-  def migrate_article(self, article):
-    if article['rubric_id'] is None:
-      rubric = self.top_rubrics['blogs']
-    else:
-      rubric = self.get_rubric(article['rubric_id'])
-    created = Article.objects.create(
-      title        = article['title'],
-      slug         = article['slug'],
-      subtitle     = article['subtitle'],
-      status       = Article.STATUS.ready,
-      type         = article['kind'],
-      published_at = article['pub_date'],
-      rubric       = rubric,
-      announce     = article['description'],
-      content      = article['content']
-    )
-    for a in self.simple_sql("SELECT user_id FROM corecontent_contentitem_authors WHERE contentitem_id=%d" % article['id']):
-      created.authors.add(self.get_author(a['user_id']))
+  def migrate_authors(self):
+    for r in self.simple_sql("SELECT * FROM auth_user WHERE is_staff=true"):
+      if r['email'] is None or len(r['email']) == 0:
+        email = 'fakeuseremail_%d@zavtra.ru' % r['id']
+      else:
+        email = r['email']
+      self.authors[r['id']] = User.objects.create(
+        email=email,
+        first_name=r['first_name'],
+        last_name=r['last_name'],
+        level=User.USER_LEVELS.staff
+      )
+
+  def migrate_articles(self):
+    article_ctype = list(self.simple_sql("""SELECT id FROM django_content_type WHERE app_label='corecontent' AND model='article'"""))[0]['id']
+    for r in self.simple_sql("SELECT * FROM corecontent_contentitem"):
+      if r['rubric_id'] is None:
+        rubric = self.top_rubrics['blogs']
+      else:
+        rubric = self.rubrics[r['rubric_id']]
+      article = Article.objects.create(
+        title        = r['title'],
+        slug         = r['slug'],
+        subtitle     = r['subtitle'],
+        status       = Article.STATUS.ready,
+        type         = r['kind'],
+        published_at = r['pub_date'],
+        rubric       = rubric,
+        announce     = r['description'], # clean html, extract cover
+        content      = r['content'] # clean html
+      )
+      for a in self.simple_sql("SELECT user_id FROM corecontent_contentitem_authors WHERE contentitem_id=%d" % r['id']):
+        article.authors.add(self.authors[a['user_id']])
+      for t in self.simple_sql("""
+        SELECT
+          ft.featureditems_id AS id
+        FROM
+          corecontent_featureditems_tags AS ft
+        WHERE
+          ft.tag_id IN (
+            SELECT
+              tti.tag_id
+            FROM
+              taggit_taggeditem AS tti
+            WHERE
+              tti.content_type_id = %d
+              AND
+              tti.object_id = %d
+          )
+      """ % (article_ctype, r['id'])):
+        article.topics.add(self.topics[t['id']])
+
+  def migrate_topics(self):
+    for r in self.simple_sql("SELECT * FROM corecontent_featureditems"):
+      self.topics[r['id']] = Topic.objects.create(title=r['title'], slug=r['slug'], on_top=r['is_active'])

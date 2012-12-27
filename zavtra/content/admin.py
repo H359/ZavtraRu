@@ -9,8 +9,10 @@ class ArticleAdmin(admin.ModelAdmin):
   list_display = ('title', 'status', 'rubric',)
   search_fields = ('title',)
   list_filter = ('status', 'rubric')
-  filter_vertical = ('authors',)
+  filter_vertical = ('authors', 'topics')
 
+  def queryset(self, request):
+    return Article.everything.all()
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Rubric, MPTTModelAdmin)

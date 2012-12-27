@@ -3,7 +3,7 @@
 {% block app_header %}
 <div id="headerbase">
   <div id="header">
-    <div class="container12">
+    <div class="container">
       <div class="row">
         {% block header %}{% endblock %}
       </div>
@@ -26,11 +26,11 @@
             <div class="row">
               <div class="span8">
                 <div id="footer_navigation">
-                  <a href="newspaper.html" class="sub_nav_item">ГАЗЕТА</a>
-                  <a href="news.html" class="sub_nav_item">СОБЫТИЯ</a>
-                  <a href="wod.html" class="sub_nav_item">СЛОВО ДНЯ</a>
-                  <a href="articles.html" class="sub_nav_item">СТАТЬИ</a>
-                  <a href="community.html" class="sub_nav_item">СООБЩЕСТВО</a>
+                  <a href="/gazette/" class="sub_nav_item">Газета</a>
+                  <a href="{{ events_rubrics[0].get_absolute_url() }}" class="sub_nav_item">События</a>
+                  <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="sub_nav_item">Слово дня</a>
+                  <a href="/articles/" class="sub_nav_item">Статьи</a>
+                  <a href="community.html" class="sub_nav_item">Сообщество</a>
                 </div>
               </div>
             </div>

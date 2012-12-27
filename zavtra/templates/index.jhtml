@@ -1,62 +1,66 @@
 {% extends "app_base.jhtml" %}
 
 {% block header %}
-<div class="row">
-  <div class="span4_5">
-    <div class="row">
-      <div class="span4_5">
-        <div style="height: 1em;" id="main_header_links">
-          <a href="#" class="main_header_link">День Лит</a>
-          <a href="#" class="main_header_link">День ТВ</a>
-          <a href="#" class="main_header_link">Архив "Завтра"</a>
-        </div>
-        <img class="block" style="width: 22.5em;" src="{{ STATIC_URL }}img/red_line_gradient.png" />
+<div class="span4_5">
+  <div class="row">
+    <div class="span4_5">
+      <div style="height: 1em;" id="main_header_links">
+        <a href="#" class="main_header_link">День Лит</a>
+        <a href="#" class="main_header_link">День ТВ</a>
+        <a href="#" class="main_header_link">Архив &laquo;Завтра&raquo;</a>
       </div>
-    </div>
-    <div class="row">
-      <div class="span4_5">
-        <div id="main_header_social_networks">
-          <a href="http://www.facebook.com/zavtraru" target="_blank">
-            <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
-          </a>
-          <a href="http://vk.com/zavtraru" target="_blank">
-            <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
-          </a>
-          <a href="https://twitter.com/ZavtraRu" target="_blank">
-            <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
-          </a>
-        </div>
-      </div>
+      <img class="block" style="width: 22.5em;" src="{{ STATIC_URL }}img/red_line_gradient.png" />
     </div>
   </div>
-  <div class="span4">
-    <div class="row">
-      <div class="span4 center_align" >
-        <a href="index.html">
-          <img src="{{STATIC_URL}}img/logo_white_med.jpg" class="block center_align" id="main_zavtra_logo" alt="Газета Завтра">
+  <div class="row">
+    <div class="span4_5">
+      <div id="main_header_social_networks">
+        <a href="http://www.facebook.com/zavtraru" target="_blank">
+          <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+        </a>
+        <a href="http://vk.com/zavtraru" target="_blank">
+          <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+        </a>
+        <a href="https://twitter.com/ZavtraRu" target="_blank">
+          <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
         </a>
       </div>
     </div>
   </div>
-  <div class="span4_5">
-    <div class="row">
-      <div class="span4_5 right_align">
-        <div id="main_header_login" style="height: 1em; width: 22.5em;" class="pull-right">
-          <span class="main_header_login_text">Сообщество:</span>
-          <a href="#" class="main_header_login_link">Вход</a>
-          <span class="main_header_login_text"> &bull; </span>
-          <a href="#" class="main_header_login_link">Регистрация</a>
-        </div>
-        <img class="block" style="width: 22.5em;" src="{{STATIC_URL}}img/red_line_gradient_right.png">
-      </div>
+</div>
+<div class="span4">
+  <div class="row">
+    <div class="span4 center_align" >
+      <a href="index.html">
+        <img src="{{STATIC_URL}}img/logo_white_med.jpg" class="block center_align" id="main_zavtra_logo" alt="Газета Завтра">
+      </a>
     </div>
-    <div class="row">
-      <div class="span4_5">
-        <div id="main_header_search">
-          <i class="icon-search inline"> </i>
-          <form action="/search/" method="get" class="navbar-search inline">
+  </div>
+</div>
+<div class="span4_5">
+  <div class="row">
+    <div class="span4_5 right_align">
+      <div id="main_header_login" style="height: 1em; width: 22.5em;" class="pull-right">
+        <span class="main_header_login_text">Сообщество:</span>
+        <a href="#" class="main_header_login_link">Вход</a>
+        <span class="main_header_login_text"> &bull; </span>
+        <a href="#" class="main_header_login_link">Регистрация</a>
+      </div>
+      <img class="block" style="width: 22.5em;" src="{{STATIC_URL}}img/red_line_gradient_right.png">
+    </div>
+  </div>
+  <div class="row">
+    <div class="span4_5">
+      <div id="main_header_search">
+        <div id="main_search_form">
+          <form action="/search/" method="get" class="navbar-search">
             <input class="search-query" type="search" name="query" placeholder="Поиск...">
           </form>
+        </div>
+        <div id="main_search_image">
+          <a href="#">
+            <i class="icon-search icon-white"> </i>
+          </a>
         </div>
       </div>
     </div>
@@ -64,7 +68,7 @@
 </div>
 {% endblock %}
 
-{% block content %}
+{% block app_content %}
 <div id="main_gray_line"></div>
 <div class="container">
   <div class="row">
@@ -77,29 +81,31 @@
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
                     <a href="{{ events_rubrics[0].get_absolute_url() }}" class="gray gray_link no_underline">
-                      <span class="main_header_category">События:</span>
+                      <span class="main_header_category">{{ events_rubrics[0].title }}:</span>
                     </a>
                   </h2>
                 </div>
                 <div class="relative" id="main_events_story">
-                  <div class="absolute" style="top: 12em; width: 100%; height: 1.5em; opacity:.75; background-color: #FFF; z-index: 2;"></div>
-                  <div class="absolute center_align" style="top: 12em; z-index: 3; width: 100%;">
+                  <div id="main_event_selection_bg"></div>
+                  <div id="main_event_selection">
                     <ul class="block no_margin no_padding"></ul>
                   </div>
+                  <div class="center_align">
                   {% for event in events %}
-                  {% if loop.first %}
-                  {% if event.cover_for_eventbox %}
-                  <a href="/materials/news/121201001">
-                    <img src="{{ event.cover_for_eventbox.url }}" style="height: 13.5em;">
-                  </a>
-                  {% endif %}
-                  <div style="box-sizing: border-box; background-color: #444; padding: .25em .75em; height: 4.5em; border: 1px solid #AAA;">
-                    <h5>
-                      <a href="#" class="white white_link">{{ event.title }}</a>
-                    </h5>
-                  </div>
-                  {% endif %}
+                    {% if loop.first %}
+                    {% if event.cover_for_eventbox %}
+                    <a href="{{ event.get_absolute_url() }}">
+                      <img src="{{ event.cover_for_eventbox.url }}" id="main_event_image">
+                    </a>
+                    {% endif %}
+                    <div id="main_event_header">
+                      <h5>
+                        <a href="{{ event.get_absolute_url() }}" class="white white_link">{{ event.title }}</a>
+                      </h5>
+                    </div>
+                    {% endif %}
                   {% endfor %}
+                  </div>
                 </div>
               </div>
             </div>
@@ -109,18 +115,18 @@
           <img src="{{ STATIC_URL }}img/article_shadow1.png" class="wod-block-shadow" />
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
-              <h2 style="color: white;">
+              <h2>
                 <a href="{{ wod.rubric.get_absolute_url() }}" class="gray gray_link no_underline">
-                  <span class="main_header_category">Слово Дня:</span> {{ wod.title }}
+                  <span class="main_header_category">Слово Дня:</span> <a class="white white_link" href="{{ wod.get_absolute_url() }}">{{ wod.title }}</a>
                 </a>
               </h2>
             </div>
-            <a href="wod/2012/12/01/">
-              <img src="pic/articles/wod.jpg" id="main_wod_img" style="width: 28.5em; height: 12em;">
+            <a href="{{ wod.get_absolute_url() }}">
+              <img src="{{ wod.cover_for_wod.url }}" id="main_wod_img">
             </a>
-            <div id="main_wod_content" style="background-color: white;">
-              <h5 class="white left_align" style="background-color: #555; padding-left: 1em; line-height: 1.75em; border-top: 1px solid #888; border-bottom: 1px solid #444;">ТОЧКИ ЗРЕНИЯ</h5>
-              <div id="main_wod_opinions" style="margin: .25em .75em; height: 3em;" class="average_padding_vertical">
+            <div id="main_wod_content">
+              <h5 class="white left_align">ТОЧКИ ЗРЕНИЯ</h5>
+              <div id="main_wod_opinions" class="average_padding_vertical">
                 <div class="center_align">
                   <a href="#" class="largetext person_name">Андрей Смирнов</a> &bull; <a href="#" class="largetext person_name">Игорь Дьяков</a> &bull; <a href="#" class="largetext person_name">Сергей Угольников</a>
                 </div>
@@ -132,7 +138,7 @@
       <div class="row">
         <div class="span9">
           <div id="main_news_box">
-            <a href="#" class="no_underline">
+            <a href="{{ events_rubrics[0].get_absolute_url() }}" class="no_underline">
               <div id="main_news_box_header">
                 <h3>Здесь и Сейчас</h3>
               </div>
@@ -147,8 +153,8 @@
         <div class="span9">
           <div id="main_navigation">
             <a href="newspaper.html" class="nav_item nav_item_border">ГАЗЕТА</a>
-            <a href="news.html" class="nav_item nav_item_border">СОБЫТИЯ</a>
-            <a href="wod.html" class="nav_item nav_item_border">СЛОВО ДНЯ</a>
+            <a href="{{ events_rubrics[0].get_absolute_url() }}" class="nav_item nav_item_border">{{ events_rubrics[0].title }}</a>
+            <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="nav_item nav_item_border">{{ wod_rubrics[0].title }}</a>
             <a href="articles.html" class="nav_item nav_item_border">СТАТЬИ</a>
             <a href="community.html" class="nav_item">СООБЩЕСТВО</a>
           </div>
@@ -157,13 +163,9 @@
       <div class="row">
         <div class="span9">
           <div id="main_subjects">
-            <a href="/category/today" class="subject_nav_item bold">сегодня</a>
-            <a href="/category/politics" class="subject_nav_item">политика</a>
-            <a href="/category/culture" class="subject_nav_item">культура</a>
-            <a href="/category/society" class="subject_nav_item">общество</a>
-            <a href="/category/economics" class="subject_nav_item">экономика</a>    
-            <a href="/category/army" class="subject_nav_item">армия</a>
-            <a href="/category/accidents" class="subject_nav_item">происшествия</a>
+            {% for topic in top_topics %}
+            <a href="{{ topic.get_absolute_url() }}" class="subject_nav_item">{{ topic.title }}</a>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -173,13 +175,20 @@
             <img src="{{ STATIC_URL }}img/editor_shadow.png" class="editor-block-shadow" />
             <div class="main_editor_message">
               <a href="#" class="no_underline">
-                <img src="pic/people/editor/andrey_prohanov.jpeg" class="main_editor_message_img" />
+                <!--
+                <img src="pic/people/editor/andrey_prohanov.jpeg" class="main_editor_message_img">
+                -->
+                avatar
                 <div class="main_editor_message_header">
-                  <h3>Колонка Редактора</h3>
+                  <h3>{{ editorial.rubric.title }}</h3>
                 </div>
                 <div class="main_editor_message_text">
-                  <h5>"Прошу Приветствовать - Наш Новый Сайт!"</h5>
-                  <h5 class="right_align dark">Андрей Фефелов</h5>
+                  <h5>&laquo;{{ editorial.title }}&raquo;</h5>
+                  <h5 class="right_align dark">
+                    {% for author in editorial.authors.all() %}
+                    {{ author }}
+                    {% endfor %}
+                  </h5>
                 </div>
               </a>
             </div>
@@ -344,7 +353,7 @@
           <div class="relative" style="z-index: 4;" id="main_newspaper_box">
             <div class="main_upper_boxes_header">
               <h2 class="center_align">
-                <a href="/gazette/{{ current_number }}/" class="gray gray_link no_underline">
+                <a href="/content/zeitung/{{ current_range.0.year }}/{{ current_number }}/" class="gray gray_link no_underline">
                   <span class="main_header_category">Газета:</span> Выпуск №{{ current_number }}
                 </a>
                 <a href="materials/newspaper/pdf/20121201_38.zip" class="pull-right">
