@@ -179,3 +179,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from zavtra.local_settings import *
+except ImportError:
+    pass
