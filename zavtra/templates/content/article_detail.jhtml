@@ -6,7 +6,7 @@
     <div class="span12 y-margin-one">
       <ul class="breadcrumb">
         <li>
-          <a href="/">Главная</a>
+          <a href="/">Главная test</a>
           <span class="divider">/</span>
         </li>
         <li>
