@@ -290,6 +290,9 @@ a:hover {
 .offset2 {
   margin-left: 140px;
 }
+.offset1_5 {
+  margin-left: 105px;
+}
 .offset1 {
   margin-left: 70px;
 }
@@ -3778,7 +3781,7 @@ input[type="submit"].btn.btn-mini {
 }
 .breadcrumb {
   padding: .5em 1em .33em 1em;
-  margin: 0em 0em .5em 0em;
+  margin: 0em; /* SDK */
   list-style: none;
   border-bottom: 1px solid #DDD;
   border-top: 1px solid #DDD;
@@ -3803,7 +3806,7 @@ input[type="submit"].btn.btn-mini {
   text-decoration: none;
 }
 .pagination {
-  margin: 20px 0;
+  margin: 1.33em 0;
 }
 .pagination ul {
   display: inline-block;
@@ -3826,8 +3829,8 @@ input[type="submit"].btn.btn-mini {
 .pagination ul > li > a,
 .pagination ul > li > span {
   float: left;
-  padding: 4px 12px;
-  line-height: 20px;
+  padding: .25em .75em;
+  line-height: 1.5em;
   text-decoration: none;
   background-color: #ffffff;
   border: 1px solid #dddddd;
@@ -3850,6 +3853,16 @@ input[type="submit"].btn.btn-mini {
   background-color: transparent;
   cursor: default;
 }
+
+.pagination ul > .info > span,
+.pagination ul > .info > a,
+.pagination ul > .info > a:hover {
+  color: #EEE;
+  cursor: default;
+  background-color: #333;
+  border: 1px solid #AAA;
+}
+
 .pagination ul > li:first-child > a,
 .pagination ul > li:first-child > span {
   border-left-width: 1px;
@@ -5371,6 +5384,9 @@ button.close {
   .offset2 {
     margin-left: 110px;
   }
+  .offset1_5 {
+    margin-left: 82px;
+  }
   .offset1 {
     margin-left: 55px;
   }
@@ -5722,6 +5738,9 @@ button.close {
   }
   .offset2 {
     margin-left: 150px;
+  }
+  .offset1_5 {
+    margin-left: 102px;
   }
   .offset1 {
     margin-left: 75px;
@@ -6121,4 +6140,6 @@ button.close {
     height: auto !important;
     overflow: visible !important;
   }
+  
 }
+
