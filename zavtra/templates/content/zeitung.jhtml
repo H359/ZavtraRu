@@ -5,11 +5,11 @@
 {% block content %}
 {% set groups = object_list|group_rubrics|list %}
 <div class="container12">
-  <div class="bordered">
-    <div class="row">
-      <div class="span12">
-        <div class="section-header">
-          <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
+	<div class="bordered">
+		<div class="row">
+			<div class="span12">
+				<div class="section-header">
+					<h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button2">
             <div class="btn-group dropdown">
               <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
@@ -46,35 +46,39 @@
       {% endfor %}
     </div>
   </div>
-  <div class="row">
-    <div class="span12">
-      <ul class="breadcrumb">
-        <li>
-          <a href="/">Главная</a>
-          <span class="divider">/</span>
-        </li>
-        <li class="active">Газета</li>
-      </ul>
-    </div>
-  </div>
-  <div class="bordered">
-    <div class="row">
-      <div class="span12">
-        <div class="section-header">
-          <h1 class="inline">
-            Выпуск № {{ issue['number'] }} &ndash; <span class="darkgray">{{ issue['date']|ru_date }}</span>
-          </h1>
-        </div>
-      </div>
-    </div>
+
+
+	<div class="bordered">
+		<div class="row">
+			<div class="span12">
+				<div class="section-header">
+					<ul class="breadcrumb inline">
+<!-- SDK comment: сделать ссылки рабочими -->
+  					<li><a href="#">Главная</a> <span class="divider">/</span></li>
+						<li><a href="#">Газета</a> <span class="divider">/</span></li>
+            <li class="active">Выпуск № {{ issue['number'] }} &ndash; {{ issue['date']|ru_date }}</li>
+  				</ul>
+				  <div class="section_header_button">
+<!-- SDK comment: сделать кнопку рабочей -->
+				    <a href="#" class="btn btn-danger baseline_align">Скачать PDF</a>
+				  </div>
+  		  </div>
+		  </div>
+  	</div>
+
     <div class="row">
       <div class="span12">
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
+<!-- SDK comment: подгрузить картинку выпуска -->
             <img id="newspaper_illustration">
             <div class="text-bottom right_align x-margin-one">
-              <i class="icon-white icon-zoom-in"> </i>
-              <h4 class="inline">текст</h4>
+							<span class="white bottom_align">
+<!-- SDK comment: сделать картинку кликабельной -->
+								<i class="icon-white icon-zoom-in"> </i>
+<!-- SDK comment: подгрузить заголовок -->
+								<h4 class="inline">текст</h4>
+							</span>
             </div>
           </div>
         </div>
@@ -90,14 +94,24 @@
     </div>
     {% endfor %}
   </div>
+
   <div class="bordered">
-    <div class="row">
-      <div class="span12">
-        <div class="section-header">
-          <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
+		<div class="row">
+			<div class="span12">
+				<div class="section-header">
+					<h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button2">
             <div class="btn-group dropdown">
-              <a href="#" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор</a>
+              <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% for joined, rubrics in groups %}{% for r in rubrics %}
+                <li>
+                  <a href="{{ r['rubric'].get_absolute_url() }}">
+                    <h5>{{ r['rubric'].title }}</h5>
+                  </a>
+                </li>
+                {% endfor %}{% endfor %}
+              </ul>
             </div>
           </div>
           <div class="section_header_button">
