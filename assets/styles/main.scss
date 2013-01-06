@@ -1,0 +1,79 @@
+$bodyBackground: #dfdfdf;
+$baseFontSize: 15px;
+
+$gridColumns: 13;
+$gridColumnWidth: 70px;
+$gridGutterWidth: 0px;
+
+$gridColumnWidth1200: 75px;
+$gridGutterWidth1200: 0px;
+
+$gridColumnWidth768: 55px;
+$gridGutterWidth768: 0px;
+
+$sprites-layout: smart;
+@import "sprites/*.png";
+
+@import "bootstrap/_variables";
+@import "bootstrap/_mixins";
+@import "bootstrap/_reset";
+
+body {
+  background-color: $bodyBackground;
+  margin: 0;
+  font-family: $baseFontFamily;
+  font-size: $baseFontSize;
+  color: black;
+}
+
+%grid-container {
+  width: ($gridColumnWidth * $gridColumns);
+  margin: 0 auto;
+  @media(min-width: 1025px) {
+    width: 975px;
+  }
+}
+
+%floatleft {
+  float: left;
+}
+
+%floatright {
+  float: right;
+}
+
+%sides-sibling {
+  padding: .5em 0 .75em 1em;
+}
+
+%limelink {
+  color: #99d578;
+  font-size: .8em;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.row {
+  @include clearfix();
+}
+
+.one-third {
+  @extend %floatleft;
+  width: 33%;
+}
+
+.two-thirds {
+  @extend %floatleft;
+  width: 66%;
+}
+
+#gray-line {
+  height: 3.75em;
+  width: 100%;
+  background-color: #444;
+  border-top: 1px solid #333;
+}
+
+@import "parts/_header";
+@import "parts/_page";
+@import "_misc";

@@ -1,0 +1,75 @@
+{% extends "app_base.jhtml" %}
+
+{% block pagestyle %}newspaper{% endblock %}
+
+{% block header %}
+<div class="row">
+  <div class="span3">
+    <div class="row">
+      <div class="span3">
+        <div class="grande_padding">
+          <a href="/">
+            <img src="{{STATIC_URL}}img/logo_white_med.jpg" id="main_zavtra_logo">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span5">
+    <div class="row">
+      <div class="span5">
+        <div id="main_header_links">
+          <a href="#" class="main_header_link">День Лит</a>
+          <a href="#" class="main_header_link">День ТВ</a>
+          <a href="#" class="main_header_link">Архив "Завтра"</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="row">
+      <div class="span4 right_align">
+        <div id="main_header_login" class="pull-right">
+          <span class="main_header_login_text">Сообщество:</span>
+          <a href="#" class="main_header_login_link">Вход</a>
+          <span class="main_header_login_text"> &bull; </span>
+          <a href="#" class="main_header_login_link">Регистрация</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block app_content %}
+<div id="main_navigation_line">
+  <div class="container12">
+    <div class="row">
+      <div class="span9">
+        <div id="navigation_items">
+          <a href="/" class="nav_item">Газета</a>
+          <a href="{{ events_rubrics[0].get_absolute_url() }}" class="nav_item">{{ events_rubrics[0].title }}</a>
+          <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="nav_item">{{ wod_rubrics[0].title }}</a>
+          <a href="articles.html" class="nav_item">СТАТЬИ</a>
+          <a href="community.html" class="nav_item">СООБЩЕСТВО</a>
+        </div>
+      </div>
+      <div class="span3">
+        <div id="main_header_search">
+          <div id="main_search_form">
+            <form action="/search/" method="get" class="navbar-search">
+              <input class="search-query" type="search" name="query" placeholder="Поиск...">
+            </form>
+          </div>
+          <div id="main_search_image">
+            <a href="#">
+              <i class="icon-search icon-white"> </i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="page">{% block content %}{% endblock %}</div>
+{% endblock %}

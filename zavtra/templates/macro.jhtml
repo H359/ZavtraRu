@@ -1,0 +1,25 @@
+{% macro pagination(request, page_obj) %}
+<div class="row">
+  <div class="span12">
+    <div class="pagination center_align">
+      <ul>
+        <li class="prev{% if not page_obj.has_previous() %}{{ ' disabled' }}{% endif %}">
+          <a rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{% else %}#{% endif %}">Предыдущая</a>
+        </li>
+        {% for p in page_obj.page_range %}
+        <li>
+          {% if p %}
+          <a rel="page" href="?page={{ p }}">{{ p }}</a>
+          {% else %}
+          <a href="#">...</a>
+          {% endif %}
+        </li>
+        {% endfor %}
+        <li class="next{% if not page_obj.has_next() %}{{ ' disabled' }}{% endif %}">
+          <a rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{% else %}#{% endif %}">Следующая</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endmacro %}

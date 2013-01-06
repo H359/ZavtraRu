@@ -1,0 +1,72 @@
+.box {
+  margin: .5em .75em;
+
+  h1 {
+    margin: 0;
+    font-size: 1.5em;
+    a {
+      @extend %limelink;
+      text-decoration: none;
+      font-size: 1em;
+    }
+  }
+
+  h3 {
+    text-align: center;
+    background-color: #444;
+    border: 1px solid #aaa;
+    height: 4.5em;
+    margin: 0;
+    padding: .25em .75em;
+    font-size: 15px;
+    font-weight: normal;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+}
+
+.carousel {
+  li {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+}
+
+.incut {
+  background-color: #EEE;
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
+
+  h4, div {
+    padding: 0 1em;
+  }
+
+  h3 {
+    font-size: 1.15em;
+    padding: 0 0 0 .5em;
+    font-weight: bold;
+    text-align: left;
+    height: auto;
+  }
+
+  h4 {
+    text-align: right;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+}
