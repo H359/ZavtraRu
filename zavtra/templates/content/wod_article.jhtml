@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap_zavtra.css" rel="stylesheet">
@@ -140,7 +140,7 @@
 				<div class="row">
 					<div class="span12">
 						<div class="section-header">
-							<h2 class="inline top_align"><span class="gray">Рубрика</span> "Слово Дня" - Свежее</h2>
+							<h2 class="inline top_align">Рубрика "Слово Дня"</h2>
 							<div class="section_header_button">
 								<a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
 							</div>
@@ -200,24 +200,22 @@
 				</div>
 			</div> <!-- end of bordered with wod history -->
 
-			<div class="row">
-				<div class="span12">
-					<ul class="breadcrumb">
-					  <li><a href="#">Главная</a> <span class="divider">/</span></li>
-					  <li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
-					  <li class="active">25-12-2012</li>
-					</ul>
-				</div>
-			</div>
 
 			<div class="bordered_clean">
 				<div class="row">
 					<div class="span12">
 						<div class="section-header">
-							<a href="#"><img src="pic/arrow_circle_left.png" style=" height: 2em; vertical-align: -25%;"/></a>
-							<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
-							<a href="#"><img src="pic/arrow_circle_right.png" style=" height: 2em; vertical-align: -25%;" /></a>
-							<a href="#"><img src="pic/circle_calendar.png" style=" height: 2em; vertical-align: -25%;" /></a>
+							<ul class="breadcrumb inline">
+								<li><a href="#">Главная</a> <span class="divider">/</span></li>
+								<li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
+								<li class="active">25-12-2012</li>
+							</ul>
+							<div class="section_header_button">
+								<a href="#"><img src="pic/arrow_circle_left.png" class="calendar_navigation_img_1" /></a>
+								<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
+								<a href="#"><img src="pic/arrow_circle_right.png" class="calendar_navigation_img_1" /></a>
+								<a href="#"><img src="pic/circle_calendar.png" class="calendar_navigation_img_1" /></a>
+							</div>
 						</div>
 					</div>
 				</div>
