@@ -175,7 +175,7 @@ body {
 	width: 1020px;
 	border-left: 1px solid #BBB;
 	border-right: 1px solid #BBB;
-	padding: 0;
+	padding-bottom: 2em;
 }
 
 	/* Newspaper Selection */
@@ -209,15 +209,15 @@ body {
 	/* Section Header */
 .section-header {
 	position: relative;
-	background-color: #444;
+	background-color: #EEE;
 	-webkit-border-radius: 2px 2px 0px 0px;
 	-moz-border-radius: 2px 2px 0px 0px;
 	border-radius: 2px 2px 0px 0px;
-	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 1);
-	-moz-box-shadow: 0 0 3px rgba(0,0,0,1);
-	box-shadow: 0 0 3px rgba(0, 0, 0, 1);
+	-webkit-box-shadow: 0 0 3px rgba(128, 128, 128, 1);
+	-moz-box-shadow: 0 0 3px rgba(128, 128, 128,1);
+	box-shadow: 0 0 3px rgba(128, 128, 128, 1);
 	padding: 0em 1em;
-	color: #FFF;
+	color: #444;
 	height: 2.5em;
 	line-height: 2.5em;
 }
@@ -334,8 +334,8 @@ abc {
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
 	-moz-box-shadow: 0 0 3px rgba(0,0,0,0.33);
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
-	margin: 2em 0em 2em 0em;
-	border-top: 1px solid #555;
+	margin: 2em 0em 0em 0em;
+	/*border-top: 1px solid #555;*/
 }
 
 .bordered {
@@ -419,7 +419,11 @@ abc {
 }
 
 .article-header-container {
-	padding-top: 0em;
+	padding-top: .25em;
+}
+
+.article-header-statistics {
+	line-height: 2em;
 }
 
 .article-header {
@@ -1028,7 +1032,122 @@ article p {
 	}
 }
 
+/*#articles_issues {
+	border-left: 1px solid #BBB;
+}
 
+#articles_editors_choice {
+	background-color: #F4F4F4;
+	border-right: 1px solid #BBB;
+	border-left: 1px solid #BBB;
+	border-bottom: 1px solid #BBB;
+	margin-left: -1px;
+}*/
+
+
+.inner_article_container:hover {
+	border: 1px solid #BBB;
+}
+
+.inner_article_container {
+	width: 13em;
+	margin: 1em 1em 0em 1em;
+	border-top: 1px solid #EEE;
+	border-right: 1px solid #EEE;
+	border-left: 1px solid #EEE;
+	border-bottom: 1px solid #DDD;
+}
+
+.inner_article_image {
+	position: relative;
+	width: 13em;
+	height: 9.75em;
+}
+
+.inner_article_header {
+	background-color: #fff;
+	position:relative;
+	z-index:1;
+	width: 13em;
+	height: 6em;
+	padding-top: .5em;
+}
+
+.inner_article_name{
+	color: #000;
+	padding: 0em 1em;
+}
+
+.inner_article_author{
+	color:#111;
+	padding: 0em 1em .25em 1em;
+}
+
+
+.article-block-shadow {
+	position: absolute;
+	top: .25em;
+	left: .33em;
+	width: 14.25em;
+	height: 18.25em;
+	z-index: 0;
+}
+
+
+.inner_editor_container {
+	position: relative;
+}
+
+.inner_editor_message {
+	margin: 1em;
+	background-image: url('../pic/articles/lenta_opening.png');
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-color: white;
+	min-height:5.5em;
+	z-index:1;
+	position: relative;
+	border-top: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-bottom: 1px solid #CCC;
+}
+
+.inner_editor_message:hover, .main_article_container:hover {
+	border: 1px solid #BBB;
+}
+
+.inner_editor_message_text {
+	padding: 1% 1%;
+	width: 73%;
+	text-align:center;
+}
+
+.inner_editor_message_header {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	background-color: #444;
+	height: 1.75em;
+	width: 13.5em;
+	color: #99D578;
+	font-family: 'Open Sans';
+	text-align: center;
+}
+
+.inner_editor_message_img {
+	position: absolute;
+	left: 75%;
+	height: 5.5em;
+}
+
+.editor-block-shadow {
+	position: absolute;
+	top: -.25em;
+	left: .25em;
+	width: 44.25em;
+	height: 6.67em;
+	z-index: 0;
+}
 
 /* Comments */
 
@@ -1389,7 +1508,6 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 
 /* NEWS */
 
-
 .news_selection_item {
 	margin: 1em 1em 1em 1em;
 	word-wrap: break-word;
@@ -1402,6 +1520,15 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	opacity: .9;
 	height: 7.5em;
 	width: 10em;
+}
+
+.news_selection_item_img_big {
+	-webkit-box-shadow: 0px 1px 3px 8px #ddd;
+	-moz-box-shadow: 0px 1px 3px 8px #ddd;
+	box-shadow: 0px 1px 5px 2px #ddd;
+	opacity: .9;
+	height: 13.5em;
+	width: 18em;
 }
 
 .news_selection_item_img {
@@ -1425,6 +1552,14 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	border: 1px solid #CCC;
 	padding: 0em .5em;
 	color: #333;
+	line-height: 1.25em;
+}
+
+.selection_item_statistics span {
+	float: right;
+}
+.selection_item_statistics span, .selection_item_statistics a {
+	vertical-align: top;
 }
 
 .selection_item_statistics img {
@@ -1446,3 +1581,15 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 
 
 /* end of NEWS */
+
+
+/* */
+.calendar_navigation_img_2 {
+	height: 1.5em;
+	vertical-align: -25%;
+}
+
+.calendar_navigation_img_1 {
+	height: 1.5em;
+	vertical-align: -15%;
+}
