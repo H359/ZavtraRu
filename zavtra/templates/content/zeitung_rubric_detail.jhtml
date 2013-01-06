@@ -48,18 +48,18 @@
     </div>
   </div>
 
-	<div class="bordered">
-		<div class="row">
-			<div class="span12">
-				<div class="section-header">
-					<ul class="breadcrumb">
-					  <li><a href="/">Главная</a> <span class="divider">/</span></li>
-					  <li><a href="/zeitung/">Газета</a> <span class="divider">/</span></li>
-					  <li class="active">{{ rubric.title }}</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+  <div class="bordered">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <ul class="breadcrumb">
+            <li><a href="/">Главная</a> <span class="divider">/</span></li>
+            <li><a href="/zeitung/">Газета</a> <span class="divider">/</span></li>
+            <li class="active">{{ rubric.title }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     {% for grouper, articles in object_list|groupby('issue_number')|reverse %}
     <div class="row">
