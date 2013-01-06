@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap_zavtra.css" rel="stylesheet">
@@ -149,7 +149,7 @@
 				<div class="row">
 					<div class="span12">
 						<div class="section-header">
-							<h3 class="inline top_align">Свежие Новости</h3>
+							<h2 class="inline top_align">Свежие Новости</h2>
 							<div class="section_header_button">
 								<a href="#" class="btn btn-success baseline_align">К Остальным Новостям...</a>
 							</div>
@@ -245,18 +245,7 @@
 					</div>
 				</div>
 			</div> <!-- end of bordered with latest news -->
-				
-				
-			<div class="row">
-				<div class="span12">
-					<ul class="breadcrumb">
-					  <li><a href="#">Главная</a> <span class="divider">/</span></li>
-					  <li><a href="#">События</a> <span class="divider">/</span></li>
-					  <li class="active">25-12-2012</li>
-					</ul>
-				</div>
-			</div>
-			
+
 
 			<div class="row">
 				<div class="span12">
@@ -267,10 +256,17 @@
 								<div class="row">
 									<div class="span12">
 										<div class="section-header">
-											<a href="#"><img src="pic/arrow_circle_left.png" style=" height: 2em; vertical-align: -25%;"/></a>
-											<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
-											<a href="#"><img src="pic/arrow_circle_right.png" style=" height: 2em; vertical-align: -25%;" /></a>
-											<a href="#"><img src="pic/circle_calendar.png" style=" height: 2em; vertical-align: -25%;" /></a>
+											<ul class="breadcrumb inline">
+											  <li><a href="#">Главная</a> <span class="divider">/</span></li>
+											  <li><a href="#">События</a> <span class="divider">/</span></li>
+											  <li class="active">25-12-2012</li>
+											</ul>
+											<div class="section_header_button">
+												<a href="#"><img src="pic/arrow_circle_left.png" class="calendar_navigation_img_1" /></a>
+												<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
+												<a href="#"><img src="pic/arrow_circle_right.png" class="calendar_navigation_img_1" /></a>
+												<a href="#"><img src="pic/circle_calendar.png" class="calendar_navigation_img_1" /></a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -280,7 +276,7 @@
 										<div class="padding_one">
 										
 											<div class="module_header rubric-header no_margin">
-												<h3>События:</h3>
+												<h3 class="inline">События:</h3>
 											</div>
 		
 											<section class="padding_one">
@@ -470,22 +466,22 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="row">
+							<div class="span12">
+								<div class="pagination center_align">
+								  <ul class="middle_align">
+									<li><a href="#">Предыдущий День</a></li>
+									<li class="info"><span>25 Декабря 2012 г.</span></li>
+									<li class="disabled"><a href="#">Следующий День</a></li>
+								  </ul>
+								</div>
+							</div>
+						</div>
+			
 					</div> <!-- end of bordered -->
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="span12">
-					<div class="pagination center_align">
-					  <ul class="middle_align">
-						<li><a href="#">Предыдущий День</a></li>
-						<li class="info"><span>25 Декабря 2012 г.</span></li>
-						<li class="disabled"><a href="#">Следующий День</a></li>
-					  </ul>
-					</div>
-				</div>
-			</div>
-
 
 
 			<div class="bordered_clean">
@@ -493,7 +489,7 @@
 				<div class="row">
 					<div class="span12">
 						<div class="section-header">
-							<h3 class="inline top_align">Самое Обсуждаемое</h3>
+							<h2 class="inline top_align">Самое Обсуждаемое</h2>
 						</div>
 					</div>
 				</div>
