@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap_zavtra.css" rel="stylesheet">
@@ -126,29 +126,22 @@
 	<div id="page">
 		<div class="container12">
 
-			<div class="row">
-				<div class="span12 y-margin-one">
-					<ul class="breadcrumb">
-					  <li><a href="#">Главная</a> <span class="divider">/</span></li>
-					  <li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
-					  <li class="active">21 по 25-12-2012</li>
-					</ul>
-				</div>
-			</div>
 
 			<div class="bordered_wod">
 
 				<div class="row">
 					<div class="span12">
 						<div class="section-header">
-							<div class="inline">
-								<h2 class="inline top_align"><span class="gray top_align">Рубрика</span> "Слово Дня"</h2>
-								<div class="section_header_button">
-									<a href="#"><img src="pic/arrow_circle_left.png" style=" height: 2em; vertical-align: -25%;"/></a>
-									<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">21-25 Декабря 2012 г.</span></h4>
-									<a href="#"><img src="pic/arrow_circle_right.png" style=" height: 2em; vertical-align: -25%;" /></a>
-									<a href="#"><img src="pic/circle_calendar.png" style=" height: 2em; vertical-align: -25%;" /></a>
-								</div>
+							<ul class="breadcrumb inline">
+							  <li><a href="#">Главная</a> <span class="divider">/</span></li>
+							  <li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
+							  <li class="active">21 по 25-12-2012</li>
+							</ul>
+							<div class="section_header_button">
+								<a href="#"><img src="pic/arrow_circle_left.png" class="calendar_navigation_img_1" /></a>
+								<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
+								<a href="#"><img src="pic/arrow_circle_right.png" class="calendar_navigation_img_1" /></a>
+								<a href="#"><img src="pic/circle_calendar.png" class="calendar_navigation_img_1" /></a>
 							</div>
 						</div>
 					</div>

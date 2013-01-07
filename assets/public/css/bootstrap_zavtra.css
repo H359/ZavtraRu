@@ -3780,11 +3780,11 @@ input[type="submit"].btn.btn-mini {
   background-color: #000000 \9;
 }
 .breadcrumb {
-  padding: .5em 1em .33em 1em;
+  padding: 0em; /* SDK */
   margin: 0em; /* SDK */
   list-style: none;
-  border-bottom: 1px solid #DDD;
-  border-top: 1px solid #DDD;
+  /*border-bottom: 1px solid #DDD;
+  border-top: 1px solid #DDD;*/
 }
 .breadcrumb li {
   display: inline-block;
@@ -3792,9 +3792,8 @@ input[type="submit"].btn.btn-mini {
   /* IE7 inline-block hack */
 
   *zoom: 1;
-   color: #000;
+  color: #000;
   font-weight: 700;
-
 }
 .breadcrumb .divider {
   padding: 0 5px;
@@ -6140,6 +6139,4 @@ button.close {
     height: auto !important;
     overflow: visible !important;
   }
-  
 }
-
