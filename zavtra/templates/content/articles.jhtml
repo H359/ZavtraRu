@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap_zavtra.css" rel="stylesheet">
@@ -170,7 +170,7 @@
 								</div>
 							</div>
 						</div>
-
+								
 						<div class="row">
 							<div class="span9">
 
@@ -185,7 +185,7 @@
 									</div>
 								</div>
 										
-								<!--<div class="row">
+								<div class="row">
 									<div class="span9">
 										<div class="inner_editor_container">
 											<img src="pic/editor_shadow.png" class="editor-block-shadow">
@@ -203,7 +203,7 @@
 											</div>
 										</div>
 									</div>
-								</div>-->
+								</div>
 					
 
 								<div class="row">
@@ -315,6 +315,7 @@
 															<span class="label label-info mediumtext"><a href="#" class="white white_link baseline_align">происшествия</a></span>
 															<span class="label label-info mediumtext"><a href="#" class="white white_link">в мире</a></span>
 														</span>
+														<span class="block mediumtext dark">12 октября 2012г.</span>
 													</div>
 												</div>
 												<div class="article-text">
@@ -325,7 +326,7 @@
 												</div>
 											</article>
 											<div class="article-statistics">
-												<span class="dark baseline_align article-statistic">12 октября 2012г.</span><span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> 783 просмотра</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> 29 комментариев</a></span></span>
+												<span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> 783 просмотра</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> 29 комментариев</a></span></span>
 											</div>
 										</section>
 										
@@ -344,6 +345,7 @@
 															<span class="label label-info mediumtext"><a href="#" class="white white_link baseline_align">происшествия</a></span>
 															<span class="label label-info mediumtext"><a href="#" class="white white_link">в мире</a></span>
 														</span>
+														<span class="block mediumtext dark">12 октября 2012г.</span>
 													</div>
 												</div>
 												<div class="article-text">
@@ -354,7 +356,7 @@
 												</div>
 											</article>
 											<div class="article-statistics">
-											<span class="dark baseline_align article-statistic">12 октября 2012г.</span><span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> 783 просмотра</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> 29 комментариев</a></span></span>
+											<span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> 783 просмотра</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> 29 комментариев</a></span></span>
 											</div>
 										</section>
 		
