@@ -57,6 +57,11 @@ class Rubric(MPTTModel):
     zeitung = Rubric.fetch_rubric('zeitung')
     return self.pk in map(lambda w: w.pk, zeitung)
 
+  @property
+  def wod_rubric(self):
+    wod = Rubric.fetch_rubric('wod')
+    return self.pk in map(lambda w: w.pk, wod)
+
   @staticmethod
   def fetch_rubric(slug):
     def get_rubric():
@@ -135,6 +140,10 @@ class Article(models.Model):
     return self.rubric.zeitung_rubric
 
   @property
+  def from_wod(self):
+    return self.rubric.wod_rubric
+
+  @property
   def issue_number(self):
     if self.from_zeitung:
       pt = self.published_at.date()
@@ -166,7 +175,7 @@ class Article(models.Model):
 
   @staticmethod
   def get_current_issue_date_range():
-    now = datetime.now().date() - 14 * oneday # DEBUG
+    now = datetime.now().date() - 28 * oneday # DEBUG
     wstart = now - oneday*(now.weekday() + 5)
     if now.weekday() >= 2:
       wstart += 7*oneday
@@ -183,3 +192,26 @@ class Article(models.Model):
     return Article.zeitung.\
            filter(published_at__range = Article.get_current_issue_date_range()).\
            order_by('rubric__position','-published_at')
+
+
+class ExpertComment(models.Model):
+  expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт')
+  article = models.ForeignKey(Article, verbose_name=u'Статья', related_name='expert_comments')
+  comment = models.TextField(verbose_name=u'Текст')
+  position = models.PositiveIntegerField(verbose_name=u'Позиция')
+
+  class Meta:
+    ordering = ['-position']
+    verbose_name = u'Комментарий эксперта'
+    verbose_name_plural = u'Комментарии экспертов'
+
+
+class DailyQuote(models.Model):
+  class Meta:
+    ordering = ['-day']
+    verbose_name = u'Цитата дня'
+    verbose_name_plural = u'Цитаты дня'
+
+  quote = models.TextField(verbose_name=u'Цитата')
+  source = models.ForeignKey(Article, verbose_name=u'Источник цитаты')
+  day = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())

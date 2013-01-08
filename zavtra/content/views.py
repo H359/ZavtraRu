@@ -9,7 +9,13 @@ from content.models import Article, Rubric, Topic
 
 
 class ArticleView(DetailView):
-  template_name = 'content/article_detail.jhtml'
+
+  @property
+  def template_name(self):
+    if self.object.from_wod:
+      return 'content/wod_article.jhtml'
+    else:
+      return 'content/article_detail.jhtml'
 
   def get_queryset(self):
     return Article.objects.select_related()
@@ -23,6 +29,8 @@ class RubricView(ListView):
   def template_name(self):
     if self.rubric.zeitung_rubric:
       return 'content/zeitung_rubric_detail.jhtml'
+    elif self.rubric.wod_rubric:
+      return 'content/wod.jhtml'
     else:
       return 'content/site_rubric_detail.jhtml'
 
