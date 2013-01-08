@@ -423,7 +423,7 @@ abc {
 }
 
 .article-header-statistics {
-	line-height: 2em;
+	line-height: 1.75em;
 }
 
 .article-header {
@@ -446,6 +446,7 @@ abc {
 
 .article-text {
 	padding-top: 1em;
+	clear: right;
 }
 
 .article-paragraph {
@@ -469,6 +470,7 @@ abc {
 .article-statistics {
 	padding-top: 0em;
 	text-align: right;
+	clear: both;
 }
 
 .article-statistic {
@@ -1592,4 +1594,25 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 .calendar_navigation_img_1 {
 	height: 1.5em;
 	vertical-align: -15%;
+}
+
+#inner_subjects {
+	background-color: #DDD;
+	padding-left: 1em;
+	padding-top: .25em;
+	margin-bottom: .5em;
+	height: 1.5em;
+	border: 1px solid #C2C08C;
+	text-align: center;
+}
+
+a.subject_nav_item, span.subject_nav_item {
+	font-family: 'Open Sans', Tahoma;
+	font-size: .9em;
+	padding-right: 1.25em;
+	font-weight: bold;
+}
+
+a.subject_nav_item:hover {
+	text-decoration: underline;
 }
