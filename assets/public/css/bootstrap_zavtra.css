@@ -1323,7 +1323,7 @@ textarea::-webkit-input-placeholder {
 .radio.inline,
 .checkbox.inline {
   display: inline-block;
-  padding-top: 5px;
+  padding-top: 0px; /* SDK */
   margin-bottom: 0;
   vertical-align: middle;
 }
