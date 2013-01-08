@@ -39,3 +39,7 @@ class User(AbstractBaseUser):
   def __unicode__(self):
     names = filter(lambda w: len(w) > 0, [self.first_name, self.mid_name, self.last_name])
     return u' '.join(names)
+
+  @models.permalink
+  def get_absolute_url(self):
+    return ('siteuser.views.profile', (), {'id': self.pk})
