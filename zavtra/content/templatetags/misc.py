@@ -13,8 +13,8 @@ def ru_dt_distance(ctx, value):
 
 @register.filter
 @jinja2.contextfilter
-def ru_date(ctx, value):
-  return ru_strftime(u'%d %B %Y г', value, inflected=True)
+def ru_date(ctx, value, format=u'%d %B %Y г'):
+  return ru_strftime(unicode(format), value, inflected=True)
 
 
 @register.filter

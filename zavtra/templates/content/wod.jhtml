@@ -1,373 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>ЗАВТРА - еженедельная газета</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "content/base.jhtml" %}
 
-    <!-- Le styles -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
-    <link href="{{STATIC_URL}}css/bootstrap_zavtra.css" rel="stylesheet">
-    <link href="{{STATIC_URL}}css/datepicker.css" rel="stylesheet">
-    <link href="{{STATIC_URL}}css/newspaper.css" rel="stylesheet">
-	<script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
-	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
-	<script>
-		$().ready(function() {  
 
-		}); 
-	</script>
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-  </head>
-
-  <body>
-  	
-	<div id="headerbase">
-		<div id="header">
-			<div class="container12">
-
-				<div class="row">
-					<div class="span3">
-						<div class="row">
-							<div class="span3" >
-								<div class="grande_padding">
-									<a href="index.html"><img src="pic/logo_white_med.jpg" id="main_zavtra_logo" alt="Газета Завтра" /></a>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="span5">
-						<div class="row">
-							<div class="span5">
-								<div id="main_header_links">
-									<a href="#" class="main_header_link">День Лит</a>
-									<a href="#" class="main_header_link">День ТВ</a>
-									<a href="#" class="main_header_link">Архив "Завтра"</a>
-								</div>
-							</div>
-						</div>
-						<!--<div class="row">
-							<div class="span5">
-								<div id="main_header_social_networks">
-									<a href="http://www.facebook.com/zavtraru" target="_blank"><img src="pic/facebook_logo.png" class="common_social_network_img" /></a>
-									<a href="http://vk.com/zavtraru" target="_blank"><img src="pic/vk_logo.png" class="common_social_network_img" /></a>
-									<a href="https://twitter.com/ZavtraRu" target="_blank"><img src="pic/twitter_logo.png" class="common_social_network_img" /></a>
-								</div>
-							</div>
-						</div>-->
-					</div>
-
-					<div class="span4">
-						<div class="row">
-							<div class="span4 right_align">
-								<div id="main_header_login" class="pull-right">
-									<span class="main_header_login_text">Сообщество:</span>
-									<a href="#" class="main_header_login_link">Вход</a>
-									<span class="main_header_login_text"> &bull; </span>
-									<a href="#" class="main_header_login_link">Регистрация</a></span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="main_navigation_line">
-		<div class="container12">
-			<div class="row">
-				<div class="span9">
-					<div id="navigation_items">
-						<a href="newspaper.html" class="nav_item">ГАЗЕТА</a>
-						<a href="events.html" class="nav_item">СОБЫТИЯ</a>
-						<a href="wod.html" class="nav_item nav_item_selected">СЛОВО ДНЯ</a>
-						<a href="articles.html" class="nav_item">СТАТЬИ</a>
-						<a href="community.html" class="nav_item">СООБЩЕСТВО</a>
-					</div>
-				</div>
-				<div class="span3">
-					<div class="row">
-						<div class="span3">
-							<div id="main_header_search">
-								<div id="main_search_form">
-									<form action="/search/" method="get" class="navbar-search">
-										<input class="search-query" type="search" name="query" placeholder="Поиск...">
-									</form>
-								</div>
-								<div id="main_search_image">
-									<a href="#"><i class="icon-search icon-white"> </i></a>
-								</div>
-							</div>
-						</div>
+{% block content %}
+{% set objects = object_list|list %}
+<div class="container12">
+	<div class="bordered_wod">
+		<div class="row">
+			<div class="span12">
+				<div class="section-header">
+					<ul class="breadcrumb inline">
+						<li>
+							<a href="/">Главная</a>
+							<span class="divider">/</span>
+						</li>
+						<li>
+							<a href="{{ rubric.get_absolute_url() }}">Слово Дня</a>
+							<span class="divider">/</span>
+						</li>
+						<li class="active">С {{ objects[-1].published_at|ru_date("%d-%m-%Y") }} по {{ objects[0].published_at|ru_date("%d-%m-%Y") }}</li>
+					</ul>
+					<div class="section_header_button">
+						<a href="#">
+							<img src="{{STATIC_URL}}img/arrow_circle_left.png" class="calendar_navigation_img_1">
+						</a>
+						<h4 class="inline top_align average_padding_horizontal">
+							<span class="baseline_align">{{ now|ru_date }}</span>
+						</h4>
+						<a href="#">
+							<img src="{{STATIC_URL}}img/arrow_circle_right.png" class="calendar_navigation_img_1">
+						</a>
+						<a href="#">
+							<img src="p{{STATIC_URL}}img/circle_calendar.png" class="calendar_navigation_img_1">
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div id="page">
-		<div class="container12">
-
-
-			<div class="bordered_wod">
-
-				<div class="row">
-					<div class="span12">
-						<div class="section-header">
-							<ul class="breadcrumb inline">
-							  <li><a href="#">Главная</a> <span class="divider">/</span></li>
-							  <li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
-							  <li class="active">21 по 25-12-2012</li>
-							</ul>
-							<div class="section_header_button">
-								<a href="#"><img src="pic/arrow_circle_left.png" class="calendar_navigation_img_1" /></a>
-								<h4 class="inline top_align average_padding_horizontal"><span class="baseline_align">25 Декабря 2012 г.</span></h4>
-								<a href="#"><img src="pic/arrow_circle_right.png" class="calendar_navigation_img_1" /></a>
-								<a href="#"><img src="pic/circle_calendar.png" class="calendar_navigation_img_1" /></a>
-							</div>
-						</div>
+		{% for object in objects %}
+		<div class="row wod_entry_header">
+			<img src="pic/gradient_grayscale_line.png" class="onepxline">
+			<div class="offset1 span11">
+				<h1>
+					<a href="{{ object.get_absolute_url() }}">
+						<span class="dark">{{ object.published_at|ru_date("%d %B") }}: </span>
+						{{ object.title }}
+					</a>
+				</h1>
+			</div>
+		</div>
+		<div class="row wod_entry_content">
+			<div class="offset1 span4">
+				<div class="wod_entry_img">
+					<a href="#" rel="facebox">
+						<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
+					</a>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="wod_entry_text">
+					<h2><a href="{{ object.get_absolute_url() }}">{{ object.subtitle }}</a></h2>
+					<p><a href="{{ object.get_absolute_url() }}">{{ object.announce }}</a></p>
+					{% set expert_comments = object.expert_comments.select_related().all()|list %}
+					{% if expert_comments|length > 0 %}
+					<h4>Экспертные Оценки:</h4>
+					{% for expert_comment in expert_comments %}
+					<a href="{{ expert_comment.expert.get_absolute_url() }}">{{ expert_comment.expert }}</a>{% if not loop.last %}, {% endif %}
+					{% endfor %}
+					{% endif %}
+					<div class="right_align">
+						<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
+						<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
 					</div>
 				</div>
-
-				<div class="row wod_entry_header">
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-					<div class="offset1 span11">
-						<h1><a href="#"><span class="dark">25 Декабря: </span>Забастовка</a></h1>
-					</div>
-				</div>
-
-				<div class="row wod_entry_content">
-					<div class="offset1 span4">
-						<div class="wod_entry_img">
-							<a href="#" rel="facebox">
-								<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
-							</a>
-						</div>
-					</div>
-										
-					<div class="span6">
-						<div class="wod_entry_text">
-							<h2><a href="#">Забастовка Продолжается</a></h2>
-							<p><a href="#">Забастовка студентов Российского государственного торгово-экономического университета (РГТЭУ) будет продолжена.</a></p>
-							<h4>Экспертные Оценки:</h4>
-							<a href="#">Алескандр Проханов</a>,
-							<a href="#">Алескандр Бородай</a>,
-							<a href="#">Елизавета Емельянова-Сеньчина</a>
-							<div class="right_align">
-								<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
-								<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
-							</div>
-						</div>
-					</div>
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-				</div>
-
-				<div class="row wod_entry_header">
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-					<div class="offset1 span11">
-						<h1><a href="#"><span class="dark">25 Декабря: </span>Забастовка</a></h1>
-					</div>
-				</div>
-
-				<div class="row wod_entry_content">
-					<div class="offset1 span4">
-						<div class="wod_entry_img">
-							<a href="#" rel="facebox">
-								<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
-							</a>
-						</div>
-					</div>
-										
-					<div class="span6">
-						<div class="wod_entry_text">
-							<h2><a href="#">Забастовка Продолжается</a></h2>
-							<p><a href="#">Забастовка студентов Российского государственного торгово-экономического университета (РГТЭУ) будет продолжена.</a></p>
-							<h4>Экспертные Оценки:</h4>
-							<a href="#">Алескандр Проханов</a>,
-							<a href="#">Алескандр Бородай</a>,
-							<a href="#">Елизавета Емельянова-Сеньчина</a>
-							<div class="right_align">
-								<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
-								<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
-							</div>
-						</div>
-					</div>
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-				</div>
-
-				<div class="row wod_entry_header">
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-					<div class="offset1 span11">
-						<h1><a href="#"><span class="dark">25 Декабря: </span>Забастовка</a></h1>
-					</div>
-				</div>
-
-				<div class="row wod_entry_content">
-					<div class="offset1 span4">
-						<div class="wod_entry_img">
-							<a href="#" rel="facebox">
-								<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
-							</a>
-						</div>
-					</div>
-										
-					<div class="span6">
-						<div class="wod_entry_text">
-							<h2><a href="#">Забастовка Продолжается</a></h2>
-							<p><a href="#">Забастовка студентов Российского государственного торгово-экономического университета (РГТЭУ) будет продолжена.</a></p>
-							<h4>Экспертные Оценки:</h4>
-							<a href="#">Алескандр Проханов</a>,
-							<a href="#">Алескандр Бородай</a>,
-							<a href="#">Елизавета Емельянова-Сеньчина</a>
-							<div class="right_align">
-								<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
-								<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
-							</div>
-						</div>
-					</div>
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-				</div>
-
-				<div class="row wod_entry_header">
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-					<div class="offset1 span11">
-						<h1><a href="#"><span class="dark">25 Декабря: </span>Забастовка</a></h1>
-					</div>
-				</div>
-
-				<div class="row wod_entry_content">
-					<div class="offset1 span4">
-						<div class="wod_entry_img">
-							<a href="#" rel="facebox">
-								<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
-							</a>
-						</div>
-					</div>
-										
-					<div class="span6">
-						<div class="wod_entry_text">
-							<h2><a href="#">Забастовка Продолжается</a></h2>
-							<p><a href="#">Забастовка студентов Российского государственного торгово-экономического университета (РГТЭУ) будет продолжена.</a></p>
-							<h4>Экспертные Оценки:</h4>
-							<a href="#">Алескандр Проханов</a>,
-							<a href="#">Алескандр Бородай</a>,
-							<a href="#">Елизавета Емельянова-Сеньчина</a>
-							<div class="right_align">
-								<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
-								<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
-							</div>
-						</div>
-					</div>
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-				</div>
-
-				<div class="row wod_entry_header">
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-					<div class="offset1 span11">
-						<h1><a href="#"><span class="dark">25 Декабря: </span>Забастовка</a></h1>
-					</div>
-				</div>
-
-				<div class="row wod_entry_content">
-					<div class="offset1 span4">
-						<div class="wod_entry_img">
-							<a href="#" rel="facebox">
-								<img src="http://zavtra.ru/media/zhivot/big/f1-51.jpg">	
-							</a>
-						</div>
-					</div>
-										
-					<div class="span6">
-						<div class="wod_entry_text">
-							<h2><a href="#">Забастовка Продолжается</a></h2>
-							<p><a href="#">Забастовка студентов Российского государственного торгово-экономического университета (РГТЭУ) будет продолжена.</a></p>
-							<h4>Экспертные Оценки:</h4>
-							<a href="#">Алескандр Проханов</a>,
-							<a href="#">Алескандр Бородай</a>,
-							<a href="#">Елизавета Емельянова-Сеньчина</a>
-							<div class="right_align">
-								<span class="article-statistic"><i class="icon-eye-open"></i> 172 просмотра</span>
-								<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23 комментария</a></span>
-							</div>
-						</div>
-					</div>
-					<img src="pic/gradient_grayscale_line.png" class="onepxline" />
-				</div>
-
-				<div class="row">
-					<div class="span12">
-						<div class="pagination center_align">
-						  <ul class="middle_align">
-							<li><a href="#">Предыдущая Неделя</a></li>
-							<li class="info"><span>21-25 Декабря 2012 г.</span></li>
-							<li class="disabled"><a href="#"><span class="large">Следующая Неделя</span></a></li>
-						  </ul>
-						</div>
-					</div>
-				</div>
-
-			</div> <!-- end of bordered with wod history -->
-			
-		</div> <!-- end of CONTAINER12 -->
-
-	</div> <!-- end of PAGE -->
-
-<footer>
-	<div id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="span13">
-					<div class="row">
-						<div class="span8">
-							<div class="row">
-								<div class="span8">
-									<div id="footer_navigation">
-										<a href="newspaper.html" class="sub_nav_item">ГАЗЕТА</a>
-										<a href="events.html" class="sub_nav_item">СОБЫТИЯ</a>
-										<a href="wod.html" class="sub_nav_item">СЛОВО ДНЯ</a>
-										<a href="articles.html" class="sub_nav_item">СТАТЬИ</a>
-										<a href="community.html" class="sub_nav_item">СООБЩЕСТВО</a>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="span8">
-									<div id="footer_social_networks">
-										<a href="http://www.facebook.com/zavtraru" target="_blank"><img src="pic/facebook_logo.png" class="common_social_network_img" /></a>
-										<a href="http://vk.com/zavtraru" target="_blank"><img src="pic/vk_logo.png" class="common_social_network_img" /></a>
-										<a href="https://twitter.com/ZavtraRu" target="_blank"><img src="pic/twitter_logo.png" class="common_social_network_img" /></a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="span5">
-							<div id="footer_text">Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. </div>
-						</div>
-					</div>
+			</div>
+			<img src="pic/gradient_grayscale_line.png" class="onepxline">
+		</div>
+		{% endfor %}
+		<div class="row">
+			<div class="span12">
+				<div class="pagination center_align">
+					<ul class="middle_align">
+						<li><a href="#">Предыдущая Неделя</a></li>
+						<li class="info"><span>21-25 Декабря 2012 г.</span></li>
+						<li class="disabled"><a href="#"><span class="large">Следующая Неделя</span></a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-</footer>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/zavtra.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

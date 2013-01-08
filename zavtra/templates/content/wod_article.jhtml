@@ -13,8 +13,9 @@
 						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<div class="row" id="newspaper_issues">
+				{#
 				<div class="span2_4">
 					<div class="text-over-image newspaper_selection_item">
 						<a href="#" rel="facebox">
@@ -73,6 +74,7 @@
 						</a>
 					</div>
 				</div>
+				#}
 			</div>
 		</div>
 
@@ -81,8 +83,13 @@
 				<div class="span12">
 					<div class="section-header">
 						<ul class="breadcrumb inline">
-							<li><a href="#">Главная</a> <span class="divider">/</span></li>
-							<li><a href="#">Слово Дня</a> <span class="divider">/</span></li>
+							<li>
+								<a href="/">Главная</a>
+								<span class="divider">/</span>
+							</li>
+							<li>
+								<a href="{{ object.rubric.get_absolute_url() }}">Слово Дня</a>
+								<span class="divider">/</span></li>
 							<li class="active">{{ object.title }}</li>
 						</ul>
 						<div class="section_header_button">
@@ -143,8 +150,9 @@
 							</header>
 						</div>
 						<div class="span3 right_align article_category_list">
-							<span class="label label-info mediumtext"><a href="#" class="white white_link baseline_align">происшествия</a></span>
-							<span class="label label-info mediumtext"><a href="#" class="white white_link">в мире</a></span>
+							{% for topic in object.topics.all() %}
+							<span class="label label-info mediumtext"><a href="{{ topic.get_absolute_url() }}" class="white white_link baseline_align">{{ topic.title }}</a></span>
+							{% endfor %}
 						</div>
 					</div>
 					<div class="row">

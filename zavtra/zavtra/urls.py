@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'zavtra.views.home', name='home'),
     url(r'^content/', include('content.urls')),
+    url(r'^accounts/', include('siteuser.urls')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls))
 )
