@@ -83,7 +83,7 @@ class Command(BaseCommand):
       )
 
   def migrate_articles(self):
-    article_ctype = list(self.simple_sql("""SELECT id FROM django_content_type WHERE app_label='corecontent' AND model='article'"""))[0]['id']
+    article_ctype = list(self.simple_sql("""SELECT id FROM django_content_type WHERE app_label='corecontent' AND model='contentitem'"""))[0]['id']
     for r in self.simple_sql("SELECT * FROM corecontent_contentitem"):
       if r['rubric_id'] is None:
         rubric = self.top_rubrics['blogs']

@@ -44,11 +44,18 @@ class RubricView(ListView):
     return self.rubric.articles.order_by('-published_at').all()
 
 
-class FeaturedView(DetailView):
+class FeaturedView(ListView):
+  paginate_by = 15
   template_name = 'content/topic_detail.jhtml'
 
+  def get_context_data(self, **kwargs):
+    context = super(FeaturedView, self).get_context_data(**kwargs)
+    context['topic'] = self.topic
+    return context
+
   def get_queryset(self):
-    return Topic.objects.all()
+    self.topic = get_object_or_404(Topic, slug=self.kwargs['slug'])
+    return self.topic.articles.select_related().all()
 
 
 class ZeitungView(ListView):

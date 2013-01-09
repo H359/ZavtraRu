@@ -11,9 +11,8 @@
               <a href="/">Главная</a>
               <span class="divider">/</span>
             </li>
-<!-- SDK comment: постарайся пожалуйста все-таки сделать это с включением следующих двух разделов: -->
-              <li><a href="#">Газета</a> <span class="divider">/</span></li>
-              <li><a href="#">Выпуск №50</a> <span class="divider">/</span></li>
+            <li><a href="/content/zeitung/">Газета</a> <span class="divider">/</span></li>
+            <li><a href="/content/zeitung/{{ object.published_at.year }}/{{ object.issue_number }}/">Выпуск №{{ object.issue_number }}</a> <span class="divider">/</span></li>
             <li>
               <a href="{{ object.rubric.get_absolute_url() }}">{{ object.rubric.title }}</a>
               <span class="divider">/</span>
@@ -46,9 +45,15 @@
                   <h1 class="article-page-main-header article-header">{{ object.title }}</h1>
                 </header>
               </div>
+              {% set topics = object.topics.all()|list %}
               <div class="span3 right_align" style="line-height: 2.5em">
-                <span class="label label-info mediumtext">тема 1</span>
-                <span class="label label-info mediumtext">тема 2</span>
+                {% if topics|length > 0 %}
+                {% for topic in topics %}
+                <a href="{{ topic.get_absolute_url() }}">
+                  <span class="label label-info mediumtext">{{ topic }}</span>
+                </a>
+                {% endfor %}
+                {% endif %}
               </div>
             </div>
             {% if object.subtitle|length > 0 %}

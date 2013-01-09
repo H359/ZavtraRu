@@ -103,7 +103,7 @@ class Article(models.Model):
   announce = models.TextField(verbose_name=u'Анонс (краткое содержание)')
   cover_source = models.ImageField(upload_to='articles/covers', verbose_name=u'Обложка')
   content = models.TextField(verbose_name=u'Текст', default='')
-  topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True)
+  topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   # managers
   objects = PublishedArticlesManager()
