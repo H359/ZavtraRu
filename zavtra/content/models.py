@@ -14,7 +14,8 @@ from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit
 
 from managers import PublishedArticlesManager, ZeitungManager, BlogsManager,\
-                     NewsManager, ColumnsManager, WODManager, EditorialManager
+                     NewsManager, ColumnsManager, WODManager, EditorialManager,\
+                     EventsManager
 from zavtra.utils import cached, oneday
 
 
@@ -110,6 +111,7 @@ class Article(models.Model):
   zeitung = ZeitungManager()
   blogs = BlogsManager()
   news = NewsManager()
+  events = EventsManager()
   columns = ColumnsManager()
   editorial = EditorialManager()
   wod = WODManager()

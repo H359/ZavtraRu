@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="container12">
-
   <div class="bordered">
     <div class="row">
       <div class="span12">
@@ -15,13 +14,13 @@
             <div class="btn-group dropdown">
               <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for joined, rubrics in groups %}{% for r in rubrics %}
+                {% for r in gazette_rubrics %}
                 <li>
-                  <a href="{{ r['rubric'].get_absolute_url() }}">
-                    <h5>{{ r['rubric'].title }}</h5>
+                  <a href="{{ r.get_absolute_url() }}">
+                    <h5>{{ r.title }}</h5>
                   </a>
                 </li>
-                {% endfor %}{% endfor %}
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -66,8 +65,8 @@
       <div class="span12">
         <div class="rubric-header">
           <h3 class="inline">
-<!-- SDK comment: сделать ссылку на полный номер вместо # -->
-            <a href="#" class="white white_link">Выпуск №{{ grouper }} &ndash; {{ articles[0].issue_date|ru_date }}</a>
+            {% set d = articles[0].issue_date %}
+            <a href="/content/zeitung/{{ d.year }}/{{ grouper }}/" class="white white_link">Выпуск №{{ grouper }} &ndash; {{ d|ru_date }}</a>
           </h3>
         </div>
       </div>

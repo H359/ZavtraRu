@@ -51,6 +51,13 @@ class NewsManager(PublishedArticlesManager):
     return super(NewsManager, self).get_query_set().filter(rubric__in = news)
 
 
+class EventsManager(PublishedArticlesManager):
+  def get_query_set(self):
+    from content.models import Rubric
+    events = Rubric.fetch_rubric('events')
+    return super(EventsManager, self).get_query_set().filter(rubric__in = events)
+
+
 class WODManager(PublishedArticlesManager):
   def get_query_set(self):
     from content.models import Rubric

@@ -20,6 +20,7 @@ class Command(BaseCommand):
     self.cleanup()
     self.top_rubrics = {      
       'gazette': Rubric.objects.create(title=u'Газета', slug='zeitung'),
+      'events': Rubric.objects.create(title=u'События', slug='events'),
       'site': Rubric.objects.create(title=u'Сайт'),
       'blogs': Rubric.objects.create(title=u'Блоги'),
       'word_of_day': Rubric.objects.create(title=u'Слово дня', slug='wod'),

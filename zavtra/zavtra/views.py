@@ -21,7 +21,8 @@ class HomeView(TemplateView):
     context = {
       'current_number': Article.get_current_issue_number(),
       'current_range': Article.get_current_issue_date_range(),
-      'events': Article.news.select_related()[0:10],
+      'events': Article.events.select_related()[0:10],
+      'latest_news_item': Article.news.latest('published_at'),
       'gazette': self.group_for_main(Article.get_current_issue().select_related()[0:5]),
       'columns': Article.columns.select_related()[0:6],
       'blogs': Article.blogs.select_related()[0:5],

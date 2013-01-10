@@ -138,13 +138,13 @@
       <div class="row">
         <div class="span9">
           <div id="main_news_box">
-            <a href="{{ events_rubrics[0].get_absolute_url() }}" class="no_underline">
+            <a href="{{ news_rubrics[0].get_absolute_url() }}" class="no_underline">
               <div id="main_news_box_header">
                 <h3>Здесь и Сейчас</h3>
               </div>
             </a>
             <div id="main_news_box_content">
-              <a href="#" class="dark dark_link mediumtext"><span class="black no_underline">12:45 - </span>В квартире режиссера Павла Костомарова идет обыск</a>
+              <a href="{{ latest_news_item.get_absolute_url() }}" class="dark dark_link mediumtext"><span class="black no_underline">{{ latest_news_item.published_at|ru_date("%H:%M") }} &ndash; </span>{{ latest_news_item.title }}</a>
             </div>
           </div>
         </div>

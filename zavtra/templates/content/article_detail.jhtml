@@ -11,12 +11,15 @@
               <a href="/">Главная</a>
               <span class="divider">/</span>
             </li>
+            {% if object.from_zeitung %}
             <li><a href="/content/zeitung/">Газета</a> <span class="divider">/</span></li>
             <li><a href="/content/zeitung/{{ object.published_at.year }}/{{ object.issue_number }}/">Выпуск №{{ object.issue_number }}</a> <span class="divider">/</span></li>
+            {% endif %}
             <li>
               <a href="{{ object.rubric.get_absolute_url() }}">{{ object.rubric.title }}</a>
               <span class="divider">/</span>
             </li>
+            <li>{{ object.title }}</li>
           </ul>
         </div>
       </div>
@@ -184,6 +187,36 @@
             <div class="article-page-module-footer">
               <h6>
                 <a href="#" class="dark dark_line">Все статьи выпуска</a>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if not object.from_zeitung %}
+      <div class="row">
+        <div class="span3">
+          <div class="article-page-module">
+            <div class="module_header rubric-header no_margin">
+              <h4>
+                <a href="#" class="gray gray_link">Новости:</a>
+              </h4>
+            </div>
+            {% for item in latest_news[0:5] %}
+            <div class="article-page-module-article">
+              <h4 class="article-header">
+                <a href="{{ item.get_absolute_url() }}" class="black black_link">{{ item.title }}</a>
+              </h4>
+            </div>
+            {% if not loop.last %}
+            <div class="center_align average_padding_vertical">
+              <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div class="article-page-module-footer">
+              <h6>
+                <a href="{{ news_rubrics[0].get_absolute_url() }}" class="dark dark_line">Все новости</a>
               </h6>
             </div>
           </div>

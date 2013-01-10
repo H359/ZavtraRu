@@ -1,5 +1,5 @@
 {% extends "content/base.jhtml" %}
-
+{% from "macro.jhtml" import pagination %}
 
 {% block content %}
 <div class="container12">
@@ -88,113 +88,30 @@
 							<div class="module_header rubric-header">
 								<h4>Политика:</h4>
 								<h4>Самое Обсуждаемое</h4>
-							</div>	
+							</div>
+							{% for object in most_commented %}
 							<div class="span3">
 								<div class="news_selection_item">
 									<div class="text-over-image">
-										<a href="#">
+										<a href="{{ object.get_absolute_url() }}">
 											<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="news_selection_item_img">
 											<div class="text-bottom white">
-												<h5><span class="gray underline">Слово Дня:</span> Длинный Длинный Заголовок Одной Статьи</h5>
+												<h5><span class="gray underline">{{ object.rubric.title }}:</span> {{ object.title }}</h5>
 											</div>
 										</a>
 									</div>
 									<div class="selection_item_statistics">
-										<a class="mediumtext">29/09/12</a>
+										<a class="mediumtext">{{ object.published_at|ru_date("%d/%m/%y") }}</a>
 										<span class="mediumtext"><a href="#"><img src="pic/views.png" /> 172</a></span>
 										<span class="mediumtext"><a href="#"><img src="pic/comment.png" /> 23</a></span>
 									</div>
 								</div>
 							</div>
-							<div class="span3">
-								<div class="news_selection_item">
-									<div class="text-over-image">
-										<a href="#">
-											<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="news_selection_item_img">
-											<div class="text-bottom white">
-												<h5><span class="gray underline">Статьи:</span> Длинный Длинный Заголовок Одной Статьи</h5>
-											</div>
-										</a>
-									</div>
-									<div class="selection_item_statistics">
-										<a href="#" rel="author" class="block dark dark_link">Александр Проханов</a>
-										<a class="mediumtext">29/09/12</a>
-										<span class="mediumtext"><a href="#"><img src="pic/views.png" /> 172</a></span>
-										<span class="mediumtext"><a href="#"><img src="pic/comment.png" /> 23</a></span>
-									</div>
-								</div>
-							</div>
-							<div class="span3">
-								<div class="news_selection_item">
-									<div class="text-over-image">
-										<a href="#">
-											<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="news_selection_item_img">
-											<div class="text-bottom white">
-												<h5><span class="gray underline">События и Новости:</span> Длинный Длинный Заголовок Одной Статьи</h5>
-											</div>
-										</a>
-									</div>
-									<div class="selection_item_statistics">
-										<a class="mediumtext">29/09/12</a>
-										<span class="mediumtext"><a href="#"><img src="pic/views.png" /> 172</a></span>
-										<span class="mediumtext"><a href="#"><img src="pic/comment.png" /> 23</a></span>
-									</div>
-								</div>
-							</div>
-							<div class="span3">
-								<div class="news_selection_item">
-									<div class="text-over-image">
-										<a href="#">
-											<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="news_selection_item_img">
-											<div class="text-bottom white">
-												<h5><span class="gray underline">События и Новости:</span> Длинный Длинный Заголовок Одной Статьи</h5>
-											</div>
-										</a>
-									</div>
-									<div class="selection_item_statistics">
-										<a class="mediumtext">29/09/12</a>
-										<span class="mediumtext"><a href="#"><img src="pic/views.png" /> 172</a></span>
-										<span class="mediumtext"><a href="#"><img src="pic/comment.png" /> 23</a></span>
-									</div>
-								</div>
-							</div>
-							<div class="span3">
-								<div class="news_selection_item">
-									<div class="text-over-image">
-										<a href="#">
-											<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="news_selection_item_img">
-											<div class="text-bottom white">
-												<h5><span class="gray underline">Статьи:</span> Длинный Длинный Заголовок Одной Статьи</h5>
-											</div>
-										</a>
-									</div>
-									<div class="selection_item_statistics">
-										<a href="#" rel="author" class="block dark dark_link">Александр Проханов</a>
-										<a class="mediumtext">29/09/12</a>
-										<span class="mediumtext"><a href="#"><img src="pic/views.png" /> 172</a></span>
-										<span class="mediumtext"><a href="#"><img src="pic/comment.png" /> 23</a></span>
-									</div>
-								</div>
-							</div>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="span12">
-						<div class="pagination center_align">
-							<ul>
-								<li class="disabled"><a href="#">Предыдущая</a></li>
-								<li class="disabled"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li class="disabled"><a href="#">...</a></li>
-								<li><a href="#">44</a></li>
-								<li><a href="#">Следующая</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				{{ pagination(request, page_obj) }}
 			</div>
 		</div>
 	</div>
