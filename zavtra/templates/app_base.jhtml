@@ -26,7 +26,7 @@
             <div class="row">
               <div class="span8">
                 <div id="footer_navigation">
-                  <a href="/gazette/" class="sub_nav_item">Газета</a>
+                  <a href="/content/zeitung/" class="sub_nav_item">Газета</a>
                   <a href="{{ events_rubrics[0].get_absolute_url() }}" class="sub_nav_item">События</a>
                   <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="sub_nav_item">Слово дня</a>
                   <a href="/articles/" class="sub_nav_item">Статьи</a>
