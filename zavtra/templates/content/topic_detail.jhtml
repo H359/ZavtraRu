@@ -50,7 +50,11 @@
 									<article>
 										<div class="article-illustration-container float_left">
 											<a href="{{ object.get_absolute_url() }}">
-												<img src="pic/articles/article_logo2.jpg" class="article-illustration">
+												{% if object.cover_source != "" %}
+												<img src="{{ object.cover_for_main }}">
+												{% else %}
+												<img src="http://placekitten.com/140/140" class="article-illustration">
+												{% endif %}
 											</a>
 										</div>
 										<div class="article-header-container">

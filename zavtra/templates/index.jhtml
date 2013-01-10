@@ -441,18 +441,30 @@
               </div>
             </div>
             <div id="main_video_selected_description_container">{{ video.announce }}</div>
-            {% endif %}
-            {% endfor %}
             <div id="main_video_selection">
               <ul class="no_margin no_padding center_align block">
-                <li class="inline no_margin no_padding"><a href="#"><img src="pic/black_arrow_left.png" class="main_video_selection_arrow" /></a></li>
-                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
-                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img half_opacity" /></a></li>
-                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
-                <li class="main_video_selection_choice" class="no_margin no_padding"><a href="#"><img src="pic/video/video.jpg" class="main_video_selection_choice_img" /></a></li>
-                <li class="inline no_margin no_padding"><a href="#"><img src="pic/black_arrow_right.png" class="main_video_selection_arrow" /></a></li>
+                <li class="inline no_margin no_padding">
+                  <a href="#">
+                    <img src="{{STATIC_URL}}img/black_arrow_left.png" class="main_video_selection_arrow">
+                  </a>
+                </li>
+                {% else %}
+                <li class="main_video_selection_choice" class="no_margin no_padding">
+                  <a href="{{ video.get_absolute_url() }}">
+                    <img src="http://placekitten.com/49/41" class="main_video_selection_choice_img">
+                  </a>
+                </li>
+                {% endif %}
+                {% if loop.last %}
+                <li class="inline no_margin no_padding">
+                  <a href="#">
+                    <img src="{{STATIC_URL}}img/black_arrow_right.png" class="main_video_selection_arrow">
+                  </a>
+                </li>
               </ul>
             </div>
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>

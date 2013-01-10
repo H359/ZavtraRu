@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from pytils.translit import slugify
+from urlparse import urlparse, parse_qs
 
 from django.db import models
 from django.conf import settings
@@ -136,6 +137,18 @@ class Article(models.Model):
 
   def __unicode__(self):
     return u'%s' % self.title
+
+  def render_content(self):
+    if self.type == Article.TYPES.text:
+      return self.content
+    else:
+      tpl = """<iframe type="text/html" width="640" height="480" src="%s" frameborder="0" allowfullscreen></iframe>"""
+      pc = urlparse(self.content)
+      if pc.netloc.endswith("youtube.com"):
+        source = "http://youtube.com/embed/%s?html5=1" % parse_qs(pc.query).get('v')[0].strip()
+      else:
+        source = self.content
+      return tpl % source
 
   @property
   def from_zeitung(self):

@@ -40,7 +40,7 @@
               <div class="comment">
                 <div class="avatar">
                   <a href="{{ comment.author.get_absolute_url() }}" rel="popover" data-content="Пользователь {{ comment.author }}" data-original-title="{{ comment.author }}">
-                    avatar
+                    <img src="http://placekitten.com/80/80">
                   </a>
                 </div>
                 <div class="inner">
@@ -75,7 +75,7 @@
         <div id="comment-form" class="clearfixer">
           <div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>
           <div class="avatar">
-            avatar
+            <img src="http://placekitten.com/80/80">
           </div>
           <form class="inner" method="post" action="{{ url('comments.views.add') }}">
             <fieldset class="body">
