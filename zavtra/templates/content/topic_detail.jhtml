@@ -19,12 +19,13 @@
 				<div class="row">
 					<div class="span12">
 						<div id="inner_subjects">
-							<span class="subject_nav_item dark">политика</span>
-							<a href="/category/culture" class="subject_nav_item">культура</a>
-							<a href="/category/society" class="subject_nav_item">общество</a>
-							<a href="/category/economics" class="subject_nav_item">экономика</a>		
-							<a href="/category/army" class="subject_nav_item">армия</a>
-							<a href="/category/accidents" class="subject_nav_item">происшествия</a>
+							{% for mtopic in top_topics %}
+							{% if mtopic.id == topic.id %}
+							<span class="subject_nav_item dark">{{ mtopic.title }}</span>
+							{% else %}
+							<a href="{{ mtopic.get_absolute_url() }}" class="subject_nav_item">{{ mtopic.title }}</a>
+							{% endif %}
+							{% endfor %}
 						</div>
 					</div>
 				</div>								
