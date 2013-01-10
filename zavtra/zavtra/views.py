@@ -25,6 +25,7 @@ class HomeView(TemplateView):
       'latest_news_item': Article.news.latest('published_at'),
       'gazette': self.group_for_main(Article.get_current_issue().select_related()[0:5]),
       'columns': Article.columns.select_related()[0:6],
+      'videos': Article.objects.filter(type = Article.TYPES.video).select_related()[0:4],
       'blogs': Article.blogs.select_related()[0:5],
       'editorial': Article.editorial.select_related().latest('published_at'),
       'wod': Article.wod.select_related().latest('published_at')

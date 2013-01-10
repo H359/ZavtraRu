@@ -138,7 +138,8 @@ INSTALLED_APPS = (
     'siteuser',
     'grappelli',
     'django.contrib.admin',
-    'mptt'
+    'mptt',
+    'comments'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

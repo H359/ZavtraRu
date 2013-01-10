@@ -4,6 +4,7 @@ from content.views import ArticleView, RubricView, FeaturedView, ZeitungView
 
 
 urlpatterns = patterns('',
+  url(r'^zeitung/$', 'content.views.current_issue_redirect', name='content.views.current_issue'),
   url(r'^zeitung/(?P<year>[0-9]+)/(?P<issue>[0-9]+)/$', ZeitungView.as_view(), name='content.views.zeitung'),
   url(r'^view/(?P<slug>[^/]+)/$', ArticleView.as_view(), name='content.views.article'),
   url(r'^rubric/(?P<slug>[^/]+)/$', RubricView.as_view(), name='content.views.rubric'),

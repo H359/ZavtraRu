@@ -1,5 +1,6 @@
 {% extends "content/base.jhtml" %}
 
+{% from "macro.jhtml" import render_comments %}
 
 {% block content %}
 <div class="container12">
@@ -15,7 +16,6 @@
 				</div>
 			</div>
 			<div class="row" id="newspaper_issues">
-				{#
 				<div class="span2_4">
 					<div class="text-over-image newspaper_selection_item">
 						<a href="#" rel="facebox">
@@ -74,7 +74,7 @@
 						</a>
 					</div>
 				</div>
-				#}
+
 			</div>
 		</div>
 
@@ -208,150 +208,27 @@
 							<div id="wod_opinions_section" class="rubric-header no_margin">
 								<h3 class="inline">Экспертные Оценки:</h3>
 							</div>
+							{% for expert_comment in object.expert_comments.all() %}
 							<div class="wod_opinion">
 								<div class="wod_opinion_avatar">
-									<img src="pic/people/aleksandr_prohanov_0001.jpg">
+									<!--<img src="pic/people/aleksandr_prohanov_0001.jpg">-->
+									avatar
 								</div>
 								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Александр Проханов</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
+									<a href="{{ expert_comment.expert.get_absolute_url() }}" class="wod_opinion-author-name">{{ expert_comment.expert }}</a>
+									{{ expert_comment.comment }}
 								</div>
 							</div>
+							{% if not loop.last %}
 							<img src="pic/gradient_grayscale_line.png" class="onepxline">
-							<div class="wod_opinion">
-								<div class="wod_opinion_avatar">
-									<img src="pic/people/alexandr_borodai_0122.jpg">
-								</div>
-								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Александр Бородай</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-								</div>
-							</div>
-							<img src="pic/gradient_grayscale_line.png" class="onepxline">
-							<div class="wod_opinion">
-								<div class="wod_opinion_avatar">
-									<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-								</div>
-								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Елизавета Емельянова-Сеньчина</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он говорил о необходимости подавлять врагов русского развития, врагов рывка, призывал наносить планомерные неослабевающие удары по коррупции, вырвать принадлежащие России богатства из оффшорных зон, вернуть их в реальную российскую экономику, начать инвестировать русские деньги в большие проекты, а не складывать их в стабилизационные фонды и заграничные ценные бумаги. Он обещал жестоко подавлять криминал, который идёт в политику, криминал, который искривляет силовые линии власти, направляя её в пользу криминальных теневых группировок.</p>
-								</div>
-							</div>
+							{% endif %}
+							{% endfor %}
 						</div>
 					</div>
 				</article>
 			</div>
 		</div>
-			
-		<div class="row">
-			<div class="offset1_5 span9">
-				<div id="comments-section" class="rubric-header no_margin">
-					<h3 class="inline">Комментарии (6):</h3>
-					<a href="comment-form" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
-				</div>
-				<div id="comments">
-					<div class="comments">
-						<div class="content">
-							<ul id="comments" class="unstyled">
-								<li id="comment-135643">
-									<div class="comment">
-										<div class="avatar">
-											<a href="#" rel="popover" data-content="Пользователь LeoSemen с нами с 8 января 2012" data-original-title="LeoSemen">
-												<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-											</a>
-										</div>
-										<div class="inner">
-											<div class="body clearfixer">
-												<div class="author">
-													<a href="/accounts/user/LeoSemen/" class="comment-author-name">Елизавета Емельянова-Сеньчина</a>
-													<a href="/resolver/25/135643/#comment-135643" class="comment-time">
-														<time datetime="2012-12-21 10:30:54.548290">21.12.2012 10:30</time>
-													</a>
-												</div>
-												<div class="text">
-													<p>У редакции явный регресс. Что изменится узнаем мы или нет об этой или подобной "новости". Что тут "обсуждать"? А больше "поговорить" не о чём?</p>
-												</div>
-												<div class="btn-toolbar">
-													<div class="btn-group">
-														<a href="#vote:up:135951" class="vote-plus btn btn-mini btn-primary "><i class="icon-white icon-plus-sign"></i></a>
-														<a class="btn btn-disabled btn-mini comment-rating" title="рейтинг комментария">0</a>
-														<a href="#vote:down:135951" class="vote-minus btn btn-mini btn-primary "><i class="icon-white icon-minus-sign"></i></a>
-													</div>
-													<div class="reply-button pull-right">
-														<a href="#reply:135951">Ответить</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>					
-							</ul>
-						</div>
-						<div id="comment-form" class="clearfixer">
-							<div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>
-							<div class="avatar">
-								<a href="#" rel="popover" data-content="Пользователь LeoSemen с нами с 8 января 2012" data-original-title="LeoSemen">
-									<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-								</a>
-							</div>
-							<form class="inner" method="post" action="/comments/add/">
-								<fieldset class="body">
-									<h4>Ваш комментарий:</h4>
-									<div>
-										<input type="hidden" name="csrfmiddlewaretoken" value="886e87d50dfc04d7167f9d5cb042e3e7">
-										<input type="hidden" name="next" value="/content/view/na-serdyukova-est-pokazaniya-2012-12-21-085002/">
-									</div>
-									<div>
-										<input type="hidden" name="content_type" value="11" id="id_content_type">
-									</div>
-									<div>
-										<input type="hidden" name="object_id" value="48026" id="id_object_id">
-									</div>
-									<div class="clearfix">
-										<label for="id_comment"></label>
-										<div class="input">
-											<div>
-												<div id="markItUpId_comment" class="markItUp">
-													<div class="markItUpContainer">
-														<div class="markItUpHeader">
-															<ul>
-																<li class="markItUpButton markItUpButton1 ">
-																	<a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
-																</li>
-																<li class="markItUpButton markItUpButton2 ">
-																	<a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
-																</li>
-																<li class="markItUpButton markItUpButton3 ">
-																	<a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
-																</li>
-															</ul>
-														</div>
-														<textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
-														<div class="markItUpFooter"></div>
-													</div>
-												</div>
-											</div>
-											<span class="help-block"></span>
-										</div>
-									</div>
-									<div>
-										<input type="hidden" name="parent" id="id_parent">
-									</div>
-									<div>
-										<input type="submit" class="btn btn-success pull-right" value="Отправить">
-									</div>
-								</fieldset>
-							</form>
-						</div>    
-					</div>
-				</div>
-			</div>
-		</div>
-
+		{{ render_comments(request, object, csrf_token, True) }}
 		<div class="bordered">
 			<div class="row">
 				<div class="span12">

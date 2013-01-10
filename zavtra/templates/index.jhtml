@@ -125,10 +125,12 @@
               <img src="{{ wod.cover_for_wod.url }}" id="main_wod_img">
             </a>
             <div id="main_wod_content">
-              <h5 class="white left_align">ТОЧКИ ЗРЕНИЯ</h5>
+              <h5 class="white left_align">Точки зрения</h5>
               <div id="main_wod_opinions" class="average_padding_vertical">
                 <div class="center_align">
-                  <a href="#" class="largetext person_name">Андрей Смирнов</a> &bull; <a href="#" class="largetext person_name">Игорь Дьяков</a> &bull; <a href="#" class="largetext person_name">Сергей Угольников</a>
+                  {% for expert_comment in wod.expert_comments.all() %}
+                  <a href="{{ expert_comment.expert.get_absolute_url() }}">{{ expert_comment.expert }}</a>{% if not loop.last %} &bull; {% endif %}
+                  {% endfor %}
                 </div>
               </div>
             </div>
@@ -155,7 +157,7 @@
             <a href="newspaper.html" class="nav_item nav_item_border">ГАЗЕТА</a>
             <a href="{{ events_rubrics[0].get_absolute_url() }}" class="nav_item nav_item_border">{{ events_rubrics[0].title }}</a>
             <a href="{{ wod_rubrics[0].get_absolute_url() }}" class="nav_item nav_item_border">{{ wod_rubrics[0].title }}</a>
-            <a href="articles.html" class="nav_item nav_item_border">СТАТЬИ</a>
+            <a href="{{ blogs_rubrics[0].get_absolute_url() }}" class="nav_item nav_item_border">СТАТЬИ</a>
             <a href="community.html" class="nav_item">СООБЩЕСТВО</a>
           </div>
         </div>
@@ -175,10 +177,7 @@
             <img src="{{ STATIC_URL }}img/editor_shadow.png" class="editor-block-shadow" />
             <div class="main_editor_message">
               <a href="#" class="no_underline">
-                <!--
-                <img src="pic/people/editor/andrey_prohanov.jpeg" class="main_editor_message_img">
-                -->
-                avatar
+                <img src="http://placekitten.com/g/120/68" class="main_editor_message_img">
                 <div class="main_editor_message_header">
                   <h3>{{ editorial.rubric.title }}</h3>
                 </div>
@@ -275,7 +274,9 @@
                 </span>
               </div>
               <div class="main_person_pic_small">
-                <a href="/blogzz/" class="dark dark_link">avatar</a>
+                <a href="/blogzz/" class="dark dark_link">
+                  <img src="http://placekitten.com/g/120/68">
+                </a>
               </div>
             </div>
             {% endfor %}
@@ -303,7 +304,9 @@
                       <img src="pic/articles/yabuduriadom.jpg" class="img-polaroid main_special_project_img"/>
                     </div>
                     <p>12 ноября в Центральном Доме Кино состоялась долгожданная премьера нового фильм Павла Руминова "Я Буду Рядом". Картина с глубоким нравственным и религиозным содержанием готовилась два года, в ней снялись ряд очень известных отечественных и зарубежных актеров. На премьере присутствовала наш специальный корреспондент Анна Евсеева.</p>
-                    <h6 class="right_align italic average_padding_vertical"><a href="#" class="brown brown_link">продолжение статьи ></a></h6>
+                    <h6 class="right_align italic average_padding_vertical">
+                      <a href="#" class="brown brown_link">продолжение статьи &raquo;</a>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -368,7 +371,7 @@
             {% for group, articles in gazette.iteritems() %}
             <div class="main_box_header">
               <h5>
-                <a class="white bright_link" href="#">{{ group }}</a>
+                <span class="white">{{ group }}</span>
               </h5>
             </div>
             <div class="main_newspaper_block">
@@ -386,7 +389,7 @@
               {% endif %}
               <a href="{{ article.get_absolute_url() }}" class="black black_link article_text no_underline">{{ article.announce }}</a>
               <h6 class="right_align italic average_padding_vertical">
-                <a href="#" class="brown brown_link">продолжение статьи &raquo;</a>
+                <a href="{{ article.get_absolute_url() }}" class="brown brown_link">продолжение статьи &raquo;</a>
               </h6>
               {% if not loop.last %}
               <div class="center_align">
@@ -398,7 +401,7 @@
             {% endfor %}
             <div class="relative" id="main_newspaper_footer">
               <h5>
-                <a href="#" class="dark dark_link">Все материалы выпуска</a>
+                <a href="/content/zeitung/{{ now.year }}/{{ current_number }}/" class="dark dark_link">Все материалы выпуска</a>
               </h5>
               <h5>
                 <a href="#" class="dark dark_link">Архив</a>
@@ -412,23 +415,34 @@
           <div class="main_box_frame">
             <div class="relative main_box_header">
               <h4><a href="#" class="white white_link">ВИДЕО</a></h4>
-              <div id="main_video_dentv_link"><a href="http://www.dentv.ru" target="_blank"><img src="pic/dentv.png"/></a></div>
+              <div id="main_video_dentv_link">
+                <a href="http://www.dentv.ru" target="_blank">
+                  <img src="{{STATIC_URL}}img/dentv.png">
+                </a>
+              </div>
             </div>
+            {% for video in videos %}
+            {% if loop.first %}
             <div id="main_video_selected">
               <div id="main_video_selected_media">
-                <a href="#" class="no_underline"><img src="pic/video/video.jpg" id="main_video_selected_video" /></a>
+                <a href="{{ video.get_absolute_url() }}" class="no_underline">
+                  <img src="http://placekitten.com/480/360" id="main_video_selected_video">
+                </a>
               </div>
               <div id="main_video_selected_header_bg"></div>
               <div id="main_video_selected_header">
-                <h5><a href="#" class="white white_link">Это Заголовок этого видео Это Заголовок этого Это Заголовок этого видео Это Заголовок этого</a></h5>
-                <div id="main_video_selected_header_stats"><i class="icon-white icon-comment"></i> <span class="smalltext"><a href="#" class="gray gray_link">14 комментариев</a></span></div>
+                <h5>
+                  <a href="{{ video.get_absolute_url() }}" class="white white_link">{{ video.title }}</a>
+                </h5>
+                <div id="main_video_selected_header_stats">
+                  <i class="icon-white icon-comment"></i> <span class="smalltext"><a href="#" class="gray gray_link">14 комментариев</a></span>
+                </div>
                 <div id="main_video_selected_header_restriction"><span class="largetext beige">18+</span></div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">
-              <span class="smalltext bold">Участники:</span> <span class="mediumtext"><a href="#" class="person_name largetext">Иван Иванов</a>, <a href="#" class="person_name largetext">Петр Петров</a></span><br />
-              <span class="smalltext bold">Обсуждается:</span> <span class="mediumtext">Назначение нового Министра Обороны</span><br />
-            </div>
+            <div id="main_video_selected_description_container">{{ video.announce }}</div>
+            {% endif %}
+            {% endfor %}
             <div id="main_video_selection">
               <ul class="no_margin no_padding center_align block">
                 <li class="inline no_margin no_padding"><a href="#"><img src="pic/black_arrow_left.png" class="main_video_selection_arrow" /></a></li>

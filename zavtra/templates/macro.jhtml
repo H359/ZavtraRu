@@ -23,3 +23,107 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro render_comments(request, object, token, offset=False) %}
+<div class="row">
+  <div class="{% if offset %}offset1_5 {% endif %}span9">
+    <div id="comments-section" class="rubric-header no_margin">
+      <h3 class="inline">Комментарии ({{ object.comments.count() }}):</h3>
+      <a href="comment-form" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
+    </div>
+    <div id="comments">
+      <div class="comments">
+        <div class="content">
+          <ul id="comments" class="unstyled">
+            {% for comment in object.comments.select_related().all() %}
+            <li id="comment-{{ comment.id }}">
+              <div class="comment">
+                <div class="avatar">
+                  <a href="{{ comment.author.get_absolute_url() }}" rel="popover" data-content="Пользователь {{ comment.author }}" data-original-title="{{ comment.author }}">
+                    avatar
+                  </a>
+                </div>
+                <div class="inner">
+                  <div class="body clearfixer">
+                    <div class="author">
+                      <a href="{{ comment.author.get_absolute_url() }}" class="comment-author-name">{{ comment.author }}</a>
+                        <time datetime="{{ comment.created_at }}">{{ comment.created_at|ru_date("%d.%m.%Y %H:%M") }}</time>
+                    </div>
+                    <div class="text">{{ comment.comment }}</div>
+                    {% if request.user and request.user.is_authenticated() %}
+                    <div class="btn-toolbar">
+                      {% if request.user.id != comment.author.id %}
+                      <div class="btn-group">
+                        <a href="#vote:up:{{ comment.id }}" class="vote-plus btn btn-mini btn-primary "><i class="icon-white icon-plus-sign"></i></a>
+                        <a class="btn btn-disabled btn-mini comment-rating" title="рейтинг комментария">0</a>
+                        <a href="#vote:down:{{ comment.id }}" class="vote-minus btn btn-mini btn-primary "><i class="icon-white icon-minus-sign"></i></a>
+                      </div>
+                      {% endif %}
+                      <div class="reply-button pull-right">
+                        <a href="#reply:{{ comment.id }}">Ответить</a>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% if request.user and request.user.is_authenticated() %}
+        <div id="comment-form" class="clearfixer">
+          <div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>
+          <div class="avatar">
+            avatar
+          </div>
+          <form class="inner" method="post" action="{{ url('comments.views.add') }}">
+            <fieldset class="body">
+              <h4>Ваш комментарий:</h4>
+              <div>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ token }}">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="hidden" name="article" value="{{ object.id }}">
+              </div>
+              <div class="clearfix">
+                <label for="id_comment"></label>
+                <div class="input">
+                  <div>
+                    <div id="markItUpId_comment" class="markItUp">
+                      <div class="markItUpContainer">
+                        <div class="markItUpHeader">
+                          <ul>
+                            <li class="markItUpButton markItUpButton1 ">
+                              <a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
+                            </li>
+                            <li class="markItUpButton markItUpButton2 ">
+                              <a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
+                            </li>
+                            <li class="markItUpButton markItUpButton3 ">
+                              <a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
+                        <div class="markItUpFooter"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div>
+                <input type="hidden" name="parent" id="id_parent">
+              </div>
+              <div>
+                <input type="submit" class="btn btn-success pull-right" value="Отправить">
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

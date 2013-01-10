@@ -1,7 +1,7 @@
 from datetime import datetime
 from calendar import isleap
 from django.views.generic import DetailView, ListView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
@@ -124,3 +124,9 @@ class ZeitungView(ListView):
            issue(int(self.kwargs['year']), int(self.kwargs['issue'])).\
            select_related().\
            order_by('rubric__position')
+
+
+def current_issue_redirect(request):
+  drange = Article.get_current_issue_date_range()
+  number = Article.get_current_issue_number()
+  return redirect('content.views.zeitung', year=drange[0].year, issue=number)
