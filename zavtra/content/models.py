@@ -177,7 +177,9 @@ class Article(models.Model):
 
   @staticmethod
   def get_current_issue_date_range():
-    now = datetime.now().date() - 28 * oneday # DEBUG
+    now = datetime.now().date()
+    if settings.DEBUG:
+      now -= 28 * oneday
     wstart = now - oneday*(now.weekday() + 5)
     if now.weekday() >= 2:
       wstart += 7*oneday
