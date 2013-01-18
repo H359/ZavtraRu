@@ -100,6 +100,31 @@
                 <h4>Самое обсуждаемое:</h4>
               </div>
             </div>
+            <div class="row">
+              {% for item in most_commented[0:5] %}
+              <div class="span3">
+                <div class="news_selection_item">
+                  <div class="text-over-image">
+                    <a href="{{item.get_absolute_url()}}">
+                      {% if item.cover_source != "" %}
+                      <img src="{{item.cover_for_main.url}}" class="news_selection_item_img">
+                      {% else %}
+                      <img src="http://placekitten.com/g/200/150" class="news_selection_item_img">
+                      {% endif %}
+                      <div class="text-bottom white">
+                        <h5>{{item.title}}</h5>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="selection_item_statistics">
+                    {% for author in item.authors.all() %}
+                    <a href="{{author.get_absolute_url()}}" rel="author" class="block dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
         <div class="row">

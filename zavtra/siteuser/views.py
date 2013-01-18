@@ -4,6 +4,8 @@ from django.views.generic import DetailView, ListView
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 
 from siteuser.models import User
+from content.models import Article
+
 
 RU_ALPHABET = map(unichr, range(1040,1072))
 
@@ -23,6 +25,7 @@ class UsersView(ListView):
     context = super(UsersView, self).get_context_data(**kwargs)
     context['alphabet'] = RU_ALPHABET
     context['selected_letter'] = self.letter
+    context['most_commented'] = Article.get_most_commented()
     return context
 
   def get_queryset(self):
