@@ -28,12 +28,15 @@ class ZhivotovIllustration(models.Model):
 
   archive_box = ImageSpec([ResizeToFit(870, 385, True)], image_field='image', format='JPEG')
   gazette_box = ImageSpec([ResizeToFit(278, 121, True)], image_field='image', format='JPEG')
+  slider_box = ImageSpec([ResizeToFit(150, 105, True)], image_field='image', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
     verbose_name = u'Иллюстрация Животова'
     verbose_name_plural = u'Иллюстрации Животова'
 
+  def __unicode__(self):
+    return u'%s' % self.published_at
 
 class Rubric(MPTTModel):
   parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Родитель')
@@ -205,6 +208,10 @@ class Article(models.Model):
     pdate = self.published_at.date()
     return Article.zeitung.exclude(pk = self.pk).\
            filter(published_at__range = (pdate, pdate + oneday))
+
+  @staticmethod
+  def get_most_commented():
+    pass
 
   @staticmethod
   def get_current_issue_date_range():

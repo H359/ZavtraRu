@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
-from content.models import Article, Rubric, Topic
+from content.models import Article, Rubric, Topic, ZhivotovIllustration
 
 
 class DayArchiveViewDefaulted(DayArchiveView):
@@ -163,6 +163,7 @@ class ZeitungView(ListView):
     context['illustration'] = get_illustration(obj.issue_date)
     max_positive_shift = (now - context['issue']['date']).days / 7
     max_negative_shift = 5 - max_positive_shift
+    dates = []
     for x in range(-max_negative_shift, max_positive_shift):
       date = context['issue']['date'] + x * 7 * oneday
       if date <= now:
@@ -171,6 +172,12 @@ class ZeitungView(ListView):
           'date': date,
           'number': self.normalize_number(context['issue']['date'].year, number)
         })
+        dates.append(date)
+    # TODO: rewrite this
+    for illustration in ZhivotovIllustration.objects.filter(published_at__range = (dates[0], dates[-1])):
+      for d in context['issue']['others']:
+        if d['date'] == illustration.published_at.date():
+          d['illustration'] = illustration
     return context
 
   def get_queryset(self):

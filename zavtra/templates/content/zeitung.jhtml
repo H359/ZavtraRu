@@ -31,6 +31,19 @@
       </div>
     </div>
     <div class="row" id="newspaper_issues">
+      {% for other in issue.others %}
+      <div class="span2_4">
+        <div class="text-over-image newspaper_selection_item{% if other.number == issue.number %} newspaper_selection_item_selected{% endif %}">
+          <a href="/content/zeitung/{{other.date.year}}/{{other.number}}/">
+            <img src="{{other.illustration.slider_box.url}}" class="newspaper_selection_item_img">
+            <div class="text-bottom white">
+              <span class="largetext bold">№{{other.number}}</span>
+              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.date|ru_date("%d %B")}}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
   <div class="bordered">
@@ -103,6 +116,21 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      {% for other in issue.others %}
+      <div class="span2_4">
+        <div class="text-over-image newspaper_selection_item{% if other.number == issue.number %} newspaper_selection_item_selected{% endif %}">
+          <a href="/content/zeitung/{{other.date.year}}/{{other.number}}/">
+            <img src="{{other.illustration.slider_box.url}}" class="newspaper_selection_item_img">
+            <div class="text-bottom white">
+              <span class="largetext bold">№{{other.number}}</span>
+              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.date|ru_date("%d %B")}}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
