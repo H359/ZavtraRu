@@ -392,7 +392,7 @@ a:hover .main_header_name {
 
 .main_editor_message {
 	margin: .75em;
-	background-image: url('../img/articles/lenta_opening.png');
+	background-image: url('../pic/articles/lenta_opening.png');
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	background-color: white;
@@ -445,7 +445,7 @@ a:hover .main_header_name {
 .main_article_image {
 	position: relative;
 	width: 13.5em;
-	height: 8em;
+	height: 10.125em;
 }
 
 .main_article_header {
@@ -627,7 +627,7 @@ a:hover .main_header_name {
 	top: .25em;
 	left: .33em;
 	width: 14.25em;
-	height: 16.25em;
+	height: 18.5em;
 	z-index: 0;
 }
 
@@ -681,7 +681,7 @@ a:hover .main_header_name {
 	margin-bottom: .25em;
 	position: relative;
 	left: .75em;
-	background-image: url('../img/line_transparent_gray.png');
+	background-image: url('../pic/line_transparent_gray.png');
 	background-size: contain;
 	background-repeat: repeat-y;
 	background-position: right;
