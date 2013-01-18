@@ -37,6 +37,11 @@ class DailyView(DayArchiveViewDefaulted):
   template_name = 'content/daily.jhtml'
   queryset = Article.columns.all()
 
+  def get_context_data(self, **kwargs):
+    context = super(DailyView, self).get_context_data(**kwargs)
+    context['most_commented'] = Article.get_most_commented()
+    return context
+
 
 class ArchiveView(ListView):
   template_name = 'content/archive.jhtml'
@@ -100,6 +105,7 @@ class RubricView(ListView):
     now = datetime.now().date()
     context = super(RubricView, self).get_context_data(**kwargs)
     context['rubric'] = self.rubric
+    context['most_commented'] = Article.get_most_commented()
     if self.rubric.zeitung_rubric:
       number = Article.get_current_issue_number()
       date = Article.get_current_issue_date_range()[0]

@@ -4,6 +4,7 @@ from pytils.translit import slugify
 from urlparse import urlparse, parse_qs
 
 from django.db import models
+from django.db.models import Count
 from django.conf import settings
 
 from mptt.models import MPTTModel, TreeForeignKey
@@ -211,7 +212,7 @@ class Article(models.Model):
 
   @staticmethod
   def get_most_commented():
-    pass
+    return Article.objects.annotate(comments_count = Count('comments')).order_by('comments_count')
 
   @staticmethod
   def get_current_issue_date_range():
