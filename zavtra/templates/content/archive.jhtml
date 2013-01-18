@@ -1,0 +1,146 @@
+{% extends "base.jhtml" %}
+
+{% from "macro.jhtml" import render_comments %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="bordered_clean">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <ul class="breadcrumb inline">
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">Архив газеты</li>
+          </ul>
+          <div class="section_header_button">
+            <div class="btn-group dropdown">
+              <a class="btn btn-success dropdown-toggle baseline_align" href="#" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% for rubric in gazette_rubrics %}
+                <li>
+                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span4">
+        <div class="row">
+          <div class="span4">
+            <div class="rubric-header">
+              <h3>Поиск по номеру</h3>
+            </div>
+            <form class="padding_one">
+              <fieldset>
+                <label><h3>Год</h3></label>
+                <div class="ui-widget">
+                  <select name="year">
+                    {% for year in years %}
+                    <option value="{{year}}"{% if year==selected_year %} selected{% endif %}>{{year}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <label><h3>Номер</h3></label>
+                <div class="ui-widget">
+                  <select id="combobox" name="issue">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="span4">
+            <div class="rubric-header">
+              <h3>Поиск по дате</h3>
+            </div>
+            <div id="datepicker" class="padding_one"></div>
+          </div>
+        </div>
+      </div>
+      <div class="span8">
+        <div class="row">
+          <div class="span8">
+            <div class="rubric-header">
+              <h3>Выпуск №{{issue.number}} &ndash; {{issue.date|ru_date("%d %B %Y")}}</h3>
+            </div>
+            {% if illustration is not none %}
+            <div class="text-over-image">
+              <div class="padding_one">
+                <img src="{{illustration.archive_box.url}}" id="newspaper_illustration">
+              </div>
+              <div class="text-bottom right_align x-margin-one">
+                <span class="white bottom_align">
+                  <i class="icon-white icon-zoom-in"> </i>
+                  <h4 class="inline">{{object_list[0].title}}</h4>
+                </span>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row newspaper_review_rubric">
+          <div class="span8">
+            <h2>
+              <a class="dark" href="{{object_list[0].rubric.get_absolute_url()}}">{{object_list[0].rubric.title}}:</a>
+            </h2>
+          </div>
+          <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+          <div class="span5">
+            <h4>
+              <a class="black black_link" href="{{object_list[0].get_absolute_url()}}">{{object_list[0].title}}</a>
+            </h4>
+            {% for author in object_list[0].authors.all() %}
+            <a href="{{author.get_absolute_url()}}" class="person_name largetext dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            <div class="newspaper_review_statistics">
+              <span class="article-statistic">
+                <i class="icon-eye-open"> </i> 172
+              </span>
+              <span class="article-statistic">
+                <i class="icon-comment"> </i> {{object_list[0].comments.count()}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row newspaper_review_rubric">
+          <div class="span8">
+            <h2 class="dark">Также в номере:</h2>
+          </div>
+          <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+          {% for object in object_list[1:9] %}
+          <div class="span3">
+            <h4>
+              <a href="{{object.get_absolute_url()}}" class="black black_link">{{object.title}}</a>
+            </h4>
+            {% for author in object.authors.all() %}
+            <a href="{{author.get_absolute_url()}}" class="person_name largetext dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            <div class="newspaper_review_statistics">
+              <span class="article-statistic">
+                <i class="icon-eye-open"> </i> 172
+              </span>
+              <span class="article-statistic">
+                <i class="icon-comment"> </i> {{object.comments.count()}}
+              </span>
+            </div>
+          </div>
+          {% if loop.index % 2 == 0 %}
+          <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,18 +1,91 @@
+{% from "macro.jhtml" import render_navigation %}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <title>{% block page_title %}&laquo;Завтра&raquo; &mdash; еженедельная газета{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap_zavtra.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/{% block pagestyle %}design{% endblock %}.css">
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext">
+    <title>{% block page_title %}Завтра &mdash; еженедельная газета{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="{{STATIC_URL}}css/bootstrap_zavtra.css" rel="stylesheet" type="text/css">
+    <link href="{{STATIC_URL}}css/{% block page_style %}design{% endblock %}.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    {% block app_header %}{% endblock %}
-    {% block app_content %}{% endblock %}
-    {% block app_footer %}{% endblock %}
-    <script src="http://yandex.st/jquery/1.8.3/jquery.min.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-    <script src="{{STATIC_URL}}js/zavtra.js"></script>
+    <div id="headerbase">
+      <div id="header">
+        {% block page_header %}
+        <div class="container12">
+          <div class="row">
+            <div class="span3">
+              <div class="row">
+                <div class="span3">
+                  <div class="grande_padding">
+                    <a href="/">
+                      <img src="{{STATIC_URL}}img/logo_white_med.jpg" id="main_zavtra_logo">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span5">
+              <div class="row">
+                <div class="span5">
+                  <div id="main_header_links">
+                    <a class="main_header_link" href="/denlit/">День Литературы</a>
+                    <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
+                    <a class="main_header_link" href="/">Архив Завтра</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span4">
+              <div class="row">
+                <div class="span4 right_align">
+                  <div id="main_header_login" class="pull-right">
+                    <span class="main_header_login_text">Сообщество</span>
+                    <a href="#" class="main_header_login_link">Вход</a>
+                    <span class="main_header_login_text"> &bull; </span>
+                    <a href="#" class="main_header_login_link">Регистрация</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
+    </div>
+    {% block page_line %}
+    <div id="main_navigation_line">
+      <div class="container12">
+        <div class="row">
+          <div class="span9">
+            <div class="navigation_items">{{render_navigation()}}</div>
+          </div>
+          <div class="span3">
+            <div class="row">
+              <div class="span3">
+                <div id="main_header_search">
+                  <div id="main_search_form">
+                    <form action="/search/" method="get" class="navbar-search">
+                      <input type="search" class="search-query" name="query" placeholder="поиск...">
+                    </form>
+                  </div>
+                  <div id="main_search_image">
+                    <a href="#">
+                      <i class="icon-search icon-white"> </i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+    <div id="page">{% block page_content %}{% endblock %}</div>
+    <footer>
+      <div id="footer">{% block page_footer %}{% endblock %}</div>
+    </footer>
   </body>
 </html>

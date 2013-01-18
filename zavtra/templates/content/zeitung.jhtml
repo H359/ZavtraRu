@@ -1,8 +1,10 @@
-{% extends "content/base.jhtml" %}
+{% extends "base.jhtml" %}
 
-{% from "zeitung.macro.jhtml" import render_zeitung_rubric %}
+{% from "macro.jhtml" import render_comments, render_zeitung_rubric %}
 
-{% block content %}
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
 {% set groups = object_list|group_rubrics|list %}
 <div class="container12">
   <div class="bordered">
@@ -12,87 +14,73 @@
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button2">
             <div class="btn-group dropdown">
-              <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
+              <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for joined, rubrics in groups %}{% for r in rubrics %}
+                {% for rubric in gazette_rubrics %}
                 <li>
-                  <a href="{{ r['rubric'].get_absolute_url() }}">
-                    <h5>{{ r['rubric'].title }}</h5>
-                  </a>
+                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}{% endfor %}
+                {% endfor %}
               </ul>
             </div>
           </div>
           <div class="section_header_button">
-            <a href="#" class="btn btn-success baseline_align">Архив газеты</a>
+            <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив газеты</a>
           </div>
         </div>
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for other in issue['others'] %}
-      <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if issue['number'] == other['number'] %}{{ ' newspaper_selection_item_selected' }}{% endif %}">
-          <a href="/content/zeitung/{{ other['date'].year }}/{{ other['number'] }}/">
-            <img src="{{STATIC_URL}}img/zhivotov_newspaper_stub.jpg" class="newspaper_selection_item_img">
-            <div class="text-bottom white">
-              <span class="largetext bold">№{{ other['number'] }}</span>
-              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{ other['date']|ru_date }}</span>
-            </div>
-          </a>
-        </div>
-      </div>
-      {% endfor %}
     </div>
   </div>
-
   <div class="bordered">
     <div class="row">
       <div class="span12">
         <div class="section-header">
           <ul class="breadcrumb inline">
-            <li><a href="/">Главная</a> <span class="divider">/</span></li>
-            <li><a href="/content/zeitung/">Газета</a> <span class="divider">/</span></li>
-            <li class="active">Выпуск № {{ issue['number'] }} &ndash; {{ issue['date']|ru_date }}</li>
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li>
+              <a href="/content/zeitung/">Газета</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">Выпуск №{{issue.number}} &ndash; {{issue.date|ru_date("%d %B %Y")}}</li>
           </ul>
           <div class="section_header_button">
-<!-- SDK comment: сделать кнопку рабочей -->
             <a href="#" class="btn btn-danger baseline_align">Скачать PDF</a>
           </div>
         </div>
       </div>
     </div>
-
+    {% if illustration is not none %}
     <div class="row">
       <div class="span12">
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
-<!-- SDK comment: подгрузить картинку выпуска -->
-            <img id="newspaper_illustration">
+            <img src="{{illustration.archive_box.url}}" id="newspaper_illustration">
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
-<!-- SDK comment: сделать картинку кликабельной -->
                 <i class="icon-white icon-zoom-in"> </i>
-<!-- SDK comment: подгрузить заголовок -->
-                <h4 class="inline">текст</h4>
+                <h4 class="inline">&laquo;{{object_list[0].title}}&raquo;, Геннадий Животов</h4>
               </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+    {% endif %}
     {% for joined, rubric in groups %}
     <div class="row">
       {% for r in rubric %}
       <div class="span{{ 12 // (rubric|length) }}">
-        {{ render_zeitung_rubric(r, rubric|length) }}
+        {{render_zeitung_rubric(r, rubric|length)}}
       </div>
       {% endfor %}
     </div>
     {% endfor %}
   </div>
-
   <div class="bordered">
     <div class="row">
       <div class="span12">
@@ -100,38 +88,21 @@
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button2">
             <div class="btn-group dropdown">
-              <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
+              <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for joined, rubrics in groups %}{% for r in rubrics %}
+                {% for rubric in gazette_rubrics %}
                 <li>
-                  <a href="{{ r['rubric'].get_absolute_url() }}">
-                    <h5>{{ r['rubric'].title }}</h5>
-                  </a>
+                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}{% endfor %}
+                {% endfor %}
               </ul>
             </div>
           </div>
           <div class="section_header_button">
-            <a href="#" class="btn btn-success baseline_align">Архив газеты</a>
+            <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив газеты</a>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row" id="newspaper_issues">
-      {% for other in issue['others'] %}
-      <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if issue['number'] == other['number'] %}{{ ' newspaper_selection_item_selected' }}{% endif %}">
-          <a href="/content/zeitung/{{ other['date'].year }}/{{ other['number'] }}/">
-            <img src="{{STATIC_URL}}img/zhivotov_newspaper_stub.jpg" class="newspaper_selection_item_img">
-            <div class="text-bottom white">
-              <span class="largetext bold">№{{ other['number'] }}</span>
-              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{ other['date']|ru_date }}</span>
-            </div>
-          </a>
-        </div>
-      </div>
-      {% endfor %}
     </div>
   </div>
 </div>

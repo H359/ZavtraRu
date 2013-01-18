@@ -1,9 +1,10 @@
-{% extends "content/base.jhtml" %}
+{% extends "base.jhtml" %}
 
 {% from "macro.jhtml" import render_comments %}
 
+{% block page_style %}newspaper{% endblock %}
 
-{% block content %}
+{% block page_content %}
 <div class="container12">
   <div class="bordered_clean">
     <div class="row">
@@ -15,19 +16,18 @@
               <span class="divider">/</span>
             </li>
             {% if object.from_zeitung %}
-            <li><a href="/content/zeitung/">Газета</a> <span class="divider">/</span></li>
-            <li><a href="/content/zeitung/{{ object.published_at.year }}/{{ object.issue_number }}/">Выпуск №{{ object.issue_number }}</a> <span class="divider">/</span></li>
             <li>
-              <a href="{{ object.rubric.get_absolute_url() }}">{{ object.rubric.title }}</a>
+              <a href="/content/zeitung/">Газета</a>
               <span class="divider">/</span>
             </li>
-            {% else %}
             <li>
-              {{ object.rubric.title }}
+              <a href="/content/zeitung/{{object.published_at.year}}/{{object.issue_number}}/">Выпуск №{{object.issue_number}}</a>
               <span class="divider">/</span>
             </li>
             {% endif %}
-            <li>{{ object.title }}</li>
+            <li>
+              <a href="{{object.rubric.get_absolute_url()}}">{{object.rubric.title}}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -43,188 +43,94 @@
     </div>
   </div>
   <div class="row">
-    <div class="span9">
+    <div class="span10">
       <div class="row">
-        <div class="span9">
+        <div class="offset1 span10">
           <article>
-            <div class="row">
+            <div class="row y-margin-one">
               <div class="span6">
                 <header>
-                  <h1 class="article-page-main-header article-header">{{ object.title }}</h1>
+                  <h1 class="article-page-main-header article-header">{{object.title}}</h1>
                 </header>
-              </div>
-              {% set topics = object.topics.all()|list %}
-              <div class="span3 right_align" style="line-height: 2.5em">
-                {% if topics|length > 0 %}
-                {% for topic in topics %}
-                <a href="{{ topic.get_absolute_url() }}">
-                  <span class="label label-info mediumtext">{{ topic }}</span>
-                </a>
-                {% endfor %}
-                {% endif %}
-              </div>
-            </div>
-            {% if object.subtitle|length > 0 %}
-            <div class="row">
-              <div class="span7">
-                <span class="article-page-main-subheader article-header">{{ object.subtitle }}</span>
-              </div>
-            </div>
-            {% endif %}
-            <div class="row">
-              <div class="span6 article-page-statistics">
-                {% set issue_number = object.issue_number %}
-                {% if issue_number is not none %}
-                <span class="article-statistic">
-                  <a href="/content/zeitung/{{ object.published_at.year }}/{{ issue_number }}/">&laquo;Завтра&raquo; &ndash; №{{ issue_number }}</a>
-                </span>
-                {% endif %}
-                <span class="article-statistic dark">{{ object.published_at|ru_date }}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="span9 article-page-content">
-                {{ object.render_content() }}
-                <div class="right_align x-margin-one">
+                <div class="article-page-author-name">
                   {% for author in object.authors.all() %}
-                  <span class="article-page-author-name">
-                    <a href="#" rel="author">{{ author }}</a>
-                  </span>
-                  {% if not loop.last %}, {% endif %}
+                  <a rel="author" href="{{author.get_absolute_url()}}" class="dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
                   {% endfor %}
+                </div>
+              </div>
+              {% if object.topics.count() > 0 %}
+              <div class="span4 right_align article_category_list">
+                {% for topic in object.topics.all() %}
+                <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="span10">
+                <div class="row">
+                  {% if object.cover_source != "" %}
+                  <div class="span5">
+                    <div class="article-page-illustration">
+                      <img src="{{object.cover_for_article.url}}">
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="span5">
+                    <div class="row">
+                      {% if object.subtitle != "" %}
+                      <div class="span5">
+                        <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
+                      </div>
+                      {% endif %}
+                      <div class="span5 article-page-statistics">
+                        {% if object.from_zeitung %}
+                        <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
+                        {% endif %}
+                        <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+                        <span class="article-statistic">
+                          <i class="icon-eye-open"> </i>199
+                        </span>
+                        <span class="article-statistic">
+                          <i class="icon-comment"> </i>{{ object.comments.count() }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
+            </div>
+            <div class="row">
+              <div class="span8 offset1">
+                <div id="footer_social_networks" class="right_align">
+                  <span class="dark x-margin-one">поделиться: </span>
+                  <a href="http://facebook.com/zavtraru">
+                    <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+                  </a>
+                  <a href="http://vk.com/zavtraru">
+                    <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+                  </a>
+                  <a href="http://twitter.com/ZavtraRu">
+                    <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+                  </a>
                 </div>
               </div>
             </div>
           </article>
         </div>
       </div>
-      {{ render_comments(request, object, csrf_token) }}
-    </div>
-    <div class="span3">
       <div class="row">
-        <div class="span3">
-          <div class="article-page-module">
-            {% if object.authors.count() > 0 %}
-            <div class="module_header rubric-header no_margin">
-              <h4>Автор{% if object.authors.count() > 1 %}ы{% endif %} статьи</h4>
-            </div>
-            {% for author in object.authors.all() %}
-            <img src="http://placekitten.com/g/174/195" class="light_padding_vertical">
-            <div class="article-page-module-article">
-              <span class="article-page-author-name">
-                <a href="{{ author.get_absolute_url() }}" rel="author">{{ author }}</a>
-              </span>
-              <span class="block dark">регалии</span>
-            </div>
-            <div class="article-page-module-footer">
-              {% if request.user and request.user.is_authenticated() %}
-              <i class="icon-envelope"></i>
-              <i class="icon-star"></i>
-              {% endif %}
-              <a href="{{ author.get_absolute_url() }}" class="dark dark_link">Профиль</a>
-            </div>
-            {% endfor %}
-            {% endif %}
+        <div class="span10 offset1">
+          <div id="comments-section" class="rubric-header no_margin">
+            <h3 class="inline">Комментарии ({{object.comments.count()}}):</h3>
+            <a href="#" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
           </div>
+          <div>{{render_comments(request, object, csrf_token)}}</div>
         </div>
       </div>
-      {% set others = object.other_authors_articles[0:3] %}
-      {% if others|length > 0 %}
-      <div class="row">
-        <div class="span3">
-          <div class="article-page-module">
-            <div class="module_header rubric-header no_margin">
-              <h4>Авторское:</h4>
-            </div>
-            {% for other in others %}
-            <div class="article-page-module-article">
-              <h4 class="article-header">
-                <a href="{{ other.get_absolute_url() }}" class="black black_link">{{ other.title }}</a>
-              </h4>
-              <div class="right_align">
-                <span class="dark block mediumtext">{{ other.published_at|ru_date }}</span>
-              </div>
-            </div>
-            {% if not loop.last %}
-            <div class="center_align average_padding_vertical">
-              <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-            </div>
-            {% endif %}
-            {% endfor %}
-            <div class="article-page-module-footer">
-              <h6>
-                <a href="#" class="dark dark_line">Все статьи автор{% if object.authors.count() > 1 %}ов{% else %}а{% endif %}</a>
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      {% set others = object.other_issue_articles[0:3] %}
-      {% if others|length > 0 %}
-      <div class="row">
-        <div class="span3">
-          <div class="article-page-module">
-            <div class="module_header rubric-header no_margin">
-              <h4>Газета &laquo;Завтра&raquo;:</h4>
-              <span class="white mediumtext">№{{ issue_number }} за {{ object.published_at.year }} год</span>
-            </div>
-            {% for other in others %}
-            <div class="article-page-module-article">
-              <h4 class="article-header">
-                <a href="{{ other.get_absolute_url() }}" class="black black_link">{{ other.title }}</a>
-              </h4>
-              <div class="right_align">
-                {% for author in other.authors.all() %}
-                <span class="dark block largetext">{{ author }}</span>{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-            {% if not loop.last %}
-            <div class="center_align average_padding_vertical">
-              <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-            </div>
-            {% endif %}
-            {% endfor %}
-            <div class="article-page-module-footer">
-              <h6>
-                <a href="/content/zeitung/{{ object.published_at.year }}/{{ issue_number }}/" class="dark dark_line">Все статьи выпуска</a>
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-      {% if not object.from_zeitung %}
-      <div class="row">
-        <div class="span3">
-          <div class="article-page-module">
-            <div class="module_header rubric-header no_margin">
-              <h4>
-                <a href="#" class="gray gray_link">Новости:</a>
-              </h4>
-            </div>
-            {% for item in latest_news[0:5] %}
-            <div class="article-page-module-article">
-              <h4 class="article-header">
-                <a href="{{ item.get_absolute_url() }}" class="black black_link">{{ item.title }}</a>
-              </h4>
-            </div>
-            {% if not loop.last %}
-            <div class="center_align average_padding_vertical">
-              <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-            </div>
-            {% endif %}
-            {% endfor %}
-            <div class="article-page-module-footer">
-              <h6>
-                <a href="{{ news_rubrics[0].get_absolute_url() }}" class="dark dark_line">Все новости</a>
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
     </div>
   </div>
 </div>

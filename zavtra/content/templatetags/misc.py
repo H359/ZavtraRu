@@ -2,9 +2,14 @@
 from django_jinja.base import Library
 import jinja2
 from pytils.dt import ru_strftime, distance_of_time_in_words
-
+from pytils.numeral import get_plural as _get_plural
 
 register = Library()
+
+@register.filter
+@jinja2.contextfilter
+def get_plural(ctx, value, variants):
+  return _get_plural(value, variants)
 
 @register.filter
 @jinja2.contextfilter

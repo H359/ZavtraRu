@@ -19,9 +19,14 @@ class ZeitungManager(PublishedArticlesManager):
     zeitung = Rubric.fetch_rubric('zeitung')
     return super(ZeitungManager, self).get_query_set().filter(rubric__in = zeitung)
 
+  def issue_by_date(self, date):
+    return self.get_query_set().filter(published_at__range = (date, date + 7 * oneday))
+
   def issue(self, year, number):
     npt = datetime(year=year, day=1, month=1) + 7 * oneday * (number - 1)
-    return self.get_query_set().filter(published_at__range = (npt, npt + 7 * oneday))
+    return self.issue_by_date(npt)
+    #return self.get_query_set().filter(published_at__range = (npt, npt + 7 * oneday))
+
 
 class ColumnsManager(PublishedArticlesManager):
   def get_query_set(self):
