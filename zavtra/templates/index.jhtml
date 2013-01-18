@@ -192,11 +192,7 @@
       <div class="row" id="navigation_holder">
         <div class="span9" id="navigation_block">
           <div id="main_navigation">
-            <a href="/content/zeitung/" class="nav_item nav_item_border">Газета</a>
-            <a href="{{events_rubrics[0].get_absolute_url()}}" class="nav_item nav_item_border">{{events_rubrics[0].title}}</a>
-            <a href="{{wod_rubrics[0].get_absolute_url()}}" class="nav_item nav_item_border">{{wod_rubrics[0].title}}</a>
-            <a href="{{blogs_rubrics[0].get_absolute_url()}}" class="nav_item nav_item_border">{{blogs_rubrics[0].title}}</a>
-            <a href="#" class="nav_item nav_item_border">Сообщество</a>
+            {{render_navigation("", " nav_item_border")}}
           </div>
         </div>
       </div>
