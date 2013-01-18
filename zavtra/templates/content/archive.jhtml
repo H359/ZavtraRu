@@ -4,6 +4,54 @@
 
 {% block page_style %}newspaper{% endblock %}
 
+{% block head %}
+<style>
+.ui-combobox {
+  position: relative;
+  display: inline-block;
+}
+.ui-combobox-toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-left: -1px;
+  padding: 0;
+  /* adjust styles for IE 6/7 */
+  *height: 1.7em;
+  *top: 0.1em;
+}
+.ui-combobox-input {
+  margin: 0;
+  padding: 0.3em;
+}
+</style>
+{% endblock %}
+
+{% block foot %}
+<script>
+var now = new Date();
+var highlightDays = function (date) {
+  if (date <= now && date.getDay() == 3) return [true, 'highlight', ''];
+  return [true, ''];
+}
+var dateSelected = function(date, picker) {
+  var ndate = picker.selectedYear + "/" + (picker.selectedMonth + 1) + "/" + picker.selectedDay;
+  window.location = "{{url('content.views.archive')}}" + ndate + "/";
+}
+
+$(function(){
+  $('#datepicker').datepicker({                
+    dateFormat: 'dd/mm/yy',
+    beforeShowDay: highlightDays,
+    showOtherMonths: true,
+    numberOfMonths: 1,
+    onSelect: dateSelected,
+    defaultDate: '{{selected_date|ru_date("%d/%m/%y")}}'
+  });
+});
+</script>
+{% endblock %}
+
 {% block page_content %}
 <div class="container12">
   <div class="bordered_clean">
@@ -44,8 +92,8 @@
                 <label><h3>Год</h3></label>
                 <div class="ui-widget">
                   <select name="year">
-                    {% for year in years %}
-                    <option value="{{year}}"{% if year==selected_year %} selected{% endif %}>{{year}}</option>
+                    {% for year in range(1996, now.year+1) %}
+                    <option value="{{year}}"{% if year==selected_date.year %} selected{% endif %}>{{year}}</option>
                     {% endfor %}
                   </select>
                 </div>

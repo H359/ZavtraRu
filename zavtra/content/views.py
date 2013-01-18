@@ -33,6 +33,7 @@ class EventsView(DayArchiveViewDefaulted):
     context['news'] = Article.news.all()[0:4]
     return context
 
+
 class DailyView(DayArchiveViewDefaulted):
   template_name = 'content/daily.jhtml'
   queryset = Article.columns.all()
@@ -48,8 +49,7 @@ class ArchiveView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(ArchiveView, self).get_context_data(**kwargs)
-    context['selected_year'] = self.date.year
-    context['years'] = xrange(1996, datetime.now().year+1)
+    context['selected_date'] = self.date
     obj = context['object_list'][0]
     context['issue'] = {
       'number': obj.issue_number,
@@ -60,8 +60,13 @@ class ArchiveView(ListView):
     return context
 
   def get_queryset(self):
-    self.date = self.kwargs.get('date')
-    if self.date is None:
+    try:
+      self.date = datetime(
+        year=int(self.kwargs['year']),
+        month=int(self.kwargs['month']),
+        day=int(self.kwargs['day'])
+      )
+    except (KeyError, ValueError):
       self.date = datetime.now().date() - 48*oneday
     return Article.zeitung.issue_by_date(self.date).select_related()
 

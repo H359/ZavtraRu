@@ -8,6 +8,12 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/bootstrap_zavtra.css" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/{% block page_style %}design{% endblock %}.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/combobox.js"></script>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <div id="headerbase">
@@ -87,5 +93,6 @@
     <footer>
       <div id="footer">{% block page_footer %}{% endblock %}</div>
     </footer>
+    {% block foot %}{% endblock %}
   </body>
 </html>
