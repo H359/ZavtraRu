@@ -335,11 +335,10 @@
                   <span class="main_header_name mediumtext">№{{current_number}} &ndash; {{current_range[0]|ru_date("%d %B")}}</span>
                 </a>
               </h2>
-              <a href="/content/zeitung/" id="main_newspaper_pdf_link">
+              <a href="#" id="main_newspaper_pdf_link">
                 <img src="{{STATIC_URL}}img/PDF_Download.png" />
               </a>
             </div>
-            <a href="#"><img src="{{STATIC_URL}}img/PDF_Download.png" id="main_newspaper_pdf_link"></a>
             <div id="main_newspaper_img">
               <a href="/content/zeitung/"><img src="{{illustration.gazette_box.url}}"></a>
             </div>
