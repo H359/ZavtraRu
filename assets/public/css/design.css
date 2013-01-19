@@ -860,6 +860,10 @@ a:hover .main_header_name {
 	display: inline;
 }
 
+.inline-block {
+	display: inline-block;
+}
+
 .block {
 	display: block;
 }
