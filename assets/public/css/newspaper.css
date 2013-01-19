@@ -39,14 +39,14 @@ body {
 }
 
 .main_header_link {
-	color: #99D578;
+	color: #FFF;
 	font-size: .8em;
 	font-family: 'Open Sans', sans-serif;
 	padding-right: 1em;
 }
 
 .main_header_link:hover {
-	color: #B7FFA6;
+	color: #EEE;
 }
 
 #main_header_login {
@@ -54,7 +54,7 @@ body {
 }
 
 .main_header_login_text {
-	color: #99D578;
+	color: #FFF;
 	text-rendering: optimizelegibility;
 	font-family: 'Open Sans', san-serif;
 	font-size: .8em;
@@ -381,7 +381,7 @@ abc {
 	margin: 1em 1em 0em 1em;
 	padding: .5em 1.5em;
 	background-color: #444;
-	color: #A6D873;
+	color: #EEE;
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .66);
 	-moz-box-shadow: 0 0 3px rgba(0,0,0,.66);
 	box-shadow: 0 0 3px rgba(0, 0, 0, .66);
@@ -389,15 +389,15 @@ abc {
 
 .rubric-header .icon-chevron-right {
 	vertical-align: -10%;
-	background-image: url("../img/glyphicons-halflings-custom.png")
+	background-image: url("../img/glyphicons-halflings-white.png")
 }
 
 .rubric-header a {
-	color: #A6D873;
+	color: #EEE;
 }
 
 .rubric-header a:hover {
-	color: #C4F092;
+	color: #FFF;
 }
 
 .article-content {
