@@ -599,15 +599,13 @@ a:hover .main_header_name {
 }
 
 #main_newspaper_pdf_link {
-	box-sizing: border-box;
-	 -moz-box-sizing: border-box;
-	width: 3em;
-	height: 2.5em;
+	width: 2.25em;
+	height: 1.75em;
 	position: absolute;
-	top: -.25em;
-	right: -1.75em;
-	z-index: 3;
+	right: -1em;
+	top: 0em;
 }
+
 
 .main_special_project_img {
 	height: 10em;
