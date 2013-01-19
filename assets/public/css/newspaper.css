@@ -243,8 +243,8 @@ body {
 	/* Newspaper Illustration */
 
 #newspaper_illustration {
-	-webkit-box-shadow: 0px 1px 3px 8px #ddd;
-	-moz-box-shadow: 0px 1px 3px 8px #ddd;
+	-webkit-box-shadow: 0px 1px 5px 2px #ddd;
+	-moz-box-shadow: 0px 1px 5px 2px #ddd;
 	box-shadow: 0px 1px 5px 2px #ddd;
 }
 
