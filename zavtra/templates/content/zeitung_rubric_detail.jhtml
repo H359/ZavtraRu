@@ -1,61 +1,51 @@
-{% extends "content/base.jhtml" %}
+{% extends "base.jhtml" %}
 
-{% from "macro.jhtml" import pagination %}
+{% from "macro.jhtml" import render_comments, render_zeitung_rubric, pagination %}
 
-{% block content %}
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
 <div class="container12">
-
   <div class="bordered">
     <div class="row">
       <div class="span12">
         <div class="section-header">
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
-<!-- SDK comment: я так понимаю, что все что идет ниже до начала статей не было адаптировано и было помечено other issues. То есть это TO DO. -->
           <div class="section_header_button2">
             <div class="btn-group dropdown">
-              <a href="#" data-toggle="dropdown" class="btn btn-success dropdown-toggle baseline_align">Рубрикатор <span class="caret"></span></a>
+              <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for joined, rubrics in groups %}{% for r in rubrics %}
+                {% for rubric in gazette_rubrics %}
                 <li>
-                  <a href="{{ r['rubric'].get_absolute_url() }}">
-                    <h5>{{ r['rubric'].title }}</h5>
-                  </a>
+                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}{% endfor %}
+                {% endfor %}
               </ul>
             </div>
           </div>
           <div class="section_header_button">
-            <a href="#" class="btn btn-success baseline_align">Архив газеты</a>
+            <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив газеты</a>
           </div>
         </div>
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for other in issue['others'] %}
-      <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if issue['number'] == other['number'] %}{{ ' newspaper_selection_item_selected' }}{% endif %}">
-          <a href="/content/zeitung/{{ other['date'].year }}/{{ other['number'] }}/">
-            <img src="{{STATIC_URL}}img/zhivotov_newspaper_stub.jpg" class="newspaper_selection_item_img">
-            <div class="text-bottom white">
-              <span class="largetext bold">№{{ other['number'] }}</span>
-              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{ other['date']|ru_date }}</span>
-            </div>
-          </a>
-        </div>
-      </div>
-      {% endfor %}
     </div>
   </div>
-
   <div class="bordered">
     <div class="row">
       <div class="span12">
         <div class="section-header">
-          <ul class="breadcrumb">
-            <li><a href="/">Главная</a> <span class="divider">/</span></li>
-            <li><a href="/zeitung/">Газета</a> <span class="divider">/</span></li>
-            <li class="active">{{ rubric.title }}</li>
+          <ul class="breadcrumb inline">
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li>
+              <a href="/content/zeitung/">Газета</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">{{rubric.title}}</li>
           </ul>
         </div>
       </div>
@@ -66,8 +56,8 @@
       <div class="span12">
         <div class="rubric-header">
           <h3 class="inline">
-<!-- SDK comment: сделать ссылку на полный номер вместо # -->
-            <a href="#" class="white white_link">Выпуск №{{ grouper }} &ndash; {{ articles[0].issue_date|ru_date }}</a>
+            {% set d = articles[0].issue_date %}
+            <a href="/content/zeitung/{{ d.year }}/{{ grouper }}/" class="white white_link">Выпуск №{{ grouper }} &ndash; {{ d|ru_date }}</a>
           </h3>
         </div>
       </div>
@@ -107,6 +97,8 @@
     </div>
     {% endfor %}
   </div>
-  {{ pagination(request, page_obj) }}
+  <div class="row">
+    <div class="span12">{{pagination(request, page_obj)}}</div>
+  </div>
 </div>
 {% endblock %}

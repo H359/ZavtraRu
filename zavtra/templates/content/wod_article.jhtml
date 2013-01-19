@@ -1,432 +1,167 @@
-{% extends "content/base.jhtml" %}
+{% extends "base.jhtml" %}
 
+{% from "macro.jhtml" import render_comments %}
 
-{% block content %}
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
 <div class="container12">
-	<div class="bordered">
-		<div class="row">
-			<div class="span12">
-				<div class="section-header">
-					<h2 class="inline top_align">Рубрика &laquo;Слово Дня&raquo;</h2>
-						<div class="section_header_button">
-							<a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row" id="newspaper_issues">
-				{#
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-49.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Парабола</span>
-								<br />
-								<span class="mediumtext">23 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="newspaper_selection_item_img" />	
-							<div class="text-bottom white">
-								<span class="largetext bold">Метроном</span>
-								<br/>
-								<span class="mediumtext">24 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item newspaper_selection_item_selected">
-						<img src="http://zavtra.ru/media/zhivot/big/f1-50_2.jpg" class="newspaper_selection_item_img">
-						<div class="text-bottom white">
-							<span class="largetext bold">Забастовка</span>
-							<br />
-							<span class="mediumtext">25 Декабря</span>
-						</div>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-47.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Усыновление</span>
-								<br />
-								<span class="mediumtext">26 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-45.jpg" class="newspaper_selection_item_img">	
-							<div class="text-bottom white">
-								<span class="largetext bold">Митинг</span>
-								<br />
-								<span class="mediumtext">27 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				#}
-			</div>
-		</div>
-
-		<div class="bordered_clean">
-			<div class="row">
-				<div class="span12">
-					<div class="section-header">
-						<ul class="breadcrumb inline">
-							<li>
-								<a href="/">Главная</a>
-								<span class="divider">/</span>
-							</li>
-							<li>
-								<a href="{{ object.rubric.get_absolute_url() }}">Слово Дня</a>
-								<span class="divider">/</span></li>
-							<li class="active">{{ object.title }}</li>
-						</ul>
-						<div class="section_header_button">
-							<a href="#">
-								<img src="pic/arrow_circle_left.png" class="calendar_navigation_img_1">
-							</a>
-							<h4 class="inline top_align average_padding_horizontal">
-								<span class="baseline_align">{{ object.published_at|ru_date }}</span>
-							</h4>
-							<a href="#">
-								<img src="pic/arrow_circle_right.png" class="calendar_navigation_img_1">
-							</a>
-							<a href="#">
-								<img src="pic/circle_calendar.png" class="calendar_navigation_img_1">
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="span12">
-				<div class="text-over-image y-margin-one">
-					<img src="pic/newspaper/f1-50m_for_main.jpg" id="newspaper_illustration">
-					<div class="text-top">
-						<a href="/media/zhivot/big/f1-50_2.jpg" rel="facebox" class="bottom_align">
-							<h1 class="inline x-margin-thrqtr">&laquo;{{ object.title }}&raquo;</h1>
-						</a>	
-					</div>
-				</div>
-				{#
-				<div>
-					<h5 class="inline">Текст:</h5>
-					<a href="#">Денис Коваленко</a>
-					<br />
-					<h5 class="inline">Иллюстрация:</h5>
-					<a href="#">Андрей Проханов</a>
-					<br />
-					<a href="wod_opinions_section" class="jump_to_comment">
-						<h5 class="inline">Экспертные Оценки:</h5>
-					</a>
-					<a href="#">Алескандр Проханов</a>,
-					<a href="#">Алескандр Бородай</a>,
-					<a href="#">Елизавета Емельянова-Сеньчина</a>
-				</div>
-				#}
-			</div>
-		</div>
-			
-		<div class="row">
-			<div class="offset1_5 span9 y-margin-two">
-				<article>
-					<div class="row">
-						<div class="span6">
-							<header>
-								<h1 class="article-page-main-header article-header">{{ object.subtitle }}</h1>
-							</header>
-						</div>
-						<div class="span3 right_align article_category_list">
-							{% for topic in object.topics.all() %}
-							<span class="label label-info mediumtext"><a href="{{ topic.get_absolute_url() }}" class="white white_link baseline_align">{{ topic.title }}</a></span>
-							{% endfor %}
-						</div>
-					</div>
-					<div class="row">
-						<div class="span6">
-							<span class="article-page-main-subheader article-header">{{ object.announce }}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="span6 article-page-statistics">
-							<span class="article-statistic dark">{{ object.published_at|ru_date }}</span>
-							<span class="article-statistic"><i class="icon-eye-open"></i> 172</span>
-							<span class="article-statistic"><a href="comments-section" class="jump_to_comment"><i class="icon-comment"></i> 23</a></span>
-						</div>
-					</div>
-					<!--
-					<div class="row">
-						<div class="offset4 span5 y-margin-one">
-							<div class="wod_quote">
-								<span class="bold">ЗАБАСТОВКА</span><span class="italic"> - единовременное по предварительному соглашению прекращение рабочими работы на предпринимателя с целью достижения от него более выгодных условий труда.</span>
-							</div>
-							<span class="wod_quote_source">Энциклопедический словарь Ф.Брокгауза и И.Эфрона, 1907-1909</span>
-						</div>
-					</div>
-				-->
-					<div class="row">
-						<div class="span9 article-page-content">
-							{{ object.content }}
-							<div class="right_align x-margin-one">
-								{% for author in object.authors.all() %}
-								<span class="article-page-author-name"><a href="{{ author.get_absolute_url() }}" rel="author">{{ author }}</a></span>{% if not loop.last %}, {% endif %}
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="span9">
-							<div id="footer_social_networks" class="right_align">
-								<span class="dark x-margin-one">поделиться: </span>
-								<a href="http://www.facebook.com/zavtraru" target="_blank">
-									<img src="pic/facebook_logo.png" class="common_social_network_img">
-								</a>
-								<a href="http://vk.com/zavtraru" target="_blank">
-									<img src="pic/vk_logo.png" class="common_social_network_img">
-								</a>
-								<a href="https://twitter.com/ZavtraRu" target="_blank">
-									<img src="pic/twitter_logo.png" class="common_social_network_img">
-								</a>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="span9">
-							<div id="wod_opinions_section" class="rubric-header no_margin">
-								<h3 class="inline">Экспертные Оценки:</h3>
-							</div>
-							<div class="wod_opinion">
-								<div class="wod_opinion_avatar">
-									<img src="pic/people/aleksandr_prohanov_0001.jpg">
-								</div>
-								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Александр Проханов</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-								</div>
-							</div>
-							<img src="pic/gradient_grayscale_line.png" class="onepxline">
-							<div class="wod_opinion">
-								<div class="wod_opinion_avatar">
-									<img src="pic/people/alexandr_borodai_0122.jpg">
-								</div>
-								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Александр Бородай</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-								</div>
-							</div>
-							<img src="pic/gradient_grayscale_line.png" class="onepxline">
-							<div class="wod_opinion">
-								<div class="wod_opinion_avatar">
-									<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-								</div>
-								<div class="wod_opinion_text">
-									<a href="/accounts/user/LeoSemen/" class="wod_opinion-author-name">Елизавета Емельянова-Сеньчина</a>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он в своей речи тронул глубинные коды русского человека, многократно, в отличие от прежних посланий, повторяя слова "русский", "Россия", "русская цивилизация". И эти разбуженные русские коды будут способствовать грядущим творческим подвигам и свершениям. </p>
-									<p>Он говорил о необходимости подавлять врагов русского развития, врагов рывка, призывал наносить планомерные неослабевающие удары по коррупции, вырвать принадлежащие России богатства из оффшорных зон, вернуть их в реальную российскую экономику, начать инвестировать русские деньги в большие проекты, а не складывать их в стабилизационные фонды и заграничные ценные бумаги. Он обещал жестоко подавлять криминал, который идёт в политику, криминал, который искривляет силовые линии власти, направляя её в пользу криминальных теневых группировок.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</article>
-			</div>
-		</div>
-			
-		<div class="row">
-			<div class="offset1_5 span9">
-				<div id="comments-section" class="rubric-header no_margin">
-					<h3 class="inline">Комментарии (6):</h3>
-					<a href="comment-form" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
-				</div>
-				<div id="comments">
-					<div class="comments">
-						<div class="content">
-							<ul id="comments" class="unstyled">
-								<li id="comment-135643">
-									<div class="comment">
-										<div class="avatar">
-											<a href="#" rel="popover" data-content="Пользователь LeoSemen с нами с 8 января 2012" data-original-title="LeoSemen">
-												<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-											</a>
-										</div>
-										<div class="inner">
-											<div class="body clearfixer">
-												<div class="author">
-													<a href="/accounts/user/LeoSemen/" class="comment-author-name">Елизавета Емельянова-Сеньчина</a>
-													<a href="/resolver/25/135643/#comment-135643" class="comment-time">
-														<time datetime="2012-12-21 10:30:54.548290">21.12.2012 10:30</time>
-													</a>
-												</div>
-												<div class="text">
-													<p>У редакции явный регресс. Что изменится узнаем мы или нет об этой или подобной "новости". Что тут "обсуждать"? А больше "поговорить" не о чём?</p>
-												</div>
-												<div class="btn-toolbar">
-													<div class="btn-group">
-														<a href="#vote:up:135951" class="vote-plus btn btn-mini btn-primary "><i class="icon-white icon-plus-sign"></i></a>
-														<a class="btn btn-disabled btn-mini comment-rating" title="рейтинг комментария">0</a>
-														<a href="#vote:down:135951" class="vote-minus btn btn-mini btn-primary "><i class="icon-white icon-minus-sign"></i></a>
-													</div>
-													<div class="reply-button pull-right">
-														<a href="#reply:135951">Ответить</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>					
-							</ul>
-						</div>
-						<div id="comment-form" class="clearfixer">
-							<div class="alert-message error hide">Похоже, вы что-то неправильно заполнили. Ниже вы найдёте дополнительную информацию.</div>
-							<div class="avatar">
-								<a href="#" rel="popover" data-content="Пользователь LeoSemen с нами с 8 января 2012" data-original-title="LeoSemen">
-									<img src="pic/people/elizaveta_emelianova-senchina_0124.jpg">
-								</a>
-							</div>
-							<form class="inner" method="post" action="/comments/add/">
-								<fieldset class="body">
-									<h4>Ваш комментарий:</h4>
-									<div>
-										<input type="hidden" name="csrfmiddlewaretoken" value="886e87d50dfc04d7167f9d5cb042e3e7">
-										<input type="hidden" name="next" value="/content/view/na-serdyukova-est-pokazaniya-2012-12-21-085002/">
-									</div>
-									<div>
-										<input type="hidden" name="content_type" value="11" id="id_content_type">
-									</div>
-									<div>
-										<input type="hidden" name="object_id" value="48026" id="id_object_id">
-									</div>
-									<div class="clearfix">
-										<label for="id_comment"></label>
-										<div class="input">
-											<div>
-												<div id="markItUpId_comment" class="markItUp">
-													<div class="markItUpContainer">
-														<div class="markItUpHeader">
-															<ul>
-																<li class="markItUpButton markItUpButton1 ">
-																	<a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
-																</li>
-																<li class="markItUpButton markItUpButton2 ">
-																	<a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
-																</li>
-																<li class="markItUpButton markItUpButton3 ">
-																	<a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
-																</li>
-															</ul>
-														</div>
-														<textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
-														<div class="markItUpFooter"></div>
-													</div>
-												</div>
-											</div>
-											<span class="help-block"></span>
-										</div>
-									</div>
-									<div>
-										<input type="hidden" name="parent" id="id_parent">
-									</div>
-									<div>
-										<input type="submit" class="btn btn-success pull-right" value="Отправить">
-									</div>
-								</fieldset>
-							</form>
-						</div>    
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="bordered">
-			<div class="row">
-				<div class="span12">
-					<div class="section-header">
-						<h2 class="inline top_align">
-							Рубрика &laquo;Слово Дня&raquo;
-						</h2>
-						<div class="section_header_button">
-							<a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row" id="wod_issues">
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-49.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Парабола</span>
-								<br />
-								<span class="mediumtext">23 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-48.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Метроном</span>
-								<br/>
-								<span class="mediumtext">24 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item newspaper_selection_item_selected">
-						<img src="http://zavtra.ru/media/zhivot/big/f1-50_2.jpg" class="newspaper_selection_item_img">
-						<div class="text-bottom white">
-							<span class="largetext bold">Забастовка</span>
-							<br />
-							<span class="mediumtext">25 Декабря</span>
-						</div>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-47.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Усыновление</span>
-								<br />
-								<span class="mediumtext">26 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="span2_4">
-					<div class="text-over-image newspaper_selection_item">
-						<a href="#" rel="facebox">
-							<img src="http://zavtra.ru/media/zhivot/big/f1-45.jpg" class="newspaper_selection_item_img">
-							<div class="text-bottom white">
-								<span class="largetext bold">Митинг</span>
-								<br />
-								<span class="mediumtext">27 Декабря</span>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="bordered">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <h2 class="inline top_align">Рубрика &laquo;Слово Дня&raquo;</h2>
+          <div class="section_header_button">
+            <a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="newspaper_issues">
+    </div>
+  </div>
+  <div class="bordered_clean">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <ul class="breadcrumb inline">
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li>
+              <a href="{{object.rubric.get_absolute_url()}}">{{object.rubric.title}}</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">{{object.published_at|ru_date("%d-%m-%Y")}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <div id="inner_subjects">
+        {% for topic in top_topics %}
+        <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <div class="text-over-image y-margin-one">
+        <img src="{{object.cover_for_wodarticle.url}}" id="newspaper_illustration">
+        <div class="text-top">
+          <a href="#" rel="facebox" class="bottom_align"><h3 class="inline x-margin-thrqtr">{{object.published_at|ru_date("%d/%m/%Y")}}</h3><h1 class="inline">{{object.title}}</h1></a>
+        </div>
+      </div>
+      <div>
+        <h5 class="inline">Текст:</h5>
+        {% for author in object.authors.all() %}<a href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}<br>
+        <h5 class="inline">Иллюстрация:</h5><a href="#">Геннадий Животов</a><br>
+        <h5 class="inline">Экспертные оценки:</h5>
+        {% for expert_comment in object.expert_comments.all() %}<a href="{{expert_comment.expert.get_absolute_url()}}">{{expert_comment.expert}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset1_5 span9 y-margin-two">
+      <article>
+        <div class="row">
+          <div class="span6">
+            <header>
+              <h1 class="article-page-main-header article-header">{{object.title}}</h1>
+            </header>
+          </div>
+          {% if object.topics.count() > 0 %}
+          <div class="span3 right_align article_category_list">
+            {% for topic in object.topics.all() %}
+            <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="row">
+          <div class="span6">
+            <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span6 article-page-statistics">
+            <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+            <span class="article-statistic">
+              <i class="icon-eye-open"> </i>199
+            </span>
+            <span class="article-statistic">
+              <i class="icon-comment"> </i>{{ object.comments.count() }}
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9 article-page-content">{{object.render_content()}}</div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            <div id="footer_social_networks" class="right_align">
+              <span class="dark x-margin-one">поделиться: </span>
+              <a href="http://facebook.com/zavtraru">
+                <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+              </a>
+              <a href="http://vk.com/zavtraru">
+                <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+              </a>
+              <a href="http://twitter.com/ZavtraRu">
+                <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset1_5 span9 y-margin-two">
+      <div id="wod_opinions_section" class="rubric-header no_margin">
+        <h3 class="inline">Экспертные оценки:</h3>
+      </div>
+      {% for expert_comment in object.expert_comments.all() %}
+      <div class="wod_opinion">
+        <div class="wod_opinion_avatar">
+          <img src="http://placekitten.com/g/107/107">
+        </div>
+        <div class="wod_opinion_text">
+          <a href="{{expert_comment.expert.get_absolute_url()}}" class="wod_opinion-author-name">{{expert_comment.expert}}</a>
+          {{expert_comment.comment}}
+        </div>
+      </div>
+      {% if not loop.last %}
+      <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset1_5 span9">
+      <div id="comments-section" class="rubric-header no_margin">
+        <h3 class="inline">Комментарии ({{object.comments.count()}}):</h3>
+      </div>
+      <div>{{render_comments(request, object, csrf_token)}}</div>
+    </div>
+  </div>
+  <div class="bordered">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <h2 class="inline top_align">Рубрика &laquo;Слово Дня&raquo;</h2>
+          <div class="section_header_button">
+            <a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="wod_issues">
+    </div>
+  </div>
 </div>
 {% endblock %}

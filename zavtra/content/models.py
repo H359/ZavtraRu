@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from pytils.translit import slugify
+from urlparse import urlparse, parse_qs
 
 from django.db import models
+from django.db.models import Count
 from django.conf import settings
 
 from mptt.models import MPTTModel, TreeForeignKey
@@ -14,7 +16,8 @@ from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit
 
 from managers import PublishedArticlesManager, ZeitungManager, BlogsManager,\
-                     NewsManager, ColumnsManager, WODManager, EditorialManager
+                     NewsManager, ColumnsManager, WODManager, EditorialManager,\
+                     EventsManager
 from zavtra.utils import cached, oneday
 
 
@@ -22,14 +25,19 @@ from zavtra.utils import cached, oneday
 class ZhivotovIllustration(models.Model):
   image = models.ImageField(upload_to='zhivotov', verbose_name=u'Изображение')
   published_at = models.DateTimeField(verbose_name=u'Время публикации')
+  #title = models.CharField(max_length=200, verbose_name=u'Название'')
 
+  archive_box = ImageSpec([ResizeToFit(870, 385, True)], image_field='image', format='JPEG')
   gazette_box = ImageSpec([ResizeToFit(278, 121, True)], image_field='image', format='JPEG')
+  slider_box = ImageSpec([ResizeToFit(150, 105, True)], image_field='image', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
     verbose_name = u'Иллюстрация Животова'
     verbose_name_plural = u'Иллюстрации Животова'
 
+  def __unicode__(self):
+    return u'%s' % self.published_at
 
 class Rubric(MPTTModel):
   parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'Родитель')
@@ -47,7 +55,10 @@ class Rubric(MPTTModel):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.rubric', (), {'slug': self.slug})
+    if self.events_rubric:
+      return ('content.views.events_now',) #, (), {})
+    else:
+      return ('content.views.rubric', (), {'slug': self.slug})
 
   def __unicode__(self):
     return u'%s %s' % ('-'*self.level, self.title)
@@ -61,6 +72,11 @@ class Rubric(MPTTModel):
   def wod_rubric(self):
     wod = Rubric.fetch_rubric('wod')
     return self.pk in map(lambda w: w.pk, wod)
+
+  @property
+  def events_rubric(self):
+    events = Rubric.fetch_rubric('events')
+    return self.pk in map(lambda w: w.pk, events)
 
   @staticmethod
   def fetch_rubric(slug):
@@ -99,17 +115,18 @@ class Article(models.Model):
   type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20)
   published_at = models.DateTimeField(verbose_name=u'Время публикации')
   rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
-  authors = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=u'Авторы', blank=True)
+  authors = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=u'Авторы', blank=True, related_name='articles')
   announce = models.TextField(verbose_name=u'Анонс (краткое содержание)')
   cover_source = models.ImageField(upload_to='articles/covers', verbose_name=u'Обложка')
   content = models.TextField(verbose_name=u'Текст', default='')
-  topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True)
+  topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   # managers
   objects = PublishedArticlesManager()
   zeitung = ZeitungManager()
   blogs = BlogsManager()
   news = NewsManager()
+  events = EventsManager()
   columns = ColumnsManager()
   editorial = EditorialManager()
   wod = WODManager()
@@ -118,10 +135,14 @@ class Article(models.Model):
   everything = models.Manager()
 
   # covers
-  cover_for_main = ImageSpec([ResizeToFit(200, 120, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_main = ImageSpec([ResizeToFit(200, 150, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_wod = ImageSpec([ResizeToFit(428, 180, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFit(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_list = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_video = ImageSpec([ResizeToFit(246, 184, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_article = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_wodarticle = ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_wodlist = ImageSpec([ResizeToFit(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
@@ -135,6 +156,18 @@ class Article(models.Model):
   def __unicode__(self):
     return u'%s' % self.title
 
+  def render_content(self):
+    if self.type == Article.TYPES.text:
+      return self.content
+    else:
+      tpl = """<iframe type="text/html" width="640" height="480" src="%s" frameborder="0" allowfullscreen></iframe>"""
+      pc = urlparse(self.content)
+      if pc.netloc.endswith("youtube.com"):
+        source = "http://youtube.com/embed/%s?html5=1" % parse_qs(pc.query).get('v')[0].strip()
+      else:
+        source = self.content
+      return tpl % source      
+
   @property
   def from_zeitung(self):
     return self.rubric.zeitung_rubric
@@ -142,6 +175,10 @@ class Article(models.Model):
   @property
   def from_wod(self):
     return self.rubric.wod_rubric
+
+  @property
+  def from_events(self):
+    return self.rubric.events_rubric
 
   @property
   def issue_number(self):
@@ -174,8 +211,14 @@ class Article(models.Model):
            filter(published_at__range = (pdate, pdate + oneday))
 
   @staticmethod
+  def get_most_commented():
+    return Article.objects.annotate(comments_count = Count('comments')).order_by('comments_count')
+
+  @staticmethod
   def get_current_issue_date_range():
-    now = datetime.now().date() - 28 * oneday # DEBUG
+    now = datetime.now().date()
+    if settings.DEBUG:
+      now -= 7*8 * oneday
     wstart = now - oneday*(now.weekday() + 5)
     if now.weekday() >= 2:
       wstart += 7*oneday
@@ -195,7 +238,7 @@ class Article(models.Model):
 
 
 class ExpertComment(models.Model):
-  expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт')
+  expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')
   article = models.ForeignKey(Article, verbose_name=u'Статья', related_name='expert_comments')
   comment = models.TextField(verbose_name=u'Текст')
   position = models.PositiveIntegerField(verbose_name=u'Позиция')

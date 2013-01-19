@@ -236,6 +236,9 @@ a:hover {
 .span4 {
   width: 280px;
 }
+.span3_5 {
+  width: 245px;
+}
 .span3 {
   width: 210px;
 }
@@ -1099,7 +1102,7 @@ table th[class*="span"],
   background-color: #c4e3f3;
 }
 form {
-  margin: 0 0 20px;
+  margin: 0;/* SDK: remove 0 0 20px; */
 }
 fieldset {
   padding: 0;
@@ -5329,6 +5332,9 @@ button.close {
   .span4 {
     width: 220px;
   }
+  .span3_5 {
+    width: 192px;
+  }
   .span3 {
     width: 165px;
   }
@@ -5683,6 +5689,9 @@ button.close {
   }
   .span4 {
     width: 300px;
+  }
+  .span3_5 {
+    width: 262px;
   }
   .span3 {
     width: 225px;

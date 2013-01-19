@@ -1,25 +1,203 @@
-{% macro pagination(request, page_obj) %}
+{% macro render_navigation(prefix="", suffix="") %}
+<a href="/content/zeitung/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
+<a href="{{url('content.views.events_now')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
+<a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
+<a href="{{url('content.views.daily_now')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
+<a href="{{url('siteuser.views.authors')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
+{% endmacro %}
+
+{% macro render_zeitung_rubric(item, spans) %}
 <div class="row">
+  {% if spans == 1 %}
   <div class="span12">
-    <div class="pagination center_align">
-      <ul>
-        <li class="prev{% if not page_obj.has_previous() %}{{ ' disabled' }}{% endif %}">
-          <a rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{% else %}#{% endif %}">Предыдущая</a>
-        </li>
-        {% for p in page_obj.page_range %}
-        <li>
-          {% if p %}
-          <a rel="page" href="?page={{ p }}">{{ p }}</a>
-          {% else %}
-          <a href="#">...</a>
-          {% endif %}
-        </li>
-        {% endfor %}
-        <li class="next{% if not page_obj.has_next() %}{{ ' disabled' }}{% endif %}">
-          <a rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{% else %}#{% endif %}">Следующая</a>
-        </li>
-      </ul>
+    <div class="row">
+      <div class="span12">
+        <div class="rubric-header">
+          <h3>
+            <a href="{{item['rubric'].get_absolute_url()}}">
+              {{item['rubric'].title}}
+              <i class="icon-chevron-right icon-white"> </i>
+            </a>
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {# TODO: add max-3-in-a-row constraint #}
+      {% for article in item['items'] %}
+      <div class="span{{ 12 // (item['items']|length) }}">
+        <div class="article-content side_shadows">
+          <section>
+            <article>
+              {% if article.cover_source != "" %}
+              <div class="article-illustration-container float_left">
+                <a href="{{article.get_absolute_url()}}">
+                  <img src="{{article.cover_for_list.url}}" class="article-illustration">
+                </a>
+              </div>
+              {% endif %}
+              <div class="article-header-container">
+                <header>
+                  <h2 class="article-header">
+                    <a href="{{article.get_absolute_url()}}">{{article.title}}</a>
+                  </h2>
+                </header>
+              </div>
+              <div class="article-author">
+                {% for author in article.authors.all() %}
+                <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+              <div class="article-text">
+                <p class="article-paragraph">
+                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+                </p>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
+  {% else %}
+  <div class="span{{ 12 // spans }}">
+    <div class="rubric-header">
+      <h3>
+        <a href="{{item['rubric'].get_absolute_url()}}">
+          {{item['rubric'].title}}
+          <i class="icon-chevron-right icon-white"> </i>
+        </a>
+      </h3>
+    </div>
+    <div class="article-content side_shadows">
+      <section>
+        {% for article in item['items'] %}
+        <article>
+          <div class="article-header-container">
+            <header>
+              <h2 class="article-header">
+                <a href="{{article.get_absolute_url()}}">{{article.title}}</a>
+              </h2>
+            </header>
+          </div>
+          <div class="article-author">
+            {% for author in article.authors.all() %}
+            <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </div>
+          <div class="article-text">
+            <p class="article-paragraph">
+              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+            </p>
+          </div>
+        </article>
+        {% endfor %}
+      </section>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro render_comments(request, object, token) %}
+  <div class="comments">
+    <div class="content">
+      <ul id="comments" class="unstyled">
+        {% for comment in object.comments.all() %}
+        <li id="comment-{{comment.id}}">
+          <div class="comment">
+            <div class="avatar">
+              <a href="{{comment.author.get_absolute_url()}}" rel="author">
+                <img src="http://placekitten.com/62/62">
+              </a>
+            </div>
+            <div class="inner">
+              <div class="body clearfixer">
+                <div class="author">
+                  <a href="{{comment.author.get_absolute_url()}}" class="comment-author-name">{{comment.author}}</a>
+                  <a href="#" class="comment-time">
+                    <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
+                  </a>
+                </div>
+                <div class="text">{{comment.comment}}</div>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if request.user and request.user.is_authenticated() %}
+    <div id="comment-form" class="clearfixer">
+      <div class="avatar">
+        <a href="#" rel="author">
+          <img src="http://placekitten.com/62/62">
+        </a>
+      </div>
+      <form class="inner" method="post" action="{{url('comments.views.add')}}">
+        <fieldset class="body">
+          <h4>Ваш комментарий:</h4>
+          <div>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{token}}">
+            <input type="hidden" name="next" value="{{request.path}}">
+            <input type="hidden" name="article" value="{{object.id}}">
+          </div>
+          <div class="clearfix">
+            <div class="input">
+              <div>
+                <div id="markItUpId_comment" class="markItUp">
+                  <div class="markItUpContainer">
+                    <div class="markItUpHeader">
+                      <ul>
+                        <li class="markItUpButton markItUpButton1 ">
+                          <a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
+                        </li>
+                        <li class="markItUpButton markItUpButton2 ">
+                          <a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
+                        </li>
+                        <li class="markItUpButton markItUpButton3 ">
+                          <a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
+                    <div class="markItUpFooter"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="help-block"></span>
+            </div>
+          </div>
+          <div>
+            <input type="submit" class="btn btn-success pull-right" value="Отправить">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro pagination(request, page_obj) %}
+<div class="pagination center_align">
+  <ul>
+    <li class="prev{% if not page_obj.has_previous() %}{{ ' disabled' }}{% endif %}">
+      <a rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{% else %}#{% endif %}">Предыдущая</a>
+    </li>
+    {% for p in page_obj.page_range %}
+    <li>
+      {% if p %}
+      <a rel="page" href="?page={{ p }}">{{ p }}</a>
+      {% else %}
+      <a href="#">...</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+    <li class="next{% if not page_obj.has_next() %}{{ ' disabled' }}{% endif %}">
+      <a rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{% else %}#{% endif %}">Следующая</a>
+    </li>
+  </ul>
 </div>
 {% endmacro %}
