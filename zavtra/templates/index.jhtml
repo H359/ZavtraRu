@@ -178,7 +178,7 @@
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
-                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline">Здесь и Сейчас</a>
+                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline"><span class="main_header_category">Здесь и Сейчас</span></a>
               </h3>
             </div>
             <div id="main_news_box_content">
@@ -213,7 +213,7 @@
               <img src="http://placekitten.com/g/146/83" class="main_editor_message_img">
               <div class="main_editor_message_header">
                 <h3>
-                  <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline">{{editorial.rubric.title}}</a>
+                  <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline"><span class="main_header_category">{{editorial.rubric.title}}</span></a>
                 </h3>
               </div>
               <div class="main_editor_message_text">
