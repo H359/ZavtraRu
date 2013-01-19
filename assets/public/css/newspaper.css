@@ -1546,7 +1546,6 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #DDD;
 	padding-left: 1em;
 	padding-top: .25em;
-	margin-bottom: .5em;
 	height: 1.5em;
 	border: 1px solid #C2C08C;
 	text-align: center;
@@ -1728,6 +1727,53 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 
+.news-illustration-container {
+	padding: 1em 1em;
+	text-align: center;
+}
+
+.news-illustration {
+	border: 1px solid #777;
+}
+
+.news-header-container {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 1em 2em .5em 1em;
+}
+
+.news-subject-container {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 1.25em 2em 0em 0em;
+	line-height: 1.5em;
+}
+
+.news-header-statistics {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0em 0em 0em 1em;
+	line-height: 1.5em;
+}
+
+.news-header {
+	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+}
+
+.news-text {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 1em 2em 0em 2em;
+}
+
+.news-paragraph {
+	font-size: .9em;
+	line-height: 1.25em;
+}
 
 @media (min-width: 1025px) and (max-width: 1199px) {
 	body {
