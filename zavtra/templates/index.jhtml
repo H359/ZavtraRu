@@ -330,11 +330,14 @@
           <div class="relative" id="main_newspaper_box">
             <div class="main_upper_boxes_header">
               <h2 class="inline">
-                <a class="no_underline" href="/content/zeitung/">Газета:</a>
+                <a class="gray gray_link no_underline" href="/content/zeitung/">
+                  <span class="main_header_category">Газета:</span>
+                  <span class="main_header_name mediumtext">№{{current_number}} &ndash; {{current_range[0]|ru_date("%d %B")}}</span>
+                </a>
               </h2>
-              <h3 class="inline">
-                <a class="no_underline" href="/content/zeitung/"><span class="main_header_name gray">№{{current_number}} &ndash; {{current_range[0]|ru_date("%d %B")}}</span></a>
-              </h3>
+              <a href="/content/zeitung/" id="main_newspaper_pdf_link">
+                <img src="{{STATIC_URL}}img/PDF_Download.png" />
+              </a>
             </div>
             <a href="#"><img src="{{STATIC_URL}}img/PDF_Download.png" id="main_newspaper_pdf_link"></a>
             <div id="main_newspaper_img">
