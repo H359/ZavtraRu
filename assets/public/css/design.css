@@ -229,7 +229,7 @@ body {
 
 #main_navigation {
 	background-color: #4A0909;
-	margin:  1em -50em 0em -50em;
+	margin:  1.5em -50em 0em -50em;
 	padding-left: 50.75em;
 	padding-top: .7em;
 	height: 2em;
@@ -302,7 +302,7 @@ body {
 #main_news_box_header {
 	box-sizing: border-box;
 	 -moz-box-sizing: border-box;
-	height: 1.75em;
+	height: 2em;
 	color: #99D578;
 	background-color: #444;
 	width: 13.5em;
@@ -319,7 +319,7 @@ body {
 	position: absolute;
 	left: 13.5em;
 	width: 30em;
-	height: 1.75em;
+	height: 2em;
 	background-color: #EEE;
 	top: 0em;
 	padding: .33em 1.5em;
