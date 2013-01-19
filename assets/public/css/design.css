@@ -72,14 +72,14 @@ body {
 }
 
 .main_header_link {
-	color: #b4c;
+	color: #FFF;
 	font-size: .8em;
 	font-family: 'Open Sans', sans-serif;
 	padding-right: 1em;
 }
 
 .main_header_link:hover {
-	color: #B7FFA6;
+	color: #EEE;
 }
 
 #main_header_login {
@@ -88,7 +88,7 @@ body {
 }
 
 .main_header_login_text {
-	color: #99D578;
+	color: #FFF;
 	text-rendering: optimizelegibility;
 	font-family: 'Open Sans', san-serif;
 	font-size: .8em;
@@ -229,7 +229,7 @@ body {
 
 #main_navigation {
 	background-color: #4A0909;
-	margin:  1.5em -50em 0em -50em;
+	margin: 1.5em -50em 0em -50em;
 	padding-left: 50.75em;
 	padding-top: .7em;
 	height: 2em;
@@ -303,8 +303,8 @@ body {
 #main_news_box_header {
 	box-sizing: border-box;
 	 -moz-box-sizing: border-box;
-	height: 2em;
-	color: #99D578;
+	height: 1.75em;
+	color: #b4c3d7;
 	background-color: #444;
 	width: 13.5em;
 	padding-left: .75em;
@@ -353,11 +353,11 @@ body {
 }
 
 .main_header_category {
-	color: #99D578;
+	color: #b4c3d7;
 }
 
 a:hover .main_header_category {
-	color: #B7FFA6;
+	color: #cddcfa;
 }
 
 a:hover .main_header_name {
@@ -413,12 +413,6 @@ a:hover .main_header_name {
 
 .main_tab_link:hover {
 	border-color: #777;
-}
-
-.main_editor_container {
-	position: relative;
-}
-
 .main_editor_message {
 	margin: .75em;
 	background-image: url('../pic/articles/lenta_opening.png');
@@ -429,14 +423,24 @@ a:hover .main_header_name {
 	width: 43.5em;
 	z-index:1;
 	position: relative;
-	border-top: 1px solid #DDD;
-	border-right: 1px solid #DDD;
-	border-left: 1px solid #DDD;
-	border-bottom: 1px solid #CCC;
+}
+
+.main_article_container,.main_editor_message {
+	-webkit-box-shadow: 0px 2px 12px 1px #999;
+	-moz-box-shadow: 0px 2px 12px 1px #999;
+	box-shadow: 0px 2px 12px 1px #999;
 }
 
 .main_editor_message:hover, .main_article_container:hover {
-	border: 1px solid #BBB;
+	-webkit-box-shadow: 0px 2px 12px 1px #777;
+	-moz-box-shadow: 0px 2px 12px 1px #777;
+	box-shadow: 0px 2px 12px 1px #777;
+}
+
+.main_editor_message:hover, .main_article_container:hover {
+	-webkit-box-shadow: 0px 2px 12px 1px #777;
+	-moz-box-shadow: 0px 2px 12px 1px #777;
+	box-shadow: 0px 2px 12px 1px #777;
 }
 
 .main_editor_message_text {
@@ -451,7 +455,7 @@ a:hover .main_header_name {
 	background-color: #444;
 	height: 1.75em;
 	width: 13.5em;
-	color: #99D578;
+	color: #B4C3D7;
 	font-family: 'Open Sans';
 	text-align: center;
 }
@@ -465,10 +469,6 @@ a:hover .main_header_name {
 .main_article_container {
 	width: 13.5em;
 	margin: .75em .75em .75em .75em;
-	border-top: 1px solid #EEE;
-	border-right: 1px solid #EEE;
-	border-left: 1px solid #EEE;
-	border-bottom: 1px solid #DDD;
 }
 
 .main_article_image {
