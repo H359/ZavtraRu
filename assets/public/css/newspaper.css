@@ -1602,12 +1602,8 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	padding: 0.3em;
 }
 
-.newspaper_review_rubric {
-	padding-bottom: 2em;
-}
-
-.newspaper_review_rubric .span8, .newspaper_review_rubric .span5, .newspaper_review_rubric .span4, .newspaper_review_rubric .span3 {
-	padding: .5em 1em .5em 2em;
+.newspaper_review_rubric .span5, .newspaper_review_rubric .span4, .newspaper_review_rubric .span3 {
+	padding: .5em 1em .5em 1.5em;
 }
 
 .newspaper_review_rubric h2 {
@@ -1773,6 +1769,33 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 .news-paragraph {
 	font-size: .9em;
 	line-height: 1.25em;
+}
+
+
+.archive_selector_category {
+	font-weight: 700;
+	color: #444;
+	padding-right: .5em;
+}
+
+.archive_selector a {
+	text-decoration: underline;
+	padding: 0em .25em;
+	line-height: 2em;
+	display: inline-block;
+}
+
+.archive_selector a:hover {
+	text-decoration: none;
+	color: #555;
+}
+
+.archive_selector_selected {
+	padding: 0em .25em;
+	font-weight: 800;
+	line-height: 2em;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 @media (min-width: 1025px) and (max-width: 1199px) {
