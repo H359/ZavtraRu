@@ -146,31 +146,30 @@
           </div>
         </div>
         <div class="span6" id="wod_block">
-          <img class="wod-block-shadow" src="{{STATIC_URL}}img/article_shadow1.png">
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
-                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">
+                <a href="wod/2012/12/01/" class="gray gray_link no_underline">
                   <span class="main_header_category">Слово Дня:</span>
                   <span class="main_header_name">{{wod.title}}</span>
                 </a>
               </h2>
             </div>
-            <a href="{{wod.get_absolute_url()}}">
-              <img id="main_wod_image" src="{{wod.cover_for_wod.url}}">
-            </a>
-            <div id="main_wod_content">
-              <h5 class="white left_align main_box_header">Точки зрения</h5>
-              <div id="main_wod_opinions" class="average_padding_vertical">
-                <div class="center_align">
-                  {% for expert_comment in wod.expert_comments.all() %}
-                  <a href="{{wod.get_absolute_url()}}">{{expert_comment.expert}}</a>
-                  {% if not loop.last %} &bull; {% endif %}
-                  {% endfor %}
-                </div>
-              </div>
+            <div class="text-over-image">
+              <a href="{{wod.get_absolute_url()}}">
+                <img id="main_wod_image" src="{{wod.cover_for_wod.url}}">
+              </a>
+              <div id="main_wod_details" class="text-bottom white">
+              <h4>[Заголовок этого Чудного Слова Дня]</h4>
+              <h5>экспертные оценки:</h5>
+              <span class="block center_align">
+                {% for expert_comment in wod.expert_comments.all() %}
+                <a href="{{wod.get_absolute_url()}}" class="largetext person_name inline-block">{{expert_comment.expert}}</a>
+                {% if not loop.last %} &bull; {% endif %}
+                {% endfor %}
+              </span>
             </div>
-          </div>
+				  </div>
         </div>
       </div>
       <div class="row">
