@@ -243,6 +243,7 @@ body {
 	letter-spacing: .1em;
 	margin: 0em 1.5em 0em 0em;
 	padding: 0em .5em;
+	text-transform: uppercase;
 }
 
 .nav_item:hover {
@@ -344,6 +345,7 @@ body {
 	font-size: .9em;
 	padding-right: 1.25em;
 	font-weight: bold;
+	text-transform: lowercase;
 }
 
 .subject_nav_item:hover {
