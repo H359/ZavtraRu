@@ -980,18 +980,12 @@ article p {
 	}
 }
 
-/*#articles_issues {
-	border-left: 1px solid #BBB;
+#articles_issues {
+	border-left: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	border-top: 1px solid #DDD;
+	background-color: #EEE;
 }
-
-#articles_editors_choice {
-	background-color: #F4F4F4;
-	border-right: 1px solid #BBB;
-	border-left: 1px solid #BBB;
-	border-bottom: 1px solid #BBB;
-	margin-left: -1px;
-}*/
-
 
 .inner_article_container:hover {
 	border: 1px solid #BBB;
