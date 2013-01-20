@@ -1129,9 +1129,9 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: .95em;
   font-weight: normal;
-  line-height: 20px;
+  line-height: 1.25em;
 }
 input,
 button,

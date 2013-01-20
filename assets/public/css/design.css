@@ -72,14 +72,14 @@ body {
 }
 
 .main_header_link {
-	color: #99D578;
+	color: #FFF;
 	font-size: .8em;
 	font-family: 'Open Sans', sans-serif;
 	padding-right: 1em;
 }
 
 .main_header_link:hover {
-	color: #B7FFA6;
+	color: #EEE;
 }
 
 #main_header_login {
@@ -88,7 +88,7 @@ body {
 }
 
 .main_header_login_text {
-	color: #99D578;
+	color: #FFF;
 	text-rendering: optimizelegibility;
 	font-family: 'Open Sans', san-serif;
 	font-size: .8em;
@@ -229,7 +229,7 @@ body {
 
 #main_navigation {
 	background-color: #4A0909;
-	margin:  1em -50em 0em -50em;
+	margin: 1.5em -50em 0em -50em;
 	padding-left: 50.75em;
 	padding-top: .7em;
 	height: 2em;
@@ -243,6 +243,7 @@ body {
 	letter-spacing: .1em;
 	margin: 0em 1.5em 0em 0em;
 	padding: 0em .5em;
+	text-transform: uppercase;
 }
 
 .nav_item:hover {
@@ -303,7 +304,7 @@ body {
 	box-sizing: border-box;
 	 -moz-box-sizing: border-box;
 	height: 1.75em;
-	color: #99D578;
+	color: #b4c3d7;
 	background-color: #444;
 	width: 13.5em;
 	padding-left: .75em;
@@ -319,7 +320,7 @@ body {
 	position: absolute;
 	left: 13.5em;
 	width: 30em;
-	height: 1.75em;
+	height: 2em;
 	background-color: #EEE;
 	top: 0em;
 	padding: .33em 1.5em;
@@ -331,7 +332,7 @@ body {
 }
 
 #main_subjects {
-	background-color: #ACFF90;
+	background-color: #B4C3D7;
 	margin: 0em -50em .75em -50em;
 	padding-left: 51.25em;
 	padding-top: .25em;
@@ -344,6 +345,7 @@ body {
 	font-size: .9em;
 	padding-right: 1.25em;
 	font-weight: bold;
+	text-transform: lowercase;
 }
 
 .subject_nav_item:hover {
@@ -351,11 +353,11 @@ body {
 }
 
 .main_header_category {
-	color: #99D578;
+	color: #b4c3d7;
 }
 
 a:hover .main_header_category {
-	color: #B7FFA6;
+	color: #cddcfa;
 }
 
 a:hover .main_header_name {
@@ -373,23 +375,44 @@ a:hover .main_header_name {
 	height: 12em;
 }
 
-#main_wod_opinions {
-	margin: .25em .75em;
-	height: 3em;
+#main_wod_details {
+	padding: .25em .75em;
+}
+
+#main_wod_details h4 {
+	margin-bottom: .5em;
 }
 
 #main_wod_content {
 	background: #FFF;
 }
 
-.main_tab_link:hover {
-	border-color: #777;
-}
 
-.main_editor_container {
+.text-over-image {
 	position: relative;
 }
 
+.text-over-image .text-bottom {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: .25em .5em;
+	background: rgba(51, 51, 51, 0.95);
+}
+
+.text-over-image .text-bottom a, .text-over-image .text-top a {
+	color: #fff;
+}
+
+#main_wod_box .text-over-image {
+	-webkit-box-shadow: 0px 0px 12px 1px #444;
+	-moz-box-shadow: 0px 0px 12px 1px #444;
+	box-shadow: 0px 0px 12px 1px #444;
+}
+
+.main_tab_link:hover {
+	border-color: #777;
 .main_editor_message {
 	margin: .75em;
 	background-image: url('../pic/articles/lenta_opening.png');
@@ -400,14 +423,24 @@ a:hover .main_header_name {
 	width: 43.5em;
 	z-index:1;
 	position: relative;
-	border-top: 1px solid #DDD;
-	border-right: 1px solid #DDD;
-	border-left: 1px solid #DDD;
-	border-bottom: 1px solid #CCC;
+}
+
+.main_article_container,.main_editor_message {
+	-webkit-box-shadow: 0px 2px 12px 1px #999;
+	-moz-box-shadow: 0px 2px 12px 1px #999;
+	box-shadow: 0px 2px 12px 1px #999;
 }
 
 .main_editor_message:hover, .main_article_container:hover {
-	border: 1px solid #BBB;
+	-webkit-box-shadow: 0px 2px 12px 1px #777;
+	-moz-box-shadow: 0px 2px 12px 1px #777;
+	box-shadow: 0px 2px 12px 1px #777;
+}
+
+.main_editor_message:hover, .main_article_container:hover {
+	-webkit-box-shadow: 0px 2px 12px 1px #777;
+	-moz-box-shadow: 0px 2px 12px 1px #777;
+	box-shadow: 0px 2px 12px 1px #777;
 }
 
 .main_editor_message_text {
@@ -422,7 +455,7 @@ a:hover .main_header_name {
 	background-color: #444;
 	height: 1.75em;
 	width: 13.5em;
-	color: #99D578;
+	color: #B4C3D7;
 	font-family: 'Open Sans';
 	text-align: center;
 }
@@ -436,10 +469,6 @@ a:hover .main_header_name {
 .main_article_container {
 	width: 13.5em;
 	margin: .75em .75em .75em .75em;
-	border-top: 1px solid #EEE;
-	border-right: 1px solid #EEE;
-	border-left: 1px solid #EEE;
-	border-bottom: 1px solid #DDD;
 }
 
 .main_article_image {
@@ -599,15 +628,13 @@ a:hover .main_header_name {
 }
 
 #main_newspaper_pdf_link {
-	box-sizing: border-box;
-	 -moz-box-sizing: border-box;
-	width: 3em;
-	height: 2.5em;
+	width: 2.25em;
+	height: 1.75em;
 	position: absolute;
-	top: -.25em;
-	right: -1.75em;
-	z-index: 3;
+	right: -1em;
+	top: 0em;
 }
+
 
 .main_special_project_img {
 	height: 10em;
@@ -858,6 +885,10 @@ a:hover .main_header_name {
 
 .inline {
 	display: inline;
+}
+
+.inline-block {
+	display: inline-block;
 }
 
 .block {
