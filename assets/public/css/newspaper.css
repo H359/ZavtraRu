@@ -984,7 +984,7 @@ article p {
 	border-left: 1px solid #DDD;
 	border-bottom: 1px solid #DDD;
 	border-top: 1px solid #DDD;
-	background-color: #EEE;
+	background-color: #F6F9F9;
 }
 
 .inner_article_container:hover {
@@ -1642,19 +1642,19 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 #author_alphabet_name {
 	background-color: #DDD;
-	margin: 0em 1.1em 2em 1.1em;
-	padding: .25em 0em;
+	margin: 0em 1em 0em 1em;
+	padding: .5em 0em;
 	min-height: 1.66em;
 	text-align: center;
-	font-family: 'Open Sans', Tahoma;
-	font-size: .9em;
 }
 
 #author_alphabet_name a {
-	padding: 0em .15em;
+	padding: 0em .25em;
 	text-decoration: underline;
 	font-weight: 600;
 	color: #333;
+	font-size: .9em;
+	font-family: 'Open Sans', Tahoma;
 }
 
 #author_alphabet_name a:hover {
@@ -1669,10 +1669,21 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	color: #777;
 }
 
+#author_search_box {
+	padding: 0em 1em;
+	background-color: #DDD;
+	margin: 0em 1em 2em 1em;
+	text-align: right;
+}
+
+#author_search_box input {
+	border: 1px solid #999;
+}
+
 #selected_letter {
 	color: #222 !important;
 	text-decoration: none;
-	font-size: 1.3em;
+	font-size: 1.25em;
 }
 
 .author-description {
