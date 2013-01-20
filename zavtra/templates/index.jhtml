@@ -106,8 +106,8 @@
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
-                    <a href="{{events_rubrics[0].get_absolute_url()}}" class="gray gray_link no_underline">
-                      <span class="main_header_category">{{events_rubrics[0].title}}</span>
+                    <a href="/content/news/" class="gray gray_link no_underline">
+                      <span class="main_header_category">События</span>
                     </a>
                   </h2>
                 </div>
@@ -120,7 +120,7 @@
                       </li>
                       {% for event in events %}
                       <li class="inline">
-                        <a href="{{ event.get_absolute_url() }}">
+                        <a href="{{event.get_absolute_url()}}">
                           <img class="main_events_selection_bullet" src="{{STATIC_URL}}img/graay_dot.png">
                         </a>
                       </li>
@@ -130,16 +130,18 @@
                       </li>
                     </ul>
                   </div>
+                  {% for event in events[0:10] %}
                   <div class="center_align">
-                    <a href="{{ events[0].get_absolute_url() }}">
-                      <img id="main_event_image" src="{{ events[0].cover_for_eventbox.url }}">
+                    <a href="/content/news/">
+                      <img id="main_event_image" src="{{event.cover_for_eventbox.url}}">
                     </a>
                   </div>
                   <div id="main_event_header">
                     <h5>
-                      <a href="{{ events[0].get_absolute_url() }}" class="white white_link">{{ events[0].title }}</a>
+                      <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
                     </h5>
                   </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
@@ -150,14 +152,14 @@
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
-                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">
+                <a class="gray gray_link no_underline" href="{{wod_rubric.get_absolute_url()}}">
                   <span class="main_header_category">Слово Дня:</span>
                   <span class="main_header_name">{{wod.title}}</span>
                 </a>
               </h2>
             </div>
             <a href="{{wod.get_absolute_url()}}">
-              <img id="main_wod_image" src="{{wod.cover_for_wod.url}}">
+              <img id="main_wod_image" src="{{wod.main_cover_for_wod.url}}">
             </a>
             <div id="main_wod_content">
               <h5 class="white left_align main_box_header">Точки зрения</h5>
@@ -207,6 +209,7 @@
       </div>
       <div class="row">
         <div class="span9">
+          {#
           <div class="main_editor_container">
             <img class="editor-block-shadow" src="{{STATIC_URL}}img/editor_shadow.png">
             <div class="main_editor_message">
@@ -228,6 +231,7 @@
               </div>
             </div>
           </div>
+          #}
         </div>
       </div>
       {% for group in columns %}
@@ -260,7 +264,7 @@
             <div>
               <div class="relative main_box_header">
                 <h4 class="white inline">
-                  <a href="{{blogs_rubrics[0].get_absolute_url()}}" class="gray gray_link">{{blogs_rubrics[0].title}}</a>
+                  <a href="/content/blogs/" class="gray gray_link">Блоги</a>
                 </h4>
               </div>
               <ul class="nav nav-tabs no_margin" id="main_blog_selector">
@@ -333,13 +337,16 @@
                 <a class="no_underline" href="/content/zeitung/">Газета:</a>
               </h2>
               <h3 class="inline">
-                <a class="no_underline" href="/content/zeitung/"><span class="main_header_name gray">№{{current_number}} &ndash; {{current_range[0]|ru_date("%d %B")}}</span></a>
+                <a class="no_underline" href="{{issue.get_absolute_url()}}"><span class="main_header_name gray">№{{issue.relative_number}} &ndash; {{issue.published_at|ru_date("%d %B")}}</span></a>
               </h3>
             </div>
             <a href="#"><img src="{{STATIC_URL}}img/PDF_Download.png" id="main_newspaper_pdf_link"></a>
             <div id="main_newspaper_img">
-              <a href="/content/zeitung/"><img src="{{illustration.gazette_box.url}}"></a>
+              {#
+              <a href="/content/zeitung/"><img src="{{issue.illustration.gazette_box.url}}"></a>
+              #}
             </div>
+            {% set gazette = issue.gazette %}
             <div class="main_box_header">
               <h5>
                 <a href="{{gazette[0].rubric.get_absolute_url()}}" class="gray gray_link">{{gazette[0].rubric.title}}</a>
@@ -361,7 +368,7 @@
               </h5>
             </div>
             <div class="main_newspaper_block">
-              {% for article in gazette[1:] %}
+              {% for article in gazette[1:6] %}
               <h4 class="right_align">
                 <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
               </h4>
@@ -391,6 +398,7 @@
       </div>
       <div class="row">
         <div class="span4">
+          {#
           <div class="main_box_frame">
             <div class="relative main_box_header">
               <h4>
@@ -424,6 +432,7 @@
               {{videos[0].announce}}
             </div>
           </div>
+          #}
         </div>
       </div>
     </div>

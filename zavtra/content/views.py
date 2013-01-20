@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
-from content.models import Article, Rubric, Topic, ZhivotovIllustration
+from content.models import Article, Rubric, Topic
 
 
 class DayArchiveViewDefaulted(DayArchiveView):
@@ -26,7 +26,8 @@ class DayArchiveViewDefaulted(DayArchiveView):
 
 class EventsView(DayArchiveViewDefaulted):
   template_name = 'content/events.jhtml'
-  queryset = Article.events.all()
+  def get_queryset(self):
+    return Article.published.filter(rubric=Rubric.fetch_rubric('novosti'))
 
   def get_context_data(self, **kwargs):
     context = super(EventsView, self).get_context_data(**kwargs)
@@ -36,7 +37,8 @@ class EventsView(DayArchiveViewDefaulted):
 
 class DailyView(DayArchiveViewDefaulted):
   template_name = 'content/daily.jhtml'
-  queryset = Article.columns.all()
+  def get_queryset(self):
+    return Article.published.filter(selected_at=self.day)
 
   def get_context_data(self, **kwargs):
     context = super(DailyView, self).get_context_data(**kwargs)

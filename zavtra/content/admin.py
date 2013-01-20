@@ -1,7 +1,6 @@
 from django.contrib import admin
-from mptt.admin import MPTTModelAdmin
 
-from content.models import Rubric, Article, ExpertComment, ZhivotovIllustration
+from content.models import Rubric, Article, ExpertComment
 
 
 class ExpertCommentAdminInline(admin.StackedInline):
@@ -22,5 +21,4 @@ class ArticleAdmin(admin.ModelAdmin):
     return Article.everything.all()
 
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(Rubric, MPTTModelAdmin)
-admin.site.register(ZhivotovIllustration)
+admin.site.register(Rubric)
