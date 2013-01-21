@@ -73,7 +73,7 @@
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
             {% if issue.illustration != "" %}
-            <img src="{{issue.archive_box.url}}" id="newspaper_illustration">
+            <img src="{{issue.zeitung_box.url}}" id="newspaper_illustration">
             {% endif %}
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
