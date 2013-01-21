@@ -17,9 +17,6 @@ class ArticleAdmin(admin.ModelAdmin):
   filter_vertical = ('authors', 'topics')
   inlines = [ExpertCommentAdminInline]
 
-  def queryset(self, request):
-    return Article.everything.all()
-
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Rubric)
 admin.site.register(Issue)
