@@ -317,9 +317,7 @@
               <img src="{{STATIC_URL}}img/PDF_Download.png" >
             </a>
             <div id="main_newspaper_img">
-              {#
               <a href="/content/zeitung/"><img src="{{issue.illustration.gazette_box.url}}"></a>
-              #}
             </div>
             {% set gazette = issue.gazette %}
             <div class="main_box_header">

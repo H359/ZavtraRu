@@ -124,7 +124,7 @@ $(function(){
             </div>
             <div class="text-over-image">
               <div class="padding_one">
-                <img src="{{issue.illustration}}" id="newspaper_illustration">
+                <img src="{{MEDIA_URL}}{{issue.illustration}}" id="newspaper_illustration">
               </div>
               <div class="text-bottom right_align x-margin-one">
                 <span class="white bottom_align">

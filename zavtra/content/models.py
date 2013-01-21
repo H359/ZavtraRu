@@ -56,6 +56,8 @@ class Issue(models.Model):
   objects = models.Manager()
   published = PublishedManager()
 
+  gazette_box = ImageSpec([ResizeToFit(278, 121, True)], image_field='image', format='JPEG')
+
   class Meta:
     ordering = ['-published_at']
     verbose_name = u'Выпуск'

@@ -67,12 +67,12 @@
       </div>
     </div>
     {% set articles = issue.gazette %}
-    {% if illustration is not none %}
+    {% if issue.illustration is not none %}
     <div class="row">
       <div class="span12">
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
-            <img src="{{issue.illustration}}" id="newspaper_illustration">
+            <img src="{{MEDIA_URL}}{{issue.illustration}}" id="newspaper_illustration">
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
                 <i class="icon-white icon-zoom-in"> </i>
