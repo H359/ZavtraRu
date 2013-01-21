@@ -32,9 +32,16 @@ class Rubric(models.Model):
   def fetch_rubric(slug):
     return cached(lambda: Rubric.objects.get(slug=slug), 'rubric:%s' % slug)
 
-  #@models.permalink
+  @staticmethod
+  def get_gazette_rubrics():
+    # TODO: optimize this
+    rii = RubricInIssue.objects.distinct('rubric').\
+          values_list('rubric', flat=True).order_by('rubric', 'position')
+    return Rubric.objects.filter(pk__in = rii)
+
+  @models.permalink
   def get_absolute_url(self):
-    return None
+    return ('content.views.rubric', (), {'slug': self.slug})
 
 
 class Issue(models.Model):
@@ -132,6 +139,7 @@ class Article(models.Model):
   cover_for_main_selection = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   inside_wod_article_cover =  ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_wodlist = ImageSpec([ResizeToFit(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']

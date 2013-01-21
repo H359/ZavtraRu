@@ -6,11 +6,12 @@
 <a href="{{url('siteuser.views.authors')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
 {% endmacro %}
 
-{% macro render_zeitung_rubric(joined, rubrics) %}
+{% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
 <div class="row">
   {% if joined %}
   {% for rubric in rubrics %}
   <div class="span6">
+    {% if with_title %}
     <div class="rubric-header">
       <h3>
         <a href="{{rubric['rubric'].get_absolute_url()}}">
@@ -19,6 +20,7 @@
         </a>
       </h3>
     </div>
+    {% endif %}
     {% for article in rubric['items'] %}
     <div class="article-content side_shadows">
       <section>
@@ -56,6 +58,7 @@
   {% else %}
   {% set rubric = rubrics[0] %}
   <div class="span12">
+    {% if with_title %}
     <div class="row">
       <div class="span12">
         <div class="rubric-header">
@@ -68,6 +71,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% for l in range(0, rubric['items']|length, 3) %}
     <div class="row">
 

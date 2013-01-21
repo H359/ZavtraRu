@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
-from content.models import Article, Rubric, Topic, Issue
+from content.models import Article, Rubric, Topic, Issue, RubricInIssue
 
 
 class DayArchiveViewDefaulted(DayArchiveView):
@@ -46,31 +46,22 @@ class DailyView(DayArchiveViewDefaulted):
     return context
 
 
-class ArchiveView(ListView):
+class ArchiveView(TemplateView):
   template_name = 'content/archive.jhtml'
 
   def get_context_data(self, **kwargs):
     context = super(ArchiveView, self).get_context_data(**kwargs)
-    context['selected_date'] = self.date
-    obj = context['object_list'][0]
-    context['issue'] = {
-      'number': obj.issue_number,
-      'date': obj.issue_date,
-      'others': []
-    }
-    context['illustration'] = get_illustration(obj.issue_date)
-    return context
-
-  def get_queryset(self):
     try:
-      self.date = datetime(
+      date = datetime(
         year=int(self.kwargs['year']),
         month=int(self.kwargs['month']),
         day=int(self.kwargs['day'])
       )
     except (KeyError, ValueError):
-      self.date = datetime.now().date() - 48*oneday
-    return Article.zeitung.issue_by_date(self.date).select_related()
+      date = datetime.now().date()
+    context['selected_date'] = date
+    context['issue'] = Issue.objects.filter(published_at__lte=date).latest('published_at')
+    return context
 
 
 class ArticleView(DetailView):
@@ -100,45 +91,21 @@ class RubricView(ListView):
 
   @property
   def template_name(self):
-    if self.rubric.zeitung_rubric:
+    if RubricInIssue.objects.filter(rubric=self.rubric).count() > 0:
       return 'content/zeitung_rubric_detail.jhtml'
-    elif self.rubric.wod_rubric:
+    elif self.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod.jhtml'
     else:
       return 'content/site_rubric_detail.jhtml'
 
-  def normalize_number(self, year, number):
-    num = (number % (52 + (1 if isleap(year) else 0)))
-    return num if num >= number else num + 1
-
-  def get_context_data(self, **kwargs):
-    now = datetime.now().date()
-    context = super(RubricView, self).get_context_data(**kwargs)
-    context['rubric'] = self.rubric
-    context['most_commented'] = Article.get_most_commented()
-    if self.rubric.zeitung_rubric:
-      number = Article.get_current_issue_number()
-      date = Article.get_current_issue_date_range()[0]
-      context['issue'] = {
-        'number': number,
-        'date': date,
-        'others': []
-      }
-      max_positive_shift = (now - context['issue']['date']).days / 7
-      max_negative_shift = 5 - max_positive_shift
-      for x in range(-max_negative_shift, max_positive_shift):
-        date = context['issue']['date'] + x * 7 * oneday
-        if date <= now:
-          number = context['issue']['number'] + x
-          context['issue']['others'].append({
-            'date': date,
-            'number': self.normalize_number(context['issue']['date'].year, number)
-          })
-    return context
-
   def get_queryset(self):
     self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
     return self.rubric.articles.order_by('-published_at').all()
+
+  def get_context_data(self, **kwargs):
+    context = super(RubricView, self).get_context_data(**kwargs)
+    context['rubric'] = self.rubric
+    return context
 
 
 class FeaturedView(ListView):
@@ -163,22 +130,12 @@ class ZeitungView(TemplateView):
 
   def get_context_data(self, **kwargs):
     context = super(ZeitungView, self).get_context_data(**kwargs)
-    context['issue'] = self.issue = Issue.published.get(
+    context['issue'] = Issue.published.get(
       published_at__year = self.kwargs['year'],
       relative_number = self.kwargs['issue']
     )
+    context['latest_issues'] = Issue.published.all()[0:5]
     return context
 
-
-def get_illustration(date):
-  try:
-    return ZhivotovIllustration.object.filter(published_at__lt = date).\
-           latest('published_at')
-  except:
-    return None
-
-
 def current_issue_redirect(request):
-  drange = Article.get_current_issue_date_range()
-  number = Article.get_current_issue_number()
-  return redirect('content.views.zeitung', year=drange[0].year, issue=number)
+  return redirect(Issue.objects.latest('published_at'))

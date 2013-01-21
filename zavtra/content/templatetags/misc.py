@@ -4,6 +4,7 @@ from django.utils.datastructures import SortedDict
 import jinja2
 from pytils.dt import ru_strftime, distance_of_time_in_words
 from pytils.numeral import get_plural as _get_plural
+from content.models import Issue
 
 register = Library()
 
@@ -42,3 +43,15 @@ def group_rubrics(ctx, value):
     else:
       yield False, (rubrics[num],)
       num += 1
+
+@register.filter
+@jinja2.contextfilter
+def get_issues_from_list(ctx, value, rubric):
+  articles = sorted(map(lambda p: p.published_at.date(), value))
+  issues = Issue.published.filter(published_at__range = (articles[0], articles[-1]))
+  for issue in issues:
+    group = {
+      'rubric': rubric,
+      'items': [article for article in value if article.published_at.date() == issue.published_at]
+    }
+    yield (issue, [group])

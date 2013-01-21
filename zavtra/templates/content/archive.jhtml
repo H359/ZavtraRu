@@ -115,47 +115,46 @@ $(function(){
           </div>
         </div>
       </div>
+      {% set objects = issue.gazette %}
       <div class="span8">
         <div class="row">
           <div class="span8">
             <div class="rubric-header">
-              <h3>Выпуск №{{issue.number}} &ndash; {{issue.date|ru_date("%d %B %Y")}}</h3>
+              <h3>Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</h3>
             </div>
-            {% if illustration is not none %}
             <div class="text-over-image">
               <div class="padding_one">
-                <img src="{{illustration.archive_box.url}}" id="newspaper_illustration">
+                <img src="{{issue.illustration}}" id="newspaper_illustration">
               </div>
               <div class="text-bottom right_align x-margin-one">
                 <span class="white bottom_align">
                   <i class="icon-white icon-zoom-in"> </i>
-                  <h4 class="inline">{{object_list[0].title}}</h4>
+                  <h4 class="inline">{{objects[0].title}}</h4>
                 </span>
               </div>
             </div>
-            {% endif %}
           </div>
         </div>
         <div class="row newspaper_review_rubric">
           <div class="span8">
             <h2>
-              <a class="dark" href="{{object_list[0].rubric.get_absolute_url()}}">{{object_list[0].rubric.title}}:</a>
+              <a class="dark" href="{{objects[0].rubric.get_absolute_url()}}">{{objects[0].rubric.title}}:</a>
             </h2>
           </div>
           <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
           <div class="span5">
             <h4>
-              <a class="black black_link" href="{{object_list[0].get_absolute_url()}}">{{object_list[0].title}}</a>
+              <a class="black black_link" href="{{objects[0].get_absolute_url()}}">{{objects[0].title}}</a>
             </h4>
-            {% for author in object_list[0].authors.all() %}
+            {% for author in objects[0].authors.all() %}
             <a href="{{author.get_absolute_url()}}" class="person_name largetext dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
             <div class="newspaper_review_statistics">
               <span class="article-statistic">
-                <i class="icon-eye-open"> </i> 172
+                <i class="icon-eye-open"> </i> {{objects[0].views_count}}
               </span>
               <span class="article-statistic">
-                <i class="icon-comment"> </i> {{object_list[0].comments.count()}}
+                <i class="icon-comment"> </i> {{objects[0].comments_count}}
               </span>
             </div>
           </div>
@@ -165,7 +164,7 @@ $(function(){
             <h2 class="dark">Также в номере:</h2>
           </div>
           <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-          {% for object in object_list[1:9] %}
+          {% for object in objects[1:] %}
           <div class="span3">
             <h4>
               <a href="{{object.get_absolute_url()}}" class="black black_link">{{object.title}}</a>

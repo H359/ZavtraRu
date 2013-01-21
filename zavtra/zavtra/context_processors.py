@@ -8,4 +8,5 @@ def common(request):
     'now': datetime.now(),
     'top_topics': Topic.objects.filter(on_top=True),
     'wod_rubric': Rubric.fetch_rubric('wod'),
+    'gazette_rubrics': Rubric.get_gazette_rubrics()
   }
