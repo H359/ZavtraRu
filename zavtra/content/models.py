@@ -57,7 +57,7 @@ class Issue(models.Model):
   published = PublishedManager()
 
   gazette_box = ImageSpec([ResizeToFit(278, 121, True)], image_field='illustration', format='JPEG')
-  archive_box = ImageSpec([ResizeToFit(870, 385, True)], image_field='illustration', format='JPEG')
+  archive_box = ImageSpec([ResizeToFit(570, 252, True)], image_field='illustration', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
