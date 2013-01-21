@@ -140,6 +140,7 @@ class Article(models.Model):
   inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   inside_wod_article_cover =  ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_wodlist = ImageSpec([ResizeToFit(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_video = ImageSpec([ResizeToFit(246, 184, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']

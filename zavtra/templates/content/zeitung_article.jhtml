@@ -20,7 +20,7 @@
               <span class="divider">/</span>
             </li>
             <li>
-              <a href="{{issue.get_absolute_url()}}/">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}})</a>
+              <a href="{{issue.get_absolute_url()}}">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}})</a>
               <span class="divider">/</span>
             </li>
             <li class="active">{{object.rubric.title}}</li>

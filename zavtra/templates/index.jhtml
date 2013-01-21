@@ -148,7 +148,6 @@
           </div>
         </div>
         <div class="span6" id="wod_block">
-          <img class="wod-block-shadow" src="{{STATIC_URL}}img/article_shadow1.png">
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
@@ -158,18 +157,19 @@
                 </a>
               </h2>
             </div>
-            <a href="{{wod.get_absolute_url()}}">
-              <img id="main_wod_image" src="{{wod.main_cover_for_wod.url}}">
-            </a>
-            <div id="main_wod_content">
-              <h5 class="white left_align main_box_header">Точки зрения</h5>
-              <div id="main_wod_opinions" class="average_padding_vertical">
-                <div class="center_align">
+            <div class="text-over-image">
+              <a href="{{wod.get_absolute_url()}}">
+                <img id="main_wod_image" src="{{wod.main_cover_for_wod.url}}">  
+              </a>
+              <div id="main_wod_details" class="text-bottom white">
+                <h4><a href="{{wod.get_absolute_url()}}">{{wod.title}}</a></h4>
+                <h5>Экспертные оценки:</h5>
+                <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
-                  <a href="{{wod.get_absolute_url()}}">{{expert_comment.expert}}</a>
+                  <a class="largetext person_name inline-block" href="{{wod.get_absolute_url()}}">{{expert_comment.expert}}</a>
                   {% if not loop.last %} &bull; {% endif %}
                   {% endfor %}
-                </div>
+                </span>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
-                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline">Здесь и Сейчас</a>
+                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline"><span class="main_header_category">Здесь и Сейчас</span></a>
               </h3>
             </div>
             <div id="main_news_box_content">
@@ -207,9 +207,9 @@
           </div>
         </div>
       </div>
+      {#
       <div class="row">
         <div class="span9">
-          {#
           <div class="main_editor_container">
             <img class="editor-block-shadow" src="{{STATIC_URL}}img/editor_shadow.png">
             <div class="main_editor_message">
@@ -231,9 +231,9 @@
               </div>
             </div>
           </div>
-          #}
         </div>
       </div>
+      #}
       {% for group in selected %}
       <div class="row">
         {% for article in group %}
@@ -258,6 +258,119 @@
         {% endfor %}
       </div>
       {% endfor %}
+      <div class="row">
+        <div class="span4">
+
+          <div class="main_box_frame">
+            <div class="relative main_box_header">
+              <h4>
+                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
+              </h4>
+              <div id="main_video_dentv_link">
+                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
+              </div>
+            </div>
+            <div id="main_video_selected">
+              <div id="main_video_selected_media">
+                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
+                  {% if videos[0].cover_source != "" %}
+                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
+                  {% else %}
+                  <img src="http://placekitten.com/246/184" id="main_video_selected_video">
+                  {% endif %}
+                </a>
+              </div>
+              <div id="main_video_selected_header_bg"></div>
+              <div id="main_video_selected_header">
+                <h6>
+                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
+                </h6>
+                <div id="main_video_selected_header_stats">
+                  <i class="icon-white icon-comment"> </i>
+                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
+                </div>
+                <div id="main_video_selected_header_restriction">
+                  <span class="smalltext beige">18+</span>
+                </div>
+              </div>
+            </div>
+            <div id="main_video_selected_description_container">
+              {{videos[0].announce}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="row" id="newspaper_holder">
+        <div class="span4" id="newspaper_block">
+          <div class="relative" id="main_newspaper_box">
+            <div class="main_upper_boxes_header">
+              <h2 class="inline">
+                <a class="gray gray_link no_underline" href="/content/zeitung/">
+                  <span class="main_header_category">Газета:</span>
+                  <span class="main_header_name mediumtext">№{{issue.relative_number}} &ndash; {{issue.published_at|ru_date("%d %B")}}</span>
+                </a>
+              </h2>
+            </div>
+            <a href="#" id="main_newspaper_pdf_link">
+              <img src="{{STATIC_URL}}img/PDF_Download.png" >
+            </a>
+            <div id="main_newspaper_img">
+              {#
+              <a href="/content/zeitung/"><img src="{{issue.illustration.gazette_box.url}}"></a>
+              #}
+            </div>
+            {% set gazette = issue.gazette %}
+            <div class="main_box_header">
+              <h5>
+                <a href="{{gazette[0].rubric.get_absolute_url()}}" class="gray gray_link">{{gazette[0].rubric.title}}</a>
+              </h5>
+            </div>
+            <div class="main_newspaper_block">
+              <h4 class="right_align">
+                <a href="{{gazette[0].get_absolute_url()}}" class="black black_link">{{gazette[0].title}}</a>
+              </h4>
+              <p class="right_align big_padding_vertical no_margin">{% for author in gazette[0].authors.all() %}<a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+              <p class="light_padding_vertical no_margin"><a href="{{gazette[0].get_absolute_url()}}" class="black black_link article_text no_underline">{{gazette[0].announce}}</a></p>
+              <h6 class="right_align italic average_padding_vertical">
+                <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
+              </h6>
+            </div>
+            <div class="main_box_header">
+              <h5>
+                <a href="/content/zeitung/" class="gray gray_link">Также в номере</a>
+              </h5>
+            </div>
+            <div class="main_newspaper_block">
+              {% for article in gazette[1:6] %}
+              <h4 class="right_align">
+                <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
+              </h4>
+              <h6>
+                <a href="{{article.get_absolute_url()}}" class="dark no_underline">{{article.subtitle}}</a>
+              </h6>
+              <p class="right_align average_padding_vertical no_margin">
+                {% for author in article.authors.all() %}
+                <a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </p>
+              {% if not loop.last %}
+              <div class="center_align">
+                <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="big_padding_vertical onepxline">
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <div class="relative" id="main_newspaper_footer">
+              <h5>
+                <a href="/content/zeitung/" class="dark dark_link">Все материалы выпуска</a>&nbsp;&bull;&nbsp;
+                <a href="/" class="dark dark_link">Архив</a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="span4">
           <div class="main_box_frame">
@@ -325,114 +438,6 @@
               {% endfor %}
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="span4">
-      <div class="row" id="newspaper_holder">
-        <div class="span4" id="newspaper_block">
-          <div class="relative" id="main_newspaper_box">
-            <div class="main_upper_boxes_header">
-              <h2 class="inline">
-                <a class="no_underline" href="/content/zeitung/">Газета:</a>
-              </h2>
-              <h3 class="inline">
-                <a class="no_underline" href="{{issue.get_absolute_url()}}"><span class="main_header_name gray">№{{issue.relative_number}} &ndash; {{issue.published_at|ru_date("%d %B")}}</span></a>
-              </h3>
-            </div>
-            <a href="#"><img src="{{STATIC_URL}}img/PDF_Download.png" id="main_newspaper_pdf_link"></a>
-            <div id="main_newspaper_img">
-              {#
-              <a href="/content/zeitung/"><img src="{{issue.illustration.gazette_box.url}}"></a>
-              #}
-            </div>
-            {% set gazette = issue.gazette %}
-            <div class="main_box_header">
-              <h5>
-                <a href="{{gazette[0].rubric.get_absolute_url()}}" class="gray gray_link">{{gazette[0].rubric.title}}</a>
-              </h5>
-            </div>
-            <div class="main_newspaper_block">
-              <h4 class="right_align">
-                <a href="{{gazette[0].get_absolute_url()}}" class="black black_link">{{gazette[0].title}}</a>
-              </h4>
-              <p class="right_align big_padding_vertical no_margin">{% for author in gazette[0].authors.all() %}<a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
-              <p class="light_padding_vertical no_margin"><a href="{{gazette[0].get_absolute_url()}}" class="black black_link article_text no_underline">{{gazette[0].announce}}</a></p>
-              <h6 class="right_align italic average_padding_vertical">
-                <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
-              </h6>
-            </div>
-            <div class="main_box_header">
-              <h5>
-                <a href="/content/zeitung/" class="gray gray_link">Также в номере</a>
-              </h5>
-            </div>
-            <div class="main_newspaper_block">
-              {% for article in gazette[1:6] %}
-              <h4 class="right_align">
-                <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
-              </h4>
-              <h6>
-                <a href="{{article.get_absolute_url()}}" class="dark no_underline">{{article.subtitle}}</a>
-              </h6>
-              <p class="right_align average_padding_vertical no_margin">
-                {% for author in article.authors.all() %}
-                <a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </p>
-              {% if not loop.last %}
-              <div class="center_align">
-                <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="big_padding_vertical onepxline">
-              </div>
-              {% endif %}
-              {% endfor %}
-            </div>
-            <div class="relative" id="main_newspaper_footer">
-              <h5>
-                <a href="/content/zeitung/" class="dark dark_link">Все материалы выпуска</a>&nbsp;&bull;&nbsp;
-                <a href="/" class="dark dark_link">Архив</a>
-              </h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="span4">
-          {#
-          <div class="main_box_frame">
-            <div class="relative main_box_header">
-              <h4>
-                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
-              </h4>
-              <div id="main_video_dentv_link">
-                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
-              </div>
-            </div>
-            <div id="main_video_selected">
-              <div id="main_video_selected_media">
-                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
-                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
-                </a>
-              </div>
-              <div id="main_video_selected_header_bg"></div>
-              <div id="main_video_selected_header">
-                <h6>
-                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
-                </h6>
-                <div id="main_video_selected_header_stats">
-                  <i class="icon-white icon-comment"> </i>
-                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
-                </div>
-                <div id="main_video_selected_header_restriction">
-                  <span class="smalltext beige">18+</span>
-                </div>
-              </div>
-            </div>
-            <div id="main_video_selected_description_container">
-              {{videos[0].announce}}
-            </div>
-          </div>
-          #}
         </div>
       </div>
     </div>

@@ -525,7 +525,7 @@ a:hover {
   clear: both;
 }
 p {
-	margin: 0;
+  margin: 0;
  /* margin: 0 0 10px;*/ /* SDK */
 }
 .lead {
@@ -1129,9 +1129,9 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: .95em;
   font-weight: normal;
-  line-height: 20px;
+  line-height: 1.25em;
 }
 input,
 button,
@@ -5297,7 +5297,7 @@ button.close {
     width: 715px;
   }
   .container12 { /* SDK */
-  	width: 660px;
+    width: 660px;
   }
   .span13 {
     width: 715px;
@@ -5655,7 +5655,7 @@ button.close {
     width: 975px;
   }
   .container12 { /* SDK */
-  	width: 900px;
+    width: 900px;
   }
   .span13 {
     width: 975px;
