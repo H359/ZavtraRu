@@ -4,8 +4,7 @@
 
 {% block page_style %}newspaper{% endblock %}
 
-{% block page_content %}
-<div class="container12">
+{% macro plashka() %}
   <div class="bordered">
     <div class="row">
       <div class="span12">
@@ -17,9 +16,13 @@
         </div>
       </div>
     </div>
-    <div class="row" id="newspaper_issues">
-    </div>
+    <div class="row" id="newspaper_issues"></div>
   </div>
+{% endmacro %}
+
+{% block page_content %}
+<div class="container12">
+  {{plashka()}}
   <div class="bordered_clean">
     <div class="row">
       <div class="span12">
@@ -51,7 +54,7 @@
   <div class="row">
     <div class="span12">
       <div class="text-over-image y-margin-one">
-        <img src="{{object.cover_for_wodarticle.url}}" id="newspaper_illustration">
+        <img src="{{object.inside_wod_article_cover.url}}" id="newspaper_illustration">
         <div class="text-top">
           <a href="#" rel="facebox" class="bottom_align"><h3 class="inline x-margin-thrqtr">{{object.published_at|ru_date("%d/%m/%Y")}}</h3><h1 class="inline">{{object.title}}</h1></a>
         </div>
@@ -149,19 +152,6 @@
       <div>{{render_comments(request, object, csrf_token)}}</div>
     </div>
   </div>
-  <div class="bordered">
-    <div class="row">
-      <div class="span12">
-        <div class="section-header">
-          <h2 class="inline top_align">Рубрика &laquo;Слово Дня&raquo;</h2>
-          <div class="section_header_button">
-            <a href="#" class="btn btn-success baseline_align">Архив Рубрики</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" id="wod_issues">
-    </div>
-  </div>
+  {{plashka()}}
 </div>
 {% endblock %}

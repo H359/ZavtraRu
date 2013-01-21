@@ -106,7 +106,7 @@
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
-                    <a href="/content/news/" class="gray gray_link no_underline">
+                    <a href="/content/events/" class="gray gray_link no_underline">
                       <span class="main_header_category">События</span>
                     </a>
                   </h2>
@@ -118,7 +118,7 @@
                       <li class="inline">
                         <img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_left.png">
                       </li>
-                      {% for event in events %}
+                      {% for event in events[0:10] %}
                       <li class="inline">
                         <a href="{{event.get_absolute_url()}}">
                           <img class="main_events_selection_bullet" src="{{STATIC_URL}}img/graay_dot.png">
@@ -131,12 +131,12 @@
                     </ul>
                   </div>
                   {% for event in events[0:10] %}
-                  <div class="center_align">
+                  <div class="center_align"{% if not loop.first %} style="display:none"{% endif %}>
                     <a href="/content/news/">
                       <img id="main_event_image" src="{{event.cover_for_eventbox.url}}">
                     </a>
                   </div>
-                  <div id="main_event_header">
+                  <div{% if not loop.first %} style="display:none"{% endif %}> {# id="main_event_header"> #}
                     <h5>
                       <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
                     </h5>
@@ -152,7 +152,7 @@
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
-                <a class="gray gray_link no_underline" href="{{wod_rubric.get_absolute_url()}}">
+                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">
                   <span class="main_header_category">Слово Дня:</span>
                   <span class="main_header_name">{{wod.title}}</span>
                 </a>
@@ -234,14 +234,14 @@
           #}
         </div>
       </div>
-      {% for group in columns %}
+      {% for group in selected %}
       <div class="row">
         {% for article in group %}
         <div class="span3">
           <div class="main_article_container">
             <img src="{{STATIC_URL}}img/article_shadow2.png" class="article-block-shadow">
             <a href="{{article.get_absolute_url()}}" class="no_underline">
-              <img src="{{article.cover_for_list.url}}" class="main_article_image">
+              <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
             </a>
             <div class="main_article_header">
               <div class="main_article_author">

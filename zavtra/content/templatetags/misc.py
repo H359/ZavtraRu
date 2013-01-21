@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django_jinja.base import Library
+from django.utils.datastructures import SortedDict
 import jinja2
 from pytils.dt import ru_strftime, distance_of_time_in_words
 from pytils.numeral import get_plural as _get_plural
@@ -25,14 +26,14 @@ def ru_date(ctx, value, format=u'%d %B %Y г'):
 @register.filter
 @jinja2.contextfilter
 def group_rubrics(ctx, value):
-  rubrics = {}
+  dct = SortedDict()
   for item in value:
-    rubrics.setdefault(item.rubric_id, {'rubric': None, 'items': []})
-    if rubrics[item.rubric_id]['rubric'] is None:
-      rubrics[item.rubric_id]['rubric'] = item.rubric
-    rubrics[item.rubric_id]['items'].append(item)
-  rubrics = sorted(rubrics.values(), key=lambda p: p['rubric'].position)
+    if item.rubric_id in dct:
+      dct[item.rubric_id]['items'].append(item)
+    else:
+      dct[item.rubric_id] = {'items': [item], 'rubric': item.rubric}
   num = 0
+  rubrics = dct.values()
   nlen = len(rubrics)
   while nlen > num:
     if len(rubrics[num]['items']) == 1 and nlen > num + 1 and len(rubrics[num + 1]['items']) == 1:

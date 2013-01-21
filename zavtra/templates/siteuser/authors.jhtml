@@ -107,7 +107,7 @@
                   <div class="text-over-image">
                     <a href="{{item.get_absolute_url()}}">
                       {% if item.cover_source != "" %}
-                      <img src="{{item.cover_for_main.url}}" class="news_selection_item_img">
+                      <img src="{{item.cover_for_sidebar.url}}" class="news_selection_item_img">
                       {% else %}
                       <img src="http://placekitten.com/g/200/150" class="news_selection_item_img">
                       {% endif %}

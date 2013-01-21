@@ -6,8 +6,8 @@ from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from siteuser.models import User
 from content.models import Article
 
-
-RU_ALPHABET = map(unichr, range(1040,1072))
+unneeded_letters = [u'Ъ', u'Ь', u'Ы']
+RU_ALPHABET = filter(lambda l: l not in unneeded_letters, map(unichr, range(1040,1072)))
 
 class UserView(DetailView):
   template_name = 'siteuser/profile.jhtml'

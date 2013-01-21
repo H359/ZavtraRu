@@ -15,7 +15,8 @@ from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit
 
-from managers import PublishedManager, EventsManager, WODManager, NewsManager
+from managers import PublishedManager, EventsManager, WODManager,\
+                     NewsManager, BlogsManager
 from zavtra.utils import cached, oneday
 
 
@@ -42,6 +43,7 @@ class Issue(models.Model):
   published_at = models.DateField(verbose_name=u'Дата выхода')
   illustration = models.ImageField(upload_to='zhivotov', verbose_name=u'Иллюстрация Животова')
 
+  objects = models.Manager()
   published = PublishedManager()
 
   class Meta:
@@ -59,9 +61,13 @@ class Issue(models.Model):
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
 
-  #@models.permalink
+  @models.permalink
   def get_absolute_url(self):
-    return None
+    kwargs = {
+      'year': self.published_at.year,
+      'issue': self.relative_number
+    }
+    return ('content.views.zeitung', (), kwargs)
 
 
 class RubricInIssue(models.Model):
@@ -86,9 +92,9 @@ class Topic(models.Model):
     verbose_name = u'Тема'
     verbose_name_plural = u'Тема'
 
-  #@models.permalink
+  @models.permalink
   def get_absolute_url(self):
-    return None
+    return ('content.views.topic', (), {'slug': self.slug})
 
 
 class Article(models.Model):
@@ -118,17 +124,53 @@ class Article(models.Model):
   events = EventsManager()
   news = NewsManager()
   wod = WODManager()
+  blogs = BlogsManager()
 
   main_cover_for_wod = ImageSpec([ResizeToFit(428, 180, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_sidebar = ImageSpec([ResizeToFit(200, 150, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_eventbox = ImageSpec([ResizeToFit(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_main_selection = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  inside_wod_article_cover =  ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
     verbose_name = u'Статья'
     verbose_name_plural = u'Статьи'
 
+  @staticmethod
+  def get_most_commented():
+    #end = datetime.now()
+    #start = end - oneday * 30
+    return Article.published.all()[0:5]
+
   @models.permalink
   def get_absolute_url(self):
     return ('content.views.article', (), {'slug': self.slug})
+
+  @property
+  def issue(self):
+    # TODO: CACHE!!!
+    try:
+      issue = RubricInIssue.objects.get(
+        issue__published_at = self.published_at,
+        rubric = self.rubric
+      ).issue
+    except RubricInIssue.DoesNotExist:
+      issue = None
+    return issue
+
+  def render_content(self):
+    if self.type == Article.TYPES.text:
+      return self.content
+    else:
+      tpl = """<iframe type="text/html" width="640" height="480" src="%s" frameborder="0" allowfullscreen></iframe>"""
+      pc = urlparse(self.content)
+      if pc.netloc.endswith("youtube.com"):
+        source = "http://youtube.com/embed/%s?html5=1" % parse_qs(pc.query).get('v')[0].strip()
+      else:
+        source = self.content
+      return tpl % source      
 
 
 class ExpertComment(models.Model):

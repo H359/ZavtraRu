@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from content.models import Rubric, Article, ExpertComment
+from content.models import Rubric, Article, Issue, ExpertComment
 
 
 class ExpertCommentAdminInline(admin.StackedInline):
@@ -22,3 +22,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Rubric)
+admin.site.register(Issue)

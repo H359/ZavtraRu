@@ -31,6 +31,7 @@ class Command(BaseCommand):
 
   def cleanup(self):
     Issue.objects.all().delete()
+    RubricInIssue.objects.all().delete()
     Rubric.objects.all().delete()
     User.objects.all().delete()
     Article.objects.all().delete()
@@ -67,14 +68,14 @@ class Command(BaseCommand):
 
     absnumber = 150
     relnumber = 1
-    for issue_date in self.simple_sql("SELECT DISTINCT date_trunc('day', pub_date) AS dt FROM corecontent_contentitem WHERE published=true ORDER BY dt DESC"):
+    for issue_date in self.simple_sql("SELECT DISTINCT date_trunc('day', pub_date) AS dt FROM corecontent_contentitem WHERE published=true ORDER BY dt ASC"):
       issue = Issue.objects.create(absolute_number=absnumber, relative_number=relnumber, published_at=issue_date['dt'].date())
       # illustration?
       ir = {}
       for r in self.simple_sql("SELECT * FROM corecontent_contentitem WHERE date_trunc('day', pub_date) = '%s' AND published=true" % issue_date['dt']):
         if r['rubric_id'] not in ir:
           rub, pos = rubrics[r['rubric_id']]
-          ir['rubric_id'] = RubricInIssue.objects.create(issue=issue, rubric=rub, position=pos)
+          ir[r['rubric_id']] = RubricInIssue.objects.create(issue=issue, rubric=rub, position=pos)
         else:
           rub, _ = rubrics[r['rubric_id']]
         article = Article.objects.create(
@@ -83,7 +84,7 @@ class Command(BaseCommand):
           subtitle     = r['subtitle'],
           status       = Article.STATUS.ready,
           type         = r['kind'],
-          published_at = r['pub_date'],
+          published_at = issue_date['dt'],
           rubric       = rub,
           selected_at  = None,
           announce     = r['description'], # clean html, extract cover

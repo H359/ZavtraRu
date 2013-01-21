@@ -1,0 +1,133 @@
+{% extends "base.jhtml" %}
+
+{% from "macro.jhtml" import render_comments %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="bordered_clean">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <ul class="breadcrumb inline">
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li>
+              <a href="/content/zeitung/">Газета</a>
+              <span class="divider">/</span>
+            </li>
+            <li>
+              <a href="{{issue.get_absolute_url()}}/">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}})</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">{{object.rubric.title}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <div id="inner_subjects">
+        {% for topic in top_topics %}
+        <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span10">
+      <div class="row">
+        <div class="offset1 span10">
+          <article>
+            <div class="row y-margin-one">
+              <div class="span6">
+                <header>
+                  <h1 class="article-page-main-header article-header">{{object.title}}</h1>
+                </header>
+                <div class="article-page-author-name">
+                  {% for author in object.authors.all() %}
+                  <a rel="author" href="{{author.get_absolute_url()}}" class="dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              {% if object.topics.count() > 0 %}
+              <div class="span4 right_align article_category_list">
+                {% for topic in object.topics.all() %}
+                <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="row">
+              <div class="span10">
+                <div class="row">
+                  {% if object.cover_source != "" %}
+                  <div class="span5">
+                    <div class="article-page-illustration">
+                      <img src="{{object.inside_article_cover.url}}">
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="span5">
+                    <div class="row">
+                      {% if object.subtitle != "" %}
+                      <div class="span5">
+                        <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
+                      </div>
+                      {% endif %}
+                      <div class="span5 article-page-statistics">
+                        {% if object.from_zeitung %}
+                        <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
+                        {% endif %}
+                        <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+                        <span class="article-statistic">
+                          <i class="icon-eye-open"> </i>199
+                        </span>
+                        <span class="article-statistic">
+                          <i class="icon-comment"> </i>{{ object.comments.count() }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
+            </div>
+            <div class="row">
+              <div class="span8 offset1">
+                <div id="footer_social_networks" class="right_align">
+                  <span class="dark x-margin-one">поделиться: </span>
+                  <a href="http://facebook.com/zavtraru">
+                    <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+                  </a>
+                  <a href="http://vk.com/zavtraru">
+                    <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+                  </a>
+                  <a href="http://twitter.com/ZavtraRu">
+                    <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span10 offset1">
+          <div id="comments-section" class="rubric-header no_margin">
+            <h3 class="inline">Комментарии ({{object.comments.count()}}):</h3>
+            <a href="#" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
+          </div>
+          <div>{{render_comments(request, object, csrf_token)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

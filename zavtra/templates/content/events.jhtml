@@ -53,7 +53,7 @@
                       <div class="span3">
                         <div class="article-illustration-container">
                           <a href="{{article.get_absolute_url()}}">
-                            <img src="{{article.cover_for_list.url}}" class="article-illustration">
+                            <img src="{{article.cover_for_main_selection.url}}" class="article-illustration">
                           </a>
                         </div>
                       </div>
@@ -147,12 +147,12 @@
                     <h3>Слово Дня:</h3>
                   </div>
                 </div>
-                {% set wod = wod_rubrics[0].articles.latest('published_at') %}
+                {% set wod = wod_rubric.articles.latest('published_at') %}
                 <div class="row wod_entry_content">
                   <div class="span4">
                     <div class="wod_entry_img">
                       <a href="{{wod.get_absolute_url()}}">
-                        <img src="{{wod.cover_for_list.url}}">
+                        <img src="{{wod.cover_for_main_selection.url}}">
                       </a>
                     </div>
                   </div>
@@ -189,7 +189,7 @@
               <ul class="middle_align">
                 <li{% if previous_day is none %} class="disabled"{% endif %}>
                   {% if previous_day is not none %}
-                  <a href="{{url('content.views.events', year=previous_day.year, month=previous_day.month, day=previous_day.day)}}">Предыдущий День</a>
+                  <a href="{{url('content.views.events_now')}}{{previous_day.year}}/{{previous_day.month}}/{{previous_day.day}}/">Предыдущий День</a>
                   {% else %}
                   <a href="#">Предыдущий День</a>
                   {% endif %}
@@ -199,7 +199,7 @@
                 </li>
                 <li{% if next_day is none %} class="disabled"{% endif %}>
                   {% if next_day is not none %}
-                  <a href="{{url('content.views.events', {'year':next_day.year, 'month':next_day.month,'day':next_day.day})}}">Следующий День</a>
+                  <a href="{{url('content.views.events_now')}}{{next_day.year}}/{{next_day.month}}/{{next_day.day}}/">Следующий День</a>
                   {% else %}
                   <a href="#">Следующий День</a>
                   {% endif %}
