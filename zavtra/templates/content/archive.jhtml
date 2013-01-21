@@ -124,7 +124,7 @@ $(function(){
             </div>
             <div class="text-over-image">
               <div class="padding_one">
-                {% if issue.illustration =! "" %}
+                {% if issue.illustration != "" %}
                 <img src="{{issue.archive_box.url}}" id="newspaper_illustration">
                 {% endif %}
               </div>
