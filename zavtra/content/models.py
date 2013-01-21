@@ -43,6 +43,9 @@ class Rubric(models.Model):
   def get_absolute_url(self):
     return ('content.views.rubric', (), {'slug': self.slug})
 
+  def __unicode__(self):
+    return u'%s' % self.title
+
 
 class Issue(models.Model):
   absolute_number = models.PositiveIntegerField(verbose_name=u'Номер (абсолютный)')
