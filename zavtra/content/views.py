@@ -27,11 +27,11 @@ class DayArchiveViewDefaulted(DayArchiveView):
 class EventsView(DayArchiveViewDefaulted):
   template_name = 'content/events.jhtml'
   def get_queryset(self):
-    return Article.events.all()
+    return Article.published.filter(rubric=Rubric.fetch_rubric('novosti'))
 
   def get_context_data(self, **kwargs):
     context = super(EventsView, self).get_context_data(**kwargs)
-    context['news'] = Article.news.all()[0:4]
+    context['latest_events'] = Article.events.all()[0:5]
     return context
 
 

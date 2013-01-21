@@ -146,6 +146,7 @@ body {
 	padding: 0em .5em;
 	display: inline-block;
 	line-height: 2.25em;
+	text-transform: uppercase;
 }
 
 .nav_item_selected {

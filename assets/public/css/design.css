@@ -413,6 +413,8 @@ a:hover .main_header_name {
 
 .main_tab_link:hover {
 	border-color: #777;
+}
+
 .main_editor_message {
 	margin: .75em;
 	background-image: url('../pic/articles/lenta_opening.png');
