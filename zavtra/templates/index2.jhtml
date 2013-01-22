@@ -107,7 +107,7 @@
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
                     <a href="/content/events/" class="gray gray_link no_underline">
-                      <span class="main_header_category">События</span>
+                      <span class="main_header_category">События:</span>
                     </a>
                   </h2>
                 </div>
@@ -136,7 +136,7 @@
                       <img id="main_event_image" src="{{event.cover_for_eventbox.url}}">
                     </a>
                   </div>
-                  <div{% if not loop.first %} style="display:none"{% endif %}> {# id="main_event_header"> #}
+                  <div{% if not loop.first %} style="display:none"{% endif %} id="main_event_header">
                     <h5>
                       <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
                     </h5>
@@ -179,9 +179,9 @@
         <div class="span9">
           <div id="main_news_box">
             <div id="main_news_box_header">
-              <h3>
-                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline"><span class="main_header_category">Здесь и Сейчас</span></a>
-              </h3>
+              <h2>
+                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline"><span class="main_header_category">Коротко:</span></a>
+              </h2>
             </div>
             <div id="main_news_box_content">
               <a href="{{latest_news_item.get_absolute_url()}}" class="mediumtext">
@@ -257,44 +257,67 @@
       </div>
       {% endfor %}
       <div class="row">
-        <div class="span4">
-
-          <div class="main_box_frame">
-            <div class="relative main_box_header">
-              <h4>
-                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
-              </h4>
-              <div id="main_video_dentv_link">
-                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
-              </div>
-            </div>
-            <div id="main_video_selected">
-              <div id="main_video_selected_media">
-                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
-                  {% if videos[0].cover_source != "" %}
-                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
-                  {% else %}
-                  <img src="http://placekitten.com/246/184" id="main_video_selected_video">
+        <div class="span9">
+          <div class="row">
+            <div class="span9">
+              <div class="main_box_frame">
+						    <div class="relative main_box_header">
+								  <h4 class="white inline">
+									  <a href="/content/blogs/" class="gray gray_link">Блоги</a>
+								  </h4>
+							  </div>
+					  	</div>
+				  	</div>
+				  </div>
+          <div class="row">
+          {% for article in blogs %}
+          {% if article.authors.count() > 0 %}
+          {% set author = article.authors.all()[0] %}
+          {% else %}
+          {% set author = None %}
+          {% endif %}
+            <div class="span4_5">
+              <div class="main_blog_entry">
+                <div class="main_blog_entry_date_box">
+                   <span class="main_blog_entry_date_content">
+                        {{article.published_at|ru_dt_distance}}
+                   </span>
+                </div>
+                <div class="main_blog_entry_box">
+                  {% if author is not none %}
+                  <span class="no_margin block black black_link largetext italic">
+                    <a href="{{author.get_absolute_url()}}" class="person_name largetext">
+                          {{author}}
+                    </a>
+                  </span>
                   {% endif %}
-                </a>
-              </div>
-              <div id="main_video_selected_header_bg"></div>
-              <div id="main_video_selected_header">
-                <h6>
-                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
-                </h6>
-                <div id="main_video_selected_header_stats">
-                  <i class="icon-white icon-comment"> </i>
-                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
+                  <h5>
+                    <a href="{{article.get_absolute_url()}}" class="black black_link">
+                      {{article.title}}
+                    </a>
+                  </h5>
+                  <div class="main_blog_entry_statistics">
+                    <i class="icon-eye-open"> </i>
+                    <span class="smalltext">
+                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">11</a>
+                    </span>
+                    &nbsp;
+                    <i class="icon-comment"> </i>
+                    <span class="smalltext">
+                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">0</a>
+                    </span>
+                  </div>
                 </div>
-                <div id="main_video_selected_header_restriction">
-                  <span class="smalltext beige">18+</span>
+                <div class="main_person_pic_small">
+                  {% if author is not none %}
+                  <a href="{{author.get_absolute_url()}}">
+                    <img src="http://placekitten.com/g/45/45">
+                  </a>
+                  {% endif %}
                 </div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">
-              {{videos[0].announce}}
-            </div>
+          {% endfor %}
           </div>
         </div>
       </div>
@@ -370,68 +393,40 @@
       <div class="row">
         <div class="span4">
           <div class="main_box_frame">
-            <div>
-              <div class="relative main_box_header">
-                <h4 class="white inline">
-                  <a href="/content/blogs/" class="gray gray_link">Блоги</a>
-                </h4>
+            <div class="relative main_box_header">
+              <h4>
+                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
+              </h4>
+              <div id="main_video_dentv_link">
+                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
-              <ul class="nav nav-tabs no_margin" id="main_blog_selector">
-                <li class="active main_tab" id="main_blogs_new_switch">
-                  <a href="#" class="main_tab_link"><h6>Новое</h6></a>
-                </li>
-                <li class="main_tab" id="main_blogs_polemics_switch">
-                  <a href="#" class="main_tab_link"><h6>Полемика</h6></a>
-                </li>
-              </ul>
             </div>
-            <div id="main_blogs_new" class="average_padding_vertical relative">
-              {% for article in blogs %}
-              {% if article.authors.count() > 0 %}
-              {% set author = article.authors.all()[0] %}
-              {% else %}
-              {% set author = None %}
-              {% endif %}
-              <div class="main_blog_entry">
-                <div class="right_align light_padding_vertical main_blog_entry_date_box">
-                  <span class="main_blog_entry_date_content">
-                    {{article.published_at|ru_dt_distance}}
-                  </span>
-                </div>
-                <div class="main_blog_entry_box light_padding_vertical">
-                  {% if author is not none %}
-                  <span class="no_margin block black black_link largetext italic average_padding_vertical">
-                    <a href="{{author.get_absolute_url()}}" class="person_name largetext">
-                      {{author}}
-                    </a>
-                  </span>
+            <div id="main_video_selected">
+              <div id="main_video_selected_media">
+                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
+                  {% if videos[0].cover_source != "" %}
+                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
+                  {% else %}
+                  <img src="http://placekitten.com/246/184" id="main_video_selected_video">
                   {% endif %}
-                  <h5>
-                    <a href="{{article.get_absolute_url()}}" class="black black_link">
-                      {{article.title}}
-                    </a>
-                  </h5>
-                  <div class="right_align">
-                    <i class="icon-eye-open"> </i>
-                    <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">11</a>
-                    </span>
-                    &nbsp;
-                    <i class="icon-comment"> </i>
-                    <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">0</a>
-                    </span>
-                  </div>
+                </a>
+              </div>
+              <div id="main_video_selected_header_bg"></div>
+              <div id="main_video_selected_header">
+                <h6>
+                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
+                </h6>
+                <div id="main_video_selected_header_stats">
+                  <i class="icon-white icon-comment"> </i>
+                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
                 </div>
-                <div class="main_person_pic_small">
-                  {% if author is not none %}
-                  <a href="{{author.get_absolute_url()}}">
-                    <img src="http://placekitten.com/g/45/45">
-                  </a>
-                  {% endif %}
+                <div id="main_video_selected_header_restriction">
+                  <span class="smalltext beige">18+</span>
                 </div>
               </div>
-              {% endfor %}
+            </div>
+            <div id="main_video_selected_description_container">
+              {{videos[0].announce}}
             </div>
           </div>
         </div>
