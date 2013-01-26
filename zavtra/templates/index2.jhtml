@@ -261,8 +261,7 @@
           <div class="row">
             <div class="span9">
               <div class="main_box_frame">
-<<<<<<< HEAD
-  					    <div class="relative main_box_header">
+						    <div class="relative main_box_header">
 								  <h4 class="white inline">
 									  <a href="/content/blogs/" class="gray gray_link">Блоги</a>
 								  </h4>
@@ -270,16 +269,6 @@
 					  	</div>
 				  	</div>
 				  </div>
-=======
-                <div class="relative main_box_header">
-                  <h4 class="white inline">
-                    <a href="/content/blogs/" class="gray gray_link">Блоги</a>
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
->>>>>>> b03cc145a31a94f6c849f57e6c60bfcaeb5ed497
           <div class="row">
           {% for article in blogs %}
           {% if article.authors.count() > 0 %}
@@ -349,13 +338,7 @@
               <img src="{{STATIC_URL}}img/PDF_Download.png" >
             </a>
             <div id="main_newspaper_img">
-<<<<<<< HEAD
               <a href="/content/zeitung/"><img src="{{issue.gazette_box.url}}"></a>
-=======
-              {% if issue.illustration != "" %}
-              <a href="/content/zeitung/"><img src="{{issue.gazette_box.url}}"></a>
-              {% endif %}
->>>>>>> b03cc145a31a94f6c849f57e6c60bfcaeb5ed497
             </div>
             {% set gazette = issue.gazette %}
             <div class="main_box_header">

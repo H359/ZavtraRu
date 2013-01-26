@@ -370,18 +370,30 @@ a:hover .main_header_name {
 	-webkit-box-shadow: 0px 2px 12px 1px #999;
 	-moz-box-shadow: 0px 2px 12px 1px #999;
 	box-shadow: 0px 2px 12px 1px #999;
+<<<<<<< HEAD
+=======
 }
 
 .main_editor_message:hover, .main_article_container:hover {
 	-webkit-box-shadow: 0px 2px 12px 1px #777;
 	-moz-box-shadow: 0px 2px 12px 1px #777;
 	box-shadow: 0px 2px 12px 1px #777;
+>>>>>>> b03cc145a31a94f6c849f57e6c60bfcaeb5ed497
 }
 
 .main_editor_message:hover, .main_article_container:hover {
 	-webkit-box-shadow: 0px 2px 12px 1px #777;
 	-moz-box-shadow: 0px 2px 12px 1px #777;
 	box-shadow: 0px 2px 12px 1px #777;
+<<<<<<< HEAD
+}
+
+.main_editor_message:hover, .main_article_container:hover {
+	-webkit-box-shadow: 0px 2px 12px 1px #777;
+	-moz-box-shadow: 0px 2px 12px 1px #777;
+	box-shadow: 0px 2px 12px 1px #777;
+=======
+>>>>>>> b03cc145a31a94f6c849f57e6c60bfcaeb5ed497
 }
 
 .main_editor_message_text {
@@ -1005,6 +1017,7 @@ p {
 	}
 	
 	#main_navigation {
+<<<<<<< HEAD
 		width: 100%;
 		min-height: 2em;
 		height: auto;
@@ -1014,6 +1027,17 @@ p {
 	
 	#main_subjects {
 		width: 100%;
+=======
+		width: 100%;
+		min-height: 2em;
+		height: auto;
+		padding-bottom: .5em;
+		line-height: 2em;
+	}
+	
+	#main_subjects {
+		width: 100%;
+>>>>>>> b03cc145a31a94f6c849f57e6c60bfcaeb5ed497
 		min-height: 1.5em;
 		height: auto;
 		padding-bottom: .25em;
