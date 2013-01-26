@@ -21,4 +21,4 @@ class UserManager(BaseUserManager):
 class ColumnistsManager(UserManager):
   def get_query_set(self):
     return super(ColumnistsManager, self).get_query_set().\
-           filter(level = self.model.USER_LEVELS.columnist)
+           filter(level__gte = self.model.USER_LEVELS.columnist)

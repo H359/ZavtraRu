@@ -80,7 +80,7 @@
                   <img src="{{STATIC_URL}}img/article_shadow2.png" class="article-block-shadow">
                   <a href="{{article.get_absolute_url()}}" class="no_underline">
                     {% if article.cover_source != "" %}
-                    <img src="{{article.cover_for_list.url}}" class="inner_article_image">
+                    <img src="{{article.cover_for_main_selection.url}}" class="inner_article_image">
                     {% else %}
                     <img src="http://placekitten.com/140/128" class="inner_article_image">
                     {% endif %}
@@ -100,6 +100,75 @@
               {% endfor %}
             </div>
             {% endfor %}
+            {% if object_list.count() > 6 %}
+            <div class="row">
+              <div class="span9 y-margin-one">
+                <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+                {% for article in object_list[6:] %}
+                <section>
+                  <article>
+                    <div class="row">
+                      {% if article.cover_source != "" %}
+                      {% set span = 6 %}
+                      <div class="span3">
+                        <div class="article-illustration-container">
+                          <a href="{{article.get_absolute_url()}}">
+                            <img src="{{article.cover_for_main_selection.url}}" class="article-illustration">
+                          </a>
+                        </div>
+                      </div>
+                      {% else %}
+                      {% set span = 9 %}
+                      {% endif %}
+                      <div class="span{{span}}">
+                        <div class="row">
+                          <div class="span{{span}} article-header-container">
+                            <header>
+                              <h2 class="article-header">
+                                <a href="{{article.get_absolute_url()}}">{{article.title}}</a>
+                              </h2>
+                            </header>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="span{{span}} article-header-statistics">
+                            <div class="row">
+                              <div class="span3_5">
+                                <a href="{{article.rubric.get_absolute_url()}}" class="block mediumtext dark">{{article.rubric.title}} &ndash; {{article.published_at|ru_date("%d %B %Y")}}</a>
+                              </div>
+                              {% if article.topics.count() > 0 %}
+                              <div class="span2 right_align">
+                                {% for t in article.topics.all() %}<span class="label label-info mediumtext"><a href="{{t.get_absolute_url()}}" class="white white_link baseline_align">{{t.title}}</a></span>{% endfor %}
+                              </div>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="span{{span}} article-text">{{article.announce}}</div>
+                        </div>
+                        <div class="row">
+                          <div class="span{{span}} article-statistics">
+                            <span class="article-statistic">
+                              <a href="{{article.get_absolute_url()}}">
+                                <i class="icon-eye-open"> </i> {{article.views_count}}
+                              </a>
+                            </span>
+                            <span class="article-statistic">
+                              <a href="{{article.get_absolute_url()}}">
+                                <i class="icon-comment"> </i> {{article.comments_count}}
+                              </a>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </section>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
           </div>
           <div class="span3">
             <div class="row" id="articles_issues">
@@ -112,7 +181,7 @@
                   <div class="text-over-image">
                     <a href="{{item.get_absolute_url()}}">
                       {% if item.cover_source != "" %}
-                      <img src="{{item.cover_for_main.url}}" class="news_selection_item_img">
+                      <img src="{{item.cover_for_sidebar.url}}" class="news_selection_item_img">
                       {% else %}
                       <img src="http://placekitten.com/g/200/150" class="news_selection_item_img">
                       {% endif %}
@@ -132,75 +201,6 @@
             </div>
           </div>
         </div>
-        {% if object_list.count() > 6 %}
-        <div class="row">
-          <div class="span9 y-margin-one">
-            <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-            {% for article in object_list[6:] %}
-            <section>
-              <article>
-                <div class="row">
-                  {% if object.cover_source != "" %}
-                  {% set span = 6 %}
-                  <div class="span3">
-                    <div class="article-illustration-container">
-                      <a href="{{object.get_absolute_url()}}">
-                        <img src="{{object.cover_for_list.url}}" class="article-illustration">
-                      </a>
-                    </div>
-                  </div>
-                  {% else %}
-                  {% set span = 9 %}
-                  {% endif %}
-                  <div class="span{{span}}">
-                    <div class="row">
-                      <div class="span{{span}} article-header-container">
-                        <header>
-                          <h2 class="article-header">
-                            <a href="{{object.get_absolute_url()}}">{{object.title}}</a>
-                          </h2>
-                        </header>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="span{{span}} article-header-statistics">
-                        <div class="row">
-                          <div class="span3_5">
-                            <a href="{{object.rubric.get_absolute_url()}}" class="block mediumtext dark">{{object.rubric.title}} &ndash; {{object.published_at|ru_date("%d %B %Y")}}</a>
-                          </div>
-                          {% if object.topics.count() > 0 %}
-                          <div class="span2 right_align">
-                            {% for t in object.topics.all() %}<span class="label label-info mediumtext"><a href="{{t.get_absolute_url()}}" class="white white_link baseline_align">{{t.title}}</a></span>{% endfor %}
-                          </div>
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="span{{span}} article-text">{{object.announce}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="span{{span}} article-statistics">
-                        <span class="article-statistic">
-                          <a href="{{object.get_absolute_url()}}">
-                            <i class="icon-eye-open"> </i> 100
-                          </a>
-                        </span>
-                        <span class="article-statistic">
-                          <a href="{{object.get_absolute_url()}}">
-                            <i class="icon-comment"> </i> {{object.comments.count()}}
-                          </a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </section>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
       </div>
     </div>
   </div>

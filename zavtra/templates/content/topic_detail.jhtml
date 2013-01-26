@@ -150,9 +150,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="span12">
-            {{ pagination(request, page_obj) }}
-          </div>
+          <div class="span12">{{pagination(request, page_obj)}}</div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 {% extends "base.jhtml" %}
 
-{% from "macro.jhtml" import render_comments, render_zeitung_rubric, pagination %}
+{% from "macro.jhtml" import render_zeitung_rubric, pagination %}
 
 {% block page_style %}newspaper{% endblock %}
 
@@ -51,49 +51,18 @@
       </div>
     </div>
 
-    {% for grouper, articles in object_list|groupby('issue_number')|reverse %}
+    {% for issue, group in object_list|get_issues_from_list(rubric) %}
     <div class="row">
       <div class="span12">
         <div class="rubric-header">
           <h3 class="inline">
-            {% set d = articles[0].issue_date %}
-            <a href="/content/zeitung/{{ d.year }}/{{ grouper }}/" class="white white_link">Выпуск №{{ grouper }} &ndash; {{ d|ru_date }}</a>
+            <a href="{{issue.get_absolute_url()}}" class="white white_link">Выпуск №{{ issue.relative_number }} ({{issue.absolute_number}}) &ndash; {{ issue.published_at|ru_date }}</a>
           </h3>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="span12">
-        {% for article in articles %}
-        <div class="span{{ 12 // (articles|length) }}">
-          <div class="article-content side_shadows">
-            <section>
-              <article>
-                <div class="article-header-container">
-                  <header>
-                    <h2 class="article-header">
-                      <a href="{{ article.get_absolute_url() }}">{{ article.title }}</a>
-                    </h2>
-                  </header>
-                </div>
-                {% if article.authors.count() > 0 %}
-                <div class="article-author">
-                  {% for author in article.authors.all() %}
-                  <a href="#" rel="author">{{ author }}</a>{% if not loop.last %}, {% endif %}
-                  {% endfor %}
-                </div>
-                {% endif %}
-                <div class="article-text">
-                  <p class="article-paragraph">
-                    <a href="{{ article.get_absolute_url() }}" class="black black_link no_underline">{{ article.announce }}</a>
-                  </p>
-                </div>
-              </article>
-            </section>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+      <div class="span12">{{render_zeitung_rubric(False, group, False)}}</div>
     </div>
     {% endfor %}
   </div>

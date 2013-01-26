@@ -70,7 +70,7 @@
                   {% if object.cover_source != "" %}
                   <div class="span5">
                     <div class="article-page-illustration">
-                      <img src="{{object.cover_for_article.url}}">
+                      <img src="{{object.inside_article_cover.url}}">
                     </div>
                   </div>
                   {% endif %}

@@ -5,7 +5,6 @@
 {% block page_style %}newspaper{% endblock %}
 
 {% block page_content %}
-{% set groups = object_list|group_rubrics|list %}
 <div class="container12">
   <div class="bordered">
     <div class="row">
@@ -31,14 +30,14 @@
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for other in issue.others %}
+      {% for other in latest_issues|reverse %}
       <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if other.number == issue.number %} newspaper_selection_item_selected{% endif %}">
-          <a href="/content/zeitung/{{other.date.year}}/{{other.number}}/">
-            <img src="{{other.illustration.slider_box.url}}" class="newspaper_selection_item_img">
+        <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
+          <a href="{{other.get_absolute_url()}}">
+            <img src="{{other.illustration}}" class="newspaper_selection_item_img">
             <div class="text-bottom white">
-              <span class="largetext bold">№{{other.number}}</span>
-              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.date|ru_date("%d %B")}}</span>
+              <span class="largetext bold">№{{other.relative_number}}</span>
+              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.published_at|ru_date("%d %B")}}</span>
             </div>
           </a>
         </div>
@@ -59,7 +58,7 @@
               <a href="/content/zeitung/">Газета</a>
               <span class="divider">/</span>
             </li>
-            <li class="active">Выпуск №{{issue.number}} &ndash; {{issue.date|ru_date("%d %B %Y")}}</li>
+            <li class="active">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
           <div class="section_header_button">
             <a href="#" class="btn btn-danger baseline_align">Скачать PDF</a>
@@ -67,32 +66,30 @@
         </div>
       </div>
     </div>
-    {% if illustration is not none %}
+    {% set articles = issue.gazette %}
+    {% if issue.illustration is not none %}
     <div class="row">
       <div class="span12">
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
-            <img src="{{illustration.archive_box.url}}" id="newspaper_illustration">
+            {% if issue.illustration != "" %}
+            <img src="{{issue.zeitung_box.url}}" id="newspaper_illustration">
+            {% endif %}
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
                 <i class="icon-white icon-zoom-in"> </i>
-                <h4 class="inline">&laquo;{{object_list[0].title}}&raquo;, Геннадий Животов</h4>
+                <h4 class="inline">&laquo;{{articles[0].title}}&raquo;, Геннадий Животов</h4>
               </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    {% endif %}
-    {% for joined, rubric in groups %}
-    <div class="row">
-      {% for r in rubric %}
-      <div class="span{{ 12 // (rubric|length) }}">
-        {{render_zeitung_rubric(r, rubric|length)}}
-      </div>
-      {% endfor %}
-    </div>
+    {% set groups = articles|group_rubrics %}
+    {% for joined, rubrics in groups %}
+    {{render_zeitung_rubric(joined, rubrics)}}
     {% endfor %}
+    {% endif %}
   </div>
   <div class="bordered">
     <div class="row">
@@ -118,14 +115,14 @@
       </div>
     </div>
     <div class="row">
-      {% for other in issue.others %}
+      {% for other in latest_issues|reverse %}
       <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if other.number == issue.number %} newspaper_selection_item_selected{% endif %}">
-          <a href="/content/zeitung/{{other.date.year}}/{{other.number}}/">
-            <img src="{{other.illustration.slider_box.url}}" class="newspaper_selection_item_img">
+        <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
+          <a href="{{other.get_absolute_url()}}">
+            <img src="{{other.illustration}}" class="newspaper_selection_item_img">
             <div class="text-bottom white">
-              <span class="largetext bold">№{{other.number}}</span>
-              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.date|ru_date("%d %B")}}</span>
+              <span class="largetext bold">№{{other.relative_number}}</span>
+              <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.published_at|ru_date("%d %B")}}</span>
             </div>
           </a>
         </div>

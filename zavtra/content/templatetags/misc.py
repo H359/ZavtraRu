@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django_jinja.base import Library
+from django.utils.datastructures import SortedDict
 import jinja2
 from pytils.dt import ru_strftime, distance_of_time_in_words
 from pytils.numeral import get_plural as _get_plural
+from content.models import Issue
 
 register = Library()
 
@@ -25,14 +27,14 @@ def ru_date(ctx, value, format=u'%d %B %Y г'):
 @register.filter
 @jinja2.contextfilter
 def group_rubrics(ctx, value):
-  rubrics = {}
+  dct = SortedDict()
   for item in value:
-    rubrics.setdefault(item.rubric_id, {'rubric': None, 'items': []})
-    if rubrics[item.rubric_id]['rubric'] is None:
-      rubrics[item.rubric_id]['rubric'] = item.rubric
-    rubrics[item.rubric_id]['items'].append(item)
-  rubrics = sorted(rubrics.values(), key=lambda p: p['rubric'].position)
+    if item.rubric_id in dct:
+      dct[item.rubric_id]['items'].append(item)
+    else:
+      dct[item.rubric_id] = {'items': [item], 'rubric': item.rubric}
   num = 0
+  rubrics = dct.values()
   nlen = len(rubrics)
   while nlen > num:
     if len(rubrics[num]['items']) == 1 and nlen > num + 1 and len(rubrics[num + 1]['items']) == 1:
@@ -41,3 +43,15 @@ def group_rubrics(ctx, value):
     else:
       yield False, (rubrics[num],)
       num += 1
+
+@register.filter
+@jinja2.contextfilter
+def get_issues_from_list(ctx, value, rubric):
+  articles = sorted(map(lambda p: p.published_at.date(), value))
+  issues = Issue.published.filter(published_at__range = (articles[0], articles[-1]))
+  for issue in issues:
+    group = {
+      'rubric': rubric,
+      'items': [article for article in value if article.published_at.date() == issue.published_at]
+    }
+    yield (issue, [group])

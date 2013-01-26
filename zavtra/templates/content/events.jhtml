@@ -6,11 +6,39 @@
 
 {% block page_content %}
 <div class="container12">
-  <div class="bordered_clean">
-  </div>
   <div class="row">
     <div class="span12">
       <div class="bordered_clean">
+        <div class="row">
+          <div class="span12">
+            <div class="section-header">
+              <h2 class="inline top_align">Свежие новости</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {% for article in latest_events %}
+          <div class="span2_4">
+            <div class="news_selection_item">
+              <div class="text-over-image">
+                <a href="{{article.get_absolute_url()}}">
+                  <img src="{{article.cover_for_main_selection.url}}" class="news_selection_item_img_small">
+                  <div class="text-bottom white">
+                    <span class="mediumtext">{{article.title}}</span>
+                  </div>
+                </a>
+              </div>
+              <div class="selection_item_statistics">
+                <a href="{{article.get_absolute_url()}}" class="smalltext">{{article.published_at|ru_date("%d/%m/%Y")}}</a>
+                <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/views.png"></a> {{article.views_count}}</span>
+                <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/comment.png"></a> {{article.comments_count}}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="bordered_clean" style="background-color: #ddd">
         <div class="row">
           <div class="span12">
             <div class="row">
@@ -22,7 +50,7 @@
                       <span class="divider">/</span>
                     </li>
                     <li>
-                      <a href="/content/events/">События</a>
+                      <a href="/content/events/">Новости</a>
                       <span class="divider">/</span>
                     </li>
                     <li class="active">{{day|ru_date("%d-%m-%Y")}}</li>
@@ -39,172 +67,95 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="span8">
-                <div class="module_header rubric-header padding_one">
-                  <h3 class="inline">События</h3>
-                </div>
-                {% for article in object_list %}
-                <section>
-                  <article>
-                    <div class="row">
-                      {% if article.cover_source != "" %}
-                      {% set span = 5 %}
-                      <div class="span3">
-                        <div class="article-illustration-container">
-                          <a href="{{article.get_absolute_url()}}">
-                            <img src="{{article.cover_for_list.url}}" class="article-illustration">
-                          </a>
-                        </div>
-                      </div>
-                      {% else %}
-                      {% set span = 8 %}
-                      {% endif %}
-                      <div class="span{{span}}">
+            <div class="row" style="background-color: #eee">
+              <div class="span10 offset1" style="border-left: 1px solid #ddd; border-right: 1px solid #ddd; background-color: #fff;">
+                <div class="row">
+                  <div class="span8 offset1">
+                    {% for article in object_list %}
+                    <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+                    <section>
+                      <article>
                         <div class="row">
-                          <div class="span{{span}} article-header-container">
+                          <div class="span5 news-header-container">
                             <header>
-                              <h2 class="article-header">
+                              <h2 class="news-header">
                                 <a href="{{article.get_absolute_url()}}">{{article.title}}</a>
                               </h2>
+                              {% if article.subtitle %}
+                              <h4 class="news-header">
+                                <a href="{{article.get_absolute_url()}}">{{article.subtitle}}</a>
+                              </h4>
+                              {% endif %}
                             </header>
+                          </div>
+                          <div class="span3 right_align news-subject-container">
+                            {% for topic in article.topics.all() %}
+                            <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
+                            {% endfor %}
                           </div>
                         </div>
                         <div class="row">
-                          <div class="span{{span}} article-header-statistics">
+                          <div class="span3">
+                            {% if article.cover_source %}
+                            <div class="news-illustration-container">
+                              <a href="{{article.get_absolute_url()}}">
+                                <img src="{{article.cover_for_eventbox.url}}" class="news-illustration">
+                              </a>
+                            </div>
+                            {% endif %}
+                          </div>
+                          <div class="span5">
                             <div class="row">
-                              <div class="span2_5">
-                                <a href="{{article.get_absolute_url()}}" class="block mediumtext dark">{{article.published_at|ru_date("%d %B %Y")}}</a>
+                              <div class="span5 news-text">
+                                <p class="news-paragraph">
+                                  <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.announce}}</a>
+                                </p>
                               </div>
-                              <div class="span2 right_align">
-                                {% for topic in article.topics.all() %}
-                                <span class="label label-info mediumtext">
-                                  <a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a>
+                            </div>
+                            <div class="row">
+                              <div class="span5 article-statistics">
+                                <span class="article-statistic">
+                                  <a href="{{article.get_absolute_url()}}">
+                                    <i class="icon-eye-open"> </i> {{article.views_count}}
+                                  </a>
                                 </span>
-                                {% endfor %}
+                                <span class="article-statistic">
+                                  <a href="{{article.get_absolute_url()}}">
+                                    <i class="icon-comment"> </i> {{article.comments_count}}
+                                  </a>
+                                </span>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="span{{span}} article-text">
-                            <p class="article-paragraph">
-                              <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.announce}}</a>
-                            </p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="span{{span}} article-statistics">
-                            <span class="article-statistic">
-                              <a href="{{article.get_absolute_url()}}">
-                                <i class="icon-eye-open"> </i> 100
-                              </a>
-                            </span>
-                            <span class="article-statistic">
-                              <a href="{{article.get_absolute_url()}}">
-                                <i class="icon-comment"> </i> {{article.comments.count()}}
-                              </a>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </section>
-                {% if not loop.last %}
-                {% endif %}
-                <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-                {% endfor %}
-              </div>
-              <div class="span4">
-                <div class="padding_one">
-                  <div class="module_header rubric-header no_margin">
-                    <h3>Новости:</h3>
-                  </div>
-                  {% for item in news %}
-                  <div class="page-module-article">
-                    <h4 class="article-header">
-                      <a href="{{item.get_absolute_url()}}" class="black black_link">{{item.title}}</a>
-                    </h4>
-                    <a href="{{item.get_absolute_url()}}" class="article-text">{{item.announce}}</a>
-                    <div class="right_align">
-                      <span class="article-statistic mediumtext">
-                        <a href="{{item.get_absolute_url()}}">
-                          <i class="icon-eye-open"> </i> 100
-                        </a>
-                      </span>
-                      <span class="article-statistic mediumtext">
-                        <a href="{{item.get_absolute_url()}}">
-                          <i class="icon-comment"> </i> {{item.comments.count()}}
-                        </a>
-                      </span>
-                    </div>
-                  </div>
-                  {% endfor %}
-                </div>
-                <div class="padding_one">
-                  <div class="module_header rubric-header no_margin">
-                    <h3>Слово Дня:</h3>
+                      </article>
+                    </section>
+                    {% endfor %}
+                    <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
                   </div>
                 </div>
-                {% set wod = wod_rubrics[0].articles.latest('published_at') %}
-                <div class="row wod_entry_content">
-                  <div class="span4">
-                    <div class="wod_entry_img">
-                      <a href="{{wod.get_absolute_url()}}">
-                        <img src="{{wod.cover_for_list.url}}">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="span4">
-                    <div class="wod_entry_text">
-                      <h3><a href="{{wod.get_absolute_url()}}">{{wod.title}}</a></h3>
-                      <p><a href="{{wod.get_absolute_url()}}">{{wod.announce}}</a></p>
-                      <h5>Экспертные оценки:</h5>
-                      {% for expert_comment in wod.expert_comments.all() %}
-                      <a href="{{expert_comment.expert.get_absolute_url()}}">{{expert_comment.expert}}</a>{% if not loop.last %},{% endif %}<br>
-                      {% endfor %}
-                      <div class="right_align">
-                        <span class="article-statistic mediumtext">
-                          <a href="{{wod.get_absolute_url()}}">
-                            <i class="icon-eye-open"> </i> 100
-                          </a>
-                        </span>
-                        <span class="article-statistic mediumtext">
-                          <a href="{{wod.get_absolute_url()}}">
-                            <i class="icon-comment"> </i> {{wod.comments.count()}}
-                          </a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                <div class="pagination center_align">
+                  <ul class="middle_align">
+                    <li{% if previous_day is none %} class="disabled"{% endif %}>
+                      {% if previous_day is not none %}
+                      <a href="{{url('content.views.events_now')}}{{previous_day.year}}/{{previous_day.month}}/{{previous_day.day}}/">Предыдущий День</a>
+                      {% else %}
+                      <a href="#">Предыдущий День</a>
+                      {% endif %}
+                    </li>
+                    <li class="info">
+                      <span>{{day|ru_date("%d %B %Y")}}</span>
+                    </li>
+                    <li{% if next_day is none %} class="disabled"{% endif %}>
+                      {% if next_day is not none %}
+                      <a href="{{url('content.views.events_now')}}{{next_day.year}}/{{next_day.month}}/{{next_day.day}}/">Следующий День</a>
+                      {% else %}
+                      <a href="#">Следующий День</a>
+                      {% endif %}
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="span12">
-            <div class="pagination center_align">
-              <ul class="middle_align">
-                <li{% if previous_day is none %} class="disabled"{% endif %}>
-                  {% if previous_day is not none %}
-                  <a href="{{url('content.views.events', year=previous_day.year, month=previous_day.month, day=previous_day.day)}}">Предыдущий День</a>
-                  {% else %}
-                  <a href="#">Предыдущий День</a>
-                  {% endif %}
-                </li>
-                <li class="info">
-                  <span>{{day|ru_date("%d %B %Y")}}</span>
-                </li>
-                <li{% if next_day is none %} class="disabled"{% endif %}>
-                  {% if next_day is not none %}
-                  <a href="{{url('content.views.events', {'year':next_day.year, 'month':next_day.month,'day':next_day.day})}}">Следующий День</a>
-                  {% else %}
-                  <a href="#">Следующий День</a>
-                  {% endif %}
-                </li>
-              </ul>
             </div>
           </div>
         </div>
