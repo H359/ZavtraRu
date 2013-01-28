@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 from content.views import ArticleView, RubricView, FeaturedView,\
                           ZeitungView, ArchiveView, DailyView,\

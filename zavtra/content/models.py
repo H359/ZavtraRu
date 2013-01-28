@@ -6,6 +6,7 @@ from urlparse import urlparse, parse_qs
 from django.db import models
 from django.db.models import Count
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 #from mptt.models import MPTTModel, TreeForeignKey
 from model_utils import Choices
@@ -18,6 +19,8 @@ from imagekit.processors.resize import ResizeToFit
 from managers import PublishedManager, EventsManager, WODManager,\
                      NewsManager, BlogsManager
 from zavtra.utils import cached, oneday
+
+UserModel = get_user_model()
 
 
 class Rubric(models.Model):
@@ -90,9 +93,12 @@ class RubricInIssue(models.Model):
   position = models.PositiveIntegerField(verbose_name=u'Позиция')
 
   class Meta:
-    ordering = ['-position']
+    ordering = ['position']
     verbose_name = u'Рубрика в выпуске'
     verbose_name_plural = u'Рубрика в выпуске'
+
+  def __unicode__(self):
+    return u'%s' % self.rubric
 
 
 class Topic(models.Model):
@@ -104,29 +110,38 @@ class Topic(models.Model):
   class Meta:
     ordering = ['-position']
     verbose_name = u'Тема'
-    verbose_name_plural = u'Тема'
+    verbose_name_plural = u'Темы'
 
   @models.permalink
   def get_absolute_url(self):
     return ('content.views.topic', (), {'slug': self.slug})
+
+  def __unicode__(self):
+    return u'%s' % self.title
+
+  @staticmethod
+  def autocomplete_search_fields():
+    return ("id__iexact", "title__icontains",)
 
 
 class Article(models.Model):
   STATUS = Choices(('draft', u'Черновик'), ('ready', u'Готово к публикации'))
   TYPES = Choices(('text', u'Текст'), ('video', u'Видео'))
 
-  rubric = models.ForeignKey(Rubric, verbose_name=u'Категория', related_name='articles')
+  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
   title = models.CharField(max_length=1024, verbose_name=u'Заголовок')
   slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from=lambda i: u'%s-%s' % (i.title, i.published_at))
   subtitle = models.CharField(max_length=1024, verbose_name=u'Подзаголовок', blank=True)
-  status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20)
-  type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20)
+  status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20, verbose_name=u'Статус')
+  type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20, verbose_name=u'Тип содержимого')
   published_at = models.DateTimeField(verbose_name=u'Время публикации')
   selected_at = models.DateTimeField(verbose_name=u'Дата выбора в топ', null=True, blank=True)
   cover_source = models.ImageField(upload_to='articles/covers', verbose_name=u'Обложка', blank=True)
   announce = models.TextField(verbose_name=u'Анонс (краткое содержание)')
   content = models.TextField(verbose_name=u'Текст', default='')
-  authors = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=u'Авторы', blank=True, related_name='articles')
+  authors = models.ManyToManyField(UserModel, verbose_name=u'Авторы', blank=True, related_name='articles', limit_choices_to={
+    'level__gte': UserModel.USER_LEVELS.trusted
+  })
   topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   comments_count = models.PositiveIntegerField(editable=False, default=0)
@@ -188,6 +203,8 @@ class Article(models.Model):
         source = self.content
       return tpl % source      
 
+  def __unicode__(self):
+    return u'%s' % self.title
 
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')
@@ -199,6 +216,19 @@ class ExpertComment(models.Model):
     ordering = ['-position']
     verbose_name = u'Комментарий эксперта'
     verbose_name_plural = u'Комментарии экспертов'
+
+  def __unicode__(self):
+    return u'%s' % self.expert
+
+
+class News(Article):
+  class Meta:
+    proxy = True
+    verbose_name = u'Новость'
+    verbose_name_plural = u'Новости'
+
+  objects = NewsManager()
+
 
 """
 class ZhivotovIllustration(models.Model):

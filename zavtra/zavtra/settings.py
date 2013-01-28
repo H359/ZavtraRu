@@ -1,4 +1,4 @@
-# Django settings for zavtra project.
+#-*- coding: utf-8 -*-
 import os
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,7 +37,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = False
+USE_I18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
@@ -48,7 +48,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.join(ROOT_DIR, '../media')
+MEDIA_ROOT = os.path.abspath(os.path.join(ROOT_DIR, '../media'))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -119,12 +119,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
     'zavtra.context_processors.common'
 )
 
 DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jhtml'
 
 INSTALLED_APPS = (
+    'grappelli.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -139,6 +141,8 @@ INSTALLED_APPS = (
     'grappelli',
     'django.contrib.admin',
     'mptt',
+    'filebrowser',
+    'tinymce',
     'comments'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
@@ -152,6 +156,20 @@ AUTH_USER_MODEL = 'siteuser.User'
 AUTOSLUG_SLUGIFY_FUNCTION = 'pytils.translit.slugify'
 
 MPTT_ADMIN_LEVEL_INDENT = 20
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,autolink,advimage,searchreplace",
+    'theme': "advanced",
+    'height': 500,
+    'skin': "o2k7",
+    'language': "ru"
+}
+TINYMCE_SPELLCHECKER = True
+GRAPPELLI_ADMIN_TITLE = u'Газета &laquo;Завтра&raquo;'
+AUTOCOMPLETE_LIMIT = 20
+GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+FILEBROWSER_DIRECTORY = 'useruploads'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

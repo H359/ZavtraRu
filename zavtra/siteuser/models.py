@@ -16,7 +16,7 @@ class User(AbstractBaseUser):
 
   email = models.EmailField(max_length=254, unique=True)  
   first_name = models.CharField(max_length=250, verbose_name=u'Имя')
-  mid_name = models.CharField(max_length=250, verbose_name=u'Отчество')
+  mid_name = models.CharField(max_length=250, verbose_name=u'Отчество', blank=True)
   last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
   level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
 
@@ -43,3 +43,7 @@ class User(AbstractBaseUser):
   @models.permalink
   def get_absolute_url(self):
     return ('siteuser.views.profile', (), {'id': self.pk})
+
+  @staticmethod
+  def autocomplete_search_fields():
+    return ("id__iexact", "last_name__icontains",)

@@ -2,6 +2,9 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
 
+from filebrowser.sites import site
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -9,7 +12,9 @@ urlpatterns = patterns('',
     url(r'^content/', include('content.urls')),
     url(r'^comments/', include('comments.urls')),
     url(r'^accounts/', include('siteuser.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
     url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/filebrowser/', include(site.urls)),
     url(r'^admin/', include(admin.site.urls))
 )
 
