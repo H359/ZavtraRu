@@ -140,10 +140,11 @@ INSTALLED_APPS = (
     'siteuser',
     'grappelli',
     'django.contrib.admin',
-    'mptt',
+    #'mptt',
     'filebrowser',
     'tinymce',
-    'comments'
+    'comments',
+    'devserver'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

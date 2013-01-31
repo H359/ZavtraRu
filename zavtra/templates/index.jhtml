@@ -67,7 +67,7 @@
         <div class="span8">
           <div class="row">
             <div class="span8">
-              <div id="footer_navigation">{{ render_navigation("sub_") }}</div>
+              <div id="footer_navigation">{{render_navigation("sub_")}}</div>
             </div>
           </div>
           <div class="span8">
@@ -132,7 +132,7 @@
                   </div>
                   {% for event in events[0:10] %}
                   <div class="center_align"{% if not loop.first %} style="display:none"{% endif %}>
-                    <a href="/content/news/">
+                    <a href="{{event.get_absolute_url()}}">
                       <img id="main_event_image" src="{{event.cover_for_eventbox.url}}">
                     </a>
                   </div>
@@ -193,9 +193,7 @@
       </div>
       <div class="row" id="navigation_holder">
         <div class="span9" id="navigation_block">
-          <div id="main_navigation">
-            {{render_navigation("", " nav_item_border")}}
-          </div>
+          <div id="main_navigation">{{render_navigation("", " nav_item_border")}}</div>
         </div>
       </div>
       <div class="row" id="subjects_holder">
@@ -270,27 +268,22 @@
             </div>
           </div>
           <div class="row">
-          {% for article in blogs %}
-          {% if article.authors.count() > 0 %}
-          {% set author = article.authors.all()[0] %}
-          {% else %}
-          {% set author = None %}
-          {% endif %}
+            {% for article in blogs %}
             <div class="span4_5">
               <div class="main_blog_entry">
                 <div class="main_blog_entry_date_box">
                    <span class="main_blog_entry_date_content">
-                        {{article.published_at|ru_dt_distance}}
+                    {{article.published_at|ru_dt_distance}}
                    </span>
                 </div>
                 <div class="main_blog_entry_box">
-                  {% if author is not none %}
+                  {% for author in article.authors.all() %}
                   <span class="no_margin block black black_link largetext italic">
                     <a href="{{author.get_absolute_url()}}" class="person_name largetext">
-                          {{author}}
-                    </a>
+                      {{author}}
+                    </a>{% if not loop.last %}, {% endif %}
                   </span>
-                  {% endif %}
+                  {% endfor %}
                   <h5>
                     <a href="{{article.get_absolute_url()}}" class="black black_link">
                       {{article.title}}
@@ -309,15 +302,15 @@
                   </div>
                 </div>
                 <div class="main_person_pic_small">
-                  {% if author is not none %}
-                  <a href="{{author.get_absolute_url()}}">
+                  {% if article.authors.all()|length > 0 %}
+                  <a href="{{article.authors.all()[0].get_absolute_url()}}">
                     <img src="http://placekitten.com/g/45/45">
                   </a>
                   {% endif %}
                 </div>
               </div>
             </div>
-          {% endfor %}
+            {% endfor %}
           </div>
         </div>
       </div>

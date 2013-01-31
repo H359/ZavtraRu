@@ -74,6 +74,7 @@ class Issue(models.Model):
     issue_rubrics = list(self.issue_rubrics.all())
     articles = list(Article.objects.filter(published_at=self.published_at).\
                filter(rubric__in = [x.rubric for x in issue_rubrics]).\
+               prefetch_related('authors').\
                select_related())
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
@@ -206,6 +207,7 @@ class Article(models.Model):
   def __unicode__(self):
     return u'%s' % self.title
 
+
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')
   article = models.ForeignKey(Article, verbose_name=u'Статья', related_name='expert_comments')
@@ -229,6 +231,25 @@ class News(Article):
 
   objects = NewsManager()
 
+
+class Wod(Article):
+  class Meta:
+    proxy = True
+    verbose_name = u'Слово Дня'
+    verbose_name_plural = u'Слова Дня'
+
+  objects = WODManager()
+
+
+class DailyQuote(models.Model):
+  class Meta:
+    ordering = ['-day']
+    verbose_name = u'Цитата дня'
+    verbose_name_plural = u'Цитаты дня'
+
+  quote = models.TextField(verbose_name=u'Цитата')
+  source = models.ForeignKey(Article, verbose_name=u'Источник цитаты')
+  day = models.DateField(verbose_name=u'День', unique=True, default=lambda: datetime.now())
 
 """
 class ZhivotovIllustration(models.Model):

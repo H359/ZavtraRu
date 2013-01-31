@@ -18,18 +18,19 @@ class HomeView(TemplateView):
   def get_context_data(self, **kwargs):
     now = datetime.now()
     selected_articles = Article.published.filter(selected_at__lte=now).\
+                        prefetch_related('authors').\
                         order_by('-selected_at').\
                         select_related()[0:6]
     context = {
       'issue': Issue.published.latest('published_at'),
-      'events': Article.events.all(),
+      'events': Article.events.select_related().all(),
       'latest_news_item': Article.news.latest('published_at'),
-      #'gazette': Article.get_current_issue().select_related().all()[0:5],
       'selected': group_by(selected_articles, 3),
-      'videos': Article.published.filter(type = Article.TYPES.video).select_related()[0:4],
-      'blogs': Article.blogs.exclude(pk__in = selected_articles).all()[0:5],
-      #'editorial': Article.editorial.select_related().latest('published_at'),
-      'wod': Article.wod.select_related().latest('published_at')
+      'videos': list(Article.published.filter(type = Article.TYPES.video)[0:4]),
+      'blogs': Article.blogs.prefetch_related('authors').\
+               exclude(pk__in = selected_articles).select_related().all()[0:6],
+      'wod': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
+             select_related().latest('published_at')
     }
     return context
 

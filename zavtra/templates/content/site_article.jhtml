@@ -41,12 +41,12 @@
     </div>
   </div>
   <div class="row">
-    <div class="span10">
+    <div class="span12">
       <div class="row">
-        <div class="offset1 span10">
+        <div class="offset1 span10 article_background">
           <article>
-            <div class="row y-margin-one">
-              <div class="span6">
+            <div class="row">
+              <div class="span6 offset1">
                 <header>
                   <h1 class="article-page-main-header article-header">{{object.title}}</h1>
                 </header>
@@ -65,23 +65,23 @@
               {% endif %}
             </div>
             <div class="row">
-              <div class="span10">
+              <div class="span8 offset1">
                 <div class="row">
                   {% if object.cover_source != "" %}
-                  <div class="span5">
+                  <div class="span4">
                     <div class="article-page-illustration">
                       <img src="{{object.inside_article_cover.url}}">
                     </div>
                   </div>
                   {% endif %}
-                  <div class="span5">
+                  <div class="span4">
                     <div class="row">
                       {% if object.subtitle != "" %}
-                      <div class="span5">
+                      <div class="span4">
                         <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
                       </div>
                       {% endif %}
-                      <div class="span5 article-page-statistics">
+                      <div class="span4 article-page-statistics">
                         {% if object.from_zeitung %}
                         <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
                         {% endif %}

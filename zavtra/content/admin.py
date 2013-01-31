@@ -5,7 +5,7 @@ from tinymce.widgets import TinyMCE
 
 from content.models import Rubric, Article, Issue,\
                            ExpertComment, Topic, RubricInIssue,\
-                           News
+                           News, Wod, DailyQuote
 
 
 class ExpertCommentAdminInline(admin.StackedInline):
@@ -33,6 +33,19 @@ class ArticleAdmin(admin.ModelAdmin):
   list_select_related = True
   search_fields = ('title',)
   list_filter = ('status', 'rubric')
+  #inlines = [ExpertCommentAdminInline]
+  form = ArticleAdminForm
+  filter_horizontal = ('authors', 'topics')
+  #raw_id_fields = ('authors', 'topics')
+  #autocomplete_lookup_fields = {
+  #  'm2m': ['authors', 'topics']
+  #}
+
+
+class WodAdmin(admin.ModelAdmin):
+  exclude = ('rubric', 'type', 'selected_at')
+  list_display = ('title', 'status', 'published_at')
+  search_fields = ('title',)
   inlines = [ExpertCommentAdminInline]
   form = ArticleAdminForm
   raw_id_fields = ('authors', 'topics')
@@ -40,9 +53,17 @@ class ArticleAdmin(admin.ModelAdmin):
     'm2m': ['authors', 'topics']
   }
 
+  def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+    formfield = super(WodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    if db_field == 'rubric':
+      formfield.queryset = formfield.queryset.filter(slug='wod')
+    return formfield
+
 
 class NewsAdmin(admin.ModelAdmin):
   exclude = ('authors', 'rubric', 'type', 'selected_at', 'topics')
+  list_display = ('title', 'status', 'published_at')
+  search_fields = ('title',)
   form = ArticleAdminForm
 
   def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
@@ -65,6 +86,8 @@ class IssueAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(News, NewsAdmin)
+admin.site.register(Wod, WodAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Rubric)
 admin.site.register(Issue, IssueAdmin)
+admin.site.register(DailyQuote)

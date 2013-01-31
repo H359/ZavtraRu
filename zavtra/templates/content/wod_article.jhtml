@@ -1,9 +1,9 @@
 {% extends "base.jhtml" %}
-
+ 
 {% from "macro.jhtml" import render_comments %}
-
+ 
 {% block page_style %}newspaper{% endblock %}
-
+ 
 {% macro plashka() %}
   <div class="bordered">
     <div class="row">
@@ -19,7 +19,7 @@
     <div class="row" id="newspaper_issues"></div>
   </div>
 {% endmacro %}
-
+ 
 {% block page_content %}
 <div class="container12">
   {{plashka()}}
@@ -125,7 +125,7 @@
   </div>
   <div class="row">
     <div class="offset1_5 span9 y-margin-two">
-      <div id="wod_opinions_section" class="rubric-header no_margin">
+      <div id="wod_opinions_section">
         <h3 class="inline">Экспертные оценки:</h3>
       </div>
       {% for expert_comment in object.expert_comments.all() %}
@@ -152,6 +152,6 @@
       <div>{{render_comments(request, object, csrf_token)}}</div>
     </div>
   </div>
-  {{plashka()}}
+{{plashka()}}
 </div>
 {% endblock %}
