@@ -20,6 +20,7 @@ media
 develop-eggs
 .installed.cfg
 pip-log.txt
+export.xml
 .coverage
 .tox
 .mr.developer.cfg

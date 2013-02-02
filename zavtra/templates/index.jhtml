@@ -321,7 +321,7 @@
           <div class="relative" id="main_newspaper_box">
             <div class="main_upper_boxes_header">
               <h2 class="inline">
-                <a class="gray gray_link no_underline" href="/content/zeitung/">
+                <a class="gray gray_link no_underline" href="/content/issue/">
                   <span class="main_header_category">Газета:</span>
                   <span class="main_header_name mediumtext">№{{issue.relative_number}} &ndash; {{issue.published_at|ru_date("%d %B")}}</span>
                 </a>
@@ -332,7 +332,7 @@
             </a>
             <div id="main_newspaper_img">
               {% if issue.illustration != "" %}
-              <a href="/content/zeitung/"><img src="{{issue.gazette_box.url}}"></a>
+              <a href="/content/issue/"><img src="{{issue.gazette_box.url}}"></a>
               {% endif %}
             </div>
             {% set gazette = issue.gazette %}

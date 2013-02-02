@@ -22,7 +22,7 @@ class HomeView(TemplateView):
                         order_by('-selected_at').\
                         select_related()[0:6]
     context = {
-      'issue': Issue.published.latest('published_at'),
+      'issue': Issue.published.prefetch_related('issue_rubrics').latest('published_at'),
       'events': Article.events.select_related().all(),
       'latest_news_item': Article.news.latest('published_at'),
       'selected': group_by(selected_articles, 3),

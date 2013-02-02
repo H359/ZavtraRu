@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 
 from content.models import Article
+from siteuser.models import User as UserModel
 
 
 class Comment(models.Model):

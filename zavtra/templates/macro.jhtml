@@ -1,8 +1,8 @@
 {% macro render_navigation(prefix="", suffix="") %}
 <a href="/content/zeitung/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
-<a href="{{url('content.views.events_now')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
+<a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
 <a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-<a href="{{url('content.views.daily_now')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
+<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
 <a href="{{url('siteuser.views.authors')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
 {% endmacro %}
 

@@ -12,19 +12,16 @@ from siteuser.models import User
 
 
 class Command(BaseCommand):
-
   def handle(self, *args, **kwargs):
-    wod, cr = Rubric.objects.get_or_create(title=u'Слово Дня', slug='wod')
-    blogs = Rubric.fetch_rubric('blogi')
-    news = Rubric.fetch_rubric('novosti')
-    if cr:
-      wod.articles.all().delete()
+    wod, _ = Rubric.objects.get_or_create(title=u'Слово дня', slug='wod')
+    columnists, _ = Rubric.objects.get_or_create(title=u'Колумнисты', slug='columnists')
+    news, _ = Rubric.objects.get_or_create(title=u'Новости', slug='novosti')
     now = datetime.now()
     oneday = timedelta(days=1)
-    start = now - 10 * oneday
+    start = now - 3 * oneday
     pic_formats = [(x, (4 / 3) * x) for x in range(400, 900, 100)]
     while True:
-      for p in [blogs, news, wod]:
+      for p in [columnists, news, wod]:
         for x in range(0, 7):
           article = Article.objects.create(
             rubric=p,
@@ -38,9 +35,10 @@ class Command(BaseCommand):
             content='<p>' + '</p><p>'.join(lorem_ipsum.paragraphs(randint(3,5))) + '</p>'          
           )
           result = urlretrieve('http://placekitten.com/%d/%d' % choice(pic_formats))
-          article.cover_source.save('kote%d.jpg' % article.id, File(open(result[0])))
-          article.save()
-          if p.id == blogs.id:
+          if p.id != news.id or (randint(0,10) > 4):
+            article.cover_source.save('kote%d.jpg' % article.id, File(open(result[0])))
+            article.save()
+          if p.id == columnists.id:
             article.authors.add(User.columnists.all()[randint(1,2000)])
           elif p.id == wod.id:
             for x in range(0, randint(3,5)):

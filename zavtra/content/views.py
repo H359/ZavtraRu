@@ -1,5 +1,6 @@
 from datetime import datetime
 from calendar import isleap
+from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.dates import DayArchiveView
 from django.shortcuts import get_object_or_404, redirect
@@ -35,13 +36,13 @@ class EventsView(DayArchiveViewDefaulted):
     return context
 
 
-class DailyView(DayArchiveViewDefaulted):
-  template_name = 'content/daily.jhtml'
+class BlogsView(DayArchiveViewDefaulted):
+  template_name = 'content/blogs.jhtml'
   def get_queryset(self):
     return Article.published.all()
 
   def get_context_data(self, **kwargs):
-    context = super(DailyView, self).get_context_data(**kwargs)
+    context = super(BlogsView, self).get_context_data(**kwargs)
     context['most_commented'] = Article.get_most_commented()
     return context
 
@@ -51,27 +52,31 @@ class ArchiveView(TemplateView):
 
   def get_context_data(self, **kwargs):
     context = super(ArchiveView, self).get_context_data(**kwargs)
-    try:
-      date = datetime(
-        year=int(self.kwargs['year']),
-        month=int(self.kwargs['month']),
-        day=int(self.kwargs['day'])
-      )
-    except (KeyError, ValueError):
-      date = datetime.now().date()
-    context['selected_date'] = date
-    context['issue'] = Issue.objects.filter(published_at__lte=date).latest('published_at')
+    queryset = Issue.objects.order_by('-published_at')
+    # TODO: refactor this SHIT
+    latest_issue = Issue.objects.latest('published_at')
+    if 'year' in self.request.GET:
+      context['selected_year'] = int(self.request.GET['year'])
+    else:
+      context['selected_year'] = latest_issue.published_at.year
+    queryset = queryset.filter(published_at__year = context['selected_year'])
+    if 'month' in self.request.GET:
+      context['selected_month'] = int(self.request.GET['month'])
+      queryset = queryset.filter(published_at__month = context['selected_month'])
+    else:
+      context['selected_month'] = 0
+    context['issues'] = queryset
+    context['months'] = [x[1] for x in MONTH_NAMES]
     return context
 
 
 class ArticleView(DetailView):
-
   @property
   def template_name(self):
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod_article.jhtml'
     elif self.issue is not None:
-      return 'content/zeitung_article.jhtml'
+      return 'content/issue_article.jhtml'
     else:
       return 'content/site_article.jhtml'
 
@@ -92,7 +97,7 @@ class RubricView(ListView):
   @property
   def template_name(self):
     if RubricInIssue.objects.filter(rubric=self.rubric).count() > 0:
-      return 'content/zeitung_rubric_detail.jhtml'
+      return 'content/issue_rubric_detail.jhtml'
     elif self.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod.jhtml'
     else:
@@ -125,11 +130,11 @@ class FeaturedView(ListView):
     return self.topic.articles.select_related().all()
 
 
-class ZeitungView(TemplateView):
-  template_name = 'content/zeitung.jhtml'
+class IssueView(TemplateView):
+  template_name = 'content/issue.jhtml'
 
   def get_context_data(self, **kwargs):
-    context = super(ZeitungView, self).get_context_data(**kwargs)
+    context = super(IssueView, self).get_context_data(**kwargs)
     context['issue'] = Issue.published.get(
       published_at__year = self.kwargs['year'],
       relative_number = self.kwargs['issue']

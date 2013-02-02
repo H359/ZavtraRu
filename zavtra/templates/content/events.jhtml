@@ -12,7 +12,7 @@
         <div class="row">
           <div class="span12">
             <div class="section-header">
-              <h2 class="inline top_align">Свежие новости</h2>
+              <h2 class="inline top_align">Сегодня</h2>
             </div>
           </div>
         </div>
@@ -49,11 +49,7 @@
                       <a href="/">Главная</a>
                       <span class="divider">/</span>
                     </li>
-                    <li>
-                      <a href="/content/events/">Новости</a>
-                      <span class="divider">/</span>
-                    </li>
-                    <li class="active">{{day|ru_date("%d-%m-%Y")}}</li>
+                    <li class="active">Новости</li>
                   </ul>
                 </div>
               </div>
@@ -100,6 +96,7 @@
                               </h4>
                               {% endif %}
                             </header>
+                            <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
                           </div>
                           <div class="span3 right_align news-subject-container">
                             {% for topic in article.topics.all() %}

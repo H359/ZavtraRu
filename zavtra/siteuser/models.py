@@ -19,6 +19,9 @@ class User(AbstractBaseUser):
   mid_name = models.CharField(max_length=250, verbose_name=u'Отчество', blank=True)
   last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
   level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
+  resume = models.CharField(max_length=1024, verbose_name=u'Короткое описание (регалии и т.п.)', blank=True)
+  bio = models.TextField(verbose_name=u'Биография', blank=True)
+  photo = models.ImageField(verbose_name=u'Фотография', blank=True, null=True, upload_to='authors')
 
   USERNAME_FIELD = 'email'
 

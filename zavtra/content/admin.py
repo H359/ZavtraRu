@@ -53,11 +53,9 @@ class WodAdmin(admin.ModelAdmin):
     'm2m': ['authors', 'topics']
   }
 
-  def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-    formfield = super(WodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-    if db_field == 'rubric':
-      formfield.queryset = formfield.queryset.filter(slug='wod')
-    return formfield
+  def save_model(self, request, obj, form, change):
+    obj.rubric = Rubric.fetch_rubric('wod')
+    obj.save()
 
 
 class NewsAdmin(admin.ModelAdmin):
@@ -66,11 +64,12 @@ class NewsAdmin(admin.ModelAdmin):
   search_fields = ('title',)
   form = ArticleAdminForm
 
-  def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
-    formfield = super(NewsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-    if db_field == 'rubric':
-      formfield.queryset = formfield.queryset.filter(slug='novosti')
-    return formfield
+  def queryset(self, request):
+    return News.objects.filter(rubric=Rubric.fetch_rubric('novosti'))
+
+  def save_model(self, request, obj, form, change):
+    obj.rubric = Rubric.fetch_rubric('novosti')
+    obj.save()
 
 
 class TopicAdmin(admin.ModelAdmin):

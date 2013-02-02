@@ -1,122 +1,106 @@
 # -*- coding: utf-8 -*-
-import psycopg2
-from django.core.management.base import BaseCommand
+from datetime import datetime
 
+from django.core.management.base import BaseCommand
+from django.db import connection
+
+import old_models as old
 from content.models import Rubric, Article, Topic, Issue, RubricInIssue
 from siteuser.models import User
 
 
-def dictify(desc, data):
-  return dict(zip(map(lambda x: x[0], desc), data))
-
-
 class Command(BaseCommand):
-  authors = {}
-  topics = {}
+  def migrate_rubrics(self):
+    self.rubrics = {}
+    for rubric in old.Rubric.select():
+      self.rubrics[rubric.id] = {
+        'rubric': Rubric.objects.create(slug=rubric.slug, title=rubric.title),
+        'position': rubric.position
+      }
+    self.blogs = Rubric.objects.create(title=u'Блоги')
 
-  def handle(self, *args, **kwargs):
-    self.cleanup()
-    self.conn = psycopg2.connect("dbname=%s user=%s" % args)
-    self.migrate_authors()
-    self.migrate_topics()
-    self.migrate_articles()
-    self.conn.close()
-
-  def simple_sql(self, sql):
-    cursor = self.conn.cursor()
-    cursor.execute(sql)
-    for record in cursor:
-      yield dictify(cursor.description, record)
-    cursor.close()
-
-  def cleanup(self):
-    Issue.objects.all().delete()
-    RubricInIssue.objects.all().delete()
-    Rubric.objects.all().delete()
-    User.objects.all().delete()
-    Article.objects.all().delete()
-    Topic.objects.all().delete()
-
-  def migrate_authors(self):
-    for r in self.simple_sql("SELECT * FROM auth_user WHERE is_staff=true"):
-      if r['email'] is None or len(r['email']) == 0:
-        email = 'fakeuseremail_%d@zavtra.ru' % r['id']
-      else:
-        email = r['email']
-      self.authors[r['id']] = User.objects.create(
-        email=email,
-        first_name=r['first_name'],
-        last_name=r['last_name'],
-        level=User.USER_LEVELS.staff
+  def migrate_users(self):
+    self.users = {}
+    for user in old.User.select().where(old.User.is_staff == True):
+      if len(user.email) == 0:
+        user.email = u'fakeuser_%d@zavtra.ru' % user.id
+      self.users[user.id] = User.objects.create(
+        email = user.email,
+        first_name = user.first_name,
+        last_name = user.last_name,
+        level = User.USER_LEVELS.staff
       )
 
-  def migrate_articles(self):
-    """
-    for r in self.simple_sql("SELECT * FROM corecontent_rubric ORDER BY position"):
-      self.rubrics[r['id']] = Rubric.objects.create(title=r['title'], slug=r['slug'])
-    self.blogs = Rubric.objects.create(title=u'Блоги')
-    self.events = Rubric.objects.create(title=u'События')
-    self.news = Rubric.objects.create(title=u'Новости')
-    self.word_of_day = Rubric.objects.create(title=u'Слово дня')
-    self.editorial = Rubric.objects.create(title=u'Колонка редактора')
-    self.special_project = Rubric.objects.create(title=u'Спецпроект')
-    """
-    # zeitung
-    rubrics = {}
-    for r in self.simple_sql("SELECT * FROM corecontent_rubric"):
-      rubrics[r['id']] = (Rubric.objects.create(title=r['title'], slug=r['slug']), r['position'])
+  def cleanup(self):
+    Article.objects.all().delete()
+    User.objects.all().delete()
+    Rubric.objects.all().delete()
+    Issue.objects.all().delete()
+    RubricInIssue.objects.all().delete()
 
-    absnumber = 150
-    relnumber = 1
-    for issue_date in self.simple_sql("SELECT DISTINCT date_trunc('day', pub_date) AS dt FROM corecontent_contentitem WHERE published=true ORDER BY dt ASC"):
-      issue = Issue.objects.create(absolute_number=absnumber, relative_number=relnumber, published_at=issue_date['dt'].date())
-      # illustration?
-      ir = {}
-      for r in self.simple_sql("SELECT * FROM corecontent_contentitem WHERE date_trunc('day', pub_date) = '%s' AND published=true" % issue_date['dt']):
-        if r['rubric_id'] not in ir:
-          rub, pos = rubrics[r['rubric_id']]
-          ir[r['rubric_id']] = RubricInIssue.objects.create(issue=issue, rubric=rub, position=pos)
-        else:
-          rub, _ = rubrics[r['rubric_id']]
-        article = Article.objects.create(
-          title        = r['title'],
-          slug         = r['slug'],
-          subtitle     = r['subtitle'],
-          status       = Article.STATUS.ready,
-          type         = r['kind'],
-          published_at = issue_date['dt'],
-          rubric       = rub,
-          selected_at  = None,
-          announce     = r['description'], # clean html, extract cover
-          content      = r['content'] # clean html
-        )        
-      absnumber += 1
-      relnumber += 1
-      for a in self.simple_sql("SELECT user_id FROM corecontent_contentitem_authors WHERE contentitem_id=%d" % r['id']):
-        article.authors.add(self.authors[a['user_id']])
+  def migrate_article(self, obj):
+    if obj.rubric is not None:
+      rubric = self.rubrics[obj.rubric.id]['rubric']
+    else:
+      rubric = self.blogs
+    article = Article.objects.create(
+      title = obj.title,
+      subtitle = obj.subtitle,
+      slug = obj.slug,
+      status = Article.STATUS.ready,
+      type = obj.kind,
+      announce = obj.description,
+      content = obj.content,
+      published_at = obj.pub_date,
+      rubric = rubric,
+      gazetted = obj.published
+    )
+    for author in obj.authors:
+      article.authors.add(self.users[author.user.id])
 
-    blogs = Rubric.objects.create(title=u'Блоги')
-    # other stuff
-    for r in self.simple_sql("SELECT * FROM corecontent_contentitem WHERE published=false"):
-      if r['rubric_id'] is not None:
-        rub, _ = rubrics[r['rubric_id']]
-      else:
-        rub = blogs
-      article = Article.objects.create(
-        title        = r['title'],
-        slug         = r['slug'],
-        subtitle     = r['subtitle'],
-        status       = Article.STATUS.ready,
-        type         = r['kind'],
-        published_at = r['pub_date'],
-        rubric       = rub,
-        selected_at  = None,
-        announce     = r['description'], # clean html, extract cover
-        content      = r['content'] # clean html
-      )        
-      for a in self.simple_sql("SELECT user_id FROM corecontent_contentitem_authors WHERE contentitem_id=%d" % r['id']):
-        article.authors.add(self.authors[a['user_id']])
-
-  def migrate_topics(self):
-    for r in self.simple_sql("SELECT * FROM corecontent_featureditems"):
-      self.topics[r['id']] = Topic.objects.create(title=r['title'], slug=r['slug'], on_top=r['is_active'])
+  def handle(self, *args, **kwargs):
+    old.database.init(args[0], user=args[1])
+    self.cleanup()
+    self.migrate_rubrics()
+    self.migrate_users()
+    for obj in old.Article.select().order_by(old.Article.pub_date.desc()):
+      self.migrate_article(obj)
+    anumber = 149
+    rnumber = 41
+    ldate = datetime(year=1950, month=1, day=1).date()
+    invrubrics = {r['rubric'].id: r['position'] for r in self.rubrics.values()}
+    cursor = connection.cursor()
+    cursor.execute("""
+      SELECT
+        DISTINCT date_trunc('day', published_at) AS day
+      FROM
+        content_article
+      WHERE
+        gazetted = true
+      ORDER BY
+        day
+    """)
+    for d in cursor:
+      if ldate != d[0].date():
+        articles = Article.objects.filter(
+          gazetted = True,
+          published_at__year = d[0].year,
+          published_at__month = d[0].month,
+          published_at__day = d[0].day
+        )
+        if articles.count() > 0:
+          anumber += 1
+          if ldate.year != d[0].year:
+            rnumber = 1
+          else:
+            rnumber += 1
+          ldate = d[0].date()
+          issue = Issue.objects.create(
+            absolute_number = anumber,
+            relative_number = rnumber,
+            published_at = ldate
+          )
+          rubrics = list(set([article.rubric for article in articles]))
+          rubrics.sort(key=lambda r: invrubrics[r.id])
+          for pos, rubric in enumerate(rubrics):
+            RubricInIssue.objects.get_or_create(issue=issue, rubric=rubric, position=pos)
