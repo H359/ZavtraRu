@@ -66,6 +66,7 @@ class Command(BaseCommand):
     self.migrate_users()
     for obj in old.Article.select().order_by(old.Article.pub_date.desc()):
       self.migrate_article(obj)
+    print 'Articles done.'
     anumber = 149
     rnumber = 41
     ldate = datetime(year=1950, month=1, day=1).date()
@@ -101,7 +102,9 @@ class Command(BaseCommand):
             relative_number = rnumber,
             published_at = ldate
           )
+          print 'Issue ', issue
           rubrics = list(set([article.rubric for article in articles]))
           rubrics.sort(key=lambda r: invrubrics[r.id])
           for pos, rubric in enumerate(rubrics):
             RubricInIssue.objects.get_or_create(issue=issue, rubric=rubric, position=pos)
+    print 'Issues done.'
