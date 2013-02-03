@@ -63,7 +63,7 @@ class Command(BaseCommand):
       rubric = rubric,
       gazetted = obj.published
     )
-    if len(obj.authors) > 0:
+    if obj.authors.count() > 0:
       article.authors.add([User.objects.get(id=self.users[x.user.id]) for x in obj.authors])
 
   def handle(self, *args, **kwargs):
