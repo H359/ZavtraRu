@@ -80,6 +80,16 @@ class Topics(BaseModel):
     class Meta:
         db_table = 'corecontent_featureditems'
 
+
+class Zhivotovillustration(BaseModel):
+    original = CharField()
+    pub_date = DateField()
+    thumbnail = CharField()
+    title = CharField()
+
+    class Meta:
+        db_table = 'corecontent_zhivotovillustration'
+
 """
 class TaggitTag(BaseModel):
     name = CharField()
@@ -94,13 +104,4 @@ class TopicTag(BaseModel):
 
     class Meta:
         db_table = 'corecontent_featureditems_tags'
-
-class CorecontentZhivotovillustration(BaseModel):
-    original = CharField()
-    pub_date = DateField()
-    thumbnail = CharField()
-    title = CharField()
-
-    class Meta:
-        db_table = 'corecontent_zhivotovillustration'
 """

@@ -236,9 +236,11 @@
         {% for article in group %}
         <div class="span3">
           <div class="main_article_container">
+            {% if article.cover_source != "" %}
             <a href="{{article.get_absolute_url()}}" class="no_underline">
               <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
             </a>
+            {% endif %}
             <div class="main_article_header">
               <div class="main_article_author">
                 <span class="person_name largetext">{% for author in article.authors.all() %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}</span>

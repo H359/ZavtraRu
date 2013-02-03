@@ -24,13 +24,14 @@ class Command(BaseCommand):
     for user in old.User.select().where(old.User.is_staff == True):
       if len(user.email) == 0:
         user.email = u'fakeuser_%d@zavtra.ru' % user.id
-      self.users[user.id] = User.objects.create(
+      created_user = User.objects.create(
         email = user.email,
         first_name = user.first_name,
         last_name = user.last_name,
         level = User.USER_LEVELS.staff,
         date_joined = user.date_joined
       )
+      self.users[user.id] = created_user.id
 
   def cleanup(self):
     Article.objects.all().delete()
@@ -56,18 +57,19 @@ class Command(BaseCommand):
       rubric = rubric,
       gazetted = obj.published
     )
-    for author in obj.authors:
-      article.authors.add(self.users[author.user.id])
+    if len(obj.authors) > 0:
+      article.authors.add([User.objects.get(id=self.users[x.user.id]) for x in obj.authors])
 
   def handle(self, *args, **kwargs):
     old.database.init(args[0], user=args[1])
     self.cleanup()
     self.migrate_rubrics()
     self.migrate_users()
-    pages = old.Article.select().count() / 100
+    paginate_by = 100
+    pages = old.Article.select().count() / paginate_by
     for page in xrange(pages + 1):
       print 'Page %d of %d' % (page, pages)
-      for obj in old.Article.select().order_by(old.Article.pub_date.desc()).paginate(page, 100):
+      for obj in old.Article.select().order_by(old.Article.pub_date.desc()).paginate(page, paginate_by):
         self.migrate_article(obj)
     print 'Articles done.'
     anumber = 149
@@ -105,7 +107,15 @@ class Command(BaseCommand):
             relative_number = rnumber,
             published_at = ldate
           )
-          print 'Issue ', issue
+          try:
+            zhivotov = old.Zhivotovillustration.select().where(
+              old.Zhivotovillustration.pub_date == issue.published_at 
+            ).get()
+            Issue.objects.filter(pk=issue.pk).update(illustration = zhivotov.original)
+            print 'Got zhivotov for %d (%d): %s' % (issue.relative_number, issue.absolute_number, zhivotov.original)
+          except old.Zhivotovillustration.DoesNotExist:
+            pass
+          print 'Issue ', issue.published_at
           rubrics = list(set([article.rubric for article in articles]))
           rubrics.sort(key=lambda r: invrubrics[r.id])
           for pos, rubric in enumerate(rubrics):
