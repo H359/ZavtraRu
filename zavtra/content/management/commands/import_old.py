@@ -28,7 +28,8 @@ class Command(BaseCommand):
         email = user.email,
         first_name = user.first_name,
         last_name = user.last_name,
-        level = User.USER_LEVELS.staff
+        level = User.USER_LEVELS.staff,
+        date_joined = user.date_joined
       )
 
   def cleanup(self):
