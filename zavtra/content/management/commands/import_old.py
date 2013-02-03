@@ -64,7 +64,7 @@ class Command(BaseCommand):
       gazetted = obj.published
     )
     if obj.authors.count() > 0:
-      article.authors.add([User.objects.get(id=self.users[x.user.id]) for x in obj.authors])
+      article.authors.add(*[User.objects.get(id=self.users[x.user.id]) for x in obj.authors])
 
   def handle(self, *args, **kwargs):
     old.database.init(args[0], user=args[1])
