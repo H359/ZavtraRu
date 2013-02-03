@@ -4,6 +4,7 @@ from django.conf import settings
 
 from content.models import Article
 from siteuser.models import User as UserModel
+from managers import ActiveManager
 
 
 class Comment(models.Model):
@@ -14,3 +15,6 @@ class Comment(models.Model):
   comment = models.TextField(verbose_name=u'Текст')
   active = models.BooleanField(verbose_name=u'Отображаемый', default=True)
   rating = models.IntegerField(verbose_name=u'Рейтинг', default=0)
+
+  objects = models.Manager()
+  enabled = ActiveManager()

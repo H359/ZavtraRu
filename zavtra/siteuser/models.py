@@ -16,12 +16,12 @@ class User(AbstractBaseUser):
 
   email = models.EmailField(max_length=254, unique=True)  
   first_name = models.CharField(max_length=250, verbose_name=u'Имя')
-  mid_name = models.CharField(max_length=250, verbose_name=u'Отчество', blank=True)
   last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
   level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
   resume = models.CharField(max_length=1024, verbose_name=u'Короткое описание (регалии и т.п.)', blank=True)
   bio = models.TextField(verbose_name=u'Биография', blank=True)
   photo = models.ImageField(verbose_name=u'Фотография', blank=True, null=True, upload_to='authors')
+  date_joined = models.DateTimeField(verbose_name=u'Дата регистрации')
 
   USERNAME_FIELD = 'email'
 
@@ -40,13 +40,32 @@ class User(AbstractBaseUser):
     return self.is_staff
 
   def __unicode__(self):
-    names = filter(lambda w: len(w) > 0, [self.first_name, self.mid_name, self.last_name])
+    names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])
     return u' '.join(names)
+
+  @property
+  def received_comments(self):
+    from comments.models import Comment
+    return Comment.enabled.filter(article__authors__in = [self.pk])
 
   @models.permalink
   def get_absolute_url(self):
-    return ('siteuser.views.profile', (), {'id': self.pk})
+    return ('siteuser.views.profile', (), {'pk': self.pk})
+
+  @models.permalink
+  def get_articles_url(self):
+    return ('siteuser.views.profile_articles', (), {'pk': self.pk})
+
+  @models.permalink
+  def get_comments_url(self):
+    return ('siteuser.views.profile_comments', (), {'pk': self.pk})    
 
   @staticmethod
   def autocomplete_search_fields():
     return ("id__iexact", "last_name__icontains",)
+
+
+class Reader(models.Model):
+  reader = models.ForeignKey(User, related_name='readers')
+  author = models.ForeignKey(User, related_name='readees')
+  subscription_start = models.DateTimeField()

@@ -1,0 +1,59 @@
+{% extends "base.jhtml" %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="row">
+    <div class="span12">
+      <ul class="breadcrumb person_breadcrumb">
+        <li>
+          <a href="/">Главная</a>
+          <span class="divider">/</span>
+        </li>
+        <li>
+          <a href="/">Сообщество</a>
+          <span class="divider">/</span>
+        </li>
+        <li class="active">Участники</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="person_background">
+  <div class="container12">
+    <div class="row">
+      <div id="person_name_navigation" class="span8">
+        <div class="row">
+          <div class="span6 offset1 right_align">
+            <span class="bold person_uppercase_name">{{object.first_name}}</span>
+            <br>
+            <span class="bold person_uppercase_name">{{object.last_name}}</span>
+            <br>
+            <span class="white person_regalii">{{object.resume}}</span>
+          </div>
+          <div class="span7 offset1 person_navigation_container">
+            <div class="row">
+              <div class="span2 person_navigation" {% if profile_part == 'profile' %}id="person_navigation_selected"{% endif %}>
+                <a {% if profile_part != 'profile' %}href="{{object.get_absolute_url()}}"{% endif %} title="Об участнике">Об участнике</a>
+              </div>
+              <div class="span2 person_navigation" {% if profile_part == 'articles' %}id="person_navigation_selected"{% endif %}>
+                <a {% if profile_part != 'articles' %}href="{{object.get_articles_url()}}"{% endif %} title="Публикации">Публикации ({{object.articles.count()}})</a>
+              </div>
+              <div class="span2 person_navigation" {% if profile_part == 'comments' %}id="person_navigation_selected"{% endif %}>
+                <a {% if profile_part != 'comments' %}href="{{object.get_comments_url()}}"{% endif %} title="Комментарии" href="#">Комментарии</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="person_pic" class="span4">
+        <img src="{{object.photo}}">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container12">
+  <div class="row">{% block content %}{% endblock %}</div>
+</div>
+{% endblock %}

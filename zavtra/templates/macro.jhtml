@@ -2,8 +2,8 @@
 <a href="/content/zeitung/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
 <a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
 <a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
-<a href="{{url('siteuser.views.authors')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
+{#<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>#}
+<a href="{{url('siteuser.views.community')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
@@ -117,32 +117,34 @@
 </div>
 {% endmacro %}
 
+{% macro render_comment(comment) %}
+<li id="comment-{{comment.id}}">
+  <div class="comment">
+    <div class="avatar">
+      <a href="{{comment.author.get_absolute_url()}}" rel="author">
+        <img src="http://placekitten.com/62/62">
+      </a>
+    </div>
+    <div class="inner">
+      <div class="body clearfixer">
+        <div class="author">
+          <a href="{{comment.author.get_absolute_url()}}" class="comment-author-name">{{comment.author}}</a>
+          <a href="#" class="comment-time">
+            <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
+          </a>
+        </div>
+        <div class="text">{{comment.comment}}</div>
+      </div>
+    </div>
+  </div>
+</li>
+{% endmacro %}
+
 {% macro render_comments(request, object, token) %}
 <div class="comments">
   <div class="content">
     <ul id="comments" class="unstyled">
-      {% for comment in object.comments.all() %}
-      <li id="comment-{{comment.id}}">
-        <div class="comment">
-          <div class="avatar">
-            <a href="{{comment.author.get_absolute_url()}}" rel="author">
-              <img src="http://placekitten.com/62/62">
-            </a>
-          </div>
-          <div class="inner">
-            <div class="body clearfixer">
-              <div class="author">
-                <a href="{{comment.author.get_absolute_url()}}" class="comment-author-name">{{comment.author}}</a>
-                <a href="#" class="comment-time">
-                  <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
-                </a>
-              </div>
-              <div class="text">{{comment.comment}}</div>
-            </div>
-          </div>
-        </div>
-      </li>
-      {% endfor %}
+      {% for comment in object.comments.all() %}{{render_comment(comment)}}{% endfor %}
     </ul>
   </div>
   {% if request.user and request.user.is_authenticated() %}

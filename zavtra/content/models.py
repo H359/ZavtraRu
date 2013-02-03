@@ -178,7 +178,7 @@ class Article(models.Model):
   def get_most_commented():
     #end = datetime.now()
     #start = end - oneday * 30
-    return Article.published.all()[0:5]
+    return Article.published.prefetch_related('authors').select_related().all()[0:5]
 
   @models.permalink
   def get_absolute_url(self):

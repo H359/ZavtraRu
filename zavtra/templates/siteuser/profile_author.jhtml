@@ -1,0 +1,53 @@
+{% extends "siteuser/profile.jhtml" %}
+
+{% macro person(p) %}
+<div class="person_entry">
+  <div class="person_entry_name">
+    <a href="{{p.get_absolute_url()}}" class="person_name largetext">{{p}}</a>
+  </div>
+  <div class="person_entry_pic">
+    <a href="{{p.get_absolute_url()}}">
+      <img src="{{p.photo}}">
+    </a>
+  </div>
+</div>
+{% endmacro %}
+
+{% block content %}
+<div class="span10 offset1" id="person_content">
+  <div class="row">
+    <div class="span8 offset1">
+      <div class="row">
+        <div class="span8" id="person_actions">
+          <span class="subscribe_button"><span>Подписаться</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 offset1">
+      <div id="person_about">
+        <h3>О себе:</h3>
+        {{object.bio}}
+        <span class="largetext bold">Присоединился к сообществу</span> {{object.date_joined|ru_date("%d %B %Y")}}
+      </div>
+    </div>
+    {% set readees = object.readees.all()|list %}
+    {% set readers = object.readers.all()|list %}
+    {% if readees|length > 0 %}
+    <div class="span8 offset1" id="person_subscriptions">
+      <h3>Участник читает:</h3>
+      {% for readee in readees %}{{person(readee)}}{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% if readers|length > 0 %}
+  <div class="row">
+    <div class="span8 offset1" id="person_subscriptions">
+      <h3>Читатели:</h3>
+      {% for reader in readers %}{{person(reader)}}{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

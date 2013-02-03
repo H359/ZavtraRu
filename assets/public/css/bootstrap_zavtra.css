@@ -525,7 +525,7 @@ a:hover {
   clear: both;
 }
 p {
-  margin: 0;
+	margin: 0;
  /* margin: 0 0 10px;*/ /* SDK */
 }
 .lead {
@@ -3795,7 +3795,7 @@ input[type="submit"].btn.btn-mini {
   /* IE7 inline-block hack */
 
   *zoom: 1;
-  color: #000;
+  /*color: #000;*/
   font-weight: 700;
 }
 .breadcrumb .divider {
@@ -5297,7 +5297,7 @@ button.close {
     width: 715px;
   }
   .container12 { /* SDK */
-    width: 660px;
+  	width: 660px;
   }
   .span13 {
     width: 715px;
@@ -5655,7 +5655,7 @@ button.close {
     width: 975px;
   }
   .container12 { /* SDK */
-    width: 900px;
+  	width: 900px;
   }
   .span13 {
     width: 975px;

@@ -2,49 +2,46 @@ from datetime import datetime
 from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView
-from django.views.generic.dates import DayArchiveView
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Max, Min
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 from content.models import Article, Rubric, Topic, Issue, RubricInIssue
 
 
-class DayArchiveViewDefaulted(DayArchiveView):
-  date_field = 'published_at'
-  year_format = '%Y'
-  month_format = '%m'
-  day_format = '%d'
-
-  def get(self, request, *args, **kwargs):
-    if 'year' not in self.kwargs:
-      date = getattr(self.get_queryset().latest(self.date_field), self.date_field)
-      self.year = '%04d' % date.year
-      self.month = '%02d' % date.month
-      self.day = '%02d' % date.day
-    return super(DayArchiveViewDefaulted, self).get(request, *args, **kwargs)
-
-
-class EventsView(DayArchiveViewDefaulted):
+class EventsView(ListView):
   template_name = 'content/events.jhtml'
-  def get_queryset(self):
-    return Article.published.filter(rubric=Rubric.fetch_rubric('novosti'))
+
+  def get_date(self):
+    if 'date' in self.kwargs:
+      date = datetime.strptime(self.kwargs['date'], '%d-%m-%Y').date()
+    else:
+      date = datetime.now().date()
+    return date
 
   def get_context_data(self, **kwargs):
     context = super(EventsView, self).get_context_data(**kwargs)
+    context['date'] = self.date    
+    context['prev_date'] = self.date - oneday
+    context['next_date'] = self.date + oneday
+
+    dates = Article.news.aggregate(start = Min('published_at'), end = Max('published_at'))
+    if context['prev_date'] < dates['start'].date():
+      context['prev_date'] = None
+    if context['next_date'] > dates['end'].date():
+      context['next_date'] = None
+
     context['latest_events'] = Article.events.all()[0:5]
     return context
 
-
-class BlogsView(DayArchiveViewDefaulted):
-  template_name = 'content/blogs.jhtml'
   def get_queryset(self):
-    return Article.published.all()
-
-  def get_context_data(self, **kwargs):
-    context = super(BlogsView, self).get_context_data(**kwargs)
-    context['most_commented'] = Article.get_most_commented()
-    return context
+    self.date = self.get_date()
+    return Article.news.filter(
+      published_at__year = self.date.year,
+      published_at__month = self.date.month,
+      published_at__day = self.date.day
+    ).select_related().prefetch_related('topics')
 
 
 class ArchiveView(TemplateView):
