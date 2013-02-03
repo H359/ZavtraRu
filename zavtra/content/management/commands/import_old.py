@@ -11,6 +11,7 @@ from siteuser.models import User
 
 class Command(BaseCommand):
   def migrate_rubrics(self):
+    print 'Rubrics...',
     self.rubrics = {}
     for rubric in old.Rubric.select():
       self.rubrics[rubric.id] = {
@@ -18,8 +19,10 @@ class Command(BaseCommand):
         'position': rubric.position
       }
     self.blogs = Rubric.objects.create(title=u'Блоги')
+    print 'done'
 
   def migrate_users(self):
+    print 'Users...',
     self.users = {}
     for user in old.User.select().where(old.User.is_staff == True):
       if len(user.email) == 0:
@@ -32,13 +35,16 @@ class Command(BaseCommand):
         date_joined = user.date_joined
       )
       self.users[user.id] = created_user.id
+    print 'done'
 
   def cleanup(self):
+    print 'Cleaning shit...',
     Article.objects.all().delete()
     User.objects.all().delete()
     Rubric.objects.all().delete()
     Issue.objects.all().delete()
     RubricInIssue.objects.all().delete()
+    print 'done'
 
   def migrate_article(self, obj):
     if obj.rubric is not None:
@@ -67,6 +73,7 @@ class Command(BaseCommand):
     self.migrate_users()
     paginate_by = 100
     pages = old.Article.select().count() / paginate_by
+    print 'Articles...'
     for page in xrange(pages + 1):
       print 'Page %d of %d' % (page, pages)
       for obj in old.Article.select().order_by(old.Article.pub_date.desc()).paginate(page, paginate_by):
@@ -87,6 +94,7 @@ class Command(BaseCommand):
       ORDER BY
         day
     """)
+    print 'Issues...'
     for d in cursor:
       if ldate != d[0].date():
         articles = Article.objects.filter(
