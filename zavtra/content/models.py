@@ -161,7 +161,7 @@ class Article(models.Model):
   wod = WODManager()
   blogs = BlogsManager()
 
-  main_cover_for_wod = ImageSpec([ResizeToFit(428, 180, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  main_cover_for_wod = ImageSpec([ResizeToFill(428, 180)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFit(200, 150, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFit(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_main_selection = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
