@@ -40,7 +40,7 @@ class Command(BaseCommand):
             article.save()
           if p.id == columnists.id or p.id == wod.id:
             article.authors.add(User.columnists.all()[randint(1,2000)])
-          elif p.id == wod.id:
+          if p.id == wod.id:
             for x in range(0, randint(3,5)):
               ExpertComment.objects.create(
                 expert = User.columnists.all()[randint(1,2000)],
