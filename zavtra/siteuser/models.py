@@ -31,6 +31,7 @@ class User(AbstractBaseUser):
   columnists = ColumnistsManager()
 
   photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
+  photo_60 = ImageSpec([ResizeToFit(60, 60, True, 0xFFFFFF)], image_field='photo')
 
   @property
   def is_staff(self):

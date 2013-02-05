@@ -304,9 +304,15 @@
                   </div>
                 </div>
                 <div class="main_person_pic_small">
-                  {% if article.authors.all()|length > 0 %}
-                  <a href="{{article.authors.all()[0].get_absolute_url()}}">
-                    <img src="http://placekitten.com/g/45/45">
+                  {% set authors = article.authors.all()|list %}
+                  {% if authors|length > 0 %}
+                  {% set author = article.authors.all()[0] %}
+                  <a href="{{author.get_absolute_url()}}">
+                    {% if author.photo != "" %}
+                    <img src="{{author.photo_90.url}}">
+                    {% else %}
+                    <img src="{{STATIC_URL}}img/no_avatar.gif">
+                    {% endif %}
                   </a>
                   {% endif %}
                 </div>
