@@ -2,6 +2,7 @@
 import os
 from datetime import datetime
 
+from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.db import connection
 
@@ -123,7 +124,7 @@ class Command(BaseCommand):
             #Issue.objects.filter(pk=issue.pk).update(illustration = zhivotov.original)
             with open('/home/zw0rk/ZavtraRu/zavtra/media/%s' % zhivotov.original, 'r') as zh:
               _, fext = os.path.splitext(zhivotov.original)
-              issue.illustration.save('%s.%s' % (issue.relative_number, fext), zh)
+              issue.illustration.save('%s.%s' % (issue.relative_number, fext), File(zh))
             print 'Got zhivotov for %d (%d): %s' % (issue.relative_number, issue.absolute_number, zhivotov.original)
           except old.Zhivotovillustration.DoesNotExist:
             pass
