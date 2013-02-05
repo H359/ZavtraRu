@@ -63,6 +63,7 @@ class Issue(models.Model):
   gazette_box = ImageSpec([ResizeToFill(278, 121)], image_field='illustration', format='JPEG')
   zeitung_box = ImageSpec([ResizeToFill(870, 385)], image_field='illustration', format='JPEG')
   archive_box = ImageSpec([ResizeToFill(570, 252)], image_field='illustration', format='JPEG')
+  inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='illustration', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
@@ -216,7 +217,7 @@ class Article(models.Model):
 
   @property
   def is_peredovitsa(self):
-    return self.rubric.id == Rubric.fetch_rubric('peredovitsa')
+    return self.rubric.id == Rubric.fetch_rubric('peredovitsa').id
 
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')
