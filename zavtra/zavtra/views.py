@@ -27,10 +27,10 @@ class HomeView(TemplateView):
                         select_related()[0:6]
     context = {
       'issue': Issue.published.prefetch_related('issue_rubrics').latest('published_at'),
-      'events': Article.events.select_related().all(),
+      'events': Article.events.select_related().defer('content').all(),
       'latest_news_item': latest_news_item,
       'selected': group_by(selected_articles, 3),
-      'videos': list(Article.published.filter(type = Article.TYPES.video)[0:4]),
+      'videos': list(Article.published.filter(type = Article.TYPES.video).defer('content')[0:4]),
       'blogs': Article.blogs.prefetch_related('authors').defer('content').\
                exclude(pk__in = selected_articles).select_related().all()[0:6],
       'wod': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\

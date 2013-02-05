@@ -1,11 +1,13 @@
 #-*- coding: utf-8 -*-
 from django.contrib import admin
 from django import forms
+from django.forms.widgets import TextInput
 from tinymce.widgets import TinyMCE
 
-from content.models import Rubric, Article, Issue,\
-                           ExpertComment, Topic, RubricInIssue,\
-                           News, Wod, DailyQuote
+from content.models import Rubric, Issue, RubricInIssue,\
+                           ExpertComment, Topic, Article,\
+                           DailyQuote
+from content.proxies import News, Wod, Video
 
 
 class ExpertCommentAdminInline(admin.StackedInline):
@@ -25,6 +27,12 @@ class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+
+
+class VideoArticleForm(forms.ModelForm):
+  class Meta:
+    model = Video
+  content = forms.CharField(label=u'Ссылка на YouTube/День-ТВ', widget=TextInput(attrs={'style': 'width: 760px'}))
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -53,6 +61,9 @@ class WodAdmin(admin.ModelAdmin):
     'm2m': ['authors', 'topics']
   }
 
+  def queryset(self, request):
+    return Article.objects.filter(rubric=Rubric.fetch_rubric('wod'))
+
   def save_model(self, request, obj, form, change):
     obj.rubric = Rubric.fetch_rubric('wod')
     obj.save()
@@ -72,6 +83,20 @@ class NewsAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class VideoAdmin(admin.ModelAdmin):
+  exclude = ('type', 'selected_at', 'authors')
+  list_display = ('title', 'status', 'published_at')
+  search_fields = ('title',)
+  form = VideoArticleForm
+
+  def queryset(self, request):
+    return Article.objects.filter(type=Article.TYPES.video)
+
+  def save_model(self, request, obj, form, change):
+    obj.type = Article.TYPES.video
+    obj.save()
+
+
 class TopicAdmin(admin.ModelAdmin):
   list_display = ('title', 'position')
   list_editable = ('position',)
@@ -86,6 +111,7 @@ class IssueAdmin(admin.ModelAdmin):
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Wod, WodAdmin)
+admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Rubric)
 admin.site.register(Issue, IssueAdmin)

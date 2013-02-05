@@ -13,6 +13,7 @@ from djorm_pgfulltext.fields import VectorField
 from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
+from imagekit.processors.crop import Crop, Anchor
 
 from siteuser.models import User as UserModel
 
@@ -77,7 +78,7 @@ class Issue(models.Model):
       published_at__month = self.published_at.month,
       published_at__day = self.published_at.day,
       rubric__in = [x.rubric for x in issue_rubrics]
-    ).prefetch_related('authors').select_related()
+    ).prefetch_related('authors').select_related().defer('content')
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
 
@@ -168,7 +169,8 @@ class Article(models.Model):
   inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   inside_wod_article_cover =  ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_wodlist = ImageSpec([ResizeToFit(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  cover_for_video = ImageSpec([ResizeToFit(246, 184, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_topbar = ImageSpec([ResizeToFill(150, 105)], image_field='cover_source', format='JPEG')
+  cover_for_video = ImageSpec([Crop(640, 360, anchor=Anchor.BOTTOM), ResizeToFill(246, 184)], image_field='cover_source', format='JPEG')
 
   class Meta:
     ordering = ['-published_at']
@@ -226,22 +228,6 @@ class ExpertComment(models.Model):
 
   def __unicode__(self):
     return u'%s' % self.expert
-
-
-class News(Article):
-  class Meta:
-    proxy = True
-    verbose_name = u'Новость'
-    verbose_name_plural = u'Новости'
-
-
-class Wod(Article):
-  class Meta:
-    proxy = True
-    verbose_name = u'Слово Дня'
-    verbose_name_plural = u'Слова Дня'
-
-  objects = WODManager()
 
 
 class DailyQuote(models.Model):

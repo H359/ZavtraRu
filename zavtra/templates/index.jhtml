@@ -294,12 +294,12 @@
                   <div class="main_blog_entry_statistics">
                     <i class="icon-eye-open"> </i>
                     <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">11</a>
+                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.views_count}}</a>
                     </span>
                     &nbsp;
                     <i class="icon-comment"> </i>
                     <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">0</a>
+                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.comments_count}}</a>
                     </span>
                   </div>
                 </div>
