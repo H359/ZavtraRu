@@ -18,7 +18,7 @@ class Command(BaseCommand):
     news, _ = Rubric.objects.get_or_create(title=u'Новости', slug='novosti')
     now = datetime.now()
     oneday = timedelta(days=1)
-    start = now - 3 * oneday
+    start = now - 10 * oneday
     pic_formats = [(x, (4 / 3) * x) for x in range(400, 900, 100)]
     while True:
       for p in [columnists, news, wod]:
@@ -38,7 +38,7 @@ class Command(BaseCommand):
           if p.id != news.id or (randint(0,10) > 4):
             article.cover_source.save('kote%d.jpg' % article.id, File(open(result[0])))
             article.save()
-          if p.id == columnists.id:
+          if p.id == columnists.id or p.id == wod.id:
             article.authors.add(User.columnists.all()[randint(1,2000)])
           elif p.id == wod.id:
             for x in range(0, randint(3,5)):
