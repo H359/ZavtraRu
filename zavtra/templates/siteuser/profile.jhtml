@@ -48,7 +48,11 @@
         </div>
       </div>
       <div id="person_pic" class="span4">
-        <img src="{{object.photo}}">
+        {% if object.photo != "" %}
+        <img src="{{object.photo_90.url}}">
+        {% else %}
+        <img src="{{STATIC_URL}}img/no_avatar.gif">
+        {% endif %}
       </div>
     </div>
   </div>
