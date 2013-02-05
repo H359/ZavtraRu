@@ -12,7 +12,7 @@ from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
 from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
-from imagekit.processors.resize import ResizeToFit
+from imagekit.processors.resize import ResizeToFit, ResizeToFill
 
 from siteuser.models import User as UserModel
 
