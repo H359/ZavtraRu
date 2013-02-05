@@ -19,21 +19,20 @@
             <li>
               <a href="{{rubric.get_absolute_url()}}">{{rubric.title}}</a>
               <span class="divider">/</span>
-            </li class="active">{{objects[-1].published_at|ru_date("%d")}} &ndash; {{objects[0].published_at|ru_date("%d-%m-%Y")}}</li>
+            </li>
+            <li class="active">{{objects[-1].published_at|ru_date("%d")}} &ndash; {{objects[0].published_at|ru_date("%d-%m-%Y")}}</li>
           </ul>
           <div class="section_header_button">
-            <a href="#">
-              <img src="{{STATIC_URL}}img/arrow_circle_left.png" class="calendar_navigation_img_1">
-            </a>
+            {% if page_obj.has_previous() %}
+            <a href="?page={{page_obj.previous_page_number()}}"><img src="{{STATIC_URL}}img/arrow_circle_left.png" class="calendar_navigation_img_1"></a>
+            {% endif %}
             <h4 class="inline top_align average_padding_horizontal">
               <span class="baseline_align">{{objects[-1].published_at|ru_date("%d")}} &ndash; {{objects[0].published_at|ru_date("%d-%m-%Y")}}</span>
             </h4>
-            <a href="#">
-              <img src="{{STATIC_URL}}img/arrow_circle_right.png" class="calendar_navigation_img_1">
-            </a>
-            <a href="#">
-              <img src="{{STATIC_URL}}img/circle_calendar.png" class="calendar_navigation_img_1">
-            </a>
+            {% if page_obj.has_next() %}
+            <a href="?page={{page_obj.next_page_number()}}"><img src="{{STATIC_URL}}img/arrow_circle_right.png" class="calendar_navigation_img_1"></a>
+            {% endif %}
+            <a href="#"><img src="{{STATIC_URL}}img/circle_calendar.png" class="calendar_navigation_img_1"></a>
           </div>
         </div>
       </div>

@@ -88,7 +88,7 @@ class ArticleView(DetailView):
 
 
 class RubricView(ListView):
-  paginate_by = 15
+  paginate_by = 5
   paginator_class = DiggPaginator
 
   @property
