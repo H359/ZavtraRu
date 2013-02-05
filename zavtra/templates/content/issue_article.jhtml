@@ -77,7 +77,7 @@
                   {% if issue.illustration != "" %}
                   <div class="span4">
                     <div class="article-page-illustration">
-                      <img src="{{object.issue.illustration.inside_article_cover.url}}">
+                      <img src="{{object.issue.inside_article_cover.url}}">
                     </div>
                   </div>
                   {% endif %}
