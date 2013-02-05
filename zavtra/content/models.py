@@ -214,6 +214,9 @@ class Article(models.Model):
   def __unicode__(self):
     return u'%s' % self.title
 
+  @property
+  def is_peredovitsa(self):
+    return self.rubric.id == Rubric.fetch_rubric('peredovitsa')
 
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')

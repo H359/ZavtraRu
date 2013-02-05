@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser
 
 from model_utils import Choices
 from siteuser.managers import UserManager, ColumnistsManager
+from imagekit.models import ImageSpec
+from imagekit.processors.resize import ResizeToFit
 
 
 class User(AbstractBaseUser):
@@ -27,6 +29,8 @@ class User(AbstractBaseUser):
 
   objects = UserManager()
   columnists = ColumnistsManager()
+
+  photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
 
   @property
   def is_staff(self):

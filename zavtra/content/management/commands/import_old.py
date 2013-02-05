@@ -79,7 +79,8 @@ class Command(BaseCommand):
     for page in xrange(pages + 1):
       print 'Page %d of %d' % (page, pages)
       for obj in old.Article.select().order_by(old.Article.pub_date.desc()).paginate(page, paginate_by):
-        self.migrate_article(obj)
+        if obj.enabled:
+          self.migrate_article(obj)
     print 'Articles done.'
     anumber = 149
     rnumber = 41

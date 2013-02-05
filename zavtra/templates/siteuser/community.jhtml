@@ -4,6 +4,26 @@
 
 {% block page_style %}newspaper{% endblock %}
 
+{% block head %}
+<script>
+$().ready(function() {
+  var n = new Date();
+  $('#datepicker').datepicker({
+    dateFormat: 'yy/mm/dd',
+    defaultDate: "{{day.strftime("%y/%m/%d")}}",
+    showOtherMonths: true,
+    numberOfMonths: 1,
+    beforeShowDay: function(dt) {
+      return [dt < n];
+    },
+    onSelect: function(dt, dp) {
+      window.location.href = "{{url('siteuser.views.community')}}" + dt;
+    }
+  });
+});
+</script>
+{% endblock %}
+
 {% block page_content %}
 <div class="container12">
   <div class="row">
@@ -24,6 +44,7 @@
         </div>
         <div class="row">
           <div class="span12">
+            {#
             <div class="row">
               <div class="span12">
                 <div class="module_header rubric-header">
@@ -46,11 +67,14 @@
                 </div>
               </div>
             </div>
+            #}
             <div class="row">
               <div class="span9">
                 <div class="row">
                   <div class="span9 blogentries">
-                    {% for object in object_list %}
+                    {% set objects = object_list|list %}
+                    {% if objects|length > 0 %}
+                    {% for object in objects %}
                     {% set author = object.authors.all()[0] %}
                     <div class="inner_blogentry">
                       <div class="inner_blogentry_date_box">
@@ -61,7 +85,11 @@
                       </div>
                       <div class="inner_blogentry_author_pic">
                         <a href="{{author.get_absolute_url()}}">
-                          <img src="{{author.photo}}">
+                          {% if author.photo != "" %}
+                          <img src="{{author.photo_90.url}}">
+                          {% else %}
+                          <img src="{{STATIC_URL}}img/no_avatar.gif">
+                          {% endif %}
                         </a>
                       </div>
                       <div class="inner_blogentry_header">
@@ -77,6 +105,11 @@
                       </div>
                     </div>
                     {% endfor %}
+                    {% else %}
+                    <div class="padding_one">
+                      <strong>В этот день не было опубликовано ни одной статьи.</strong>
+                    </div>
+                    {% endif %}
                   </div>
                   <div class="span9">
                     <div class="pagination center_align">
@@ -105,9 +138,7 @@
               </div>
               <div class="span3">
                 <div class="row">
-                  <div class="span3">
-                    datepicker
-                  </div>
+                  <div class="span3"><div id="datepicker" class="padding_one"></div></div>
                   <div class="span3">
                     <div class="module_header rubric-header">
                       <h4>Самое обсуждаемое:</h4>
