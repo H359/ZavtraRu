@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from datetime import datetime
 
 from django.core.management.base import BaseCommand
@@ -119,7 +120,10 @@ class Command(BaseCommand):
             zhivotov = old.Zhivotovillustration.select().where(
               old.Zhivotovillustration.pub_date == issue.published_at 
             ).get()
-            Issue.objects.filter(pk=issue.pk).update(illustration = zhivotov.original)
+            #Issue.objects.filter(pk=issue.pk).update(illustration = zhivotov.original)
+            with open('/home/zavtra/media/%s' % zhivotov.original, 'r') as zh:
+              _, fext = os.path.splitext(zhivotov.original)
+              issue.illustration.save('%s.%s' % (issue.relative_number, fext), zh.read())
             print 'Got zhivotov for %d (%d): %s' % (issue.relative_number, issue.absolute_number, zhivotov.original)
           except old.Zhivotovillustration.DoesNotExist:
             pass
