@@ -7,4 +7,4 @@ from siteuser.models import User
 class UserAdmin(admin.ModelAdmin):
   search_fields = ('last_name',)
 
-admin.site.register(UserAdmin, User)
+admin.site.register(User, UserAdmin)
