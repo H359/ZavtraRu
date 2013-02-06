@@ -4,4 +4,7 @@ from django.contrib import admin
 from siteuser.models import User
 
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+  search_fields = ('last_name',)
+
+admin.site.register(UserAdmin, User)
