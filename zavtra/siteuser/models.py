@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 
@@ -23,7 +24,7 @@ class User(AbstractBaseUser):
   resume = models.CharField(max_length=1024, verbose_name=u'Короткое описание (регалии и т.п.)', blank=True)
   bio = models.TextField(verbose_name=u'Биография', blank=True)
   photo = models.ImageField(verbose_name=u'Фотография', blank=True, null=True, upload_to='authors')
-  date_joined = models.DateTimeField(verbose_name=u'Дата регистрации')
+  date_joined = models.DateTimeField(verbose_name=u'Дата регистрации', default=lambda: datetime.now())
 
   USERNAME_FIELD = 'email'
 
