@@ -111,37 +111,30 @@
                     </a>
                   </h2>
                 </div>
-                <div class="relative" id="main_events_story">
-                  <div id="main_event_selection_bg"></div>
-                  <div id="main_event_selection">
-                    <ul class="block no_margin no_padding">
-                      <li class="inline">
-                        <img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_left.png">
-                      </li>
-                      {% for event in events[0:10] %}
-                      <li class="inline">
-                        <a href="{{event.get_absolute_url()}}">
-                          <img class="main_events_selection_bullet" src="{{STATIC_URL}}img/graay_dot.png">
-                        </a>
-                      </li>
-                      {% endfor %}
-                      <li class="inline">
-                        <img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_right.png">
-                      </li>
-                    </ul>
+                <div id="events" data-cycle="go" data-interval="1400" class="cycle slide">
+                  <div class="cycle-inner">
+                    {% for event in events[0:10] %}
+                    <div class="item">
+                      <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
+                      <h5>
+                        <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
+                      </h5>
+                    </div>
+                    {% endfor %}
                   </div>
-                  {% for event in events[0:10] %}
-                  <div class="center_align"{% if not loop.first %} style="display:none"{% endif %}>
-                    <a href="{{event.get_absolute_url()}}">
-                      <img id="main_event_image" src="{{event.cover_for_eventbox.url}}">
-                    </a>
-                  </div>
-                  <div{% if not loop.first %} style="display:none"{% endif %} id="main_event_header">
-                    <h5>
-                      <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
-                    </h5>
-                  </div>
-                  {% endfor %}
+                  <ul class="cycle-nav">
+                    <li>
+                      <a href="#events" title="Предыдущее" data-cycle="prev"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_left.png"></a>
+                    </li>
+                    {% for event in events[0:10] %}
+                    <li>
+                      <a href="#events" data-cycle="to" data-args="{{loop.index}}"><img class="main_events_selection_bullet" src="{{STATIC_URL}}img/gray_dot.png"></a>
+                    </li>
+                    {% endfor %}
+                    <li>
+                      <a href="#events" title="Следующее" data-cycle="next"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_right.png"></a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -180,13 +173,19 @@
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h2>
-                <a href="{{latest_news_item.get_absolute_url()}}" class="no_underline"><span class="main_header_category">Коротко:</span></a>
+                <a href="/content/events/" class="no_underline"><span class="main_header_category">Коротко:</span></a>
               </h2>
             </div>
             <div id="main_news_box_content">
-              <a href="{{latest_news_item.get_absolute_url()}}" class="mediumtext">
-                {{latest_news_item.title}}
-              </a>
+              <div data-cycle="go" class="cycle slide down">
+                <div class="latest_news cycle-inner">
+                  {% for item in latest_news %}
+                  <div class="item">
+                    <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
             </div>
           </div>
         </div>
