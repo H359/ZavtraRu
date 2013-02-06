@@ -37,7 +37,7 @@
               <div class="row">
                 <div class="span5">
                   <div id="main_header_links">
-                    <a class="main_header_link" href="/denlit/">День Литературы</a>
+                    <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
                     <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
                     <a class="main_header_link" href="{{url('content.views.archive')}}">Архив Завтра</a>
                   </div>

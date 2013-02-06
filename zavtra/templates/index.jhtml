@@ -166,7 +166,7 @@
                 <h5>Экспертные оценки:</h5>
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
-                  <a class="largetext person_name inline-block" href="{{wod.get_absolute_url()}}">{{expert_comment.expert}}</a>
+                  <span class="largetext person_name inline-block">{{expert_comment.expert}}</span>
                   {% if not loop.last %} &bull; {% endif %}
                   {% endfor %}
                 </span>
@@ -185,7 +185,7 @@
             </div>
             <div id="main_news_box_content">
               <a href="{{latest_news_item.get_absolute_url()}}" class="mediumtext">
-                <span class="black no_underline">{{latest_news_item.published_at|ru_date("%H:%M")}} &ndash; </span> {{latest_news_item.title}}
+                {{latest_news_item.title}}
               </a>
             </div>
           </div>
@@ -222,7 +222,7 @@
                 </h5>
                 <h5 class="right_align dark">
                   {% for author in editorial.authors.all() %}
-                  <a href="{{author.get_absolute_url()}}" class="no_underline">{{ author }}</a>
+                  <a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
                   {% endfor %}
                 </h5>
               </div>
@@ -231,9 +231,8 @@
         </div>
       </div>
       #}
-      {% for group in selected %}
       <div class="row">
-        {% for article in group %}
+        {% for article in selected_articles %}
         <div class="span3">
           <div class="main_article_container">
             {% if article.cover_source != "" %}
@@ -255,7 +254,6 @@
         </div>
         {% endfor %}
       </div>
-      {% endfor %}
       <div class="row">
         <div class="span9">
           <div class="row">
@@ -263,7 +261,7 @@
               <div class="main_box_frame">
                 <div class="relative main_box_header">
                   <h4 class="white inline">
-                    <a href="/content/blogs/" class="gray gray_link">Блоги</a>
+                    <a href="/community/" class="gray gray_link">Сообщество</a>
                   </h4>
                 </div>
               </div>
@@ -361,7 +359,7 @@
             </div>
             <div class="main_box_header">
               <h5>
-                <a href="/content/zeitung/" class="gray gray_link">Также в номере</a>
+                <a href="/content/issue/" class="gray gray_link">Также в номере</a>
               </h5>
             </div>
             <div class="main_newspaper_block">
@@ -386,8 +384,8 @@
             </div>
             <div class="relative" id="main_newspaper_footer">
               <h5>
-                <a href="/content/zeitung/" class="dark dark_link">Все материалы выпуска</a>&nbsp;&bull;&nbsp;
-                <a href="/" class="dark dark_link">Архив</a>
+                <a href="/content/issue/" class="dark dark_link">Все материалы выпуска</a>&nbsp;&bull;&nbsp;
+                <a href="/content/archive/" class="dark dark_link">Архив</a>
               </h5>
             </div>
           </div>

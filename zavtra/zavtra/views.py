@@ -9,9 +9,11 @@ from content.models import Article, Rubric, Issue
 from siteuser.models import User
 
 
+"""
 def group_by(coll, sep):
   steps = int(math.ceil(len(coll) / (1.0*sep)))
   return [coll[sep*p:sep*(p+1)] for p in range(0, steps)]
+"""
 
 
 class HomeView(TemplateView):
@@ -29,7 +31,7 @@ class HomeView(TemplateView):
       'issue': Issue.published.prefetch_related('issue_rubrics').latest('published_at'),
       'events': Article.events.select_related().defer('content').all(),
       'latest_news_item': latest_news_item,
-      'selected': group_by(selected_articles, 3),
+      'selected_articles': selected_articles,
       'videos': list(Article.published.filter(type = Article.TYPES.video).defer('content')[0:4]),
       'blogs': Article.blogs.prefetch_related('authors').defer('content').\
                exclude(pk__in = selected_articles).select_related().all()[0:6],
