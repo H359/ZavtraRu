@@ -111,7 +111,7 @@
                     </a>
                   </h2>
                 </div>
-                <div id="events" data-cycle="go" data-interval="1400" class="cycle slide">
+                <div id="events" data-cycle="go" data-interval="14000" class="cycle slide">
                   <div class="cycle-inner">
                     {% for event in events[0:10] %}
                     <div class="item">
