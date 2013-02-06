@@ -33,6 +33,7 @@ class User(AbstractBaseUser):
 
   photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
   photo_60 = ImageSpec([ResizeToFit(60, 60, True, 0xFFFFFF)], image_field='photo')
+  photo_225 = ImageSpec([ResizeToFit(225, 169, True, 0xFFFFFF)], image_field='photo')
 
   @property
   def is_staff(self):
