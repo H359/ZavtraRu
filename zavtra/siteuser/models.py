@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from model_utils import Choices
 from siteuser.managers import UserManager, ColumnistsManager
 from imagekit.models import ImageSpec
-from imagekit.processors.resize import ResizeToFit
+from imagekit.processors.resize import ResizeToFit, ResizeToFill
 
 
 class User(AbstractBaseUser):
