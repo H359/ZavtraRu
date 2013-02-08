@@ -1,5 +1,5 @@
 {% macro render_navigation(prefix="", suffix="") %}
-<a href="/content/zeitung/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
+<a href="/content/issue/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
 <a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
 <a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
 {#<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>#}
