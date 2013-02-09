@@ -132,21 +132,17 @@ body {
 }
 
 #main_header_search input {
-	width: 8em;
+	width: 10em;
 	color: white;
-	border: 1px solid #6A0000;
-	background-color: #333;
+	border: 2px solid #BBB;
+	background-color: #EEE;
 	cursor: pointer;
 	display: inline;
 	vertical-align: middle;
 }
 
 #main_header_search input:focus {
-	background-color: #222;
-	border: 1px solid #6A0000;
-	width: 12em;
 	cursor: text;
-
 }
 
 #main_header_social_networks { /* ? */
