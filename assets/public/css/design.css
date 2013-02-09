@@ -584,6 +584,12 @@ a:hover .main_header_name {
 	padding: 1em;
 }
 
+.main_newspaper_block > a {
+display: block;
+text-align: right;
+padding: .5em 0em;
+}
+
 #main_video_selected_description_container {
 	border-bottom: 1px solid #BBB;
 }
@@ -995,7 +1001,7 @@ p {
 .person_name {
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
 	cursor: pointer;
-	font-size: 1.05em;
+	font-size: .9em;
 }
 
 @media (min-width: 1025px) and (max-width: 1199px) {
