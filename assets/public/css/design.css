@@ -588,6 +588,12 @@ a:hover .main_header_name {
 	border-bottom: 1px solid #BBB;
 }
 
+#main_newspaper_img {
+	-webkit-box-shadow: 0px 0px 12px 1px #444;
+	-moz-box-shadow: 0px 0px 12px 1px #444;
+	box-shadow: 0px 0px 12px 1px #444;
+}
+
 #main_newspaper_pdf_link {
 	width: 2.25em;
 	height: 1.75em;
@@ -595,7 +601,6 @@ a:hover .main_header_name {
 	right: -1em;
 	top: 0em;
 }
-
 
 .main_special_project_img {
 	height: 10em;
@@ -1071,10 +1076,6 @@ p {
 	
 	#header {
 		height: auto !important;
-	}
-	
-	#main_newspaper_img {
-		text-align: center;
 	}
 	
 	#main_wod_box {
