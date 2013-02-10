@@ -1897,7 +1897,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .top_selection_item {
-	margin: 0em 1em 1em 1em;
+	margin: 0em 1em 0em 1em;
 	padding: 1em 0em 0em 0em;
 	word-wrap: break-word;
 	position: relative;
