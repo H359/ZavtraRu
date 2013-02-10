@@ -1327,7 +1327,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	margin-top: 2em;
 }
 
-.wod_entry_header div {
+.wod_entry_header div, .wod_entry_header2 {
 	padding: .5em 2em .5em 2em;
 }
 
