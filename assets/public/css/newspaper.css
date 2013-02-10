@@ -1709,7 +1709,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	padding: 1em 2em 0em 2em;
+	padding: 1em 2em 1em 2em;
 }
 
 .news-paragraph {
