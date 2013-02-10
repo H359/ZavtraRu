@@ -2310,10 +2310,9 @@ li.empty span.large {
 	padding: 0em 0em 1em 0em;
 }
 
-#person_statistics {
+#person_statistics, #person_datepicker {
 	border-radius: 5px;
 	background-color: #FFF;
-	margin: 0em 0em 0em 2em;
 	padding: 1em;
 	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
 	-moz-box-shadow: 0px 2px 9px 1px #AAA;
@@ -2321,6 +2320,7 @@ li.empty span.large {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	margin-bottom: 1em;
 }
 
 #person_content .news-header-container {
@@ -2348,7 +2348,6 @@ li.empty span.large {
 	border-radius: 5px;
 	background-color: #FFF;
 	margin: 1em 0em;
-	padding: 0em 0em 1em 0em;
 	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
 	-moz-box-shadow: 0px 2px 9px 1px #AAA;
 	box-shadow: 0px 2px 9px 1px #AAA;
