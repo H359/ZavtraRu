@@ -5,12 +5,10 @@
 {% block content %}
 <div class="span10 offset1" id="person_content">
   <div class="row">
-    <div class="span8 offset1">
-      <div class="row">
-        <div class="span8" id="person_actions">
-          <span class="subscribe_button"><span>Подписаться</span></span>
-        </div>
-      </div>
+    <div class="span4 offset1">
+    </div>
+    <div class="span4" id="person_actions">
+      <span class="subscribe_button"><span>Подписаться</span></span>
     </div>
   </div>
   <div class="row">
