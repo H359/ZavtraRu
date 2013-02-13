@@ -611,6 +611,7 @@ padding: .5em 0em;
 .main_box_header {
 	padding: .25em .75em;
 	background-color: #555;
+	text-transform: uppercase;
 }
 
 .main_box_frame {
