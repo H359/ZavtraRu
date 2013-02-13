@@ -18,8 +18,8 @@ class ExpertCommentAdminInline(admin.StackedInline):
 
 class RubricInIssueAdminInline(admin.StackedInline):
   model = RubricInIssue
-  max_num = 8
-  extra = 8
+  max_num = 9
+  extra = 9
   sortable_field_name = 'position'
 
 
