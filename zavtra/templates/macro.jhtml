@@ -28,7 +28,7 @@
           {% if article.cover_source != "" %}
           <div class="article-illustration-container float_left">
             <a href="{{article.get_absolute_url()}}">
-              <img src="{{article.cover_for_list.url}}" class="article-illustration">
+              <img src="{{article.cover_for_sidebar.url}}" class="article-illustration">
             </a>
           </div>
           {% endif %}
