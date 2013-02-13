@@ -462,6 +462,7 @@ abc {
 .article-paragraph {
 	font-size: .9em;
 	line-height: 1.25em;
+	word-wrap: break-word;
 }
 
 .fill-h-space-img {
