@@ -1,8 +1,10 @@
 {% extends "content/base_content.jhtml" %}
 
-{% from "macro.jhtml" import render_comments %}
+{% from "macro.jhtml" import render_comments, render_navigation %}
 
 {% block page_style %}newspaper{% endblock %}
+
+{% block navigation %}{{render_navigation(path="/content/issue/")}}{% endblock %}
 
 {% block page_content %}
 <div class="container12">

@@ -1,9 +1,11 @@
 {% extends "content/base_content.jhtml" %}
  
-{% from "macro.jhtml" import render_comments %}
+{% from "macro.jhtml" import render_comments, render_navigation %}
  
 {% block page_style %}newspaper{% endblock %}
- 
+
+{% block navigation %}{{render_navigation(path="/content/rubric/wod/")}}{% endblock %}
+
 {% macro plashka(object) %}
   <div class="bordered">
     <div class="row">
@@ -53,7 +55,7 @@
               <a href="{{object.rubric.get_absolute_url()}}">{{object.rubric.title}}</a>
               <span class="divider">/</span>
             </li>
-            <li class="active">{{object.published_at|ru_date("%d-%m-%Y")}}</li>
+            <li class="active">{{object.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
         </div>
       </div>

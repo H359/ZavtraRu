@@ -1,8 +1,8 @@
-{% macro render_navigation(prefix="", suffix="") %}
-<a href="/content/issue/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
-<a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
-<a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-<a href="{{url('siteuser.views.community')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
+{% macro render_navigation(prefix="", suffix="", path="") %}
+<a href="/content/issue/" class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Газета</a>
+<a href="{{url('content.views.events')}}" class="{% if path.startswith('/content/events/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">События</a>
+<a href="/content/rubric/wod/" class="{% if path.startswith('/content/rubric/wod/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Слово Дня</a>
+<a href="{{url('siteuser.views.community')}}" class="{% if path.startswith('/community/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Статьи</a>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}

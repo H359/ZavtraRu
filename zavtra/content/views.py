@@ -87,6 +87,7 @@ class ArticleView(DetailView):
     return Article.objects.select_related()
 
 
+
 class RubricView(ListView):
   paginate_by = 5
   paginator_class = DiggPaginator

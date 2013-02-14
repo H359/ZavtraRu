@@ -65,7 +65,7 @@
       <div class="container12">
         <div class="row">
           <div class="span9">
-            <div class="navigation_items">{{render_navigation()}}</div>
+            <div class="navigation_items">{% block navigation %}{{render_navigation(path=request.path)}}{% endblock %}</div>
           </div>
           <div class="span3">
             <div class="row">
