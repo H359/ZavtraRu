@@ -13,6 +13,9 @@
     <link href="{{STATIC_URL}}css/bloat.css" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script>var switchTo5x=true;</script>
+    <script src="http://w.sharethis.com/button/buttons.js"></script>
+    <script src="http://s.sharethis.com/loader.js"></script>
     {% block head %}{% endblock %}
   </head>
   <body>
@@ -94,10 +97,14 @@
       <div id="footer">{% block page_footer %}{% endblock %}</div>
     </footer>
     {% block foot %}{% endblock %}
-    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/combobox.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/cycle.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/zavtra.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
+    <script src="{{STATIC_URL}}js/combobox.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/cycle.min.js"></script>
+    <script src="{{STATIC_URL}}js/zavtra.js"></script>
+    <script>stLight.options({publisher: "f2e120ce-c7c8-479f-accc-b5d2d34e2555", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+    <script>var options={ "publisher": "f2e120ce-c7c8-479f-accc-b5d2d34e2555", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["vkontakte", "twitter", "livejournal", "googleplus", "facebook", "sharethis"]}};
+      var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
+    </script>
   </body>
 </html>
