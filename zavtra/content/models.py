@@ -39,7 +39,7 @@ class Rubric(models.Model):
   @staticmethod
   def get_gazette_rubrics():
     # TODO: optimize this
-    rii = RubricInIssue.objects.filter(in_rubricator=True).distinct('rubric').\
+    rii = RubricInIssue.objects.filter(rubric__in_rubricator=True).distinct('rubric').\
           values_list('rubric', flat=True).order_by('rubric', 'position')
     return Rubric.objects.filter(pk__in = rii)
 
