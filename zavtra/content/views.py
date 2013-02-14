@@ -62,14 +62,14 @@ class ArchiveView(TemplateView):
       queryset = queryset.filter(published_at__month = context['selected_month'])
     else:
       context['selected_month'] = 0
+    context['built_attrs'] = []
+    if 'selected_year' in context:
+      context['built_attrs'].append('year=%d' % context['selected_year'])
+    if 'selected_month' in context and context['selected_month'] != 0:
+      context['built_attrs'].append('month=%d' % context['selected_month'])
+    context['built_attrs'] = '&'.join(context['built_attrs'])
     if 'number' in self.request.GET:
       context['number'] = int(self.request.GET['number'])
-      context['built_attrs'] = []
-      if 'selected_year' in context:
-        context['built_attrs'].append('year=%d' % context['selected_year'])
-      if 'selected_month' in context and context['selected_month'] != 0:
-        context['built_attrs'].append('month=%d' % context['selected_month'])
-      context['built_attrs'] = '&'.join(context['built_attrs'])
     context['issues'] = queryset
     context['months'] = [x[1] for x in MONTH_NAMES]
     return context
