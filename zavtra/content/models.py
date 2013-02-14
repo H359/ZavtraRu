@@ -113,7 +113,7 @@ class Topic(models.Model):
   on_top = models.BooleanField(verbose_name=u'Выводить в главном меню', default=False)
 
   class Meta:
-    ordering = ['-position']
+    ordering = ['position']
     verbose_name = u'Тема'
     verbose_name_plural = u'Темы'
 

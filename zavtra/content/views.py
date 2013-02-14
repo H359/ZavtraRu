@@ -110,7 +110,7 @@ class RubricView(ListView):
     return context
 
 
-class FeaturedView(ListView):
+class TopicView(ListView):
   paginate_by = 15
   paginator_class = DiggPaginator
   template_name = 'content/topic_detail.jhtml'
@@ -138,6 +138,7 @@ class IssueView(TemplateView):
     )
     context['latest_issues'] = Issue.published.all()[0:5]
     return context
+
 
 def current_issue_redirect(request):
   return redirect(Issue.objects.latest('published_at'))
