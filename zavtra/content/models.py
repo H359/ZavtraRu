@@ -26,6 +26,7 @@ from zavtra.utils import cached, oneday
 class Rubric(models.Model):
   title = models.CharField(max_length=1024, verbose_name=u'Название')
   slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from='title')
+  in_rubricator = models.BooleanField(default=True, verbose_name=u'Включать в рубрикатор')
 
   class Meta:
     verbose_name = u'Рубрика'
@@ -38,7 +39,7 @@ class Rubric(models.Model):
   @staticmethod
   def get_gazette_rubrics():
     # TODO: optimize this
-    rii = RubricInIssue.objects.distinct('rubric').\
+    rii = RubricInIssue.objects.filter(in_rubricator=True).distinct('rubric').\
           values_list('rubric', flat=True).order_by('rubric', 'position')
     return Rubric.objects.filter(pk__in = rii)
 
