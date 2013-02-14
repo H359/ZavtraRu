@@ -11,7 +11,7 @@
           <div id="main_header_links">
             <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
             <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
-            <a class="main_header_link" href="/">Архив Завтра</a>
+            <a class="main_header_link" href="/content/archive/">Архив Завтра</a>
           </div>
           <img src="{{STATIC_URL}}img/red_line_gradient.png" class="block">
         </div>
