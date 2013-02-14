@@ -121,22 +121,6 @@
         <div class="row">
           <div class="span9 article-page-content">{{object.render_content()}}</div>
         </div>
-        <div class="row">
-          <div class="span9">
-            <div id="footer_social_networks" class="right_align">
-              <span class="dark x-margin-one">поделиться: </span>
-              <a href="http://facebook.com/zavtraru">
-                <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
-              </a>
-              <a href="http://vk.com/zavtraru">
-                <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
-              </a>
-              <a href="http://twitter.com/ZavtraRu">
-                <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
-              </a>
-            </div>
-          </div>
-        </div>
       </article>
     </div>
   </div>

@@ -10,3 +10,13 @@
   right: 0;
   z-index: 10;
 }
+
+#social {
+  position: fixed;
+  top: 100px;
+  width: 40px;
+}
+
+#social span {
+  
+}

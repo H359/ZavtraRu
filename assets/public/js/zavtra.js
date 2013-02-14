@@ -61,6 +61,7 @@ function switchMainTabs(which) {
 $(document).ready(function(){
 	checkSizes();
 	$('.main_tab').on('click', function(){switchMainTabs(this)});
+	$('#social').css({left: $('#page').css('marginLeft')});
 });
 
 $(window).on('resize', checkSizes);
