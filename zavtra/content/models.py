@@ -62,7 +62,7 @@ class Issue(models.Model):
   #gazette_box = ImageSpec([ResizeToFit(278, 121, True, 0xFFFFFF)], image_field='illustration', format='JPEG')
   gazette_box = ImageSpec([ResizeToFill(278, 121)], image_field='illustration', format='JPEG')
   zeitung_box = ImageSpec([ResizeToFill(870, 385)], image_field='illustration', format='JPEG')
-  archive_box = ImageSpec([ResizeToFill(570, 252)], image_field='illustration', format='JPEG')
+  archive_box = ImageSpec([ResizeToFill(750, 300)], image_field='illustration', format='JPEG')
   inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='illustration', format='JPEG')
 
   class Meta:
