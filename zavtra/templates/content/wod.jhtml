@@ -20,7 +20,11 @@
               <a href="{{rubric.get_absolute_url()}}">{{rubric.title}}</a>
               <span class="divider">/</span>
             </li>
-            <li class="active">{{objects[-1].published_at|ru_date("%d")}} &ndash; {{objects[0].published_at|ru_date("%d-%m-%Y")}}</li>
+            {% if objects[-1].published_at.year < objects[0].published_at.year %}
+            <li class="active">{{objects[-1].published_at|ru_date("%d %B %Y")}} &ndash; {{objects[0].published_at|ru_date("%d %B %Y")}}</li>
+            {% else %}
+            <li class="active">{{objects[-1].published_at|ru_date("%d %B")}} &ndash; {{objects[0].published_at|ru_date("%d %B %Y")}}</li>
+            {% endif %}
           </ul>
           <div class="section_header_button">
             {% if page_obj.has_next() %}
