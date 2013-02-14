@@ -164,12 +164,12 @@ class Article(models.Model):
   blogs = BlogsManager()
 
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
-  cover_for_sidebar = ImageSpec([ResizeToFit(200, 150, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  cover_for_eventbox = ImageSpec([ResizeToFit(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  cover_for_main_selection = ImageSpec([ResizeToFit(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  inside_wod_article_cover =  ImageSpec([ResizeToFit(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
-  cover_for_wodlist = ImageSpec([ResizeToFit(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_eventbox = ImageSpec([ResizeToFill(200, 200, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_main_selection = ImageSpec([ResizeToFill(140, 128, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  inside_article_cover = ImageSpec([ResizeToFill(345, 345, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 399, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
+  cover_for_wodlist = ImageSpec([ResizeToFill(390, 170, True, 0xFFFFFF)], image_field='cover_source', format='JPEG')
   cover_for_topbar = ImageSpec([ResizeToFill(150, 105)], image_field='cover_source', format='JPEG')
   cover_for_video = ImageSpec([Crop(640, 360, anchor=Anchor.BOTTOM), ResizeToFill(246, 184)], image_field='cover_source', format='JPEG')
 
