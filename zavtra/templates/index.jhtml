@@ -234,19 +234,16 @@
         {% for article in selected_articles %}
         <div class="span3">
           <div class="main_article_container">
+            <a href="{{article.get_absolute_url()}}" class="no_underline bloat"></a>
             {% if article.cover_source != "" %}
-            <a href="{{article.get_absolute_url()}}" class="no_underline">
-              <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
-            </a>
+            <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
             {% endif %}
             <div class="main_article_header">
               <div class="main_article_author">
                 <span class="person_name">{% for author in article.authors.all() %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
               </div>
               <div class="main_article_name">
-                <h6>
-                  <a href="{{article.get_absolute_url()}}" class="no_underline">{{article.title}}</a>
-                </h6>
+                <h6>{{article.title}}</h6>
               </div>
             </div>
           </div>
