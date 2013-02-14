@@ -74,7 +74,6 @@
     {% endif %}
     {% for l in range(0, rubric['items']|length, 3) %}
     <div class="row">
-
       {% for article in rubric['items'][l:l+3] %}
       <div class="span{{12 // loop.length}}">
         <div class="article-content side_shadows">
@@ -101,7 +100,7 @@
               </div>
               <div class="article-text">
                 <p class="article-paragraph">
-                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
                 </p>
               </div>
             </article>
@@ -109,7 +108,6 @@
         </div>
       </div>
       {% endfor %}
-
     </div>
     {% endfor %}
   </div>
