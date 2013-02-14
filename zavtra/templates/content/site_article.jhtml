@@ -1,4 +1,4 @@
-{% extends "base.jhtml" %}
+{% extends "content/base_content.jhtml" %}
 
 {% from "macro.jhtml" import render_comments %}
 
