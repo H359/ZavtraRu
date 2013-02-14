@@ -1,8 +1,10 @@
 {% extends "base.jhtml" %}
 
-{% from "macro.jhtml" import pagination %}
+{% from "macro.jhtml" import pagination, render_navigation %}
 
 {% block page_style %}newspaper{% endblock %}
+
+{% block navigation %}{{render_navigation(path="/content/events/")}}{% endblock %}
 
 {% block page_content %}
 <div class="container12">
