@@ -41,7 +41,7 @@
           </div>
           <div class="article-author">
             {% for author in article.authors.all() %}
-            <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+            <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
           </div>
           <div class="article-text">
@@ -95,7 +95,7 @@
               </div>
               <div class="article-author">
                 {% for author in article.authors.all() %}
-                <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+                <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
                 {% endfor %}
               </div>
               <div class="article-text">
