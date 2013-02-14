@@ -11,12 +11,16 @@ $().ready(function() {
   $('#datepicker').datepicker({
     dateFormat: 'yy/mm/dd',
     showOtherMonths: true,
+    {% if selected_date %}defaultDate: '{{selected_date.strftime("%y/%m/%d")}}',{% endif %}
     numberOfMonths: 1,
     beforeShowDay: function(dt) {
       return [dt < n];
     },
     onSelect: function(dt, dp) {
-      window.location.href = "{{url('siteuser.views.community')}}" + dt;
+      var date = '?year=' + dp.selectedYear +
+                 '&month=' + (dp.selectedMonth + 1) +
+                 '&day=' + dp.selectedDay;
+      window.location.href = "{{url('siteuser.views.community')}}" + date;
     }
   });
 });
@@ -36,7 +40,15 @@ $().ready(function() {
                   <a href="/">Главная</a>
                   <span class="divider">/</span>
                 </li>
-                <li class="active">Сообщество</li>
+                {% if selected_date %}
+                <li>
+                  <a href="{{url('siteuser.views.community')}}">Статьи</a>
+                  <span class="divider">/</span>
+                </li>
+                <li class="active">Пуликации за {{selected_date|ru_date("%d %B %Y")}}</li>
+                {% else %}
+                <li class="active">Статьи</li>
+                {% endif %}
               </ul>
             </div>
           </div>
