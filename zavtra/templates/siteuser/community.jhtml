@@ -10,7 +10,6 @@ $().ready(function() {
   var n = new Date();
   $('#datepicker').datepicker({
     dateFormat: 'yy/mm/dd',
-    defaultDate: "{{day.strftime("%y/%m/%d")}}",
     showOtherMonths: true,
     numberOfMonths: 1,
     beforeShowDay: function(dt) {
@@ -72,18 +71,19 @@ $().ready(function() {
               <div class="span9">
                 <div class="row">
                   <div class="span9 blogentries">
-                    {% set objects = object_list|list %}
-                    {% if objects|length > 0 %}
-                    {% for object in objects %}
-                    {% set author = object.authors.all()[0] %}
+                    {% for object in object_list %}
                     <div class="inner_blogentry">
                       <div class="inner_blogentry_date_box">
                         <div class="inner_blogentry_date_content">{{object.published_at|ru_date("%d %B %Y")}}</div>
                       </div>
                       <div class="inner_blogentry_author">
+                        {% for author in object.authors.all() %}
                         <a href="{{author.get_absolute_url()}}">{{author}}</a>
+                        {% if not loop.last %}<br>{% endif %}
+                        {% endfor %}
                       </div>
                       <div class="inner_blogentry_author_pic">
+                        {% set author = object.authors.all()[0] %}
                         <a href="{{author.get_absolute_url()}}">
                           {% if author.photo != "" %}
                           <img src="{{author.photo_90.url}}">
@@ -105,35 +105,8 @@ $().ready(function() {
                       </div>
                     </div>
                     {% endfor %}
-                    {% else %}
-                    <div class="padding_one">
-                      <strong>В этот день не было опубликовано ни одной статьи.</strong>
-                    </div>
-                    {% endif %}
                   </div>
-                  <div class="span9">
-                    <div class="pagination center_align">
-                      <ul class="middle_align">
-                        <li>
-                          {% if previous_day is not none %}
-                          <a href="{{url('siteuser.views.community')}}{{previous_day.year}}/{{previous_day.month}}/{{previous_day.day}}/{% if selected_letter %}?letter={{selected_letter}}{% endif %}">{{previous_day|ru_date("%d %B %Y")}}</a>
-                          {% endif %}
-                        </li>
-                        <li class="info">
-                          <span>{{day|ru_date("%d %B %Y")}}</span>
-                        </li>
-                        {% if next_day is none %}
-                        <li class="disabled empty">
-                          <span class="large">&nbsp;</span>
-                        </li>
-                        {% else %}
-                        <li>
-                          <a href="{{url('siteuser.views.community')}}{{next_day.year}}/{{next_day.month}}/{{next_day.day}}/{% if selected_letter %}?letter={{selected_letter}}{% endif %}">{{next_day|ru_date("%d %B %Y")}}</a>
-                        </li>
-                        {% endif %}
-                      </ul>
-                    </div>
-                  </div>
+                  <div class="span9">{{pagination(request, page_obj)}}</div>
                 </div>
               </div>
               <div class="span3">

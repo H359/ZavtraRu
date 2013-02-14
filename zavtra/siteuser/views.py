@@ -3,7 +3,6 @@ from datetime import datetime
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
-from django.views.generic.dates import DayArchiveView, BaseTodayArchiveView
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 
@@ -56,21 +55,18 @@ class CommentsView(ListView):
 
 
 
-class CommunityView(DayArchiveView):
-  allow_empty = True
-  month_format = '%m'
+class CommunityView(ListView):
   template_name = 'siteuser/community.jhtml'
-  date_field = 'published_at'
-  queryset = Article.published.\
-             filter(authors__level__gte = User.USER_LEVELS.trusted).\
-             prefetch_related('authors').defer('content')
+  paginate_by = 15
+  paginator_class = DiggPaginator
+
+  def get_queryset(self):
+    return Article.published.\
+           filter(authors__level__gte = User.USER_LEVELS.trusted).\
+           prefetch_related('authors').defer('content')
 
   def get_context_data(self, **kwargs):
     context = super(CommunityView, self).get_context_data(**kwargs)
     context['alphabet'] = RU_ALPHABET
     context['most_commented'] = Article.get_most_commented()
     return context
-
-
-class CommunityHomeView(CommunityView, BaseTodayArchiveView):
-  pass
