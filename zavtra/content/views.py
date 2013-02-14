@@ -72,6 +72,8 @@ class ArticleView(DetailView):
   def template_name(self):
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod_article.jhtml'
+    elif self.object.rubric.id == Rubric.fetch_rubric('novosti').id:
+      return 'content/event_article.jhtml'
     elif self.issue is not None:
       return 'content/issue_article.jhtml'
     else:
