@@ -53,7 +53,7 @@
           {% if selected_month == 0 %}
           <span class="archive_selector_selected">все</span>
           {% else %}
-          <a href="#">все</a>
+          <a href="?year={{selected_year}}">все</a>
           {% endif %}
           {% for month in months %}
           {% if loop.index == selected_month %}
@@ -68,15 +68,23 @@
     <div class="row">
       <div class="span10 offset1">
         <div class="center_align big_padding_vertical archive_selector">
-          {% for issue in issues %}
-          <a href="#">{{issue.relative_number}} ({{issue.absolute_number}})</a>
+          {% for issue in issues.all() %}
+          {% if issue.relative_number == number %}
+          <span class="archive_selector_selected">{{issue.relative_number}} ({{issue.absolute_number}})</span>
+          {% else %}
+          <a href="{{url('content.views.archive')}}?number={{issue.relative_number}}&{{built_attrs}}">{{issue.relative_number}} ({{issue.absolute_number}})</a>
+          {% endif %}
           {% endfor %}
         </div>
       </div>
     </div>
     <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
     <div class="row">
+      {% if number %}
+      {% set issue = issues.get(relative_number=number) %}
+      {% else %}
       {% set issue = issues.latest('published_at') %}
+      {% endif %}
       {% set objects = issue.gazette %}
       <div class="span10 offset1">
         <div class="row">
