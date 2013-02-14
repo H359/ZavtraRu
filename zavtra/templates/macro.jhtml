@@ -2,8 +2,7 @@
 <a href="/content/issue/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
 <a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
 <a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-{#<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>#}
-<a href="{{url('siteuser.views.community')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
+<a href="{{url('siteuser.views.community')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
@@ -46,7 +45,7 @@
           </div>
           <div class="article-text">
             <p class="article-paragraph">
-              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
             </p>
           </div>
         </article>

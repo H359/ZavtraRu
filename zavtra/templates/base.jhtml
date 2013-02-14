@@ -45,7 +45,7 @@
               <div class="row">
                 <div class="span4 right_align">
                   <div id="main_header_login" class="pull-right">
-                    <span class="main_header_login_text">Сообщество</span>
+                    <span class="main_header_login_text">Статьи</span>
                     <a href="#" class="main_header_login_link">Вход</a>
                     <span class="main_header_login_text"> &bull; </span>
                     <a href="#" class="main_header_login_link">Регистрация</a>
