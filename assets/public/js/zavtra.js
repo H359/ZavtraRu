@@ -68,3 +68,5 @@ $(document).ready(function(){
 
 $(window).on('resize', checkSizes);
 $(window).on('load', alignRows)
+
+//$.fn.modal.defaults.maxHeight = function(){ return $(window).height() - 165; }

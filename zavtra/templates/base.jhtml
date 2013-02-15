@@ -10,6 +10,7 @@
     <link href="{{STATIC_URL}}css/{% block page_style %}design{% endblock %}.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
     <link href="{{STATIC_URL}}css/bloat.css" rel="stylesheet" type="text/css">
+    <link href="{{STATIC_URL}}css/bootstrap-modal.css" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     {% block head %}{% endblock %}
@@ -96,6 +97,8 @@
     <script src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
     <script src="{{STATIC_URL}}js/combobox.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modalmanager.js"></script>
     <script src="{{STATIC_URL}}js/zavtra.js"></script>
   </body>
 </html>
