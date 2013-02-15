@@ -127,7 +127,7 @@ class TopicView(ListView):
   template_name = 'content/topic_detail.jhtml'
 
   def get_context_data(self, **kwargs):
-    context = super(FeaturedView, self).get_context_data(**kwargs)
+    context = super(TopicView, self).get_context_data(**kwargs)
     context['topic'] = self.topic
     # TODO: fix this
     context['most_commented'] = self.topic.articles.all()[0:5]
