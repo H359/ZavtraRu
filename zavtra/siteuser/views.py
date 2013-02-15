@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
+#from filters import Filter, FilterItem
 
 from siteuser.models import User
 from content.models import Article
@@ -23,6 +24,20 @@ class ProfileView(DetailView):
     return context
 
 
+"""
+class ArticlesFilter(Filter):
+  year = FilterItem(title=u'Год', blank=True, blank_string=u'все', field='published_at')
+  month = FilterItem(title=u'Месяц', blank=True, blank_string=u'все', field='published_at')
+  category = FilterItem(title=u'Категория', blank=True, blank_string=u'все',
+    choices=(
+      (u'статьи', lambda qs: qs.exclude(rubric__slug = 'wod', type=Article.TYPES.video)),
+      (u'видео', lambda qs: qs.filter(type=Article.TYPES.video)),
+      (u'слово дня', lambda qs: qs.filter(rubric__slug = 'wod'))
+    )
+  )
+"""
+
+
 class ArticlesView(ListView):
   template_name = 'siteuser/profile_articles.jhtml'
   paginate_by = 15
@@ -32,10 +47,13 @@ class ArticlesView(ListView):
     context = super(ArticlesView, self).get_context_data(**kwargs)
     context['profile_part'] = 'articles'
     context['object'] = self.user
+    #context['filter'] = self.filter
     return context
 
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
+    #self.filter = ArticlesFilter(request=self.request, queryset=self.user.articles.all())
+    #return self.filter.as_queryset()
     return self.user.articles.all()
 
 
@@ -53,7 +71,6 @@ class CommentsView(ListView):
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
     return self.user.comments.all()
-
 
 
 class CommunityView(ListView):

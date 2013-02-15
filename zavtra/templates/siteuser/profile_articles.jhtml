@@ -31,6 +31,23 @@
   </div>
   <div class="row">
     <div class="span8 offset1">
+      <div class="person_search_bar">
+        <div class="module_header rubric-header">
+          <h4 class="inline">Выборка Публикации:</h4>
+        </div>
+        <div class="padding_one">
+          <div class="archive_selector">
+            {% for row in filter %}
+            {{row}}
+            {% endfor %}
+            <span class="archive_selector_category">Год:</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 offset1">
       {% for article in object_list %}
       <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
       <section>

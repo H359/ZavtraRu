@@ -111,10 +111,16 @@
                     </a>
                   </h2>
                 </div>
-                <div id="events" data-cycle="go" data-interval="14000" class="cycle slide">
-                  <div class="cycle-inner">
+                <div id="main_event_selection_bg"></div>
+                <div id="events" class="carousel slide carousel-fast">
+                  <ol class="carousel-indicators">
+                    {% for i in range(0, 10) %}
+                    <li data-target="#events" data-slide-to="{{i}}"{% if loop.first %} class="active"{% endif %}></li>
+                    {% endfor %}
+                  </ol>
+                  <div class="carousel-inner">
                     {% for event in events[0:10] %}
-                    <div class="item">
+                    <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
                       <h5>
                         <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
@@ -122,19 +128,8 @@
                     </div>
                     {% endfor %}
                   </div>
-                  <ul class="cycle-nav">
-                    <li>
-                      <a href="#events" title="Предыдущее" data-cycle="prev"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_left.png"></a>
-                    </li>
-                    {% for event in events[0:10] %}
-                    <li>
-                      <a href="#events" data-cycle="to" data-args="{{loop.index}}"><img class="main_events_selection_bullet" src="{{STATIC_URL}}img/gray_dot.png"></a>
-                    </li>
-                    {% endfor %}
-                    <li>
-                      <a href="#events" title="Следующее" data-cycle="next"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_right.png"></a>
-                    </li>
-                  </ul>
+                  <a href="#events" class="carousel-control left" data-slide="prev"></a>
+                  <a href="#events" class="carousel-control right" data-slide="next"></a>
                 </div>
               </div>
             </div>
@@ -176,15 +171,13 @@
                 <a href="/content/events/" class="no_underline"><span class="main_header_category">Коротко:</span></a>
               </h2>
             </div>
-            <div id="main_news_box_content">
-              <div data-cycle="go" class="cycle slide down">
-                <div class="latest_news cycle-inner">
-                  {% for item in latest_news %}
-                  <div class="item">
-                    <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
-                  </div>
-                  {% endfor %}
+            <div id="main_news_box_content" class="carousel slide carousel-slow">
+              <div class="carousel-inner">
+                {% for item in latest_news %}
+                <div class="item{% if loop.first %} active{% endif %}">
+                  <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
                 </div>
+                {% endfor %}
               </div>
             </div>
           </div>
