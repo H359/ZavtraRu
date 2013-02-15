@@ -1,6 +1,9 @@
 {% extends "base.jhtml" %}
 
+{% from "macro.jhtml" import render_comments, render_navigation %}
 {% from "bootstrap_form.jhtml" import render_form %}
+
+{% block navigation %}{{render_navigation(path="")}}{% endblock %}
 
 {% block page_style %}newspaper{% endblock %}
 
