@@ -133,3 +133,11 @@
   right: 0;
   background: url('/static/img/black_arrow_right.png') no-repeat;
 }
+
+.control-group .controls {
+  padding-bottom: .5em;
+}
+
+.control-group input {
+  border: 1px solid #BBB;
+}

@@ -33,7 +33,7 @@
             <span class="main_header_login_text">Сообщество</span>
             <a href="#" class="main_header_login_link">Вход</a>
             <span class="main_header_login_text"> &bull; </span>
-            <a href="#" class="main_header_login_link">Регистрация</a>
+            <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
           </div>
           <img class="block" src="{{STATIC_URL}}img/red_line_gradient_right.png">
         </div>

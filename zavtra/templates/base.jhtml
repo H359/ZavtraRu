@@ -49,7 +49,7 @@
                     <span class="main_header_login_text">Статьи</span>
                     <a href="#" class="main_header_login_link">Вход</a>
                     <span class="main_header_login_text"> &bull; </span>
-                    <a href="#" class="main_header_login_link">Регистрация</a>
+                    <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
                   </div>
                 </div>
               </div>

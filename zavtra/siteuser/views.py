@@ -1,18 +1,38 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
 
-from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import FormView
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 #from filters import Filter, FilterItem
 
 from siteuser.models import User
+from siteuser.forms import RegisterUserForm
 from content.models import Article
 
 unneeded_letters = [u'Ъ', u'Ь', u'Ы']
 RU_ALPHABET = filter(lambda l: l not in unneeded_letters, map(unichr, range(1040,1072)))
+
+
+class RegisterView(TemplateView, FormView):
+  template_name = 'siteuser/register.jhtml'
+
+  def return_form(self, form):
+    return self.render_to_response(self.get_context_data(form=form))
+
+  def post(self, request, *args, **kwargs):
+    form = RegisterUserForm(request.POST)
+    if form.is_valid():
+      return redirect('home')
+    return self.return_form(form)
+
+  def get(self, request, *args, **kwargs):
+    return self.return_form(RegisterUserForm())
+
+
 
 class ProfileView(DetailView):
   template_name = 'siteuser/profile_author.jhtml'
