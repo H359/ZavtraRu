@@ -26,6 +26,11 @@ class RegisterView(TemplateView, FormView):
   def post(self, request, *args, **kwargs):
     form = RegisterUserForm(request.POST)
     if form.is_valid():
+      data = form.cleaned_data
+      user = User.objects.create_user(email=data['email'], password=data['password1'])
+      user.first_name = data.get('first_name')
+      user.last_name = data.get('last_name')
+      user.save()
       return redirect('home')
     return self.return_form(form)
 

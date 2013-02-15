@@ -19,4 +19,7 @@ class RegisterUserForm(forms.Form):
       self._errors['password2'] = self.error_class([u'Пароли не совпадают'])
       if 'password2' in cleaned_data:
         del cleaned_data['password2']
+    email = cleaned_data.get('email')
+    if User.objects.filter(email = email).count() > 0:
+      self._errors['email'] = self.error_class([u'Такой email использовать нельзя.'])
     return cleaned_data
