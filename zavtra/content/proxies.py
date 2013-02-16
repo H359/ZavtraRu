@@ -22,3 +22,10 @@ class Video(Article):
     proxy = True
     verbose_name = u'Видео'
     verbose_name_plural = u'Видео'
+
+
+class Columns(Article):
+  class Meta:
+    proxy = True
+    verbose_name = u'Колонка колумниста'
+    verbose_name_plural = u'Колонки колумнистов'
