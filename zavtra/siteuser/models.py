@@ -9,8 +9,10 @@ from siteuser.managers import UserManager, ColumnistsManager
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
 
+from zavtra.utils import OpenGraphMixin
 
-class User(AbstractBaseUser):
+
+class User(OpenGraphMixin, AbstractBaseUser):
   USER_LEVELS = Choices(
     (0, 'ordinary',  u'Обычный'),
     (1, 'trusted',   u'Доверенный'),
@@ -37,8 +39,22 @@ class User(AbstractBaseUser):
   photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], image_field='photo')
   photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], image_field='photo')
 
+  def __unicode__(self):
+    names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])
+    return u' '.join(names)
+
   class Meta:
     ordering = ('last_name', 'first_name')
+
+  @property
+  def open_graph_data(self):
+    yield ('og:type', 'profile')
+    if self.photo != "":
+      yield ('og:image', self.photo_225.url)
+    yield ('og:title', unicode(self))
+    yield ('og:description', self.resume)
+    yield ('profile:first_name', self.first_name)
+    yield ('profile:last_name', self.last_name)
 
   @property
   def is_staff(self):
@@ -50,10 +66,6 @@ class User(AbstractBaseUser):
 
   def has_perm(self, permission):
     return self.is_staff
-
-  def __unicode__(self):
-    names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])
-    return u' '.join(names)
 
   @property
   def latest_article(self):

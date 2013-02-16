@@ -3,6 +3,14 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
+    {%- if object and object.provides_open_graph -%}
+    <meta property="fb:app_id" content="175357809210274">
+    <meta property="og:site_name" content="Газета &laquo;Завтра&raquo;">
+    <meta property="og:url" content="http://{{APP_DOMAIN}}{{object.get_absolute_url()|e}}">
+    {%- for name, value in object.open_graph_data -%}
+    <meta property="{{name}}" content="{{value|e}}">
+    {%- endfor -%}
+    {%- endif -%}
     <title>{% block page_title %}Завтра &mdash; еженедельная газета{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
