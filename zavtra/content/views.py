@@ -8,6 +8,7 @@ from django.db.models import Max, Min
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 from content.models import Article, Rubric, Topic, Issue, RubricInIssue
+from siteuser.models import User
 
 
 class EventsView(ListView):
@@ -152,7 +153,7 @@ class IssueView(TemplateView):
 
 
 class CommunityView(ListView):
-  template_name = 'siteuser/community.jhtml'
+  template_name = 'content/community.jhtml'
   paginate_by = 15
   paginator_class = DiggPaginator
   selected_date = None
@@ -176,7 +177,6 @@ class CommunityView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(CommunityView, self).get_context_data(**kwargs)
-    context['alphabet'] = RU_ALPHABET
     if self.selected_date is not None:
       context['selected_date'] = self.selected_date
     context['most_commented'] = Article.get_most_commented()
