@@ -49,7 +49,7 @@
               </div>
               <div id="author_search_box">
                 <form action="." method="get">
-                  <input type="search" name="query" placeholder="Поиск по фамилии автора...">
+                  <input type="search" name="query" {% if query %}value="{{query}}"{% endif %} placeholder="Поиск по фамилии автора...">
                   <button class="trans-button" type="submit"><i class="icon-search baseline_align"> </i></buton>
                 </form>
               </div>
@@ -176,10 +176,12 @@
               {% endif %}
               {% endfor %}
             </div>
-            {%- if query != "" %}
-            {%- set suffix = "&query=" + query %}
+            {%- if query and query != "" -%}
+            {%- set suffix = "&query=" + query -%}
+            {%- elif letter and letter != "" -%}
+            {%- set suffix = "&letter=" + letter -%}
             {%- else -%}
-            {%- set suffix = None %}
+            {%- set suffix = None -%}
             {%- endif -%}
             <div class="span9">{{pagination(request, page_obj, suffix)}}</div>
           </div>
