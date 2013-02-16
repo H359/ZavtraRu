@@ -221,7 +221,19 @@ class Article(OpenGraphMixin, models.Model):
   def is_peredovitsa(self):
     return self.rubric.id == Rubric.fetch_rubric('peredovitsa').id
 
+  @property
+  def source(self):
+    if not hasattr(self, '__source_cached'):
+      pc = urlparse(self.content)
+      if pc.netloc.endswith("youtube.com"):
+        source = 'youtube:%s' % parse_qs(pc.query).get('v')[0].strip()
+      else:
+        source ='dentv:%s' % pc.path
+      self.__source_cached = source
+    return self.__source_cached
+
   def render_content(self, width=640, height=480):
+    # TODO: cache rendered content?
     if self.type == Article.TYPES.text:
       return self.content
     else:

@@ -68,6 +68,17 @@ $(document).ready(function(){
 		$('#login-modal').modal();
 		return false;
 	});
+	$('#main_video_selected').find("[data-video-source]").on('click', function(){
+		var video_source = $(this).data('video-source').split(':'), src;
+		if (video_source[0] == 'youtube') {
+			src = "http://www.youtube.com/embed/" + video_source[1];
+		} else {
+			src = "http://dentv.ru/embed" + video_source[1] + '0/';
+		}
+		var video = $('<div class="modal-body" style="text-align:center"><iframe src="' + src + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>');
+		$('#video-modal').append(video).modal();
+		return false;
+	});
 });
 
 $(window).on('resize', checkSizes);

@@ -30,7 +30,7 @@ class HomeView(TemplateView):
       'events': Article.events.select_related().defer('content').all(),
       'latest_news': Article.news.defer('content').all()[0:3],
       'selected_articles': selected_articles,
-      'videos': list(Article.published.filter(type = Article.TYPES.video).defer('content')[0:4]),
+      'video': Article.published.filter(type = Article.TYPES.video).latest('published_at'),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
                select_related().all()[0:6],

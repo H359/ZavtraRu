@@ -382,18 +382,15 @@
         <div class="span4">
           <div class="main_box_frame">
             <div class="relative main_box_header">
-              <h4>
-                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
-              </h4>
               <div id="main_video_dentv_link">
-                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
+                <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
             </div>
             <div id="main_video_selected">
               <div id="main_video_selected_media">
-                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
-                  {% if videos[0].cover_source != "" %}
-                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
+                <a href="{{video.get_absolute_url()}}" class="no_underline" data-video-source="{{video.source}}">
+                  {% if video.cover_source != "" %}
+                  <img src="{{video.cover_for_video.url}}" id="main_video_selected_video">
                   {% else %}
                   <img src="http://placekitten.com/246/184" id="main_video_selected_video">
                   {% endif %}
@@ -402,24 +399,23 @@
               <div id="main_video_selected_header_bg"></div>
               <div id="main_video_selected_header">
                 <h6>
-                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
+                  <a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="white white_link">{{video.title}}</a>
                 </h6>
                 <div id="main_video_selected_header_stats">
                   <i class="icon-white icon-comment"> </i>
-                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
+                  <span class="smalltext"><a data-video-source="{{video.source}}" href="{{video.get_absolute_url()}}" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
                 </div>
                 <div id="main_video_selected_header_restriction">
                   <span class="smalltext beige">18+</span>
                 </div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">
-              {{videos[0].announce}}
-            </div>
+            <div id="main_video_selected_description_container">{{video.announce|striptags}}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div id="video-modal" class="modal hide fade" data-width="760"></div>
 {% endblock %}
