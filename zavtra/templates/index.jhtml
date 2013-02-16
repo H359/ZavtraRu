@@ -30,10 +30,14 @@
       <div class="row">
         <div class="span4_5 right_align">
           <div id="main_header_login" class="pull-right">
-            <span class="main_header_login_text">Сообщество</span>
-            <a href="#" class="main_header_login_link">Вход</a>
+            <span class="main_header_login_text">Статьи</span>
+            {% if not request.user or not request.user.is_authenticated() %}
+            <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
             <span class="main_header_login_text"> &bull; </span>
             <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+            {% else %}
+            <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+            {% endif %}
           </div>
           <img class="block" src="{{STATIC_URL}}img/red_line_gradient_right.png">
         </div>

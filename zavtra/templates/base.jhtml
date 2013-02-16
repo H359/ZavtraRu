@@ -48,9 +48,13 @@
                 <div class="span4 right_align">
                   <div id="main_header_login" class="pull-right">
                     <span class="main_header_login_text">Статьи</span>
-                    <a href="#" class="main_header_login_link">Вход</a>
+                    {% if not request.user or not request.user.is_authenticated() %}
+                    <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
                     <span class="main_header_login_text"> &bull; </span>
                     <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+                    {% else %}
+                    <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -93,6 +97,36 @@
     <footer>
       <div id="footer">{% block page_footer %}{% endblock %}</div>
     </footer>
+    {% if not request.user or not request.user.is_authenticated() %}
+    <div class="modal fade hide" id="login-modal">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Войти</h3>
+      </div>
+      <div class="modal-body">
+        <form action="{{url('siteuser.views.login')}}" method="post" class="form-horizontal">
+          <div class="control-group required">
+            <label class="control-label" for="id_username">Email</label>
+            <div class="controls">
+              <input id="id_username" maxlength="254" name="username" type="text">
+            </div>
+          </div>
+          <div class="control-group required">
+            <label class="control-label" for="id_password">Пароль</label>
+            <div class="controls">
+              <input id="id_password" name="password" type="password">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit" class="btn">Войти</button>
+            </div>
+          </div>
+      </div>
+    </div>
+    {% endif %}
     {% block foot %}{% endblock %}
     <script src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
     <script src="{{STATIC_URL}}js/combobox.js"></script>

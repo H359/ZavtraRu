@@ -64,6 +64,10 @@ $(document).ready(function(){
 	$('#social').css({left: $('#page').css('marginLeft')});
 	$('.carousel-fast').carousel({interval: 8000});
 	$('.carousel-slow').carousel({interval: 14000});
+	$('#main_header_login_link').on('click', function(){
+		$('#login-modal').modal();
+		return false;
+	});
 });
 
 $(window).on('resize', checkSizes);

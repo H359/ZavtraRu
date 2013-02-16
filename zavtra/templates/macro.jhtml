@@ -2,7 +2,8 @@
 <a href="/content/issue/" class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Газета</a>
 <a href="{{url('content.views.events')}}" class="{% if path.startswith('/content/events/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">События</a>
 <a href="/content/rubric/wod/" class="{% if path.startswith('/content/rubric/wod/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-<a href="{{url('siteuser.views.community')}}" class="{% if path.startswith('/community/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Статьи</a>
+<a href="{{url('content.views.community')}}" class="{% if path.startswith('/content/community/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Статьи</a>
+<a href="{{url('siteuser.views.authors')}}" class="{% if path.startswith('/authors/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Авторы</a>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
@@ -193,23 +194,23 @@
 </div>
 {% endmacro %}
 
-{% macro pagination(request, page_obj) %}
+{% macro pagination(request, page_obj, suffix="") %}
 <div class="pagination center_align">
   <ul>
     <li class="prev{% if not page_obj.has_previous() %}{{ ' disabled' }}{% endif %}">
-      <a rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{% else %}#{% endif %}">Предыдущая</a>
+      <a title="Предыдущая страница" rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{{suffix}}{% endif %}">Предыдущая</a>
     </li>
     {% for p in page_obj.page_range %}
     <li>
       {% if p %}
-      <a rel="page" href="?page={{ p }}">{{ p }}</a>
+      <a rel="page" href="?page={{p}}{{suffix}}">{{p}}</a>
       {% else %}
       <a href="#">...</a>
       {% endif %}
     </li>
     {% endfor %}
     <li class="next{% if not page_obj.has_next() %}{{ ' disabled' }}{% endif %}">
-      <a rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{% else %}#{% endif %}">Следующая</a>
+      <a title="Следующая страница" rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{{suffix}}{% endif %}">Следующая</a>
     </li>
   </ul>
 </div>

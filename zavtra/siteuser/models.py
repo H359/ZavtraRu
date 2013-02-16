@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractBaseUser
 
 from model_utils import Choices
@@ -33,7 +34,11 @@ class User(AbstractBaseUser):
 
   photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
   photo_60 = ImageSpec([ResizeToFit(60, 60, True, 0xFFFFFF)], image_field='photo')
+  photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], image_field='photo')
   photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], image_field='photo')
+
+  class Meta:
+    ordering = ('last_name', 'first_name')
 
   @property
   def is_staff(self):
@@ -51,6 +56,15 @@ class User(AbstractBaseUser):
     return u' '.join(names)
 
   @property
+  def latest_article(self):
+    if not hasattr(self, '__latest_article_cache'):
+      try:
+        self.__latest_article_cache = self.articles.select_related().prefetch_related('topics').latest('published_at')
+      except ObjectDoesNotExist:
+        self.__latest_article_cache = None
+    return self.__latest_article_cache
+
+  @property
   def received_comments(self):
     from comments.models import Comment
     return Comment.enabled.filter(article__authors__in = [self.pk])
@@ -58,6 +72,10 @@ class User(AbstractBaseUser):
   @models.permalink
   def get_absolute_url(self):
     return ('siteuser.views.profile', (), {'pk': self.pk})
+
+  @models.permalink
+  def get_subscribe_url(self):
+    return ('siteuser.views.subscribe', (), {'readee': self.pk})
 
   @models.permalink
   def get_articles_url(self):

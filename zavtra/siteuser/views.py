@@ -2,19 +2,30 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.views.generic.edit import FormView
+from django.db.models import Count
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 #from filters import Filter, FilterItem
 
-from siteuser.models import User
+from siteuser.models import User, Reader
 from siteuser.forms import RegisterUserForm
-from content.models import Article
 
 unneeded_letters = [u'Ъ', u'Ь', u'Ы']
 RU_ALPHABET = filter(lambda l: l not in unneeded_letters, map(unichr, range(1040,1072)))
+
+
+class SubscribeUser(RedirectView):
+  def get(self, request, *args, **kwargs):
+    self.url = request.GET.get('next', '/')
+    if request.user is not None and request.user.is_authenticated():
+      readee = get_object_or_404(User, pk=kwargs['readee'])
+      rdr = Reader.objects.filter(author=readee, reader=request.user)
+      if rdr.count() == 0:
+        Reader.objects.create(author=readee, reader=request.user, subscription_start=datetime.now())
+    return super(SubscribeUser, self).get(request, *args, **kwargs)
 
 
 class RegisterView(TemplateView, FormView):
@@ -37,6 +48,31 @@ class RegisterView(TemplateView, FormView):
   def get(self, request, *args, **kwargs):
     return self.return_form(RegisterUserForm())
 
+
+class AuthorsView(ListView):
+  template_name = 'siteuser/authors.jhtml'
+  paginate_by = 5
+  paginator_class = DiggPaginator
+
+  def get_context_data(self, **kwargs):
+    context = super(AuthorsView, self).get_context_data(**kwargs)
+    context['alphabet'] = RU_ALPHABET
+    context['query'] = self.query
+    if len(self.query) == 1:
+      context['letter'] = self.query[0]
+    if self.request.user is not None and self.request.user.is_authenticated():
+      context['user_reads'] = Reader.objects.filter(
+        author__in=context['object_list'],
+        reader = self.request.user
+      ).values_list('author_id', flat=True)
+    return context
+
+  def get_queryset(self):
+    self.query = self.request.GET.get('query', u'А')
+    return User.columnists.filter(last_name__istartswith = self.query).\
+           annotate(articles_count = Count('articles')).\
+           annotate(left_comments = Count('comments')).\
+           annotate(expert_comments_count = Count('expert_comments'))
 
 
 class ProfileView(DetailView):
@@ -96,35 +132,3 @@ class CommentsView(ListView):
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
     return self.user.comments.all()
-
-
-class CommunityView(ListView):
-  template_name = 'siteuser/community.jhtml'
-  paginate_by = 15
-  paginator_class = DiggPaginator
-  selected_date = None
-
-  def get_queryset(self):
-    qs = Article.published.\
-         filter(authors__level__gte = User.USER_LEVELS.trusted).\
-         prefetch_related('authors').defer('content')
-    if 'year' in self.request.GET and \
-       'month' in self.request.GET and \
-       'day' in self.request.GET:
-       dt = datetime(
-        year = int(self.request.GET['year']),
-        month = int(self.request.GET['month']),
-        day = int(self.request.GET['day']),
-        hour = 0, minute = 0, second = 0
-       )
-       qs = qs.filter(published_at__gte = dt, published_at__lt = dt + oneday)
-       self.selected_date = dt
-    return qs
-
-  def get_context_data(self, **kwargs):
-    context = super(CommunityView, self).get_context_data(**kwargs)
-    context['alphabet'] = RU_ALPHABET
-    if self.selected_date is not None:
-      context['selected_date'] = self.selected_date
-    context['most_commented'] = Article.get_most_commented()
-    return context

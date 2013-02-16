@@ -141,3 +141,11 @@
 .control-group input {
   border: 1px solid #BBB;
 }
+
+.trans-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0 0 4px 0;
+  height: 29px;
+}
