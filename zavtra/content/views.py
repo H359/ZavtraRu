@@ -102,10 +102,11 @@ class ArticleView(DetailView):
 class RubricView(ListView):
   paginate_by = 5
   paginator_class = DiggPaginator
+  is_zeitung = False
 
   @property
   def template_name(self):
-    if RubricInIssue.objects.filter(rubric=self.rubric).count() > 0:
+    if self.is_zeitung:
       return 'content/issue_rubric_detail.jhtml'
     elif self.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod.jhtml'
@@ -118,6 +119,8 @@ class RubricView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(RubricView, self).get_context_data(**kwargs)
+    qs = RubricInIssue.objects.filter(rubric=self.rubric)
+    self.is_zeitung = qs.count() > 0
     context['rubric'] = self.rubric
     return context
 
