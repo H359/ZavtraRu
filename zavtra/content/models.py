@@ -205,7 +205,7 @@ class Article(OpenGraphMixin, models.Model):
     yield ('og:title', self.title)
     yield ('og:description', strip_tags(self.announce))
     for author in self.authors.all():
-      yield ('og:author', author.get_absolute_url())
+      yield ('og:author', 'http://%s%s' % (settings.APP_DOMAIN, author.get_absolute_url()))
     for topic in self.topics.all():
       yield ('og:tag', topic.title)
     yield ('article:published_time', self.published_at.strftime('%Y-%m-%d'))
