@@ -76,7 +76,7 @@ $(document).ready(function(){
 			src = "http://dentv.ru/embed" + video_source[1] + '0/';
 		}
 		var video = $('<div class="modal-body" style="text-align:center"><iframe src="' + src + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>');
-		$('#video-modal').append(video).modal();
+		$('#video-modal').empty().append(video).modal();
 		return false;
 	});
 });
