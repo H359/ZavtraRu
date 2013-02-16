@@ -19,7 +19,7 @@ from imagekit.processors.crop import Crop, Anchor
 from siteuser.models import User as UserModel
 
 from managers import PublishedManager, EventsManager, WODManager,\
-                     NewsManager, BlogsManager
+                     NewsManager, ColumnsManager
 from zavtra.utils import cached, oneday, OpenGraphMixin
 
 
@@ -162,7 +162,7 @@ class Article(OpenGraphMixin, models.Model):
   events = EventsManager()
   news = NewsManager()
   wod = WODManager()
-  blogs = BlogsManager()
+  columns = ColumnsManager()
 
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
