@@ -4,6 +4,27 @@
 <script>var switchTo5x=true;</script>
 <script src="http://w.sharethis.com/button/buttons.js"></script>
 <!--<script src="http://s.sharethis.com/loader.js"></script>-->
+<meta property="fb:app_id" content="175357809210274">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://{{APP_DOMAIN}}{{object.get_absolute_url()|e}}">
+<meta property="og:site_name" content="Газета &laquo;Завтра&raquo;">
+{%- if object.cover_source != "" -%}
+<meta property="og:image" content="{{object.inside_article_cover.url}}">
+{%- else -%}
+{%- if object.is_peredovitsa and object.issue.illustration != "" -%}
+<meta property="og:image" content="{{object.issue.inside_article_cover.url}}">
+{%- endif -%}
+{%- endif -%}
+<meta property="og:title" content="{{object.title|e}}">
+<meta property="og:description" content="{{object.announce|striptags|e}}"> 
+<meta property="article:published_time" content="{{object.published_at|ru_date('%Y-%m-%d')}}">
+{%- for author in object.authors.all() -%}
+<meta property="article:author" content="http://{{APP_DOMAIN}}{{author.get_absolute_url()}}">
+{%- endfor -%}
+{%- for topic in object.topics.all() -%}
+<meta property="article:tag" content="{{topic.title|e}}">
+{%- endfor -%}
+
 {% endblock %}
 
 {% block foot %}

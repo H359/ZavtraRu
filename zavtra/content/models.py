@@ -191,15 +191,16 @@ class Article(models.Model):
 
   @property
   def issue(self):
-    # TODO: CACHE!!!
-    try:
-      issue = RubricInIssue.objects.get(
-        issue__published_at = self.published_at,
-        rubric = self.rubric
-      ).issue
-    except RubricInIssue.DoesNotExist:
-      issue = None
-    return issue
+    if not hasattr(self, '__issue_cache'):
+      try:
+        issue = RubricInIssue.objects.get(
+          issue__published_at = self.published_at,
+          rubric = self.rubric
+        ).issue
+      except RubricInIssue.DoesNotExist:
+        issue = None
+      self.__issue_cache = issue
+    return self.__issue_cache
 
   def render_content(self):
     if self.type == Article.TYPES.text:
