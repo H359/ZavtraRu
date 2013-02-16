@@ -55,9 +55,11 @@ class AuthorsView(ListView):
   paginator_class = DiggPaginator
 
   def get_context_data(self, **kwargs):
+    from content.models import Article
     context = super(AuthorsView, self).get_context_data(**kwargs)
     context['alphabet'] = RU_ALPHABET
     context['query'] = self.query
+    context['most_commented'] = Article.get_most_commented()
     if len(self.query) == 1:
       context['letter'] = self.query[0]
     if self.request.user is not None and self.request.user.is_authenticated():

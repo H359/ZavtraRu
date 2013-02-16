@@ -95,7 +95,43 @@
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>
     <footer>
-      <div id="footer">{% block page_footer %}{% endblock %}</div>
+      <div id="footer">
+        {% block page_footer %}
+        <div class="container">
+          <div class="row">
+            <div class="span13">
+              <div class="row">
+                <div class="span8">
+                  <div class="row">
+                    <div class="span8">
+                      <div id="footer_navigation">{{render_navigation(prefix="sub_")}}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="span8">
+                      <div id="footer_social_networks">
+                        <a href="http://www.facebook.com/zavtraru">
+                          <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+                        </a>
+                        <a href="http://www.vk.com/zavtraru">
+                          <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+                        </a>
+                        <a href="http://www.twitter.com/ZavtraRu">
+                          <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="span5">
+                  <div id="footer_text">Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
     </footer>
     {% if not request.user or not request.user.is_authenticated() %}
     <div class="modal fade hide" id="login-modal">
