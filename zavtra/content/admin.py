@@ -43,11 +43,10 @@ class ArticleAdmin(admin.ModelAdmin):
   list_filter = ('status', 'rubric')
   #inlines = [ExpertCommentAdminInline]
   form = ArticleAdminForm
-  filter_horizontal = ('authors', 'topics')
-  #raw_id_fields = ('authors', 'topics')
-  #autocomplete_lookup_fields = {
-  #  'm2m': ['authors', 'topics']
-  #}
+  raw_id_fields = ('authors', 'topics')
+  autocomplete_lookup_fields = {
+    'm2m': ['authors', 'topics']
+  }
 
 
 class WodAdmin(admin.ModelAdmin):
@@ -88,6 +87,10 @@ class VideoAdmin(admin.ModelAdmin):
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
   form = VideoArticleForm
+  raw_id_fields = ('authors', 'topics')
+  autocomplete_lookup_fields = {
+    'm2m': ['authors', 'topics']
+  }
 
   def queryset(self, request):
     return Article.objects.filter(type=Article.TYPES.video)
