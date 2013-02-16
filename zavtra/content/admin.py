@@ -98,7 +98,7 @@ class VideoAdmin(admin.ModelAdmin):
 
 
 class ColumnsAdmin(admin.ModelAdmin):
-  exclude = ('type', 'selected_at', 'authors')
+  exclude = ('rubric', 'selected_at', 'authors')
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
   raw_id_fields = ('authors', 'topics')
