@@ -50,7 +50,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
   def open_graph_data(self):
     yield ('og:type', 'profile')
     if self.photo != "":
-      yield ('og:image', self.photo_225.url)
+      yield ('og:image', self.photo.url)
     yield ('og:title', unicode(self))
     yield ('og:description', self.resume)
     yield ('profile:first_name', self.first_name)
