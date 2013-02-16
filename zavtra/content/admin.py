@@ -102,6 +102,7 @@ class ColumnsAdmin(admin.ModelAdmin):
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
   raw_id_fields = ('authors', 'topics')
+  form = ArticleAdminForm
   autocomplete_lookup_fields = {
     'm2m': ['authors', 'topics']
   }
@@ -112,6 +113,7 @@ class ColumnsAdmin(admin.ModelAdmin):
   def save_model(self, request, obj, form, change):
     obj.rubric = Rubric.fetch_rubric('columnists')
     obj.save()
+
 
 class TopicAdmin(admin.ModelAdmin):
   list_display = ('title', 'position')
