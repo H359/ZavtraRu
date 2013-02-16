@@ -218,17 +218,17 @@ class Article(OpenGraphMixin, models.Model):
   def is_peredovitsa(self):
     return self.rubric.id == Rubric.fetch_rubric('peredovitsa').id
 
-  def render_content(self):
+  def render_content(self, width=640, height=480):
     if self.type == Article.TYPES.text:
       return self.content
     else:
-      tpl = """<iframe type="text/html" width="640" height="480" src="%s" frameborder="0" allowfullscreen></iframe>"""
+      tpl = """<iframe type="text/html" width="%d" height="%d" src="%s" frameborder="0" allowfullscreen></iframe>"""
       pc = urlparse(self.content)
       if pc.netloc.endswith("youtube.com"):
         source = "http://youtube.com/embed/%s?html5=1" % parse_qs(pc.query).get('v')[0].strip()
       else:
         source = self.content
-      return tpl % source      
+      return tpl % (width, height, source)
 
   @staticmethod
   def get_most_commented():

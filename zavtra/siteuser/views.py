@@ -129,7 +129,8 @@ class ArticlesView(ListView):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
     #self.filter = ArticlesFilter(request=self.request, queryset=self.user.articles.all())
     #return self.filter.as_queryset()
-    return self.user.articles.all()
+    return self.user.articles.select_related().\
+           prefetch_related('authors', 'expert_comments', 'expert_comments__expert', 'topics')
 
 
 class CommentsView(ListView):
