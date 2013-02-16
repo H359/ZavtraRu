@@ -324,7 +324,7 @@
                 </a>
               </h2>
             </div>
-            <a href="#" id="main_newspaper_pdf_link">
+            <a href="{{issue.get_pdf_link()}}" id="main_newspaper_pdf_link">
               <img src="{{STATIC_URL}}img/PDF_Download.png" >
             </a>
             <div id="main_newspaper_img">

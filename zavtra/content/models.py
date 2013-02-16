@@ -92,6 +92,9 @@ class Issue(models.Model):
     }
     return ('content.views.zeitung', (), kwargs)
 
+  def get_pdf_link(self):
+    return "http://zavtra.ru/media/content/pdfs/%dPDF.zip" % self.relative_number
+
 
 class RubricInIssue(models.Model):
   issue = models.ForeignKey(Issue, verbose_name=u'Выпуск', related_name='issue_rubrics')

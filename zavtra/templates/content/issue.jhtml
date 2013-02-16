@@ -68,7 +68,7 @@
             <li class="active">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
           <div class="section_header_button">
-            <a href="#" class="btn btn-danger baseline_align">Скачать PDF</a>
+            <a href="{{issue.get_pdf_link()}}" class="btn btn-danger baseline_align">Скачать PDF</a>
           </div>
         </div>
       </div>
