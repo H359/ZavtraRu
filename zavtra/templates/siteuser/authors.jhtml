@@ -43,7 +43,7 @@
                 {% if l == letter %}
                 <span class="selected_letter">{{l}}</span>
                 {% else %}
-                <a href="?query={{l}}">{{l}}</a>
+                <a href="?letter={{l}}">{{l}}</a>
                 {% endif %}
                 {% endfor %}
               </div>
