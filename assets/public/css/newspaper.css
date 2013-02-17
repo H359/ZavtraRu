@@ -2332,28 +2332,18 @@ li.empty span.large {
 }
 
 .person_search_result {
-	border-radius: 5px;
-	background-color: #FFF;
-	margin: 1em 0em;
-	padding: 1em 0em;
-	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
-	-moz-box-shadow: 0px 2px 9px 1px #AAA;
-	box-shadow: 0px 2px 9px 1px #AAA;
+	margin: 2em 0em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
 .person_search_bar {
-	border-radius: 5px;
-	background-color: #FFF;
 	margin: 1em 0em;
-	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
-	-moz-box-shadow: 0px 2px 9px 1px #AAA;
-	box-shadow: 0px 2px 9px 1px #AAA;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	padding-left: 1em;
 }
 
 .person_search_bar > div {
