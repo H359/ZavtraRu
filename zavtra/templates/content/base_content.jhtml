@@ -2,6 +2,7 @@
 
 {% block social_block %}
 <div class="right_align">
+  <span class="largetext">Поделиться:</span>
   <span st_title="{{object.title|e}}" class="st_vkontakte_large" displayText="ВКонтакте"></span>
   <span st_title="{{object.title|e}}" class="st_twitter_large" displayText="Tweet"></span>
   <span st_title="{{object.title|e}}" class="st_facebook_large" displayText="Facebook"></span>
