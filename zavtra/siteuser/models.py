@@ -92,6 +92,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
     return ('siteuser.views.subscribe', (), {'readee': self.pk})
 
   @models.permalink
+  def get_unsubcribe_url(self):
+    return ('siteuser.views.unsubscribe', (), {'readee': self.pk})
+
+  @models.permalink
   def get_articles_url(self):
     return ('siteuser.views.profile_articles', (), {'pk': self.pk})
 

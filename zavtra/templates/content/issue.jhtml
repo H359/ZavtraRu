@@ -52,7 +52,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="bordered rows-aligned">
+  <div class="bordered">
     <div class="row">
       <div class="span12">
         <div class="section-header">
@@ -100,12 +100,13 @@
         <img src="{{MEDIA_URL}}{{issue.illustration}}">
       </div>
     </div>
-
     {% endif %}
-    {% set groups = articles|group_rubrics %}
-    {% for joined, rubrics in groups %}
-    {{render_zeitung_rubric(joined, rubrics)}}
-    {% endfor %}
+    <div class="rows-aligned">
+      {% set groups = articles|group_rubrics %}
+      {% for joined, rubrics in groups %}
+      {{render_zeitung_rubric(joined, rubrics)}}
+      {% endfor %}
+    </div>
   </div>
   <div class="bordered">
     <div class="row">
@@ -133,7 +134,7 @@
           <a href="/content/archive/">
             <img src="/static/img/no_avatar.gif" class="newspaper_selection_item_img">
             <div class="text-bottom white center_align one_padding_vertical">
-              <h4 class="bold">Архив: Все Номера Газеты "Завтра"</h4>
+              <h4 class="bold">Архив: все номера газеты &laquo;Завтра&raquo;</h4>
             </div>
           </a>
         </div>

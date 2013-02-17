@@ -28,6 +28,14 @@ class SubscribeUser(RedirectView):
     return super(SubscribeUser, self).get(request, *args, **kwargs)
 
 
+class UnSubscribeUser(RedirectView):
+  def get(self, request, *args, **kwargs):
+    self.url = request.GET.get('next', '/')
+    if request.user is not None and request.user.is_authenticated():
+      Reader.objects.filter(author_id=kwargs['readee'], reader=request.user).delete()
+    return super(SubscribeUser, self).get(request, *args, **kwargs)
+
+
 class RegisterView(TemplateView, FormView):
   template_name = 'siteuser/register.jhtml'
 
