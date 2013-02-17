@@ -18,9 +18,15 @@
   <div class="row">
     <div class="span4 offset1">
     </div>
+    {% if request.user and request.user.is_authenticated() %}
     <div class="span4" id="person_actions">
-      <span class="subscribe_button"><span>Подписаться</span></span>
+      {% if request.user.readers.filter(author=object).count() == 0 %}
+      <a href="{{object.get_subscribe_url()}}" class="subscribe_button"><span>Подписаться</span></a>
+      {% else %}
+      <a href="{{object.get_unsubscribe_url()}}" class="subscribe_button"><span>Отписаться</span></a>
+      {% endif %}
     </div>
+    {% endif %}
   </div>
   <div class="row">
     <div class="span8 offset1">
