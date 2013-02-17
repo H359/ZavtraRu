@@ -92,10 +92,24 @@
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {
+  #main_events_box #main_event_selection_bg {
+    top: 19.2em;
+  }
+  #events .carousel-indicators {
+    top: 12.6em;
+  }
   #events .carousel-indicators li {
-    width: .6em;
-    height: .6em;
-    margin-right: 0.1em;
+    font-size: 11px;
+    margin-right: 0.2em;
+  }
+  #events a.carousel-control {
+    top: 12.5em;
+  }
+}
+
+@media (max-width: 767px) {
+  #main_events_box {
+    display: none;
   }
 }
 
