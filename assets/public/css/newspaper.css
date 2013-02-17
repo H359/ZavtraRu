@@ -1652,7 +1652,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
-	margin: 0em 1em 3em 1em;
+	margin: 0em 1em;
 	text-align: center;
 	padding: .25em 2em;
 	background-image: url('/static/img/gradient_grayscale_line_opacity.png');
@@ -1663,7 +1663,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .author_link {
 	padding-left: 1em;
-	font-weight: 500;
+	font-weight: 700;
 }
 
 .author_link:hover {
