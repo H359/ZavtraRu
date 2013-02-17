@@ -7,9 +7,7 @@ var max = function(l) {
 
 var alignRow = function(num, row) {
 	var children = $('.article-content', row);
-	if (children.length > 1) {
-		children.height(max(children.map(function(i,v){return $(v).height();})));
-	}
+	if (children.length > 1) children.height(max(children.map(function(i,v){return $(v).height();})));
 }
 
 var alignRows = function() {

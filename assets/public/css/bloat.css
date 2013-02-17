@@ -86,12 +86,18 @@
 }
 
 @media (max-width: 1199px) and (min-width: 1025px) {
+  #events {
+    font-size: 14px;
+  }
   #events .carousel-indicators li {
     margin-right: 0.2em;
   }
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {
+  #events {
+    font-size: 11px;
+  }
   #main_events_box #main_event_selection_bg {
     top: 19.2em;
   }
