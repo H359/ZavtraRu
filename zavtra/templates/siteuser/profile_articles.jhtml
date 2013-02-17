@@ -65,12 +65,12 @@
               <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
               <span class="article-statistic">
                 <a href="{{article.get_absolute_url()}}">
-                  <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
+                  <img src="{{STATIC_URL}}img/views.png"> {{article.views_count}}
                 </a>
               </span>
               <span class="article-statistic">
                 <a href="{{article.get_absolute_url()}}">
-                  <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                  <img src="{{STATIC_URL}}img/comment.png"> {{article.comments_count}}
                 </a>
               </span>
             </div>

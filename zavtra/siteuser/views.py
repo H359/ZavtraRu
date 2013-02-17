@@ -139,10 +139,6 @@ class ArticlesView(ListView):
     return Article.published.select_related().\
            prefetch_related('authors', 'expert_comments', 'topics').\
            filter(Q(authors__in = [self.user]) | Q(expert_comments__expert = self.user))
-    #self.filter = ArticlesFilter(request=self.request, queryset=self.user.articles.all())
-    #return self.filter.as_queryset()
-    #return self.user.articles.select_related().\
-    #       prefetch_related('authors', 'expert_comments', 'expert_comments', 'topics')
 
 
 class CommentsView(ListView):
