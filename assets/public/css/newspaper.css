@@ -394,6 +394,16 @@ abc {
 	box-shadow: 0 0 3px rgba(0, 0, 0, .66);
 }
 
+.rubric-header-red {
+	margin: 1em 1em 0em 1em;
+	padding: .5em 1.5em;
+	background-color: #CF4444 !important;
+	color: #FFF;
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .66);
+	-moz-box-shadow: 0 0 3px rgba(0,0,0,.66);
+	box-shadow: 0 0 3px rgba(0, 0, 0, .66);
+}
+
 .rubric-header .icon-chevron-right {
 	vertical-align: -10%;
 	background-image: url("../img/glyphicons-halflings-white.png")
@@ -1784,7 +1794,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry .inner_blogentry_author {
-	margin-left: 5em;
+	margin-left: 4.75em;
 	height: 3.25em;
 }
 
@@ -1878,15 +1888,14 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .inner_blogentry_date_box {
 	background-color: #444;
-	-webkit-box-shadow: 0px 2px 3px 1px #777;
-	-moz-box-shadow: 0px 2px 3px 1px #777;
-	box-shadow: 0px 2px 3px 1px #777;
+	line-height: 1.33em;
 }
 
 .inner_blogentry_date_content {
 	color: white;
 	font-size: .8em;
 	text-align: right;
+	vertical-align: middle;
 }
 
 .inner_blogentry_new_tag {
@@ -1901,7 +1910,6 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	padding: 1em 0em 0em 0em;
 	word-wrap: break-word;
 	position: relative;
-	background-color: #B4C3D7;
 }
 
 .top_selection_item_pic {
@@ -1945,7 +1953,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .top_selection_item_header {
-	padding: .5em 0em .5em 4.5em;
+	padding: .5em .5em .5em 4.5em;
 }
 
 .top_selection_item_header a {
