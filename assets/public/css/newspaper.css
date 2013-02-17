@@ -946,12 +946,12 @@ p {
 }
 
 .article-page-main-header {
-	margin: .25em 0em;
+	margin: .5em 0em;
 }
 
 .article-page-main-subheader {
 	display: block;
-	margin: .5em 0em .25em 0em;
+	margin: .75em 0em .25em 0em;
 	font-size: 1.1em;
 }
 
@@ -999,6 +999,7 @@ article p {
 .article_background {
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	background-color: #fff;
 }
 
@@ -1027,6 +1028,12 @@ article p {
 	margin: 0;
 
 	padding-bottom: .75em;
+}
+
+#comment-form form {
+	background-color: #F2F2F2;	
+}
+
 }
 
 .comment, #comment-form {
@@ -1644,7 +1651,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
-	margin: 0em 1em;
+	margin: 1em 1em 0em 1em;
 	text-align: center;
 	padding: .25em 2em;
 	background-image: url('/static/img/gradient_grayscale_line_opacity.png');
@@ -1656,6 +1663,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 .author_link {
 	padding-left: 1em;
 	font-weight: 700;
+	font-size: .9em;
 }
 
 .author_link:hover {
