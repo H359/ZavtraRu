@@ -12,7 +12,7 @@
           <span class="divider">/</span>
         </li>
         <li>
-          <a href="/">Сообщество</a>
+          <a href="{{url('siteuser.views.authors')}}">Авторы</a>
           <span class="divider">/</span>
         </li>
         <li class="active">Участники</li>

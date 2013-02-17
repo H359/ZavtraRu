@@ -411,7 +411,7 @@
                 </div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">{{video.announce|striptags}}</div>
+            <div id="main_video_selected_description_container"><a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a></div>
           </div>
         </div>
       </div>
