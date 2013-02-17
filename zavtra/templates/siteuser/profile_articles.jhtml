@@ -31,15 +31,32 @@
   </div>
   <div class="row">
     <div class="span8 offset1">
+      <div class="person_search_bar">
+        <div class="module_header rubric-header">
+          <h4 class="inline">Выборка Публикации:</h4>
+        </div>
+        <div class="padding_one">
+          <div class="archive_selector">
+            {% for row in filter %}
+            {{row}}
+            {% endfor %}
+            <span class="archive_selector_category">Год:</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 offset1">
       {% for article in object_list %}
       <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
       <section>
         <article>
           <div class="row">
-            <div class="span5 news-header-container">
+            <div class="span6 news-header-container">
               <header>
                 <h2 class="news-header">
-                  <a href="{{article.get_absolute_url()}}">{{article.title}}</a>
+                  <a href="{{article.get_absolute_url()}}">{% if article.rubric.id == wod_rubric.id %}<span class="dark">Слово дня:</span>&nbsp;{% endif %}{{article.title}}</a>
                 </h2>
                 <h4 class="news-header">
                   <a href="{{article.get_absolute_url()}}">{{article.subtitle}}</a>
@@ -57,7 +74,7 @@
                 </a>
               </span>
             </div>
-            <div class="span3 right_align news-subject-container">
+            <div class="span2 right_align news-subject-container">
               {% for topic in article.topics.all() %}
               <span class="label label-info mediumtext">
                 <a href="{{topic.get_absolute_url()}}">{{topic.title}}</a>
@@ -66,20 +83,34 @@
             </div>
           </div>
           <div class="row">
+            {% if article.type == 'video' %}
+            <div class="span8 news-text center_align">{{article.render_content(384,288)}}</div>
+            {% else %}
+            {% if article.cover_source != "" %}
             <div class="span3">
               <div class="news-illustration-container">
-                {% if article.cover_source != "" %}
                 <a href="{{article.get_absolute_url()}}">
                   <img src="{{article.cover_for_sidebar.url}}" class="news-illustration">
                 </a>
-                {% endif %}
               </div>
             </div>
+            {% endif %}
             <div class="span5">
               <div class="row">
-                <div class="span5 news-text">{{object.announce}}</div>
+                <div class="span5 news-text">
+                  <p class="news-paragraph">{{article.announce|striptags}}</p>
+                  {% if article.rubric.id == wod_rubric.id %}
+                  <div>
+                    <br><h4>Экспертные оценки:</h4><br>
+                    {% for comment in article.expert_comments.all() %}
+                    <a href="{{article.get_absolute_url()}}">{{comment.expert}}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
               </div>
             </div>
+            {% endif %}
           </div>
         </article>
       </section>

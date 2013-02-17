@@ -11,7 +11,7 @@
           <div id="main_header_links">
             <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
             <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
-            <a class="main_header_link" href="/">Архив Завтра</a>
+            <a class="main_header_link" href="/content/archive/">Архив Завтра</a>
           </div>
           <img src="{{STATIC_URL}}img/red_line_gradient.png" class="block">
         </div>
@@ -30,10 +30,14 @@
       <div class="row">
         <div class="span4_5 right_align">
           <div id="main_header_login" class="pull-right">
-            <span class="main_header_login_text">Сообщество</span>
-            <a href="#" class="main_header_login_link">Вход</a>
+            <span class="main_header_login_text">Статьи</span>
+            {% if not request.user or not request.user.is_authenticated() %}
+            <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
             <span class="main_header_login_text"> &bull; </span>
-            <a href="#" class="main_header_login_link">Регистрация</a>
+            <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+            {% else %}
+            <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+            {% endif %}
           </div>
           <img class="block" src="{{STATIC_URL}}img/red_line_gradient_right.png">
         </div>
@@ -111,10 +115,16 @@
                     </a>
                   </h2>
                 </div>
-                <div id="events" data-cycle="go" data-interval="14000" class="cycle slide">
-                  <div class="cycle-inner">
+                <div id="main_event_selection_bg"></div>
+                <div id="events" class="carousel slide carousel-fast">
+                  <ol class="carousel-indicators">
+                    {% for i in range(0, 10) %}
+                    <li data-target="#events" data-slide-to="{{i}}"{% if loop.first %} class="active"{% endif %}></li>
+                    {% endfor %}
+                  </ol>
+                  <div class="carousel-inner">
                     {% for event in events[0:10] %}
-                    <div class="item">
+                    <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
                       <h5>
                         <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
@@ -122,19 +132,8 @@
                     </div>
                     {% endfor %}
                   </div>
-                  <ul class="cycle-nav">
-                    <li>
-                      <a href="#events" title="Предыдущее" data-cycle="prev"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_left.png"></a>
-                    </li>
-                    {% for event in events[0:10] %}
-                    <li>
-                      <a href="#events" data-cycle="to" data-args="{{loop.index}}"><img class="main_events_selection_bullet" src="{{STATIC_URL}}img/gray_dot.png"></a>
-                    </li>
-                    {% endfor %}
-                    <li>
-                      <a href="#events" title="Следующее" data-cycle="next"><img class="main_events_selection_arrow" src="{{STATIC_URL}}img/black_arrow_right.png"></a>
-                    </li>
-                  </ul>
+                  <a href="#events" class="carousel-control left" data-slide="prev"></a>
+                  <a href="#events" class="carousel-control right" data-slide="next"></a>
                 </div>
               </div>
             </div>
@@ -176,15 +175,13 @@
                 <a href="/content/events/" class="no_underline"><span class="main_header_category">Коротко:</span></a>
               </h2>
             </div>
-            <div id="main_news_box_content">
-              <div data-cycle="go" class="cycle slide down">
-                <div class="latest_news cycle-inner">
-                  {% for item in latest_news %}
-                  <div class="item">
-                    <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
-                  </div>
-                  {% endfor %}
+            <div id="main_news_box_content" class="carousel slide carousel-slow">
+              <div class="carousel-inner">
+                {% for item in latest_news %}
+                <div class="item{% if loop.first %} active{% endif %}">
+                  <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
                 </div>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -234,19 +231,16 @@
         {% for article in selected_articles %}
         <div class="span3">
           <div class="main_article_container">
+            <a href="{{article.get_absolute_url()}}" class="no_underline bloat"></a>
             {% if article.cover_source != "" %}
-            <a href="{{article.get_absolute_url()}}" class="no_underline">
-              <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
-            </a>
+            <img src="{{article.cover_for_main_selection.url}}" class="main_article_image">
             {% endif %}
             <div class="main_article_header">
               <div class="main_article_author">
                 <span class="person_name">{% for author in article.authors.all() %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
               </div>
               <div class="main_article_name">
-                <h6>
-                  <a href="{{article.get_absolute_url()}}" class="no_underline">{{article.title}}</a>
-                </h6>
+                <h6>{{article.title}}</h6>
               </div>
             </div>
           </div>
@@ -330,7 +324,7 @@
                 </a>
               </h2>
             </div>
-            <a href="#" id="main_newspaper_pdf_link">
+            <a href="{{issue.get_pdf_link()}}" id="main_newspaper_pdf_link">
               <img src="{{STATIC_URL}}img/PDF_Download.png" >
             </a>
             <div id="main_newspaper_img">
@@ -388,18 +382,15 @@
         <div class="span4">
           <div class="main_box_frame">
             <div class="relative main_box_header">
-              <h4>
-                <a href="{{videos[0].rubric.get_absolute_url()}}" class="gray gray_link">{{videos[0].rubric.title}}</a>
-              </h4>
               <div id="main_video_dentv_link">
-                <a href="http://dentv.ru"><img src="{{STATIC_URL}}img/dentv.png"></a>
+                <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
             </div>
             <div id="main_video_selected">
               <div id="main_video_selected_media">
-                <a href="{{videos[0].get_absolute_url()}}" class="no_underline">
-                  {% if videos[0].cover_source != "" %}
-                  <img src="{{videos[0].cover_for_video.url}}" id="main_video_selected_video">
+                <a href="{{video.get_absolute_url()}}" class="no_underline" data-video-source="{{video.source}}">
+                  {% if video.cover_source != "" %}
+                  <img src="{{video.cover_for_video.url}}" id="main_video_selected_video">
                   {% else %}
                   <img src="http://placekitten.com/246/184" id="main_video_selected_video">
                   {% endif %}
@@ -408,24 +399,23 @@
               <div id="main_video_selected_header_bg"></div>
               <div id="main_video_selected_header">
                 <h6>
-                  <a href="{{videos[0].get_absolute_url()}}" class="white white_link">{{videos[0].title}}</a>
+                  <a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="white white_link">{{video.title}}</a>
                 </h6>
                 <div id="main_video_selected_header_stats">
                   <i class="icon-white icon-comment"> </i>
-                  <span class="smalltext"><a href="{{videos[0].get_absolute_url()}}" class="gray gray_link">14 комментариев</a></span>
+                  <span class="smalltext"><a data-video-source="{{video.source}}" href="{{video.get_absolute_url()}}" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
                 </div>
                 <div id="main_video_selected_header_restriction">
                   <span class="smalltext beige">18+</span>
                 </div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">
-              {{videos[0].announce}}
-            </div>
+            <div id="main_video_selected_description_container">{{video.announce|striptags}}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div id="video-modal" class="modal hide fade" data-width="760"></div>
 {% endblock %}

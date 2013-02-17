@@ -8,6 +8,7 @@ from django.db.models import Max, Min
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 from content.models import Article, Rubric, Topic, Issue, RubricInIssue
+from siteuser.models import User
 
 
 class EventsView(ListView):
@@ -62,6 +63,14 @@ class ArchiveView(TemplateView):
       queryset = queryset.filter(published_at__month = context['selected_month'])
     else:
       context['selected_month'] = 0
+    context['built_attrs'] = []
+    if 'selected_year' in context:
+      context['built_attrs'].append('year=%d' % context['selected_year'])
+    if 'selected_month' in context and context['selected_month'] != 0:
+      context['built_attrs'].append('month=%d' % context['selected_month'])
+    context['built_attrs'] = '&'.join(context['built_attrs'])
+    if 'number' in self.request.GET:
+      context['number'] = int(self.request.GET['number'])
     context['issues'] = queryset
     context['months'] = [x[1] for x in MONTH_NAMES]
     return context
@@ -72,6 +81,8 @@ class ArticleView(DetailView):
   def template_name(self):
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod_article.jhtml'
+    elif self.object.rubric.id == Rubric.fetch_rubric('novosti').id:
+      return 'content/event_article.jhtml'
     elif self.issue is not None:
       return 'content/issue_article.jhtml'
     else:
@@ -87,13 +98,15 @@ class ArticleView(DetailView):
     return Article.objects.select_related()
 
 
+
 class RubricView(ListView):
   paginate_by = 5
   paginator_class = DiggPaginator
+  is_zeitung = False
 
   @property
   def template_name(self):
-    if RubricInIssue.objects.filter(rubric=self.rubric).count() > 0:
+    if self.is_zeitung:
       return 'content/issue_rubric_detail.jhtml'
     elif self.rubric.id == Rubric.fetch_rubric('wod').id:
       return 'content/wod.jhtml'
@@ -106,17 +119,19 @@ class RubricView(ListView):
 
   def get_context_data(self, **kwargs):
     context = super(RubricView, self).get_context_data(**kwargs)
+    qs = RubricInIssue.objects.filter(rubric=self.rubric)
+    self.is_zeitung = qs.count() > 0
     context['rubric'] = self.rubric
     return context
 
 
-class FeaturedView(ListView):
+class TopicView(ListView):
   paginate_by = 15
   paginator_class = DiggPaginator
   template_name = 'content/topic_detail.jhtml'
 
   def get_context_data(self, **kwargs):
-    context = super(FeaturedView, self).get_context_data(**kwargs)
+    context = super(TopicView, self).get_context_data(**kwargs)
     context['topic'] = self.topic
     # TODO: fix this
     context['most_commented'] = self.topic.articles.all()[0:5]
@@ -138,6 +153,38 @@ class IssueView(TemplateView):
     )
     context['latest_issues'] = Issue.published.all()[0:5]
     return context
+
+
+class CommunityView(ListView):
+  template_name = 'content/community.jhtml'
+  paginate_by = 15
+  paginator_class = DiggPaginator
+  selected_date = None
+
+  def get_queryset(self):
+    qs = Article.published.\
+         filter(authors__level__gte = User.USER_LEVELS.trusted).\
+         prefetch_related('authors').defer('content')
+    if 'year' in self.request.GET and \
+       'month' in self.request.GET and \
+       'day' in self.request.GET:
+       dt = datetime(
+        year = int(self.request.GET['year']),
+        month = int(self.request.GET['month']),
+        day = int(self.request.GET['day']),
+        hour = 0, minute = 0, second = 0
+       )
+       qs = qs.filter(published_at__gte = dt, published_at__lt = dt + oneday)
+       self.selected_date = dt
+    return qs
+
+  def get_context_data(self, **kwargs):
+    context = super(CommunityView, self).get_context_data(**kwargs)
+    if self.selected_date is not None:
+      context['selected_date'] = self.selected_date
+    context['most_commented'] = Article.get_most_commented()
+    return context
+
 
 def current_issue_redirect(request):
   return redirect(Issue.objects.latest('published_at'))

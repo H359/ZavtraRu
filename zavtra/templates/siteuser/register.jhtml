@@ -1,0 +1,71 @@
+{% extends "base.jhtml" %}
+
+{% from "macro.jhtml" import render_comments, render_navigation %}
+{% from "bootstrap_form.jhtml" import render_form %}
+
+{% block navigation %}{{render_navigation(path="")}}{% endblock %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="row">
+    <div class="span12">
+      <div class="bordered_clean">
+        <div class="row">
+          <div class="span12">
+            <div class="row">
+              <div class="span12">
+                <div class="section-header">
+                  <ul class="breadcrumb inline">
+                    <li>
+                      <a href="/">Главная</a>
+                      <span class="divider">/</span>
+                    </li>
+                    <li class="active">Регистрация</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span9 offset1_5">
+                <div class="row">
+                  <div class="span9 person_search_bar">
+                    <div class="module_header rubric-header">
+                      <h4 class="inline">Регистрация на сайте:</h4>
+                    </div>
+                    <div class="padding_one">
+                      <p class="bold">Уважаемый пользователь сайта газеты "Завтра",</p>
+                      <p class="big_padding_vertical">Здесь будет текст, который объяснит регистрирующемуся двушаговость процесса - сначала он получит доступ к личному кабинету.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="span6 offset1_5">
+                    <h3 class="big_padding_vertical">Заполните регистрационную форму:</h3>
+                    <section class="person_search_result">
+                      <div class="row">
+                        <div class="span6 padding_one">
+                          <form action="." class="form-horizontal" method="post">
+                            {{render_form(form)}}
+                            <div class="control-group">
+                              <div class="controls">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                                <button type="submit" class="btn">Отправить</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

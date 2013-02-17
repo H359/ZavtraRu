@@ -1,9 +1,9 @@
-{% macro render_navigation(prefix="", suffix="") %}
-<a href="/content/issue/" class="{{prefix}}nav_item{{suffix}}">Газета</a>
-<a href="{{url('content.views.events')}}" class="{{prefix}}nav_item{{suffix}}">События</a>
-<a href="/content/rubric/wod/" class="{{prefix}}nav_item{{suffix}}">Слово Дня</a>
-{#<a href="{{url('content.views.blogs')}}" class="{{prefix}}nav_item{{suffix}}">Статьи</a>#}
-<a href="{{url('siteuser.views.community')}}" class="{{prefix}}nav_item{{suffix}}">Сообщество</a>
+{% macro render_navigation(prefix="", suffix="", path="") %}
+<a href="/content/issue/" class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Газета</a>
+<a href="{{url('content.views.events')}}" class="{% if path.startswith('/content/events/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">События</a>
+<a href="/content/rubric/wod/" class="{% if path.startswith('/content/rubric/wod/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Слово Дня</a>
+<a href="{{url('content.views.community')}}" class="{% if path.startswith('/content/community/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Статьи</a>
+<a href="{{url('siteuser.views.authors')}}" class="{% if path.startswith('/authors/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}">Авторы</a>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
@@ -41,12 +41,12 @@
           </div>
           <div class="article-author">
             {% for author in article.authors.all() %}
-            <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+            <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
             {% endfor %}
           </div>
           <div class="article-text">
             <p class="article-paragraph">
-              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
             </p>
           </div>
         </article>
@@ -74,7 +74,6 @@
     {% endif %}
     {% for l in range(0, rubric['items']|length, 3) %}
     <div class="row">
-
       {% for article in rubric['items'][l:l+3] %}
       <div class="span{{12 // loop.length}}">
         <div class="article-content side_shadows">
@@ -96,12 +95,12 @@
               </div>
               <div class="article-author">
                 {% for author in article.authors.all() %}
-                <a href="#" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+                <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
                 {% endfor %}
               </div>
               <div class="article-text">
                 <p class="article-paragraph">
-                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce}}</a>
+                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
                 </p>
               </div>
             </article>
@@ -109,7 +108,6 @@
         </div>
       </div>
       {% endfor %}
-
     </div>
     {% endfor %}
   </div>
@@ -196,23 +194,23 @@
 </div>
 {% endmacro %}
 
-{% macro pagination(request, page_obj) %}
+{% macro pagination(request, page_obj, suffix="") %}
 <div class="pagination center_align">
   <ul>
     <li class="prev{% if not page_obj.has_previous() %}{{ ' disabled' }}{% endif %}">
-      <a rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{% else %}#{% endif %}">Предыдущая</a>
+      <a title="Предыдущая страница" rel="page" href="{% if page_obj.has_previous() %}?page={{ page_obj.previous_page_number() }}{{suffix}}{% endif %}">Предыдущая</a>
     </li>
     {% for p in page_obj.page_range %}
     <li>
       {% if p %}
-      <a rel="page" href="?page={{ p }}">{{ p }}</a>
+      <a rel="page" href="?page={{p}}{{suffix}}">{{p}}</a>
       {% else %}
       <a href="#">...</a>
       {% endif %}
     </li>
     {% endfor %}
     <li class="next{% if not page_obj.has_next() %}{{ ' disabled' }}{% endif %}">
-      <a rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{% else %}#{% endif %}">Следующая</a>
+      <a title="Следующая страница" rel="page" href="{% if page_obj.has_next() %}?page={{ page_obj.next_page_number() }}{{suffix}}{% endif %}">Следующая</a>
     </li>
   </ul>
 </div>

@@ -3,19 +3,24 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
+    {%- if object and object.provides_open_graph -%}
+    <meta property="fb:app_id" content="175357809210274">
+    <meta property="og:site_name" content="Газета &laquo;Завтра&raquo;">
+    <meta property="og:url" content="http://{{APP_DOMAIN}}{{object.get_absolute_url()|e}}">
+    {%- for name, value in object.open_graph_data -%}
+    <meta property="{{name}}" content="{{value|e}}">
+    {%- endfor -%}
+    {%- endif -%}
     <title>{% block page_title %}Завтра &mdash; еженедельная газета{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/bootstrap_zavtra.css" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/{% block page_style %}design{% endblock %}.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-    <link href="{{STATIC_URL}}css/cycle.css" rel="stylesheet" type="text/css">
+    <link href="{{STATIC_URL}}css/bloat.css" rel="stylesheet" type="text/css">
+    <link href="{{STATIC_URL}}css/bootstrap-modal.css" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/combobox.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/cycle.min.js"></script>
     {% block head %}{% endblock %}
   </head>
   <body>
@@ -41,7 +46,7 @@
                   <div id="main_header_links">
                     <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
                     <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
-                    <a class="main_header_link" href="{{url('content.views.archive')}}">Архив Завтра</a>
+                    <a class="main_header_link" href="/content/archive/">Архив Завтра</a>
                   </div>
                 </div>
               </div>
@@ -50,10 +55,14 @@
               <div class="row">
                 <div class="span4 right_align">
                   <div id="main_header_login" class="pull-right">
-                    <span class="main_header_login_text">Сообщество</span>
-                    <a href="#" class="main_header_login_link">Вход</a>
+                    <span class="main_header_login_text">Статьи</span>
+                    {% if not request.user or not request.user.is_authenticated() %}
+                    <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
                     <span class="main_header_login_text"> &bull; </span>
-                    <a href="#" class="main_header_login_link">Регистрация</a>
+                    <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+                    {% else %}
+                    <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -68,7 +77,7 @@
       <div class="container12">
         <div class="row">
           <div class="span9">
-            <div class="navigation_items">{{render_navigation()}}</div>
+            <div class="navigation_items">{% block navigation %}{{render_navigation(path=request.path)}}{% endblock %}</div>
           </div>
           <div class="span3">
             <div class="row">
@@ -94,8 +103,80 @@
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>
     <footer>
-      <div id="footer">{% block page_footer %}{% endblock %}</div>
+      <div id="footer">
+        {% block page_footer %}
+        <div class="container">
+          <div class="row">
+            <div class="span13">
+              <div class="row">
+                <div class="span8">
+                  <div class="row">
+                    <div class="span8">
+                      <div id="footer_navigation">{{render_navigation(prefix="sub_")}}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="span8">
+                      <div id="footer_social_networks">
+                        <a href="http://www.facebook.com/zavtraru">
+                          <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
+                        </a>
+                        <a href="http://www.vk.com/zavtraru">
+                          <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
+                        </a>
+                        <a href="http://www.twitter.com/ZavtraRu">
+                          <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="span5">
+                  <div id="footer_text">Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
     </footer>
+    {% if not request.user or not request.user.is_authenticated() %}
+    <div class="modal fade hide" id="login-modal">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Войти</h3>
+      </div>
+      <div class="modal-body">
+        <form action="{{url('siteuser.views.login')}}" method="post" class="form-horizontal">
+          <div class="control-group required">
+            <label class="control-label" for="id_username">Email</label>
+            <div class="controls">
+              <input id="id_username" maxlength="254" name="username" type="text">
+            </div>
+          </div>
+          <div class="control-group required">
+            <label class="control-label" for="id_password">Пароль</label>
+            <div class="controls">
+              <input id="id_password" name="password" type="password">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+              <input type="hidden" name="next" value="{{request.path}}">
+              <button type="submit" class="btn">Войти</button>
+            </div>
+          </div>
+      </div>
+    </div>
+    {% endif %}
     {% block foot %}{% endblock %}
+    <script src="{{STATIC_URL}}js/jquery.ui.datepicker-ru.js"></script>
+    <script src="{{STATIC_URL}}js/combobox.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modalmanager.js"></script>
+    <script src="{{STATIC_URL}}js/zavtra.js"></script>
   </body>
 </html>

@@ -1,9 +1,11 @@
-{% extends "base.jhtml" %}
+{% extends "content/base_content.jhtml" %}
  
-{% from "macro.jhtml" import render_comments %}
+{% from "macro.jhtml" import render_comments, render_navigation %}
  
 {% block page_style %}newspaper{% endblock %}
- 
+
+{% block navigation %}{{render_navigation(path="/content/rubric/wod/")}}{% endblock %}
+
 {% macro plashka(object) %}
   <div class="bordered">
     <div class="row">
@@ -53,7 +55,7 @@
               <a href="{{object.rubric.get_absolute_url()}}">{{object.rubric.title}}</a>
               <span class="divider">/</span>
             </li>
-            <li class="active">{{object.published_at|ru_date("%d-%m-%Y")}}</li>
+            <li class="active">{{object.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
         </div>
       </div>
@@ -120,22 +122,6 @@
         </div>
         <div class="row">
           <div class="span9 article-page-content">{{object.render_content()}}</div>
-        </div>
-        <div class="row">
-          <div class="span9">
-            <div id="footer_social_networks" class="right_align">
-              <span class="dark x-margin-one">поделиться: </span>
-              <a href="http://facebook.com/zavtraru">
-                <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
-              </a>
-              <a href="http://vk.com/zavtraru">
-                <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
-              </a>
-              <a href="http://twitter.com/ZavtraRu">
-                <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
-              </a>
-            </div>
-          </div>
         </div>
       </article>
     </div>

@@ -21,8 +21,7 @@ class HomeView(TemplateView):
 
   def get_context_data(self, **kwargs):
     now = datetime.now()
-    selected_articles = Article.published.filter(selected_at__lte=now).\
-                        defer('content').\
+    selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
                         order_by('-selected_at').\
                         select_related()[0:6]
@@ -31,9 +30,10 @@ class HomeView(TemplateView):
       'events': Article.events.select_related().defer('content').all(),
       'latest_news': Article.news.defer('content').all()[0:3],
       'selected_articles': selected_articles,
-      'videos': list(Article.published.filter(type = Article.TYPES.video).defer('content')[0:4]),
-      'blogs': Article.blogs.prefetch_related('authors').defer('content').\
-               exclude(pk__in = selected_articles).select_related().all()[0:6],
+      'video': Article.published.filter(type = Article.TYPES.video).latest('published_at'),
+      'blogs': Article.published.prefetch_related('authors').defer('content').\
+               filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
+               select_related().all()[0:6],
       'wod': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
              defer('content').select_related().latest('published_at')
     }

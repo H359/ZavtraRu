@@ -54,4 +54,5 @@ def get_issues_from_list(ctx, value, rubric):
       'rubric': rubric,
       'items': [article for article in value if article.published_at.date() == issue.published_at]
     }
+    if len(group['items']) == 0: continue
     yield (issue, [group])

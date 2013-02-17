@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractBaseUser
 
 from model_utils import Choices
@@ -8,8 +9,10 @@ from siteuser.managers import UserManager, ColumnistsManager
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
 
+from zavtra.utils import OpenGraphMixin
 
-class User(AbstractBaseUser):
+
+class User(OpenGraphMixin, AbstractBaseUser):
   USER_LEVELS = Choices(
     (0, 'ordinary',  u'Обычный'),
     (1, 'trusted',   u'Доверенный'),
@@ -33,7 +36,25 @@ class User(AbstractBaseUser):
 
   photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
   photo_60 = ImageSpec([ResizeToFit(60, 60, True, 0xFFFFFF)], image_field='photo')
+  photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], image_field='photo')
   photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], image_field='photo')
+
+  def __unicode__(self):
+    names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])
+    return u' '.join(names)
+
+  class Meta:
+    ordering = ('last_name', 'first_name')
+
+  @property
+  def open_graph_data(self):
+    yield ('og:type', 'profile')
+    if self.photo != "":
+      yield ('og:image', self.photo.url)
+    yield ('og:title', unicode(self))
+    yield ('og:description', self.resume)
+    yield ('profile:first_name', self.first_name)
+    yield ('profile:last_name', self.last_name)
 
   @property
   def is_staff(self):
@@ -46,9 +67,14 @@ class User(AbstractBaseUser):
   def has_perm(self, permission):
     return self.is_staff
 
-  def __unicode__(self):
-    names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])
-    return u' '.join(names)
+  @property
+  def latest_article(self):
+    if not hasattr(self, '__latest_article_cache'):
+      try:
+        self.__latest_article_cache = self.articles.select_related().prefetch_related('topics').latest('published_at')
+      except ObjectDoesNotExist:
+        self.__latest_article_cache = None
+    return self.__latest_article_cache
 
   @property
   def received_comments(self):
@@ -58,6 +84,10 @@ class User(AbstractBaseUser):
   @models.permalink
   def get_absolute_url(self):
     return ('siteuser.views.profile', (), {'pk': self.pk})
+
+  @models.permalink
+  def get_subscribe_url(self):
+    return ('siteuser.views.subscribe', (), {'readee': self.pk})
 
   @models.permalink
   def get_articles_url(self):

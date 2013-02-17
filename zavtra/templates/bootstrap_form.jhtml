@@ -1,0 +1,33 @@
+{% macro render_field(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+  {% if field.field.widget.__class__.__name__.lower() == "checkboxinput" %}
+  <div class="controls">
+    <label class="checkbox">{{field}} <span>{{field.label}}</span></label>
+    {% for error in field.errors %}<span class="help-inline">{{error}}</span>{% endfor %}
+    {% if field.help_text %}<p class="help-block">{{field.help_text}}</p>{% endif %}
+  </div>
+  {% else %}
+  <label class="control-label" for="{{field.auto_id}}">{{field.label}}</label>
+  <div class="controls">
+    {{field}}
+    {% for error in field.errors %}
+    <span class="help-inline">{{error}}</span>
+    {% endfor %}
+    {% if field.help_text %}
+    <p class="help-block">{{field.help_text}}</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro render_form(form) %}
+{% if form.non_field_errors() %}
+<div class="alert alert-error">
+  <a class="close" data-dismiss="alert">&times;</a>
+  {% for non_field_error in form.non_field_errors() %}{{non_field_error}}{% endfor %}
+</div>
+{% endif %}
+{% for field in form.hidden_fields() %}{{field}}{% endfor %}
+{% for field in form.visible_fields() %}{{render_field(field)}}{% endfor %}
+{% endmacro %}

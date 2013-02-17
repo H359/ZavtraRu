@@ -1,19 +1,18 @@
 var currentWidth;
-    
-$(document).ready(
-	function() {
-		checkSizes();
-		$('.main_tab').on('click', function(){switchMainTabs(this)});
-		
+var max = function(l) {
+	var res = l[0], i$l = l.length;
+	for (var i = 0; i < i$l; i++) if (res < l[i]) res = l[i];
+	return res;
+}
 
-	}
-);
+var alignRow = function(num, row) {
+	var children = $('.article-content', row);
+	if (children.length > 1) children.height(max(children.map(function(i,v){ return $(v).height(); })));
+}
 
-$(window).resize(
-	function(){
-		checkSizes();
-	}
-);
+var alignRows = function() {
+	$('.rows-aligned .row').each(alignRow);
+}
 
 function checkSizes() {
 		if ($(window).width() < 768) {
@@ -58,3 +57,31 @@ function switchMainTabs(which) {
 	}
 
 }
+
+$(document).ready(function(){
+	checkSizes();
+	$('.main_tab').on('click', function(){switchMainTabs(this)});
+	$('#social').css({left: $('#page').css('marginLeft')});
+	$('.carousel-fast').carousel({interval: 8000});
+	$('.carousel-slow').carousel({interval: 14000});
+	$('#main_header_login_link').on('click', function(){
+		$('#login-modal').modal();
+		return false;
+	});
+	$('#main_video_selected').find("[data-video-source]").on('click', function(){
+		var video_source = $(this).data('video-source').split(':'), src;
+		if (video_source[0] == 'youtube') {
+			src = "http://www.youtube.com/embed/" + video_source[1];
+		} else {
+			src = "http://dentv.ru/embed" + video_source[1] + '0/';
+		}
+		var video = $('<div class="modal-body" style="text-align:center"><iframe src="' + src + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>');
+		$('#video-modal').empty().append(video).modal();
+		return false;
+	});
+});
+
+$(window).on('resize', checkSizes);
+$(window).on('load', alignRows)
+
+//$.fn.modal.defaults.maxHeight = function(){ return $(window).height() - 165; }

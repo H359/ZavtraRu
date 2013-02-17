@@ -1,6 +1,8 @@
 {% extends "base.jhtml" %}
 
-{% from "macro.jhtml" import render_zeitung_rubric, pagination %}
+{% from "macro.jhtml" import render_zeitung_rubric, pagination, render_navigation %}
+
+{% block navigation %}{{render_navigation(path="/content/issue/")}}{% endblock %}
 
 {% block page_style %}newspaper{% endblock %}
 

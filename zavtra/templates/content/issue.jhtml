@@ -52,7 +52,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="bordered">
+  <div class="bordered rows-aligned">
     <div class="row">
       <div class="span12">
         <div class="section-header">
@@ -68,35 +68,44 @@
             <li class="active">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
           <div class="section_header_button">
-            <a href="#" class="btn btn-danger baseline_align">Скачать PDF</a>
+            <a href="{{issue.get_pdf_link()}}" class="btn btn-danger baseline_align">Скачать PDF</a>
           </div>
         </div>
       </div>
     </div>
     {% set articles = issue.gazette %}
-    {% if issue.illustration is not none %}
+    {% if issue.illustration != "" %}
     <div class="row">
       <div class="span12">
         <div class="text-over-image">
           <div class="y-margin-one x-margin-one">
-            {% if issue.illustration != "" %}
             <img src="{{issue.zeitung_box.url}}" id="newspaper_illustration">
-            {% endif %}
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
                 <i class="icon-white icon-zoom-in"> </i>
-                <h4 class="inline">&laquo;{{articles[0].title}}&raquo;, Геннадий Животов</h4>
+                <h4 class="inline"><a href="#full-zhivotov" title="Открыть большое изображение" data-toggle="modal">&laquo;{{articles[0].title}}&raquo;, Геннадий Животов</a></h4>
               </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal hide fade" data-width="{{issue.illustration.width}}" id="full-zhivotov">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>{{articles[0].title}}</h3>
+      </div>
+      <div class="modal-body">
+        <img src="{{MEDIA_URL}}{{issue.illustration}}">
+      </div>
+    </div>
+
+    {% endif %}
     {% set groups = articles|group_rubrics %}
     {% for joined, rubrics in groups %}
     {{render_zeitung_rubric(joined, rubrics)}}
     {% endfor %}
-    {% endif %}
   </div>
   <div class="bordered">
     <div class="row">

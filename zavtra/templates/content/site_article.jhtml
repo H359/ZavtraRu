@@ -1,4 +1,4 @@
-{% extends "base.jhtml" %}
+{% extends "content/base_content.jhtml" %}
 
 {% from "macro.jhtml" import render_comments %}
 
@@ -87,10 +87,10 @@
                         {% endif %}
                         <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
                         <span class="article-statistic">
-                          <i class="icon-eye-open"> </i>199
+                          <i class="icon-eye-open"> </i>{{object.views_count}}
                         </span>
                         <span class="article-statistic">
-                          <i class="icon-comment"> </i>{{ object.comments.count() }}
+                          <i class="icon-comment"> </i>{{object.comments_count}}
                         </span>
                       </div>
                     </div>
@@ -100,22 +100,6 @@
             </div>
             <div class="row">
               <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
-            </div>
-            <div class="row">
-              <div class="span8 offset1">
-                <div id="footer_social_networks" class="right_align">
-                  <span class="dark x-margin-one">поделиться: </span>
-                  <a href="http://facebook.com/zavtraru">
-                    <img src="{{STATIC_URL}}img/facebook_logo.png" class="common_social_network_img">
-                  </a>
-                  <a href="http://vk.com/zavtraru">
-                    <img src="{{STATIC_URL}}img/vk_logo.png" class="common_social_network_img">
-                  </a>
-                  <a href="http://twitter.com/ZavtraRu">
-                    <img src="{{STATIC_URL}}img/twitter_logo.png" class="common_social_network_img">
-                  </a>
-                </div>
-              </div>
             </div>
           </article>
         </div>

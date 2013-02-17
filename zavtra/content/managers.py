@@ -39,8 +39,8 @@ class WODManager(PublishedManager):
            filter(rubric=Rubric.fetch_rubric('wod'))
 
 
-class BlogsManager(PublishedManager):
+class ColumnsManager(PublishedManager):
   def get_query_set(self):
     from content.models import Rubric
-    return super(BlogsManager, self).get_query_set().\
-           filter(rubric=Rubric.fetch_rubric('blogi'))
+    return super(ColumnsManager, self).get_query_set().\
+           filter(rubric=Rubric.fetch_rubric('columnists'))

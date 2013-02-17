@@ -39,7 +39,7 @@ $().ready(function() {
       var date = '?year=' + dp.selectedYear +
                  '&month=' + (dp.selectedMonth + 1) +
                  '&day=' + dp.selectedDay;
-      window.location.href = "{{url('siteuser.views.community')}}" + date;
+      window.location.href = "{{url('content.views.community')}}" + date;
     }
   });
 });
