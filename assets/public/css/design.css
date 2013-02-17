@@ -283,15 +283,15 @@ body {
 	padding-top: .25em;
 	height: 1.5em;
 	border-bottom: 1px solid #C2C08C;
+	line-height: 1.33em;
 }
 
 .subject_nav_item {
 	font-family: 'Open Sans', Tahoma;
-	font-size: .9em;
+	font-size: .8em;
 	padding-right: 1em;
 	font-weight: bold;
-	text-transform: lowercase;
-	line-height: 1.5em;
+	text-transform: uppercase;
 	vertical-align: baseline;
 }
 
