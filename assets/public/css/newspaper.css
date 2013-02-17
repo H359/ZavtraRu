@@ -2293,7 +2293,7 @@ li.empty span.large {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: #555;
+	background: #CF4444;
 	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
 	-moz-box-shadow: 0px 2px 9px 1px #AAA;
 	box-shadow: 0px 2px 9px 1px #AAA;
@@ -2306,6 +2306,11 @@ li.empty span.large {
 	width: 9em;
 	float: right;
 	padding: 0em .25em;
+}
+
+.subscribe_button:hover {
+	background-color: #CF0000;
+	text-decoration: none;
 }
 
 .subscribe_button span {
