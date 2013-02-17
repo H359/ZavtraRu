@@ -171,15 +171,15 @@
         <div class="span9">
           <div id="main_news_box">
             <div id="main_news_box_header">
-              <h2>
-                <a href="/content/events/" class="no_underline"><span class="main_header_category">Коротко:</span></a>
-              </h2>
+              <h3>
+                <a href="/content/events/" class="no_underline"><span class="main_header_category middle_align">Коротко:</span></a>
+              </h3>
             </div>
             <div id="main_news_box_content" class="carousel slide carousel-slow">
               <div class="carousel-inner">
                 {% for item in latest_news %}
                 <div class="item{% if loop.first %} active{% endif %}">
-                  <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
+                  <a href="{{item.get_absolute_url()}}" class="largetext middle_align">{{item.title}}</a>
                 </div>
                 {% endfor %}
               </div>
@@ -351,9 +351,9 @@
                 <a href="/content/issue/" class="gray gray_link">Также в номере</a>
               </h5>
             </div>
-            <div class="main_newspaper_block">
+            <div class="main_newspaper_block right_align">
               {% for article in gazette[1:6] %}
-              <h4 class="right_align">
+              <h4>
                 <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
               </h4>
               <h6>
@@ -363,7 +363,7 @@
               <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
               {% endfor %}
               {% if not loop.last %}
-              <div class="center_align">
+              <div>
                 <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="big_padding_vertical onepxline">
               </div>
               {% endif %}
