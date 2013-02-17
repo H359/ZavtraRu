@@ -76,3 +76,24 @@ class DiggPaginator(ExPaginator):
 
 class QuerySetDiggPaginator(DiggPaginator, QuerySetPaginator):
     pass
+
+
+class ExtendedQuerySetDiggPaginator(QuerySetDiggPaginator):
+    pass
+    """
+    def page(self, number, *args, **kwargs):
+        #print self.per_page, number
+        if number == 1:
+            self.per_page -= 1
+        page = super(ExtendedQuerySetDiggPaginator, self).page(number, *args, **kwargs)
+        return page
+
+    def _get_num_pages(self):
+        if self._num_pages is None:
+            if self.count == 0:
+                self._num_pages = 0
+            else:
+                if self._num_pages < (self.per_page - 1):
+
+        return self._num_pages
+    """

@@ -29,14 +29,6 @@
             <div class="span9 person_search_bar">
               <div class="module_header rubric-header">
                 <h4 class="inline">Участники сообщества:</h4>
-                {% if request.user and request.user.is_authenticated() %}
-                <span class="pull-right">
-                  <input class="top_align" id="show-favorites-only" value="1" type="checkbox">
-                  <label class="inline" for="show-favorites-only">
-                    <span class="middle_align">Показывать только любимых авторов</span>
-                  </label>
-                </span>
-                {% endif %}
               </div>
               <div id="author_alphabet_name">
                 {% for l in alphabet %}
@@ -160,9 +152,9 @@
                     <div class="author-actions">
                       {% if request.user and request.user.is_authenticated() %}
                       {% if object.id in user_reads %}
-                      <strong>Ваш любимый автор</strong>
+                      <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}">Отписаться</a>
                       {% else %}
-                      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="author_link">Отметить как любимого автора</a>
+                      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="author_link">Подписаться</a>
                       {% endif %}
                       {% endif %}
                       <a href="{{object.get_articles_url()}}" class="author_link">Статьи ({{object.articles_count}})</a>
@@ -187,7 +179,7 @@
           </div>
         </div>
         <div class="span3">
-          <div class="module_header rubric-header">
+          <div class="module_header rubric-header-red">
             <h4>Самое обсуждаемое:</h4>
           </div>
           {% for object in most_commented %}

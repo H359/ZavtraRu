@@ -1039,7 +1039,7 @@ article p {
 
 .avatar {
 	float: left;
-	background-image: url(../pic/dialogue.png);
+	background-image: url(/static/img/dialogue.png);
 	background-repeat: no-repeat;
 	background-position: right;
 }

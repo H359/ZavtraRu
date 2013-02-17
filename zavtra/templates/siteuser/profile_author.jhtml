@@ -18,9 +18,15 @@
   <div class="row">
     <div class="span4 offset1">
     </div>
+    {% if request.user and request.user.is_authenticated() %}
     <div class="span4" id="person_actions">
-      <span class="subscribe_button"><span>Подписаться</span></span>
+      {% if request.user.readers.filter(author=object).count() == 0 %}
+      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Подписаться</span></a>
+      {% else %}
+      <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Отписаться</span></a>
+      {% endif %}
     </div>
+    {% endif %}
   </div>
   <div class="row">
     <div class="span8 offset1">
@@ -30,22 +36,6 @@
         <span class="largetext bold">Присоединился к сообществу</span> {{object.date_joined|ru_date("%d %B %Y")}}
       </div>
     </div>
-    {% set readees = object.readees.all()|list %}
-    {% set readers = object.readers.all()|list %}
-    {% if readees|length > 0 %}
-    <div class="span8 offset1" id="person_subscriptions">
-      <h3>Участник читает:</h3>
-      {% for readee in readees %}{{person(readee)}}{% endfor %}
-    </div>
-    {% endif %}
   </div>
-  {% if readers|length > 0 %}
-  <div class="row">
-    <div class="span8 offset1" id="person_subscriptions">
-      <h3>Читатели:</h3>
-      {% for reader in readers %}{{person(reader)}}{% endfor %}
-    </div>
-  </div>
-  {% endif %}
 </div>
 {% endblock %}

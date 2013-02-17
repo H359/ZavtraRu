@@ -73,11 +73,11 @@
           {% endfor %}
           <div class="right_align">
             <span class="article-statistic">
-              <i class="icon-eye-open"> </i> 172
+              <i class="icon-eye-open"> </i>{{object.views_count}}
             </span>
             <span class="article-statistic">
               <a href="{{object.get_absolute_url()}}" class="jump_to_comment">
-                <i class="icon-comment"> </i> {{object.comments.count()}}
+                <i class="icon-comment"> </i>{{object.comments_count}}
               </a>
             </span>
           </div>

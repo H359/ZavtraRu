@@ -11,6 +11,7 @@
   z-index: 10;
 }
 
+/*
 #social {
   position: fixed;
   top: 100px;
@@ -20,6 +21,7 @@
 #social span {
   
 }
+*/
 
 #main_events_box #main_event_selection_bg {
   top: 14.3em;
@@ -86,16 +88,33 @@
 }
 
 @media (max-width: 1199px) and (min-width: 1025px) {
+  #events {
+    font-size: 14px;
+  }
   #events .carousel-indicators li {
     margin-right: 0.2em;
   }
 }
 
 @media (max-width: 1024px) and (min-width: 768px) {
+  #events {
+    font-size: 11px;
+  }
+  #events .carousel-indicators {
+    top: 12.6em;
+  }
   #events .carousel-indicators li {
-    width: .6em;
-    height: .6em;
-    margin-right: 0.1em;
+    font-size: 11px;
+    margin-right: 0.2em;
+  }
+  #events a.carousel-control {
+    top: 12.5em;
+  }
+}
+
+@media (max-width: 767px) {
+  #main_events_box {
+    display: none;
   }
 }
 
@@ -150,6 +169,7 @@
   height: 29px;
 }
 
+/*
 #main_video_dentv_link a {
   display: block;
 }
@@ -157,3 +177,4 @@
 .main_box_header {
   height: 20px
 }
+*/

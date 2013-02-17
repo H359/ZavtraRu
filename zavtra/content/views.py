@@ -5,7 +5,8 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Max, Min
 
-from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
+from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
+                             ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
 from zavtra.utils import oneday
 from content.models import Article, Rubric, Topic, Issue, RubricInIssue
 from siteuser.models import User
@@ -158,7 +159,8 @@ class IssueView(TemplateView):
 class CommunityView(ListView):
   template_name = 'content/community.jhtml'
   paginate_by = 15
-  paginator_class = DiggPaginator
+  #paginator_class = DiggPaginator
+  paginator_class = ExtendedDiggPaginator
   selected_date = None
 
   def get_queryset(self):

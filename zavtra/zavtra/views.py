@@ -25,6 +25,7 @@ class HomeView(TemplateView):
                         prefetch_related('authors').\
                         order_by('-selected_at').\
                         select_related()[0:6]
+    #latest_news = Article.news.defer('content').all()
     context = {
       'issue': Issue.published.prefetch_related('issue_rubrics').latest('published_at'),
       'events': Article.events.select_related().defer('content').all(),

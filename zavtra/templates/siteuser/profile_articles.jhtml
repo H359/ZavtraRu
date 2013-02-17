@@ -25,9 +25,15 @@
         <span class="mediumtext bold">Получено комментариев:</span> {{object.received_comments.count()}}
       </div>
     </div>
+    {% if request.user and request.user.is_authenticated() %}
     <div class="span4" id="person_actions">
-      <span class="subscribe_button"><span>Подписаться</span></span>
+      {% if request.user.readers.filter(author=object).count() == 0 %}
+      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Подписаться</span></a>
+      {% else %}
+      <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Отписаться</span></a>
+      {% endif %}
     </div>
+    {% endif %}
   </div>
   <div class="row">
     <div class="span8 offset1">
@@ -65,12 +71,12 @@
               <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
               <span class="article-statistic">
                 <a href="{{article.get_absolute_url()}}">
-                  <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
+                  <img src="{{STATIC_URL}}img/views.png"> {{article.views_count}}
                 </a>
               </span>
               <span class="article-statistic">
                 <a href="{{article.get_absolute_url()}}">
-                  <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                  <img src="{{STATIC_URL}}img/comment.png"> {{article.comments_count}}
                 </a>
               </span>
             </div>

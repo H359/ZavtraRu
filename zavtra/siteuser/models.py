@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractBaseUser
@@ -70,8 +70,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
   @property
   def latest_article(self):
     if not hasattr(self, '__latest_article_cache'):
+      thr = datetime.now() - timedelta(days=30)
       try:
-        self.__latest_article_cache = self.articles.select_related().prefetch_related('topics').latest('published_at')
+        self.__latest_article_cache = self.articles.select_related().prefetch_related('topics').\
+                                      filter(published_at__gte = thr).latest('published_at')
       except ObjectDoesNotExist:
         self.__latest_article_cache = None
     return self.__latest_article_cache
@@ -88,6 +90,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
   @models.permalink
   def get_subscribe_url(self):
     return ('siteuser.views.subscribe', (), {'readee': self.pk})
+
+  @models.permalink
+  def get_unsubscribe_url(self):
+    return ('siteuser.views.unsubscribe', (), {'readee': self.pk})
 
   @models.permalink
   def get_articles_url(self):

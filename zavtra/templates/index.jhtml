@@ -118,12 +118,12 @@
                 <div id="main_event_selection_bg"></div>
                 <div id="events" class="carousel slide carousel-fast">
                   <ol class="carousel-indicators">
-                    {% for i in range(0, 10) %}
+                    {% for i in range(0, 8) %}
                     <li data-target="#events" data-slide-to="{{i}}"{% if loop.first %} class="active"{% endif %}></li>
                     {% endfor %}
                   </ol>
                   <div class="carousel-inner">
-                    {% for event in events[0:10] %}
+                    {% for event in events[0:8] %}
                     <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
                       <h5>
@@ -382,6 +382,7 @@
         <div class="span4">
           <div class="main_box_frame">
             <div class="relative main_box_header">
+              <h5><a href="#" class="gray gray_link">Видео</a></h5>
               <div id="main_video_dentv_link">
                 <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
@@ -403,14 +404,14 @@
                 </h6>
                 <div id="main_video_selected_header_stats">
                   <i class="icon-white icon-comment"> </i>
-                  <span class="smalltext"><a data-video-source="{{video.source}}" href="{{video.get_absolute_url()}}" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
+                  <span class="smalltext"><a href="{{video.get_absolute_url()}}" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
                 </div>
                 <div id="main_video_selected_header_restriction">
                   <span class="smalltext beige">18+</span>
                 </div>
               </div>
             </div>
-            <div id="main_video_selected_description_container">{{video.announce|striptags}}</div>
+            <div id="main_video_selected_description_container"><a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a></div>
           </div>
         </div>
       </div>

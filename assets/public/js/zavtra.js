@@ -7,11 +7,11 @@ var max = function(l) {
 
 var alignRow = function(num, row) {
 	var children = $('.article-content', row);
-	if (children.length > 1) children.height(max(children.map(function(i,v){ return $(v).height(); })));
+	if (children.length > 1) children.height(max(children.map(function(i,v){return $(v).height();})));
 }
 
 var alignRows = function() {
-	$('.rows-aligned .row').each(alignRow);
+	$('.rows-aligned .span12 .row').each(alignRow);
 }
 
 function checkSizes() {
@@ -55,13 +55,11 @@ function switchMainTabs(which) {
 			$('#main_blogs_polemics').css('display', 'none');
 		break
 	}
-
 }
 
 $(document).ready(function(){
 	checkSizes();
 	$('.main_tab').on('click', function(){switchMainTabs(this)});
-	$('#social').css({left: $('#page').css('marginLeft')});
 	$('.carousel-fast').carousel({interval: 8000});
 	$('.carousel-slow').carousel({interval: 14000});
 	$('#main_header_login_link').on('click', function(){
@@ -75,7 +73,7 @@ $(document).ready(function(){
 		} else {
 			src = "http://dentv.ru/embed" + video_source[1] + '0/';
 		}
-		var video = $('<div class="modal-body" style="text-align:center"><iframe src="' + src + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>');
+		var video = $('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="modal-body" style="text-align:center"><iframe src="' + src + '" width="640" height="360" frameborder="0" allowfullscreen></iframe></div>');
 		$('#video-modal').empty().append(video).modal();
 		return false;
 	});

@@ -12,31 +12,26 @@
         <div class="section-header">
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button">
-            <div class="btn-group dropdown">
-              <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                {% for rubric in gazette_rubrics %}
-                <li>
-                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
-                </li>
-                {% endfor %}
-              </ul>
+            <div class="section_header_button2">
+              <div class="btn-group dropdown">
+                <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  {% for rubric in gazette_rubrics %}
+                  <li>
+                    <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="section_header_button">
+              <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив&nbsp;газеты</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item">
-          <a href="/content/archive/">
-            <img src="/static/img/no_avatar.gif" class="newspaper_selection_item_img">
-            <div class="text-bottom white center_align one_padding_vertical">
-              <h4 class="bold">Архив: Все Номера Газеты "Завтра"</h4>
-            </div>
-          </a>
-        </div>
-      </div>
       {% for other in latest_issues|reverse %}
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
@@ -52,7 +47,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="bordered rows-aligned">
+  <div class="bordered">
     <div class="row">
       <div class="span12">
         <div class="section-header">
@@ -100,12 +95,13 @@
         <img src="{{MEDIA_URL}}{{issue.illustration}}">
       </div>
     </div>
-
     {% endif %}
-    {% set groups = articles|group_rubrics %}
-    {% for joined, rubrics in groups %}
-    {{render_zeitung_rubric(joined, rubrics)}}
-    {% endfor %}
+    <div class="rows-aligned">
+      {% set groups = articles|group_rubrics %}
+      {% for joined, rubrics in groups %}
+      {{render_zeitung_rubric(joined, rubrics)}}
+      {% endfor %}
+    </div>
   </div>
   <div class="bordered">
     <div class="row">
@@ -128,16 +124,6 @@
       </div>
     </div>
     <div class="row">
-      <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item">
-          <a href="/content/archive/">
-            <img src="/static/img/no_avatar.gif" class="newspaper_selection_item_img">
-            <div class="text-bottom white center_align one_padding_vertical">
-              <h4 class="bold">Архив: Все Номера Газеты "Завтра"</h4>
-            </div>
-          </a>
-        </div>
-      </div>
       {% for other in latest_issues|reverse %}
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
