@@ -69,10 +69,14 @@ class WodAdmin(admin.ModelAdmin):
 
 
 class NewsAdmin(admin.ModelAdmin):
-  exclude = ('authors', 'rubric', 'type', 'selected_at', 'topics')
+  exclude = ('authors', 'rubric', 'type', 'selected_at',)
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
   form = ArticleAdminForm
+  raw_id_fields = ('topics',)
+  autocomplete_lookup_fields = {
+    'm2m': ['topics']
+  }
 
   def queryset(self, request):
     return News.objects.filter(rubric=Rubric.fetch_rubric('novosti'))
