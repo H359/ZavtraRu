@@ -28,8 +28,7 @@ class NewsManager(PublishedManager):
   def get_query_set(self):
     from content.models import Rubric
     return super(NewsManager, self).get_query_set().\
-           filter(rubric=Rubric.fetch_rubric('novosti')).\
-           filter(Q(cover_source = "") | Q(cover_source__isnull = True))
+           filter(rubric=Rubric.fetch_rubric('novosti'))
 
 
 class WODManager(PublishedManager):
