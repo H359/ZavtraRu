@@ -152,7 +152,7 @@
                     <div class="author-actions">
                       {% if request.user and request.user.is_authenticated() %}
                       {% if object.id in user_reads %}
-                      <a href="{{object.get_unsubcribe_url()}}?next={{request.path|e}}">Отписться</a>
+                      <a href="{{object.get_unsubcribe_url()}}?next={{request.path|e}}">Отписаться</a>
                       {% else %}
                       <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="author_link">Подписаться</a>
                       {% endif %}
