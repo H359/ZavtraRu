@@ -179,7 +179,7 @@
               <div class="carousel-inner">
                 {% for item in latest_news %}
                 <div class="item{% if loop.first %} active{% endif %}">
-                  <a href="{{item.get_absolute_url()}}" class="mediumtext">{{item.title}}</a>
+                  <a href="{{item.get_absolute_url()}}" class="largetext">{{item.title}}</a>
                 </div>
                 {% endfor %}
               </div>
