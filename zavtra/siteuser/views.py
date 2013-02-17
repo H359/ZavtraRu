@@ -33,7 +33,7 @@ class UnSubscribeUser(RedirectView):
     self.url = request.GET.get('next', '/')
     if request.user is not None and request.user.is_authenticated():
       Reader.objects.filter(author_id=kwargs['readee'], reader=request.user).delete()
-    return super(SubscribeUser, self).get(request, *args, **kwargs)
+    return super(UnSubscribeUser, self).get(request, *args, **kwargs)
 
 
 class RegisterView(TemplateView, FormView):
