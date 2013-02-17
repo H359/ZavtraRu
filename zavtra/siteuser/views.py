@@ -4,12 +4,13 @@ from datetime import datetime
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.views.generic.edit import FormView
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
 #from filters import Filter, FilterItem
 
+from content.models import Article
 from siteuser.models import User, Reader
 from siteuser.forms import RegisterUserForm
 
@@ -135,10 +136,13 @@ class ArticlesView(ListView):
 
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
+    return Article.published.select_related().\
+           prefetch_related('authors', 'expert_comments', 'topics').\
+           filter(Q(authors__in = self.user) | Q(expert_comments__expert = self.user))
     #self.filter = ArticlesFilter(request=self.request, queryset=self.user.articles.all())
     #return self.filter.as_queryset()
-    return self.user.articles.select_related().\
-           prefetch_related('authors', 'expert_comments', 'expert_comments__expert', 'topics')
+    #return self.user.articles.select_related().\
+    #       prefetch_related('authors', 'expert_comments', 'expert_comments', 'topics')
 
 
 class CommentsView(ListView):
