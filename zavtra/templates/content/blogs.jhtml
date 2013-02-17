@@ -172,7 +172,7 @@
           </div>
           <div class="span3">
             <div class="row" id="articles_issues">
-              <div class="module_header rubric-header">
+              <div class="module_header rubric-header-red">
                 <h4>Самое обсуждаемое:</h4>
               </div>
               {% for item in most_commented[0:5] %}
