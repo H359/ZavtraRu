@@ -118,12 +118,12 @@
                 <div id="main_event_selection_bg"></div>
                 <div id="events" class="carousel slide carousel-fast">
                   <ol class="carousel-indicators">
-                    {% for i in range(0, 10) %}
+                    {% for i in range(0, 8) %}
                     <li data-target="#events" data-slide-to="{{i}}"{% if loop.first %} class="active"{% endif %}></li>
                     {% endfor %}
                   </ol>
                   <div class="carousel-inner">
-                    {% for event in events[0:10] %}
+                    {% for event in events[0:8] %}
                     <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
                       <h5>
