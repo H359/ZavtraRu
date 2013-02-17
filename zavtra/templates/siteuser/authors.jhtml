@@ -48,7 +48,7 @@
             </div>
             <div class="row">
               <div class="span9">
-                <h3>Результаты поиска ({{paginator.count}}):</h3>
+                <h3 class="padding_one">Результаты поиска ({{paginator.count}}):</h3>
                 <img src="/static/img/gradient_grayscale_line.png" class="onepxline">
                 {% for object in object_list %}
                 <section class="person_search_result">
