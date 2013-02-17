@@ -31,11 +31,11 @@
       </div>
     </div>
     {% set readees = object.readees.all()|list %}
-    {% set readers = object.readers.all()|list %}
+    {% set readers = object.readers.filter(reader__level__gte = 1).all()|list %}
     {% if readees|length > 0 %}
     <div class="span8 offset1" id="person_subscriptions">
       <h3>Участник читает:</h3>
-      {% for readee in readees %}{{person(readee)}}{% endfor %}
+      {% for readee in readees %}{{person(readee.author)}}{% endfor %}
     </div>
     {% endif %}
   </div>
@@ -43,7 +43,7 @@
   <div class="row">
     <div class="span8 offset1" id="person_subscriptions">
       <h3>Читатели:</h3>
-      {% for reader in readers %}{{person(reader)}}{% endfor %}
+      {% for reader in readers %}{{person(reader.reader)}}{% endfor %}
     </div>
   </div>
   {% endif %}
