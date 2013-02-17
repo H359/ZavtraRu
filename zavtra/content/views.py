@@ -39,7 +39,7 @@ class EventsView(ListView):
 
   def get_queryset(self):
     self.date = self.get_date()
-    return Article.news.filter(
+    return Article.common_news.filter(
       published_at__year = self.date.year,
       published_at__month = self.date.month,
       published_at__day = self.date.day

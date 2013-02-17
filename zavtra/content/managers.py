@@ -16,7 +16,14 @@ class PublishedManager(models.Manager):
     return qs
 
 
-class EventsManager(PublishedManager):
+class BaseNewsManager(PublishedManager):
+  def get_query_set(self):
+    from content.models import Rubric
+    return super(BaseNewsManager, self).get_query_set().\
+           filter(rubric=Rubric.fetch_rubric('novosti'))
+
+
+class EventsManager(BaseNewsManager):
   def get_query_set(self):
     from content.models import Rubric
     return super(EventsManager, self).get_query_set().\
@@ -24,11 +31,12 @@ class EventsManager(PublishedManager):
            exclude(Q(cover_source = "") | Q(cover_source__isnull = True))
 
 
-class NewsManager(PublishedManager):
+class NewsManager(BaseNewsManager):
   def get_query_set(self):
     from content.models import Rubric
     return super(NewsManager, self).get_query_set().\
-           filter(rubric=Rubric.fetch_rubric('novosti'))
+           filter(rubric=Rubric.fetch_rubric('novosti')).\
+           filter(Q(cover_source = "") | Q(cover_source__isnull = True))
 
 
 class WODManager(PublishedManager):
