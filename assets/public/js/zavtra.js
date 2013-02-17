@@ -60,7 +60,6 @@ function switchMainTabs(which) {
 $(document).ready(function(){
 	checkSizes();
 	$('.main_tab').on('click', function(){switchMainTabs(this)});
-	$('#social').css({left: $('#page').css('marginLeft')});
 	$('.carousel-fast').carousel({interval: 8000});
 	$('.carousel-slow').carousel({interval: 14000});
 	$('#main_header_login_link').on('click', function(){

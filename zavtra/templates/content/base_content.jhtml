@@ -1,5 +1,14 @@
 {% extends "base.jhtml" %}
 
+{% block social_block %}
+<div class="right_align">
+  <span st_title="{{object.title|e}}" class="st_vkontakte_large" displayText="ВКонтакте"></span>
+  <span st_title="{{object.title|e}}" class="st_twitter_large" displayText="Tweet"></span>
+  <span st_title="{{object.title|e}}" class="st_facebook_large" displayText="Facebook"></span>
+  <span st_title="{{object.title|e}}" class="st_googleplus_large" displayText="G+"></span>
+</div>
+{% endblock %}
+
 {% block head %}
 <script>var switchTo5x=true;</script>
 <script src="http://w.sharethis.com/button/buttons.js"></script>
@@ -7,13 +16,6 @@
 {% endblock %}
 
 {% block foot %}
-<div id="social">
-  <span st_title="{{object.title|e}}" class="st_vkontakte_large" displayText="ВКонтакте"></span>
-  <span st_title="{{object.title|e}}" class="st_twitter_large" displayText="Tweet"></span>
-  <span st_title="{{object.title|e}}" class="st_facebook_large" displayText="Facebook"></span>
-  <span st_title="{{object.title|e}}" class="st_googleplus_large" displayText="G+"></span>
-</div>
-
 <script type="text/javascript">stLight.options({publisher:"f2e120ce-c7c8-479f-accc-b5d2d34e2555"});</script>
 {#
   <script>stLight.options({headerTitle:"Поделиться",publisher:"f2e120ce-c7c8-479f-accc-b5d2d34e2555",doNotHash:false, doNotCopy:false,hashAddressBar:false,st_title:"{{object.title|e}}"});</script>
