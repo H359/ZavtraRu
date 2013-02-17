@@ -21,9 +21,9 @@
     {% if request.user and request.user.is_authenticated() %}
     <div class="span4" id="person_actions">
       {% if request.user.readers.filter(author=object).count() == 0 %}
-      <a href="{{object.get_subscribe_url()}}" class="subscribe_button"><span>Подписаться</span></a>
+      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Подписаться</span></a>
       {% else %}
-      <a href="{{object.get_unsubscribe_url()}}" class="subscribe_button"><span>Отписаться</span></a>
+      <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Отписаться</span></a>
       {% endif %}
     </div>
     {% endif %}
