@@ -32,9 +32,9 @@
               </div>
               <div class="selection_item_statistics">
                 <a href="{{article.get_absolute_url()}}" class="smalltext">{{article.published_at|ru_date("%d/%m/%Y")}}</a>
-                <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/views.png"></a> {{article.views_count}}</span>
                 <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/comment.png"></a> {{article.comments_count}}</span>
-              </div>
+                <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/views.png"></a> {{article.views_count}}</span>
+                </div>
             </div>
           </div>
           {% endfor %}

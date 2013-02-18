@@ -57,7 +57,7 @@
                 </div>
               </div>
               {% if object.topics.count() > 0 %}
-              <div class="span4 right_align article_category_list">
+              <div class="span2 right_align article_category_list">
                 {% for topic in object.topics.all() %}
                 <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
                 {% endfor %}
