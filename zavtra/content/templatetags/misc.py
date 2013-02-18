@@ -23,6 +23,9 @@ def ru_dt_distance(ctx, value):
 def ru_date(ctx, value, format=u'%d %B %Y г'):
   return ru_strftime(unicode(format), value, inflected=True)
 
+@register.filter
+def nl2br(ctc, value):
+  return u'<br>'.join(value.split('\n'))
 
 @register.filter
 @jinja2.contextfilter
