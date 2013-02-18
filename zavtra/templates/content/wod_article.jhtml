@@ -79,9 +79,11 @@
         </div>
       </div>
       <div>
+        {% if object.authors.count() > 0 %}
         <h5 class="inline">Текст:</h5>
         {% for author in object.authors.all() %}<a href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}<br>
-        <h5 class="inline">Иллюстрация:</h5><a href="#">Геннадий Животов</a><br>
+        {% endif %}
+        {#<h5 class="inline">Иллюстрация:</h5><a href="#">Геннадий Животов</a><br>#}
         <h5 class="inline">Экспертные оценки:</h5>
         {% for expert_comment in object.expert_comments.all() %}<a href="{{expert_comment.expert.get_absolute_url()}}">{{expert_comment.expert}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
       </div>
