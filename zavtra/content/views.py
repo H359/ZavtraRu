@@ -97,7 +97,7 @@ class ArticleView(DetailView):
 
   def get_queryset(self):
     return Article.objects.select_related().\
-           prefetch_related('expert_comment', 'expert_comment__expert', 'cites')
+           prefetch_related('expert_comments', 'expert_comments__expert', 'cites')
 
 
 
