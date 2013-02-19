@@ -96,7 +96,8 @@ class ArticleView(DetailView):
     return context
 
   def get_queryset(self):
-    return Article.objects.select_related()
+    return Article.objects.select_related().\
+           prefetch_related('expert_comment', 'expert_comment__expert', 'cites')
 
 
 

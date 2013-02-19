@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
-                           DailyQuote
+                           DailyQuote, WodCite
 from content.proxies import News, Wod, Video, Columns
 
 
@@ -54,11 +54,17 @@ class ArticleAdmin(admin.ModelAdmin):
   }
 
 
+class WodCiteAdmin(admin.StackedInline):
+  model = WodCite
+  max_num = 1
+  extra = 1
+
+
 class WodAdmin(admin.ModelAdmin):
   exclude = ('rubric', 'type', 'selected_at')
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
-  inlines = [ExpertCommentAdminInline]
+  inlines = [WodCiteAdmin, ExpertCommentAdminInline]
   form = ArticleAdminForm
   raw_id_fields = ('authors', 'topics')
   autocomplete_lookup_fields = {

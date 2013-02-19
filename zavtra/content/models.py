@@ -268,6 +268,20 @@ class ExpertComment(models.Model):
     verbose_name_plural = u'Комментарии экспертов'
 
 
+class WodCite(models.Model):
+  article = models.ForeignKey(Article, verbose_name=u'Статья', related_name='cites')
+  word = models.CharField(verbose_name=u'Слово', max_length=256)
+  cite = models.TextField(verbose_name=u'Значение')
+  source = models.CharField(verbose_name=u'Источник', max_length=1024)
+
+  def __unicode__(self):
+    return self.word
+
+  class Meta:
+    verbose_name = u'Выдержка из словаря'
+    verbose_name_plural = u'Выдержки из словарей'
+
+
 class DailyQuote(models.Model):
   quote = models.TextField(verbose_name=u'Цитата')
   source = models.ForeignKey(Article, verbose_name=u'Источник цитаты')
