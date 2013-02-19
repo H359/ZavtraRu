@@ -154,7 +154,7 @@
                 <img id="main_wod_image" src="{{wod.main_cover_for_wod.url}}">  
               </a>
               <div id="main_wod_details" class="text-bottom white">
-                <h4><a href="{{wod.get_absolute_url()}}">{{wod.title}}</a></h4>
+                <h4><a href="{{wod.get_absolute_url()}}">{{wod.subtitle}}</a></h4>
                 <h5>Экспертные оценки:</h5>
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}

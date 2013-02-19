@@ -79,9 +79,11 @@
         </div>
       </div>
       <div>
+        {% if object.authors.count() > 0 %}
         <h5 class="inline">Текст:</h5>
         {% for author in object.authors.all() %}<a href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}<br>
-        <h5 class="inline">Иллюстрация:</h5><a href="#">Геннадий Животов</a><br>
+        {% endif %}
+        {#<h5 class="inline">Иллюстрация:</h5><a href="#">Геннадий Животов</a><br>#}
         <h5 class="inline">Экспертные оценки:</h5>
         {% for expert_comment in object.expert_comments.all() %}<a href="{{expert_comment.expert.get_absolute_url()}}">{{expert_comment.expert}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
       </div>
@@ -136,11 +138,15 @@
       {% for expert_comment in object.expert_comments.all() %}
       <div class="wod_opinion">
         <div class="wod_opinion_avatar">
-          <img src="http://placekitten.com/g/107/107">
+          {% if expert_comment.expert.photo != "" %}
+          <img src="{{expert_comment.expert.photo_90.url}}">
+          {% else %}
+          <img src="{{STATIC_URL}}img/no_avatar.gif">
+          {% endif %}
         </div>
         <div class="wod_opinion_text">
           <a href="{{expert_comment.expert.get_absolute_url()}}" class="wod_opinion-author-name">{{expert_comment.expert}}</a>
-          {{expert_comment.comment}}
+          {{expert_comment.comment|nl2br}}
         </div>
       </div>
       {% if not loop.last %}

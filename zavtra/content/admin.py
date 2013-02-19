@@ -14,6 +14,11 @@ class ExpertCommentAdminInline(admin.StackedInline):
   model = ExpertComment
   max_num = None
   extra = 0
+  raw_id_fields = ('expert',)
+  autocomplete_lookup_fields = {
+    'fk': ['expert']
+  }
+
 
 
 class RubricInIssueAdminInline(admin.StackedInline):
