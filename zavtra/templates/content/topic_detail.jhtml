@@ -59,7 +59,7 @@
                       <div class="span3">
                         <div class="article-illustration-container">
                           <a href="{{object.get_absolute_url()}}">
-                            <img src="{{object.cover_for_list.url}}" class="article-illustration">
+                            <img src="{{object.cover_for_eventbox.url}}" class="article-illustration">
                           </a>
                         </div>
                       </div>
