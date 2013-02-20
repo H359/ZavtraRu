@@ -115,15 +115,29 @@
           <div class="span6 article-page-statistics">
             <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
             <span class="article-statistic">
-              <i class="icon-eye-open"> </i>199
+              <i class="icon-eye-open"> </i> {{object.views_count}}
             </span>
             <span class="article-statistic">
-              <i class="icon-comment"> </i>{{ object.comments.count() }}
+              <i class="icon-comment"> </i> {{object.comments_count}}
             </span>
           </div>
         </div>
         <div class="row">
-          <div class="span9 article-page-content">{{object.render_content()}}</div>
+          <div class="span9 article-page-content">
+            {% if object.cites.count() > 0 %}
+            {% for cite in object.cites.all() %}
+            <div class="row">
+              <div class="offset4 span5 y-margin-one">
+                <div class="wod_quote">
+                  <span class="bold">{{cite.word}}</span> &ndash; <span class="italic">{{cite.cite}}</span>
+                  <span class="wod_quote_source">{{cite.source}}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {{object.render_content()}}
+          </div>
         </div>
         <div class="row">
           <div class="span8 offset1">{% block social_block %}{{super()}}{% endblock %}</div>

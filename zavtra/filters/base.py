@@ -11,20 +11,21 @@ class FilterBase(type):
     
     module = attrs.pop('__module__')
     new_class = super_new(cls, name, bases, {'__module__': module})
+    new_class._filters = []
     for obj_name, obj in attrs.items():
-      new_class._filters[(obj_name, obj)]
+      new_class._filters.append((obj_name, obj))
       setattr(new_class, obj_name, None)
     return new_class
 
 
 class Filter(six.with_metaclass(FilterBase)):
   def __init__(self, request, queryset):
-    self._filters = []
     self._request = request
     self._queryset = queryset
 
   def __iter__(self):
-    return self
+    for f in self._filters:
+      yield 
 
   def as_queryset(self):
     return self._queryset
@@ -34,6 +35,12 @@ class Filter(six.with_metaclass(FilterBase)):
 
 
 class FilterItem(object):
-  def __init__(self, *args, **kwargs):
-    pass
+  selected_item = None
+  title = u'Unnamed field'
 
+  def __init__(self, *args, **kwargs):
+    for k, v in kwargs.items():
+      setattr(self, k, v)
+
+  def __unicode__(self):
+    return self.title

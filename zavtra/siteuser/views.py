@@ -8,7 +8,7 @@ from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
-#from filters import Filter, FilterItem
+from filters import Filter, FilterItem
 
 from content.models import Article
 from siteuser.models import User, Reader
@@ -108,7 +108,6 @@ class ProfileView(DetailView):
     return context
 
 
-"""
 class ArticlesFilter(Filter):
   year = FilterItem(title=u'Год', blank=True, blank_string=u'все', field='published_at')
   month = FilterItem(title=u'Месяц', blank=True, blank_string=u'все', field='published_at')
@@ -119,7 +118,6 @@ class ArticlesFilter(Filter):
       (u'слово дня', lambda qs: qs.filter(rubric__slug = 'wod'))
     )
   )
-"""
 
 
 class ArticlesView(ListView):
@@ -131,14 +129,16 @@ class ArticlesView(ListView):
     context = super(ArticlesView, self).get_context_data(**kwargs)
     context['profile_part'] = 'articles'
     context['object'] = self.user
-    #context['filter'] = self.filter
+    context['filter'] = self.filter
     return context
 
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
-    return Article.published.select_related().\
-           prefetch_related('authors', 'expert_comments', 'topics').\
-           filter(Q(authors__in = [self.user]) | Q(expert_comments__expert = self.user))
+    queryset = Article.published.select_related().\
+               prefetch_related('authors', 'expert_comments', 'topics').\
+               filter(Q(authors__in = [self.user]) | Q(expert_comments__expert = self.user))
+    self.filter = ArticlesFilter(self.request, queryset)
+    return self.filter.as_queryset()
 
 
 class CommentsView(ListView):
