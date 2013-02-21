@@ -292,7 +292,7 @@ class WodCite(models.Model):
   source = models.CharField(verbose_name=u'Источник', max_length=1024)
 
   def __unicode__(self):
-    return self.word
+    return self.article.title
 
   class Meta:
     verbose_name = u'Выдержка из словаря'
