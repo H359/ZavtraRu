@@ -26,7 +26,7 @@
       <section>
         <article>
           {% if article.cover_source != "" %}
-          <div class="article-illustration-container float_left">
+          <div class="article-illustration-container">
             <a href="{{article.get_absolute_url()}}">
               <img src="{{article.cover_for_sidebar.url}}" class="article-illustration">
             </a>
@@ -80,7 +80,7 @@
           <section>
             <article>
               {% if article.cover_source != "" %}
-              <div class="article-illustration-container float_left">
+              <div class="article-illustration-container">
                 <a href="{{article.get_absolute_url()}}">
                   <img src="{{article.cover_for_sidebar.url}}" class="article-illustration">
                 </a>
