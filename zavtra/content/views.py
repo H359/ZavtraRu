@@ -117,7 +117,8 @@ class RubricView(ListView):
 
   def get_queryset(self):
     self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
-    return self.rubric.articles.order_by('-published_at').all()
+    #return self.rubric.articles.order_by('-published_at').all()
+    return Article.published.filter(rubric=self.rubric)
 
   def get_context_data(self, **kwargs):
     context = super(RubricView, self).get_context_data(**kwargs)
