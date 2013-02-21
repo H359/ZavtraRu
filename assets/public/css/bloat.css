@@ -2,6 +2,11 @@
   position: relative;
 }
 
+body .modal-backdrop,
+body .modal-backdrop.fade.in {
+  background: #000;
+}
+
 .bloat {
   position: absolute;
   top: 0;
