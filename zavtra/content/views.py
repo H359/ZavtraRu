@@ -1,14 +1,14 @@
 from datetime import datetime
 from calendar import isleap
 from pytils.dt import MONTH_NAMES
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Max, Min
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
 from zavtra.utils import oneday
-from content.models import Article, Rubric, Topic, Issue, RubricInIssue
+from content.models import Article, Rubric, Topic, Issue, RubricInIssue, ArticleVote
 from siteuser.models import User
 
 
@@ -93,6 +93,15 @@ class ArticleView(DetailView):
     context = super(ArticleView, self).get_context_data(**kwargs)
     self.issue = self.object.issue
     context['issue'] = self.issue
+    if self.request.user and self.request.user.is_authenticated():
+      try:
+        vote = context['object'].votes.get(user=self.request.user)
+        context['has_voted'] = True
+        context['vote'] = vote
+      except ArticleVote.DoesNotExist:
+        context['has_voted'] = False
+    if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
+      context['related'] = Article.published.defer('content')[0:5]
     return context
 
   def get_queryset(self):
@@ -188,6 +197,18 @@ class CommunityView(ListView):
       context['selected_date'] = self.selected_date
     context['most_commented'] = Article.get_most_commented()
     return context
+
+
+class ArticleVoteView(RedirectView):
+  def get(self, request, *args, **kwargs):
+    self.url = '/'
+    if request.user is not None and request.user.is_authenticated():
+      obj = Article.published.get(slug=self.kwargs['slug'])
+      self.url = obj.get_absolute_url()
+      vote, _ = ArticleVote.objects.get_or_create(user=request.user, article=obj)
+      vote.vote = 1 if self.kwargs['vote'] == 'up' else -1
+      vote.save()
+    return super(ArticleVoteView, self).get(request, *args, **kwargs)
 
 
 def current_issue_redirect(request):

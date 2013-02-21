@@ -4,7 +4,7 @@ from pytils.translit import slugify
 from urlparse import urlparse, parse_qs
 
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.conf import settings
 from django.utils.html import strip_tags
 
@@ -152,6 +152,7 @@ class Article(OpenGraphMixin, models.Model):
   authors = models.ManyToManyField(UserModel, verbose_name=u'Авторы', blank=True, related_name='articles', limit_choices_to={
     'level__gte': UserModel.USER_LEVELS.trusted
   })
+  rating = models.IntegerField(editable=False, default=0)
   topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   # TODO: remove after migration
@@ -253,6 +254,21 @@ class Article(OpenGraphMixin, models.Model):
     #start = end - oneday * 30
     return Article.published.prefetch_related('authors').select_related().all()[0:5]
 
+
+class ArticleVote(models.Model):
+  article = models.ForeignKey(Article, related_name='votes')
+  user = models.ForeignKey(settings.AUTH_USER_MODEL)
+  vote = models.SmallIntegerField(default=0)
+
+  class Meta:
+    unique_together = ('article', 'user')
+
+  def save(self, *args, **kwargs):
+    super(ArticleVote, self).save(*args, **kwargs)
+    print ArticleVote.objects.filter(article=self.article).aggregate(rating=Sum('vote'))
+    Article.published.filter(id=self.article_id).update(
+      **ArticleVote.objects.filter(article=self.article).aggregate(rating=Sum('vote'))
+    )
 
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')

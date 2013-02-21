@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from content.views import ArticleView, RubricView, IssueView,\
                           ArchiveView, EventsView, TopicView,\
-                          CommunityView
+                          CommunityView, ArticleVoteView
 
 
 urlpatterns = patterns('',
@@ -10,6 +10,7 @@ urlpatterns = patterns('',
   url(r'^issue/(?P<year>[0-9]+)/(?P<issue>[0-9]+)/$', IssueView.as_view(), name='content.views.zeitung'),
   url(r'^archive/$', ArchiveView.as_view(), name='content.views.archive'),
   url(r'^view/(?P<slug>[^/]+)/$', ArticleView.as_view(), name='content.views.article'),
+  url(r'^vote/(?P<slug>[^/]+)/(?P<vote>(up|down)+)/$', ArticleVoteView.as_view(), name='content.views.article_vote'),
   url(r'^rubric/(?P<slug>[^/]+)/$', RubricView.as_view(), name='content.views.rubric'),
   url(r'^events/$', EventsView.as_view(), name='content.views.events'),
   url(r'^events/(?P<date>[0-9]{1,2}-[0-9]{1,2}-[0-9]{4})/$', EventsView.as_view()),

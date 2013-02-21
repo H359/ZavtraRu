@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for article in object.rubric.articles.defer('content')[0:5]|list|reverse %}
+      {% for article in related %}
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if article.id == object.id %} newspaper_selection_item_selected{% endif %}">
           {% if article.id != object.id %}<a href="{{article.get_absolute_url()}}">{% endif %}
