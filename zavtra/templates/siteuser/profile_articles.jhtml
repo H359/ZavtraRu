@@ -94,6 +94,15 @@
             {% if article.type == 'video' %}
             <div class="span8 news-text center_align">{{article.render_content(384,288)}}</div>
             {% else %}
+            {% if article.is_peredovitsa and article.issue.illustration != "" %}
+            <div class="span3">
+              <div class="news-illustration-container">
+                <a href="{{article.get_absolute_url()}}">
+                  <img src="{{article.issue.cover_for_sidebar.url}}" class="news-illustration">
+                </a>
+              </div>
+            </div>
+            {% endif %}
             {% if article.cover_source != "" %}
             <div class="span3">
               <div class="news-illustration-container">

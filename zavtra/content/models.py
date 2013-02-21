@@ -65,6 +65,7 @@ class Issue(models.Model):
   zeitung_box = ImageSpec([ResizeToFill(870, 385)], image_field='illustration', format='JPEG')
   archive_box = ImageSpec([ResizeToFill(750, 300)], image_field='illustration', format='JPEG')
   inside_article_cover = ImageSpec([ResizeToFit(345, 345, True, 0xFFFFFF)], image_field='illustration', format='JPEG')
+  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='illustration')
 
   class Meta:
     ordering = ['-published_at']
