@@ -287,7 +287,7 @@ class ExpertComment(models.Model):
 
 class WodCite(models.Model):
   article = models.ForeignKey(Article, verbose_name=u'Статья', related_name='cites')
-  word = models.CharField(verbose_name=u'Слово', max_length=256)
+  #word = models.CharField(verbose_name=u'Слово', max_length=256)
   cite = models.TextField(verbose_name=u'Значение')
   source = models.CharField(verbose_name=u'Источник', max_length=1024)
 
