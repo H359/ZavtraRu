@@ -51,11 +51,15 @@ class RegisterView(TemplateView, FormView):
       user.first_name = data.get('first_name')
       user.last_name = data.get('last_name')
       user.save()
-      return redirect('home')
+      return redirect('siteuser.views.register_done')
     return self.return_form(form)
 
   def get(self, request, *args, **kwargs):
     return self.return_form(RegisterUserForm())
+
+
+class RegisterDoneView(TemplateView):
+  template_name = 'siteuser/register_done.jhtml'
 
 
 class AuthorsView(ListView):
