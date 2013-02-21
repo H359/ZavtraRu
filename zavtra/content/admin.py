@@ -36,8 +36,8 @@ class ArticleAdminForm(forms.ModelForm):
 class WodAdminForm(forms.ModelForm):
   class Meta:
     model = Wod
-  title = forms.CharField(label=u'Слово')
-  subtitle = forms.CharField(label=u'Заголовок')
+  title = forms.CharField(label=u'Слово', widget=TextInput(attrs={'style': 'width: 760px'}))
+  subtitle = forms.CharField(label=u'Заголовок', widget=TextInput(attrs={'style': 'width: 760px'}))
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 
