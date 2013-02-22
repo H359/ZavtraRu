@@ -38,6 +38,7 @@ class WodAdminForm(forms.ModelForm):
     model = Wod
   title = forms.CharField(label=u'Слово', widget=TextInput(attrs={'style': 'width: 760px'}))
   subtitle = forms.CharField(label=u'Заголовок', widget=TextInput(attrs={'style': 'width: 760px'}))
+  cover_source = forms.ImageField(label=u'Обложка')
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 
