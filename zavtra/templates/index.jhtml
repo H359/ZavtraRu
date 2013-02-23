@@ -30,13 +30,14 @@
       <div class="row">
         <div class="span4_5 right_align">
           <div id="main_header_login" class="pull-right">
-            <span class="main_header_login_text">Статьи</span>
             {% if not request.user or not request.user.is_authenticated() %}
-            <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
+            <a id="main_header_login_link" href="{{url('siteuser.view.login')}}" class="main_header_login_link">Вход</a>
             <span class="main_header_login_text"> &bull; </span>
-            <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+            <a href="{{url('siteuser.view.register')}}" class="main_header_login_link">Регистрация</a>
             {% else %}
-            <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+            <a href="{{url('siteuser.view.cabinet')}}" class="main_header_login_link">Личный кабинет</a>
+            <span class="main_header_login_text"> &bull; </span>
+            <a class="main_header_login_link" href="{{url('siteuser.view.logout')}}?next={{request.path|e}}">Выход</a>
             {% endif %}
           </div>
           <img class="block" src="{{STATIC_URL}}img/red_line_gradient_right.png">
@@ -46,7 +47,7 @@
         <div class="span4_5">
           <div id="main_header_search">
             <div id="main_search_form">
-              <form action="/search/" method="get" class="navbar-search">
+              <form action="/content/search/" method="get" class="navbar-search">
                 <input class="search-query" type="search" name="query" placeholder="поиск...">
               </form>
             </div>
@@ -104,6 +105,7 @@
   <div class="row">
     <div class="span9">
       <div class="row">
+        {% cache 600 'home:events' %}
         <div class="relative span3">
           <div class="row">
             <div class="span3" id="events_block">
@@ -139,6 +141,8 @@
             </div>
           </div>
         </div>
+        {% endcache %}
+        {% cache 600 'home:wod' %}
         <div class="span6" id="wod_block">
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
@@ -166,9 +170,11 @@
             </div>
           </div>
         </div>
+        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
+          {% cache 600 'home:news' %}
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
@@ -185,6 +191,7 @@
               </div>
             </div>
           </div>
+          {% endcache %}
         </div>
       </div>
       <div class="row" id="navigation_holder">

@@ -1,0 +1,30 @@
+{% extends "siteuser/cabinet.jhtml" %}
+
+{% from "bootstrap_form.jhtml" import render_form %}
+
+{% block content %}
+<div class="row">
+  <div class="span10 offset1 person_cab_content">
+    <div class="row">
+      <div class="span8 offset1">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-block alert-success"><h4>{{message}}</h4></div>
+        {% endfor %}
+        {% endif %}
+        <div id="person_about">
+          <form class="form-horizontal" action="." method="post">
+            {{render_form(form)}}
+            <div class="control-group">
+              <div class="controls">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                <button type="submit" class="btn">Отправить{% if request.user.level > 0 %} на обновление{% endif %}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,39 +1,14 @@
-{% extends "siteuser/profile.jhtml" %}
+{% extends "siteuser/cabinet.jhtml" %}
 
 {% from "macro.jhtml" import pagination %}
 
-{% macro person(p) %}
-<div class="person_entry">
-  <div class="person_entry_name">
-    <a href="{{p.get_absolute_url()}}" class="person_name largetext">{{p}}</a>
-  </div>
-  <div class="person_entry_pic">
-    <a href="{{p.get_absolute_url()}}">
-      <img src="{{p.photo}}">
-    </a>
-  </div>
-</div>
-{% endmacro %}
-
 {% block content %}
-<div class="span10 offset1" id="person_content">
+<div class="span10 offset1 person_cab_content">
   <div class="row">
-    <div class="span4 offset1">
-      <div id="person_statistics">
-        <span class="mediumtext bold">Публикаций:</span> {{object.articles.count()}}
-        <br>
-        <span class="mediumtext bold">Получено комментариев:</span> {{object.received_comments.count()}}
-      </div>
+    <div class="span5 padding_one">
+      <a href="{{url('siteuser.view.cabinet_subscriptions_authors')}}"><span class="regular_button">Авторы</span></a>
+      <span class="regular_button button_selected">Статьи</span>
     </div>
-    {% if request.user and request.user.is_authenticated() %}
-    <div class="span4" id="person_actions">
-      {% if request.user.readers.filter(author=object).count() == 0 %}
-      <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Подписаться</span></a>
-      {% else %}
-      <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Отписаться</span></a>
-      {% endif %}
-    </div>
-    {% endif %}
   </div>
   <div class="row">
     <div class="span8 offset1">
@@ -49,7 +24,7 @@
             {% else %}
             <a href="{{request.path|e}}">все</a>
             {% endif %}
-            {% for year in object.get_pub_dates(quant='year') %}
+            {% for year in request.user.get_pub_dates(quant='year') %}
             {% if year.year == filters['year'] %}
             <span class="archive_selector_selected">{{year.year}}</span>
             {% else %}
@@ -66,7 +41,7 @@
             {% else %}
             <a href="?year={{filters['year']}}">все</a>
             {% endif %}
-            {% for month in object.get_pub_dates(quant='month', order='ASC', filters=["extract(year from published_at) = %d" % filters['year']]) %}
+            {% for month in request.user.get_pub_dates(quant='month', order='ASC', filters=["extract(year from published_at) = %d" % filters['year']]) %}
             {% if month.month == filters['month'] %}
             <span class="archive_selector_selected">{{month_names[month.month-1]}}</span>
             {% else %}

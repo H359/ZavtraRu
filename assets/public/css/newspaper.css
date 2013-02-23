@@ -411,9 +411,9 @@ abc {
 
 .article-content {
 	border: 1px solid #DDD;
-	background-color: #FFF;/*#F7FAFA;*/
+	background-color: #FFF;
 	margin: 0em 1em 1em 1em;
-	padding: 1em 2em 2em 2em
+	padding: 1em 2em 2em 2em;
 }
 
 .article-illustration-container {
@@ -2245,6 +2245,10 @@ li.empty span.large {
 	font-size: .95em; 
 }
 
+#person_navigation_selected a:hover {
+    color: #FFF; 
+}
+
 .person_navigation {
 	line-height: 1.5em;
 	border-right: 1px solid #333;
@@ -2258,12 +2262,12 @@ li.empty span.large {
 	border-top-right-radius: 5px;
 }
 
-.person_navigation a {
-	font-size: .95em;
-	font-weight: 700;
-	vertical-align: baseline;
-	color: #FFF;
-	text-decoration: none;
+.person_navigation a, .person_navigation span {
+    font-size: .95em;
+    font-weight: 700;
+    vertical-align: baseline;
+    color: #FFF;
+    text-decoration: none;
 }
 
 .person_navigation a:hover {
@@ -2280,7 +2284,7 @@ li.empty span.large {
 	border: 1px solid #777;
 }
 
-#person_content article {
+#person_content article, .person_cab_content article {
 	border-radius: 5px;
 	background-color: #FFF;
 	margin: 1em 0em;
@@ -2310,7 +2314,7 @@ li.empty span.large {
 }
 
 #person_subscriptions {
-	padding: 2em 0em 0em 1em;
+	padding: 1em 0em 0em 1em;
 	position: relative;
 }
 
@@ -2393,10 +2397,14 @@ li.empty span.large {
 	text-decoration: none;
 }
 
-.subscribe_button span {
-	font-size: .85em;
-	color: #FFF;
-	vertical-align: bottom;
+.subscribe_button, .regular_button, .publish_button span {
+    font-size: .85em;
+    color: #FFF;
+    vertical-align: bottom;
+}
+ 
+#person_content #datepicker, .person_cab_content #datepicker {
+    padding: 0em 0em 1em 0em;
 }
 
 #person_content #datepicker {
@@ -2416,27 +2424,27 @@ li.empty span.large {
 	margin-bottom: 1em;
 }
 
-#person_content .news-header-container {
-	padding: 1.5em 1em 0em 1.5em;
+#person_content .news-header-container, .person_cab_content .news-header-container {
+    padding: 1.5em 1em 0em 1.5em;
 }
-
-#person_content .news-illustration-container {
-	padding: 1.5em 1em 1.5em 1.5em;
+ 
+#person_content .news-illustration-container, .person_cab_content .news-illustration-container {
+    padding: 1.5em 1em 1.5em 1.5em;
 }
-
+ 
 .person_search_result {
-	margin: 2em 0em;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
+    margin: 2em 0em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
-
+ 
 .person_search_bar {
-	margin: 1em 0em;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding-left: 1em;
+    margin: 1em 0em 0em 0em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+ 
 }
 
 .person_search_bar > div {
@@ -2448,6 +2456,317 @@ li.empty span.large {
 	padding-left: 1em;
 	padding-top: 1em;
 }
+
+
+/* person cabinet */
+ 
+.person_cab_navigation_container {
+    position: absolute;
+    bottom: -2.25em;
+    border-left: 1px solid #333;
+}
+ 
+.person_cab_content {
+    padding-top: 13em;
+    padding-bottom: 2em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #EEE;
+    border: 1px solid #777;
+}
+ 
+.publish_button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #CF4444;
+    -webkit-box-shadow: 0px 2px 9px 1px #AAA;
+    -moz-box-shadow: 0px 2px 9px 1px #AAA;
+    box-shadow: 0px 2px 9px 1px #AAA;
+    border-radius: 5px;
+    height: 1.75em;
+    margin-left: 1em;
+    display: block;
+    text-align: center;
+    line-height: 1.75em;
+    width: 12em;
+    float: right;
+    padding: 0em .25em;
+}
+ 
+ 
+.publish_button:hover {
+    background-color: #CF0000;
+    text-decoration: none;
+}
+ 
+.regular_button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #444;
+    -webkit-box-shadow: 0px 2px 9px 1px #AAA;
+    -moz-box-shadow: 0px 2px 9px 1px #AAA;
+    box-shadow: 0px 2px 9px 1px #AAA;
+    border-radius: 5px;
+    height: 2em;
+    margin-left: 1em;
+    display: block;
+    text-align: center;
+    line-height: 2em;
+    width: 10em;
+    float: right;
+    padding: 0em .25em;
+    font-size: 1em;
+}
+ 
+.regular_button:hover {
+    background-color: #555;
+    text-decoration: none;
+}
+ 
+.button_selected {
+    background-color: #777;
+}
+ 
+.button_selected:hover {
+    background-color: #777 !important;
+    text-decoration: none;
+}
+ 
+.small_button {
+    padding: .1em;
+    width: 7em;
+    font-size: .75em;
+    height: 1.75em;
+    line-height: 1.75em;
+    margin: 0em .5em .5em .5em;
+}
+ 
+.publish_button span, .regular_button span, .subscribe_button span {
+    color: #FFF;
+}
+ 
+#person_about .form-horizontal {
+    margin: 1em 0em;
+}
+ 
+#person_about .form-horizontal label {
+    font-weight: 700;
+    font-size: 1.25em;
+}
+ 
+#person_about .form-horizontal input[type='text'] {
+    height: 2em;
+    width: 17em;
+    font-size: 1.05em;
+    padding: .15em .5em;
+    color: #000;
+}
+ 
+#person_about .form-horizontal textarea {
+    font-size: 1.05em;
+    padding: .5em .5em;
+    color: #000;
+}
+ 
+#regalii, #hobbies {
+    height: 6em;
+    width: 17em;
+}
+ 
+#bio {
+    height: 25em;
+    width: 17em;
+}
+ 
+#add_text {
+    height: 50em;
+    width: 98%;
+}
+ 
+#add_header, #add_subheader {
+    width: 24em !important;
+}
+ 
+/* person cabinet - end */
+ 
+ 
+/* registration */
+ 
+.control-group .controls {
+    padding-bottom: .5em;
+}
+ 
+.control-group input {
+    border: 1px solid #BBB;
+}
+ 
+/*registration - end */
+ 
+ 
+/*search - start */
+ 
+.search {
+    width: 100%;
+    position: absolute;
+    left: 0em;
+    top: 9.5em;
+    height: 9em;
+    background: #444;
+    background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, 
+                color-stop(0%,#333), color-stop(100%,#222));
+    background: -webkit-linear-gradient(top, #333, #222);
+    background: -o-linear-gradient(top, #333, #222); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #333, #222); /* IE10 */
+    background: linear-gradient(top, #333, #222); /* CSS3 */ 
+}
+ 
+.search_content {
+    padding-top: 8.5em;
+    border-left: 1px solid #777;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;  
+    background-color: #EEE;
+} 
+ 
+.search_block {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 8.5em;
+    padding-top: 1em;
+    position: relative;
+    background: #444;
+    color: #FFF;
+    background: -moz-linear-gradient(top, #444, #222); /* Firefox 3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, 
+                color-stop(0%,#444), color-stop(100%,#222));
+    background: -webkit-linear-gradient(top, #444, #222);
+    background: -o-linear-gradient(top, #444, #222); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #444, #222); /* IE10 */
+    background: linear-gradient(top, #444, #222); /* CSS3 */
+    line-height: 2em;
+}
+ 
+.search_block > .row {
+    margin: 0em 0em .75em 0em;
+}
+ 
+.search_block .search_category {
+    padding: .15em .5em;
+    display: inline-block;
+}
+ 
+.search_block  .search_category_selected {
+    background-color: #444;
+}
+ 
+.search_block .search_categories span {
+    margin-right: .5em;
+}
+ 
+.search_block .search_category a {
+    color: white;
+}
+ 
+.navbar-search2 {
+    display: inline;
+}
+ 
+.search-query2 {
+    width: 60%;
+}
+ 
+.navbar-search2 input[type="search"].search-query2  {
+    color: #FFF !important;
+}
+ 
+.navbar-search2, .search-query2 {
+    height: 1.8em !important;
+}
+ 
+.navbar-search2 .search-query2 {
+    padding: .0em .9em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.2em;
+    font-weight: normal;
+    background-color: #555;
+    border-color: #333;
+    margin: 0em .75em;
+}
+ 
+.search_dates select {
+    height: 1.75em;
+    padding: .5em 0em;
+    font-size: .8em;
+    display: inline-block;
+    margin: 0;
+}
+ 
+.search_dates .day {
+    width: 4em;
+}
+ 
+.search_dates .month {
+    width: 8em;
+}
+ 
+.search_dates .year {
+    width: 5em;
+    margin-right: 2em;
+}
+ 
+.search_dates span {
+    display: inline-block;
+    margin-right: .25em;
+    vertical-align: top;
+    color: white;
+    font-size: 1em;
+    width: 1em;
+    text-align: right;
+}
+ 
+.search_dates div {
+    display: inline-block;
+}
+ 
+.search_publications {
+    background-color: #fff;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+}
+ 
+.search_publications .article-header-statistics {
+    padding: 0em;
+}
+ 
+.article-header-subjects {
+    padding-right: 1.5em;
+}
+ 
+.span8.article-header-container, .span8.article-header-statistics .span6, .span8.article-text {
+    padding-left: 2em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+ 
+.search_category_name {
+    color: #fff;
+    background-color: #444;
+    line-height: 2em;
+    height: 2em;
+}
+ 
+.search_authors_short {
+    margin-bottom: 2em;
+    padding-left: 1em;
+}
+ 
+/* search - end */
 
 @media (min-width: 1025px) and (max-width: 1199px) {
 	body {
@@ -2511,44 +2830,84 @@ li.empty span.large {
 	}
 
 
-	/* to make person page work */
-	#person_background {
-		position: static;
-	}
-	#person_content {
-		padding-top: 1em;
-	}
-	#person_pic {
-		float: left;
-		width: 25%;
-	}
-	.person_uppercase_name {
-		font-size: 1.4em;
-	}
-	#person_name_navigation {
-		float: left;
-		width: 75%;
-		padding-right: 1em;
-	}
-	.person_navigation {
-		float: right;
-		width: inherit;
-	}
-	.person_navigation_container{
-		padding-top: 1em;
-		position: static;
-		border-left: none;
-	}
-	#person_content article {
-		margin: 1em;
-	}
-	#person_statistics {
-		margin: 1em;
-	}
-	#person_actions {
-		padding-right: 1em;
-		margin-bottom: 2em;
-	}
+    /* to make search page work */
+    .search {
+        position: static;
+        height: 11em;
+    }
+    .search_content {
+        padding-top: 1em;
+    }
+    .search_block {
+        padding: 1em;
+        height: 11em;
+    }
+    .search_dates div {
+        padding-bottom: .5em;
+    }
+    .search_categories {
+        background-color: #222;
+    }
+    .search_category_name {
+        padding-left: 1em;
+        margin: 1em 0em;
+    }
+    .search .article-header-subjects {
+        padding-right: 2em;
+    }
+    
+    .search_publications .author_fresh_article_header,
+    .search_publications .article-header-container,
+    .search_publications .author-description,
+    .search_publications .article-header-statistics,
+    .search_publications .article-text {
+        padding-left: 2em;
+        padding-right: 2em;
+        margin-bottom: .5em;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+ 
+    /* to make person page work */
+    #person_background {
+        position: static;
+    }
+    #person_content, .person_cab_content {
+        padding-top: 1em;
+    }
+    #person_pic {
+        float: left;
+        width: 25%;
+    }
+    .person_uppercase_name {
+        font-size: 1.4em;
+    }
+    #person_name_navigation {
+        float: left;
+        width: 75%;
+        padding-right: 1em;
+    }
+    .person_navigation {
+        float: right;
+        width: inherit;
+    }
+    .person_navigation_container{
+        padding-top: 1em;
+        position: static;
+        border-left: none;
+    }
+    #person_content article, .person_cab_content article {
+        margin: 1em;
+    }
+    #person_statistics {
+        margin: 1em;
+    }
+    #person_actions {
+        padding-right: 1em;
+        margin-bottom: 2em;
+    }
 }
 
 @media (min-width: 768px) {

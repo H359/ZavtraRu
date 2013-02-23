@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from django_jinja.base import Library
 from django.utils.datastructures import SortedDict
 import jinja2
@@ -15,8 +16,20 @@ def get_plural(ctx, value, variants):
 
 @register.filter
 @jinja2.contextfilter
-def ru_dt_distance(ctx, value):
-  return distance_of_time_in_words(value)
+def ru_dt_distance(ctx, value, accuracy=1):
+  return distance_of_time_in_words(value, accuracy=accuracy)
+
+@register.filter
+@jinja2.contextfilter
+def ru_dt_distance_fuzzy(ctx, value):
+  diff = (datetime.now().date() - value.date()).days
+  if diff > 1:
+    return ru_strftime(unicode(u'%d %B %Y г'), value, inflected=True)
+  elif diff == 1:
+    return u'Вчера'
+  else:
+    return u'Сегодня'
+
 
 @register.filter
 @jinja2.contextfilter

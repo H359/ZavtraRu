@@ -1,7 +1,17 @@
 #-*- coding: utf-8 -*-
 from django import forms
+from django.forms import widgets
 
 from siteuser.models import User
+
+
+class UserInfoForm(forms.ModelForm):
+  class Meta:
+    model = User
+    exclude = ('password', 'level', 'email', 'date_joined', 'last_login', 'photo')
+    widgets = {
+      'bio': widgets.Textarea(attrs={'cols': 28, 'rows': 8})
+    }
 
 
 class RegisterUserForm(forms.Form):

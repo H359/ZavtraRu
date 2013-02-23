@@ -11,6 +11,7 @@ from django.utils.html import strip_tags
 from model_utils import Choices
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
+from djorm_expressions.models import ExpressionManager
 from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
@@ -37,7 +38,7 @@ class Rubric(models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.rubric', (), {'slug': self.slug})
+    return ('content.view.rubric', (), {'slug': self.slug})
 
   @staticmethod
   def fetch_rubric(slug):
@@ -91,7 +92,7 @@ class Issue(models.Model):
       'year': self.published_at.year,
       'issue': self.relative_number
     }
-    return ('content.views.zeitung', (), kwargs)
+    return ('content.view.zeitung', (), kwargs)
 
   def get_pdf_link(self):
     return "http://zavtra.ru/media/content/pdfs/%dPDF.zip" % self.relative_number
@@ -99,7 +100,7 @@ class Issue(models.Model):
 
 class RubricInIssue(models.Model):
   issue = models.ForeignKey(Issue, verbose_name=u'Выпуск', related_name='issue_rubrics')
-  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика')
+  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='issue_rubrics')
   position = models.PositiveIntegerField(verbose_name=u'Позиция')
 
   def __unicode__(self):
@@ -127,7 +128,7 @@ class Topic(models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.topic', (), {'slug': self.slug})
+    return ('content.view.topic', (), {'slug': self.slug})
 
   @staticmethod
   def autocomplete_search_fields():
@@ -156,13 +157,16 @@ class Article(OpenGraphMixin, models.Model):
   topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   # TODO: remove after migration
-  gazetted = models.BooleanField(default=False)
+  gazetted = models.BooleanField(default=False, editable=False)
 
   comments_count = models.PositiveIntegerField(editable=False, default=0)
   views_count = models.PositiveIntegerField(editable=False, default=0)
 
+  search_index = VectorField()
+
   # not mapped stuff
-  objects = models.Manager()
+  #objects = models.Manager()
+  objects = ExpressionManager()
   published = PublishedManager()
   events = EventsManager()
   news = NewsManager()
@@ -170,6 +174,14 @@ class Article(OpenGraphMixin, models.Model):
   wod = WODManager()
   columns = ColumnsManager()
 
+  searcher = SearchManager(
+    fields = (('title', 'A'), ('subtitle', 'B'), ('content', 'C')),
+    config = 'pg_catalog.russian',
+    search_field = 'search_index',
+    auto_update_search_field = True
+  )
+
+  # thumbs
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], image_field='cover_source', format='JPEG')
@@ -182,6 +194,9 @@ class Article(OpenGraphMixin, models.Model):
 
   def __unicode__(self):
     return u'%s' % self.title
+  
+  def update_search_field(self, *args, **kwargs):
+    self._fts_manager.update_search_field(pk=self.pk)
 
   class Meta:
     ordering = ['-published_at']
@@ -190,7 +205,7 @@ class Article(OpenGraphMixin, models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.article', (), {'slug': self.slug})
+    return ('content.view.article', (), {'slug': self.slug})
 
   @property
   def issue(self):

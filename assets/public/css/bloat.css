@@ -183,3 +183,21 @@ body .modal-backdrop.fade.in {
   height: 20px
 }
 */
+
+#id_query {
+  color: white;
+}
+
+#id_start_day, #id_end_day {
+  width: 4em;
+}
+
+#id_start_month, #id_end_month {
+  margin-left: .5em;
+  width: 8em;
+}
+
+#id_start_year, #id_end_year {
+  width: 5em;
+  margin-right: 2em;
+}

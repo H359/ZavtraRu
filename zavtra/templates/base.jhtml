@@ -55,13 +55,14 @@
               <div class="row">
                 <div class="span4 right_align">
                   <div id="main_header_login" class="pull-right">
-                    <span class="main_header_login_text">Статьи</span>
                     {% if not request.user or not request.user.is_authenticated() %}
-                    <a id="main_header_login_link" href="{{url('siteuser.views.login')}}" class="main_header_login_link">Вход</a>
+                    <a id="main_header_login_link" href="{{url('siteuser.view.login')}}" class="main_header_login_link">Вход</a>
                     <span class="main_header_login_text"> &bull; </span>
-                    <a href="{{url('siteuser.views.register')}}" class="main_header_login_link">Регистрация</a>
+                    <a href="{{url('siteuser.view.register')}}" class="main_header_login_link">Регистрация</a>
                     {% else %}
-                    <a class="main_header_login_link" href="{{url('siteuser.views.logout')}}?next={{request.path|e}}">Выход</a>
+                    <a href="{{url('siteuser.view.cabinet')}}" class="main_header_login_link">Личный кабинет</a>
+                    <span class="main_header_login_text"> &bull; </span>
+                    <a class="main_header_login_link" href="{{url('siteuser.view.logout')}}?next={{request.path|e}}">Выход</a>
                     {% endif %}
                   </div>
                 </div>
@@ -82,9 +83,10 @@
           <div class="span3">
             <div class="row">
               <div class="span3">
+                {% block header_search %}
                 <div id="main_header_search">
                   <div id="main_search_form">
-                    <form action="/search/" method="get" class="navbar-search">
+                    <form action="/content/search/" method="get" class="navbar-search">
                       <input type="search" class="search-query" name="query" placeholder="поиск...">
                     </form>
                   </div>
@@ -94,11 +96,17 @@
                     </a>
                   </div>
                 </div>
+                {% endblock %}
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div id="inner_subjects">
+      {% for topic in top_topics %}
+      <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
+      {% endfor %}
     </div>
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>
@@ -148,7 +156,7 @@
         <h3>Войти</h3>
       </div>
       <div class="modal-body">
-        <form action="{{url('siteuser.views.login')}}" method="post" class="form-horizontal">
+        <form action="{{url('siteuser.view.login')}}" method="post" class="form-horizontal">
           <div class="control-group required">
             <label class="control-label" for="id_username">Email</label>
             <div class="controls">
