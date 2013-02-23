@@ -1252,6 +1252,12 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
+.module_header .caret {
+	line-height: 1.4em;
+	vertical-align: middle;
+	border-top-color: #FFF;	
+}
+
 .article-page-module-footer {
 	background-color: #CCC;
 	padding: .25em .75em;
