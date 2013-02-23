@@ -1,14 +1,19 @@
+#-*- coding: utf-8 -*-
+from urllib import urlencode
 from datetime import datetime
 from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
 from zavtra.utils import oneday
+
 from content.models import Article, Rubric, Topic, Issue, RubricInIssue, ArticleVote
+from content.forms import SearchForm
+
 from siteuser.models import User
 
 
@@ -209,6 +214,53 @@ class ArticleVoteView(RedirectView):
       vote.vote = 1 if self.kwargs['vote'] == 'up' else -1
       vote.save()
     return super(ArticleVoteView, self).get(request, *args, **kwargs)
+
+
+class SearchView(ListView):
+  paginate_by = 15
+  paginator_class = DiggPaginator
+  template_name = 'content/search.jhtml'
+
+  def get_queryset(self):
+    qs = Article.searcher
+
+    # process form
+    self.form = SearchForm(self.request.GET)
+    if self.form.is_valid():
+      data = self.form.cleaned_data
+      q = data['query']
+      qs = qs.search(query=q, rank_field='rank')
+      if data['start']:
+        qs = qs.filter(published_at__gte = data['start'])
+      if data['end']:
+        qs = qs.filter(published_at__lte = data['end'])
+      self.found_authors = User.columnists.filter(
+        Q(first_name__icontains = q) | Q(last_name__icontains = q) |
+        Q(resume__icontains = q) | Q(bio__icontains = q)
+      )
+    else:
+      self.found_authors = []
+    
+    # pack params for GET reuse
+    self.form_data = {}
+    for k, v in self.form.data.iteritems():
+      self.form_data[k] = unicode(v).encode('utf-8')
+
+    # apply rubric filter if any
+    self.category = self.kwargs.get('category')
+    if self.category == 'wod':
+      qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
+    elif self.category == 'events':
+      qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
+    return qs.select_related().prefetch_related('authors', 'topics').defer('content')
+
+  def get_context_data(self, **kwargs):
+    context = super(SearchView, self).get_context_data(**kwargs)
+    context['form'] = self.form
+    context['found_authors'] = self.found_authors
+    context['page_suffix'] = urlencode(self.form_data)
+    context['category'] = self.category
+    return context
 
 
 def current_issue_redirect(request):

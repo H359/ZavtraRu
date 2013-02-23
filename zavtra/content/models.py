@@ -11,6 +11,7 @@ from django.utils.html import strip_tags
 from model_utils import Choices
 from djorm_pgfulltext.models import SearchManager
 from djorm_pgfulltext.fields import VectorField
+from djorm_expressions.models import ExpressionManager
 from autoslug import AutoSlugField
 from imagekit.models import ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
@@ -161,8 +162,11 @@ class Article(OpenGraphMixin, models.Model):
   comments_count = models.PositiveIntegerField(editable=False, default=0)
   views_count = models.PositiveIntegerField(editable=False, default=0)
 
+  search_index = VectorField()
+
   # not mapped stuff
-  objects = models.Manager()
+  #objects = models.Manager()
+  objects = ExpressionManager()
   published = PublishedManager()
   events = EventsManager()
   news = NewsManager()
@@ -170,6 +174,14 @@ class Article(OpenGraphMixin, models.Model):
   wod = WODManager()
   columns = ColumnsManager()
 
+  searcher = SearchManager(
+    fields = (('title', 'A'), ('subtitle', 'B'), ('content', 'C')),
+    config = 'pg_catalog.russian',
+    search_field = 'search_index',
+    auto_update_search_field = True
+  )
+
+  # thumbs
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], image_field='cover_source', format='JPEG')

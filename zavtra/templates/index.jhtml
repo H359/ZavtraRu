@@ -46,7 +46,7 @@
         <div class="span4_5">
           <div id="main_header_search">
             <div id="main_search_form">
-              <form action="/search/" method="get" class="navbar-search">
+              <form action="/content/search/" method="get" class="navbar-search">
                 <input class="search-query" type="search" name="query" placeholder="поиск...">
               </form>
             </div>

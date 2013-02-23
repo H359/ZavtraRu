@@ -1,0 +1,176 @@
+{% extends "base.jhtml" %}
+
+{% from "macro.jhtml" import pagination %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block header_search %}{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="row">
+    <div class="span12">
+      <ul class="breadcrumb person_breadcrumb">
+        <li>
+          <a href="/">Главная</a>
+          <span class="divider">/</span>
+        </li>
+        <li class="active">Поиск</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="search">
+  <form action="." method="get" class="navbar-search2">
+    <div class="container12">
+      <div class="row">
+        <div class="search_block span12">
+          <div class="row">
+            <div class="span8 offset2">
+              <h2 class="middle_align inline">Поиск:</h2>
+              {{form.query}}
+              <button type="submit"><i class="icon-search icon-white middle_align"></i></button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8 offset2">
+              <div class="search_dates inline_block">
+                <div><span>с</span>{{form.start}}</div>
+                <div><span>по</span>{{form.end}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span8 offset2 search_categories">
+              {% set root_search = url('content.views.search') %}
+              <span class="search_category{% if category is none %} search_category_selected{% endif %}"><a href="{{root_search}}?{{page_suffix}}">везде</a></span>
+              <span class="search_category"><a href="{{url('siteuser.views.authors')}}?query={{form.data.query}}">авторы</a></span>
+              <span class="search_category{% if category == 'articles' %} search_category_selected{% endif %}"><a href="{{root_search}}articles/?{{page_suffix}}">статьи</a></span>
+              <span class="search_category{% if category == 'wod' %} search_category_selected{% endif %}"><a href="{{root_search}}wod/?{{page_suffix}}">слова дней</a></span>
+              <span class="search_category{% if category == 'events' %} search_category_selected{% endif %}"><a href="{{root_search}}events/?{{page_suffix}}">события</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container12">
+  <div class="row">
+    <div class="span10 offset1 search_content">
+      <div class="row">
+        <div class="span8 offset1 padding_one">
+          <h3>Результаты:</h3>
+        </div>
+      </div>
+      {% if page_obj.number == 1 %}
+      {% set authors = found_authors[0:6]|list %}
+      {% if authors|length > 0 %}
+      <div class="row">
+        <div class="span10 search_category_name">
+          <div class="row">
+            <div class="span8 offset1">
+              <h3>Авторы:</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8 offset1 search_authors_short">
+          {% for author in authors %}
+          <div class="person_entry">
+            <div class="person_entry_name">
+              <a href="{{author.get_absolute_url()}}" class="person_name largetext">{{author}}</a>
+            </div>
+            <div class="person_entry_pic">
+              <a href="{{author.get_absolute_url()}}">
+                {% if author.photo != "" %}
+                <img src="{{author.photo_90.url}}">
+                {% else %}
+                <img src="{{STATIC_URL}}img/no_avatar.gif">
+                {% endif %}
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      <div class="row">
+        <div class="span10 search_category_name">
+          <div class="row">
+            <div class="span8 offset1">
+              <h3>Публикации:</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8 offset1 search_publications">
+          {% for object in object_list %}
+          <section>
+            <article>
+              <div class="row">
+                {% set has_cover = object.cover_source != "" %}
+                {% set span = 8 %}
+                {% if has_cover %}
+                {% set span = 5 %}
+                <div class="span3">
+                  <div class="article-illustration-container">
+                    <a href="{{object.get_absolute_url()}}" title="{{object.title|e}}"><img src="{{object.inside_article_cover.url}}"></a>
+                  </div>
+                </div>
+                {% endif %}
+                <div class="span{{span}}">
+                  <div class="row">
+                    <div class="span{{span}} article-header-container">
+                      <header>
+                        <h2 class="article-header">
+                          <a href="{{object.get_absolute_url()}}">{{object.title}}</a>
+                        </h2>
+                      </header>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="span{{span}} article-header-statistics">
+                      <div class="row">
+                        <div class="span{% if has_cover %}3{% else %}6{% endif %}">
+                          <span class="block dark mediumtext">{{object.rubric.title}}</span>
+                        </div>
+                        <div class="span2 right_align">
+                          <div class="article-header-subjects">
+                            {% for topic in object.topics.all() %}
+                            <span class="label label-info mediumtext">
+                              <a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic}}</a>
+                            </span>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="span{{span}} article-text">
+                      <p class="article-paragraph">{{object.announce|striptags}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="span{{span}} article-statistics">
+                      <span class="article-statistic"><a href="{{object.get_absolute_url()}}"><i class="icon-eye-open"></i> {{object.views_count|get_plural("просмотр,просмотра,просмотров")}}</a></span>
+                      <span class="article-statistic"><a href="{{object.get_absolute_url()}}"><i class="icon-comment"></i> {{object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+          <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+          {% endfor %}
+          {{pagination(request, page_obj, '&amp;%s' % page_suffix)}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

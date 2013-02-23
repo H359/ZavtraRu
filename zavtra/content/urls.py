@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from content.views import ArticleView, RubricView, IssueView,\
                           ArchiveView, EventsView, TopicView,\
-                          CommunityView, ArticleVoteView
+                          CommunityView, ArticleVoteView, SearchView
 
 
 urlpatterns = patterns('',
@@ -16,4 +16,6 @@ urlpatterns = patterns('',
   url(r'^events/(?P<date>[0-9]{1,2}-[0-9]{1,2}-[0-9]{4})/$', EventsView.as_view()),
   url(r'^topic/(?P<slug>[^/]+)/$', TopicView.as_view(), name='content.views.topic'),
   url(r'^community/$', CommunityView.as_view(), name='content.views.community'),
+  url(r'^search/$', SearchView.as_view(), name='content.views.search'),
+  url(r'^search/(?P<category>(articles|wod|events))/$', SearchView.as_view())
 )
