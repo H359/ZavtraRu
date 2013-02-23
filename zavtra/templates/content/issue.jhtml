@@ -11,22 +11,20 @@
       <div class="span12">
         <div class="section-header">
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
+          <div class="section_header_button2">
+            <div class="btn-group dropdown">
+              <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% for rubric in gazette_rubrics %}
+                <li>
+                  <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
           <div class="section_header_button">
-            <div class="section_header_button2">
-              <div class="btn-group dropdown">
-                <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  {% for rubric in gazette_rubrics %}
-                  <li>
-                    <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-            <div class="section_header_button">
-              <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив&nbsp;газеты</a>
-            </div>
+            <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив&nbsp;газеты</a>
           </div>
         </div>
       </div>
