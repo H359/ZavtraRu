@@ -78,6 +78,15 @@
                         </div>
                         <div class="row">
                           <div class="span{{span}} article-header-statistics">
+                            {% if object.authors.count() > 0 %}
+                            <div class="row">
+                              <div class="span6">
+                                {% for author in object.authors.all() %}
+                                <a href="{{author.get_absolute_url()}}" rel="author" class="dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                              </div>
+                            </div>
+                            {% endif %}
                             <div class="row">
                               <div class="span3_5">
                                 <a href="{{object.rubric.get_absolute_url()}}" class="block mediumtext dark">{{object.rubric.title}} &ndash; {{object.published_at|ru_date("%d %B %Y")}}</a>
