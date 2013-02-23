@@ -2048,12 +2048,16 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #datepicker .ui-datepicker-header {
-	padding: .33em .75em;
+	padding: .25em .75em;
+}
+
+#datepicker .ui-datepicker .ui-datepicker-prev {
+	height: 1.5em;
 }
 
 #datepicker .ui-datepicker-title {
 	line-height: 1.4em;
-	font-size: 1em;
+	font-size: .85em;
 	color: #EEE;
 }
 
