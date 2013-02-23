@@ -157,7 +157,7 @@ class Article(OpenGraphMixin, models.Model):
   topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
 
   # TODO: remove after migration
-  gazetted = models.BooleanField(default=False)
+  gazetted = models.BooleanField(default=False, editable=False)
 
   comments_count = models.PositiveIntegerField(editable=False, default=0)
   views_count = models.PositiveIntegerField(editable=False, default=0)
@@ -194,6 +194,9 @@ class Article(OpenGraphMixin, models.Model):
 
   def __unicode__(self):
     return u'%s' % self.title
+  
+  def update_search_field(self, *args, **kwargs):
+    self._fts_manager.update_search_field(pk=self.pk)
 
   class Meta:
     ordering = ['-published_at']

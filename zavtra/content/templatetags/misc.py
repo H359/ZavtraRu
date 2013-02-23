@@ -22,10 +22,13 @@ def ru_dt_distance(ctx, value, accuracy=1):
 @register.filter
 @jinja2.contextfilter
 def ru_dt_distance_fuzzy(ctx, value):
-  if (datetime.now().date() - value.date()).days > 2:
+  diff = (datetime.now().date() - value.date()).days
+  if diff > 1:
     return ru_strftime(unicode(u'%d %B %Y г'), value, inflected=True)
+  elif diff == 1:
+    return u'Вчера'
   else:
-    return distance_of_time_in_words(value)
+    return u'Сегодня'
 
 
 @register.filter
