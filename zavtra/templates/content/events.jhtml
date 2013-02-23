@@ -67,27 +67,6 @@
             </div>
             <div class="row">
               <div class="span10 offset1 article_background">
-                <div class="pagination center_align">
-                  <ul class="middle_align">
-                    <li{% if prev_date is none %} class="disabled"{% endif %}>
-                      {% if prev_date is not none %}
-                      <a href="{{url('content.views.events')}}{{prev_date|ru_date('%d-%m-%Y')}}/">Предыдущий День</a>
-                      {% else %}
-                      <a href="#">Предыдущий День</a>
-                      {% endif %}
-                    </li>
-                    <li class="info">
-                      <span>{{date|ru_date("%d %B %Y")}}</span>
-                    </li>
-                    <li{% if next_date is none %} class="disabled"{% endif %}>
-                      {% if next_date is not none %}
-                      <a href="{{url('content.views.events')}}{{next_date|ru_date('%d-%m-%Y')}}/">Следующий День</a>
-                      {% else %}
-                      <a href="#">Следующий День</a>
-                      {% endif %}
-                    </li>
-                  </ul>
-                </div>
                 <div class="row">
                   <div class="span8 offset1">
                     {% for article in object_list %}
