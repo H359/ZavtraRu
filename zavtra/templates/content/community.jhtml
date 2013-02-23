@@ -61,7 +61,7 @@ $().ready(function() {
                 </li>
                 {% if selected_date %}
                 <li>
-                  <a href="{{url('siteuser.views.community')}}">Статьи</a>
+                  <a href="{{url('content.views.community')}}">Статьи</a>
                   <span class="divider">/</span>
                 </li>
                 <li class="active">Пуликации за {{selected_date|ru_date("%d %B %Y")}}</li>
