@@ -15,7 +15,7 @@
           <a href="{{url('siteuser.views.authors')}}">Авторы</a>
           <span class="divider">/</span>
         </li>
-        <li class="active">Участники</li>
+        <li class="active">{{object}}</li>
       </ul>
     </div>
   </div>
