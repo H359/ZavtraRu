@@ -336,11 +336,11 @@ abc {
 }
 
 .bordered {
-	background-image: url(../pic/newspaper_bg.png);
+	background-image: url(/static/img/newspaper_bg.png);
 }
 
 .bordered_wod {
-	background-image: url(../pic/wod_bg.png);
+	background-image: url(/static/img/wod_bg.png);
 }
 
 .bordered_clean {
