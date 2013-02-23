@@ -1928,15 +1928,15 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .top_selection_details {
-	min-height: 7em;
+	min-height: 5em;
 	background: #444;
-    background: -moz-linear-gradient(top, #444, #333); /* Firefox 3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, 
+	background: -moz-linear-gradient(top, #444, #333); /* Firefox 3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, 
                 color-stop(0%,#444), color-stop(100%,#333));
-    background: -webkit-linear-gradient(top, #444, #333);
-    background: -o-linear-gradient(top, #444, #333); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #444, #333); /* IE10 */
-    background: linear-gradient(top, #444, #333); /* CSS3 */ 
+	background: -webkit-linear-gradient(top, #444, #333);
+	background: -o-linear-gradient(top, #444, #333); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #444, #333); /* IE10 */
+	background: linear-gradient(top, #444, #333); /* CSS3 */ 
 }
 
 .top_selection_item_author {
