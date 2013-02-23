@@ -1252,7 +1252,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
-.module_header .caret {
+.section_header_button .caret {
 	line-height: 1.4em;
 	vertical-align: middle;
 	border-top-color: #FFF;	
@@ -2032,6 +2032,69 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	height: 5.5em;
 }
 
+.datepicker_container {
+	position: absolute;
+	z-index: 1;
+	right: 0em;
+	width: 15em;
+	height: 14em;
+	line-height: 1em;
+	background: #EEE;
+	background: -moz-linear-gradient(top, #EEE, #AAA);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEE), color-stop(100%,#AAA));
+	background: -webkit-linear-gradient(top, #EEE, #AAA);
+	background: -o-linear-gradient(top, #EEE, #AAA);
+	background: -ms-linear-gradient(top, #EEE, #AAA);
+	background: linear-gradient(top, #EE, #AAA);
+	-webkit-box-shadow: 0 0 1px rgba(128, 128, 128, 1);
+	-moz-box-shadow: 0 0 1px rgba(128, 128, 128,1);
+	box-shadow: 0 0 1px rgba(128, 128, 128, 1);
+}
+
+.section_header_button_datepicker {
+	color:  #FFF;
+	background: #555;
+	background: -moz-linear-gradient(top, #555, #444);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#555), color-stop(100%,#444));
+	background: -webkit-linear-gradient(top, #555, #444);
+	background: -o-linear-gradient(top, #555, #444);
+	background: -ms-linear-gradient(top, #555, #444);
+	background: linear-gradient(top, #555, #444);
+	height: 2em;
+	margin: .25em 0em;
+	padding: 0em .5em;
+	font-size: 1em;
+	font-weight: 700;
+	-moz-box-sizing: border-box;  
+	-webkit-box-sizing: border-box;  
+	box-sizing: border-box;
+	border-radius: 3px;
+	line-height: 2em;
+	text-align:  center;
+	width: 13em;
+	cursor: pointer;
+}
+
+.section_header_button_datepicker.selected {
+	background: #777;
+	background: -moz-linear-gradient(top, #777, #555);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#777), color-stop(100%,#555));
+	background: -webkit-linear-gradient(top, #777, #555);
+	background: -o-linear-gradient(top, #777, #555);
+	background: -ms-linear-gradient(top, #777, #555);
+	background: linear-gradient(top, #777, #555);
+}
+
+.section_header_button_datepicker:hover {
+	background: #777;
+	background: -moz-linear-gradient(top, #777, #555);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#777), color-stop(100%,#555));
+	background: -webkit-linear-gradient(top, #777, #555);
+	background: -o-linear-gradient(top, #777, #555);
+	background: -ms-linear-gradient(top, #777, #555);
+	background: linear-gradient(top, #777, #555);
+}
+
 #datepicker .ui-widget {
 	font-size: 1em;
 }
@@ -2057,7 +2120,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	padding: .25em .75em;
 }
 
-#datepicker .ui-datepicker .ui-datepicker-prev {
+#datepicker .ui-datepicker .ui-datepicker-prev, #datepicker .ui-datepicker .ui-datepicker-next {
 	height: 1.5em;
 }
 
@@ -2082,6 +2145,10 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 #datepicker .ui-state-hover {
 	background: #777;
 	cursor: pointer;
+}
+
+#datepicker .ui-datepicker table {
+	font-size: .85em;
 }
 
 .ui-datepicker .ui-datepicker-title {
@@ -2162,7 +2229,6 @@ li.empty span.large {
 	max-height: 10.5em;
 	position: absolute;
 	bottom: 0;
-	
 }
 
 .person_navigation_container {
@@ -2188,6 +2254,8 @@ li.empty span.large {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	text-align: center;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 .person_navigation a {
@@ -2480,11 +2548,6 @@ li.empty span.large {
 	#person_actions {
 		padding-right: 1em;
 		margin-bottom: 2em;
-	}
-	#datepicker {
-		width: 15em;
-		padding-left: 1em;
-		margin: auto;
 	}
 }
 
