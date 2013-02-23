@@ -159,8 +159,8 @@
                   </span>
                 </div>
               </div>
-              {% endfor %}
             </div>
+            {% endfor %}
           </div>
         </div>
         <div class="row">
