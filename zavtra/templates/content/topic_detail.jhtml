@@ -128,30 +128,35 @@
             </div>
           </div>
           <div class="span3">
-            <div class="row" id="articles_issues">
-              <div class="module_header rubric-header">
-                <h4>Самое обсуждаемое</h4>
+            <div class="module_header rubric-header-red">
+              <h4>Самое обсуждаемое</h4>
+            </div>
+            {% for item in most_commented %}
+            <div class="top_selection_item">
+              <div class="top_selection_item_pic">
+                <a href="{{item.get_absolute_url()}}">{% if item.cover_source != "" %}<img src="{{item.cover_for_sidebar.url}}">{% endif %}</a>
               </div>
-              {% for item in most_commented[0:5] %}
-              <div class="span3">
-                <div class="news_selection_item">
-                  <div class="text-over-image">
+              <div class="top_selection_details">
+                <div class="top_selection_item_author">
+                  {% for author in item.authors.all() %}
+                  <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="top_selection_item_header">
+                  <a href="{{item.get_absolute_url()}}">{{item.title}}</a>
+                </div>
+                <div class="selection_item_statistics">
+                  <a class="mediumtext">{{item.published_at|ru_date("%d/%m/%y")}}</a>
+                  <span class="mediumtext">
                     <a href="{{item.get_absolute_url()}}">
-                      {% if item.cover_source != "" %}
-                      <img src="{{item.cover_for_sidebar.url}}" class="news_selection_item_img">
-                      {% else %}
-                      <img src="http://placekitten.com/g/200/150" class="news_selection_item_img">
-                      {% endif %}
-                      <div class="text-bottom white">
-                        <h5>{{item.title}}</h5>
-                      </div>
+                      <img src="{{STATIC_URL}}img/comment.png"> {{item.comments_count}}
                     </a>
-                  </div>
-                  <div class="selection_item_statistics">
-                    {% for author in item.authors.all() %}
-                    <a href="{{author.get_absolute_url()}}" rel="author" class="block dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                  </div>
+                  </span>
+                  <span class="mediumtext">
+                    <a href="{{item.get_absolute_url()}}">
+                      <img src="{{STATIC_URL}}img/views.png"> {{item.views_count}}
+                    </a>
+                  </span>
                 </div>
               </div>
               {% endfor %}
