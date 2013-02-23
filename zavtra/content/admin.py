@@ -20,7 +20,6 @@ class ExpertCommentAdminInline(admin.StackedInline):
   }
 
 
-
 class RubricInIssueAdminInline(admin.StackedInline):
   model = RubricInIssue
   max_num = 9
@@ -31,6 +30,15 @@ class RubricInIssueAdminInline(admin.StackedInline):
 class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+
+
+class WodAdminForm(forms.ModelForm):
+  class Meta:
+    model = Wod
+  title = forms.CharField(label=u'Слово', widget=TextInput(attrs={'style': 'width: 760px'}))
+  subtitle = forms.CharField(label=u'Заголовок', widget=TextInput(attrs={'style': 'width: 760px'}))
+  cover_source = forms.ImageField(label=u'Обложка')
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
 
@@ -65,7 +73,7 @@ class WodAdmin(admin.ModelAdmin):
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
   inlines = [WodCiteAdmin, ExpertCommentAdminInline]
-  form = ArticleAdminForm
+  form = WodAdminForm
   raw_id_fields = ('authors', 'topics')
   autocomplete_lookup_fields = {
     'm2m': ['authors', 'topics']

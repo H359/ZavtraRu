@@ -35,7 +35,6 @@
     </div>
     {% endif %}
   </div>
-  {#
   <div class="row">
     <div class="span8 offset1">
       <div class="person_search_bar">
@@ -44,16 +43,66 @@
         </div>
         <div class="padding_one">
           <div class="archive_selector">
-            {% for row in filter %}
-            {{row}}
-            {% endfor %}
             <span class="archive_selector_category">Год:</span>
+            {% if filters['year'] == 0 %}
+            <span class="archive_selector_selected">все</span>
+            {% else %}
+            <a href="{{request.path|e}}">все</a>
+            {% endif %}
+            {% for year in object.get_pub_dates(quant='year') %}
+            {% if year.year == filters['year'] %}
+            <span class="archive_selector_selected">{{year.year}}</span>
+            {% else %}
+            <a href="?year={{year.year}}">{{year.year}}</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <img src="pic/gradient_grayscale_line.png" class="onepxline">
+          {% if filters['year'] != 0 %}
+          <div class="archive_selector">
+            <span class="archive_selector_category">Месяц:</span>
+            {% if filters['month'] == 0 %}
+            <span class="archive_selector_selected">все</span>
+            {% else %}
+            <a href="?year={{filters['year']}}">все</a>
+            {% endif %}
+            {% for month in object.get_pub_dates(quant='month', order='ASC', filters=["extract(year from published_at) = %d" % filters['year']]) %}
+            {% if month.month == filters['month'] %}
+            <span class="archive_selector_selected">{{month_names[month.month-1]}}</span>
+            {% else %}
+            <a href="?year={{filters['year']}}&month={{month.month}}">{{month_names[month.month-1]}}</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <img src="pic/gradient_grayscale_line.png" class="onepxline">
+          {% endif %}
+          <div class="archive_selector">
+            <span class="archive_selector_category">Категория:</span>
+            {% if category is none %}
+            <span class="archive_selector_selected">все</span>
+            {% else %}
+            <a href="/authors/user/{{object.pk}}/articles/?page=1{{filters_suffix}}">все</a>
+            {% endif %}
+            {% if category == 'text' %}
+            <span class="archive_selector_selected">статьи</span>
+            {% else %}
+            <a href="/authors/user/{{object.pk}}/articles/text/?page=1{{filters_suffix}}">статьи</a>
+            {% endif %}
+            {% if category == 'video' %}
+            <span class="archive_selector_selected">видео</span>
+            {% else %}
+            <a href="/authors/user/{{object.pk}}/articles/video/?page=1{{filters_suffix}}">видео</a>
+            {% endif %}
+            {% if category == 'wod' %}
+            <span class="archive_selector_selected">слово дня</span>
+            {% else %}
+            <a href="/authors/user/{{object.pk}}/articles/wod/?page=1{{filters_suffix}}">слово дня</a>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
   </div>
-  #}
   <div class="row">
     <div class="span8 offset1">
       {% for article in object_list %}
@@ -94,6 +143,15 @@
             {% if article.type == 'video' %}
             <div class="span8 news-text center_align">{{article.render_content(384,288)}}</div>
             {% else %}
+            {% if article.is_peredovitsa and article.issue is not none and article.issue.illustration != "" %}
+            <div class="span3">
+              <div class="news-illustration-container">
+                <a href="{{article.get_absolute_url()}}">
+                  <img src="{{article.issue.cover_for_sidebar.url}}" class="news-illustration">
+                </a>
+              </div>
+            </div>
+            {% endif %}
             {% if article.cover_source != "" %}
             <div class="span3">
               <div class="news-illustration-container">
@@ -127,7 +185,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="span8 offset1">{{pagination(request, page_obj)}}</div>
+    <div class="span8 offset1">{{pagination(request, page_obj, filters_suffix)}}</div>
   </div>
 </div>
 {% endblock %}

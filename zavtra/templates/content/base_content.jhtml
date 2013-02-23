@@ -1,7 +1,16 @@
 {% extends "base.jhtml" %}
 
 {% block social_block %}
-<div class="right_align">
+<div class="offset1 span4">
+  {% if request.user and request.user.is_authenticated() %}
+  <div class="btn-toolbar">
+    <div class="btn-group">
+      <a href="/content/vote/{{object.slug|e}}/up/" class="vote-plus btn btn-mini {% if has_voted and vote.vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг статьи" class="btn btn-disabled btn-mini comment-rating">{{object.rating}}</a><a href="/content/vote/{{object.slug|e}}/down/" class="vote-minus btn btn-mini {% if has_voted and vote.vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<div class="span4 right_align">
   <span class="largetext">Поделиться:</span>
   <span st_title="{{object.title|e}}" class="st_vkontakte_large" displayText="ВКонтакте"></span>
   <span st_title="{{object.title|e}}" class="st_twitter_large" displayText="Tweet"></span>

@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for article in object.rubric.articles.defer('content')[0:5]|list|reverse %}
+      {% for article in related %}
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if article.id == object.id %} newspaper_selection_item_selected{% endif %}">
           {% if article.id != object.id %}<a href="{{article.get_absolute_url()}}">{% endif %}
@@ -129,7 +129,7 @@
             <div class="row">
               <div class="offset4 span5 y-margin-one">
                 <div class="wod_quote">
-                  <span class="bold">{{cite.word}}</span> &ndash; <span class="italic">{{cite.cite}}</span>
+                  <span class="bold">{{object.title}}</span> &ndash; <span class="italic">{{cite.cite}}</span>
                   <span class="wod_quote_source">{{cite.source}}</span>
                 </div>
               </div>

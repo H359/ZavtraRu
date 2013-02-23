@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from datetime import datetime
+from pytils.dt import MONTH_NAMES
 
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
@@ -8,9 +9,8 @@ from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from zavtra.utils import oneday
-from filters import Filter, FilterItem
 
-from content.models import Article
+from content.models import Article, Rubric
 from siteuser.models import User, Reader
 from siteuser.forms import RegisterUserForm
 
@@ -51,11 +51,15 @@ class RegisterView(TemplateView, FormView):
       user.first_name = data.get('first_name')
       user.last_name = data.get('last_name')
       user.save()
-      return redirect('home')
+      return redirect('siteuser.views.register_done')
     return self.return_form(form)
 
   def get(self, request, *args, **kwargs):
     return self.return_form(RegisterUserForm())
+
+
+class RegisterDoneView(TemplateView):
+  template_name = 'siteuser/register_done.jhtml'
 
 
 class AuthorsView(ListView):
@@ -108,37 +112,47 @@ class ProfileView(DetailView):
     return context
 
 
-class ArticlesFilter(Filter):
-  year = FilterItem(title=u'Год', blank=True, blank_string=u'все', field='published_at')
-  month = FilterItem(title=u'Месяц', blank=True, blank_string=u'все', field='published_at')
-  category = FilterItem(title=u'Категория', blank=True, blank_string=u'все',
-    choices=(
-      (u'статьи', lambda qs: qs.exclude(rubric__slug = 'wod', type=Article.TYPES.video)),
-      (u'видео', lambda qs: qs.filter(type=Article.TYPES.video)),
-      (u'слово дня', lambda qs: qs.filter(rubric__slug = 'wod'))
-    )
-  )
-
-
 class ArticlesView(ListView):
   template_name = 'siteuser/profile_articles.jhtml'
   paginate_by = 15
   paginator_class = DiggPaginator
 
+  def get_filters_qs(self):
+    result = []
+    for k, v in self.filters.items():
+      if v != 0:
+        result.append('%s=%d' % (k, v))
+    return '&'.join(result)
+
   def get_context_data(self, **kwargs):
     context = super(ArticlesView, self).get_context_data(**kwargs)
     context['profile_part'] = 'articles'
+    context['category'] = self.category
     context['object'] = self.user
-    context['filter'] = self.filter
+    context['filters'] = self.filters
+    context['filters_suffix'] = '&%s' % self.get_filters_qs()
+    context['month_names'] = map(lambda w: w[1], MONTH_NAMES)
     return context
 
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
+    self.filters = {
+      'year': int(self.request.GET.get('year', 0)),
+      'month': int(self.request.GET.get('month', 0))
+    }
+    self.category = self.kwargs.get('category', None)
     queryset = Article.published.select_related().\
                prefetch_related('authors', 'expert_comments', 'topics').\
                filter(Q(authors__in = [self.user]) | Q(expert_comments__expert = self.user))
-    self.filter = ArticlesFilter(self.request, queryset)
-    return self.filter.as_queryset()
+    for f, v in self.filters.items():
+      if v != 0:
+        queryset = queryset.filter(**{'published_at__%s' % f: v})
+    if self.category is not None:
+      if self.category == 'wod':
+        queryset = queryset.filter(rubric = Rubric.fetch_rubric('wod'))
+      else:
+        queryset = queryset.filter(type = getattr(Article.TYPES, self.category))
+    return queryset
 
 
 class CommentsView(ListView):
