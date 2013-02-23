@@ -83,7 +83,7 @@ $().ready(function() {
                     <div class="inner_blogentry_new">
                       <div class="inner_blogentry_date_box_new">
                         <span class="inner_blogentry_new_tag">новое</span>
-                        <span class="inner_blogentry_date_content">{{object.published_at|ru_dt_distance}}</span>
+                        <span class="inner_blogentry_date_content">{{object.published_at|ru_dt_distance_fuzzy}}</span>
                       </div>
                       <div class="inner_blogentry_author">
                         {% for author in object.authors.all() %}
