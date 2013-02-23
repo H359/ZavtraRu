@@ -157,7 +157,7 @@ class TopicView(ListView):
   def get_queryset(self):
     self.topic = get_object_or_404(Topic, slug=self.kwargs['slug'])
     #return self.topic.articles.select_related().all()
-    return Article.published.filter(topic__in = [self.topic]).select_related().\
+    return Article.published.filter(topics__in = [self.topic]).select_related().\
            prefetch_related('authors', 'topics')
 
 
