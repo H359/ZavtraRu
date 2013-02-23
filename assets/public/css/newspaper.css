@@ -1026,7 +1026,6 @@ article p {
 
 #comments {
 	margin: 0;
-
 	padding-bottom: .75em;
 }
 
@@ -1034,7 +1033,6 @@ article p {
 	background-color: #F2F2F2;	
 }
 
-}
 
 .comment, #comment-form {
 	padding: 1em .75em .25em 5.5em;
