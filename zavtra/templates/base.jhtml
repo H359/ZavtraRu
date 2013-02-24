@@ -103,9 +103,11 @@
         </div>
       </div>
     </div>
-    {% for topic in top_topics %}
-    <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
-    {% endfor %}
+    <div id="inner_subject">
+      {% for topic in top_topics %}
+      <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
+      {% endfor %}
+    </div>
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>
     <footer>
