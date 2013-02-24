@@ -102,7 +102,7 @@ body {
 
 #main_header_search input {
 	width: 10em;
-	color: white;
+	color: #000;
 	border: 2px solid #BBB;
 	background-color: #EEE;
 	cursor: pointer;
@@ -1801,6 +1801,10 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	line-height: 1.15em;
 }
 
+.inner_blogentry_author a {
+	font-size: 1.1em;
+}
+
 .inner_blogentry .inner_blogentry_author {
 	margin-left: 4.75em;
 	height: 3.25em;
@@ -1843,12 +1847,12 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_new .inner_blogentry_header {
-	height: 4.75em;
+	height: 6em;
 	margin-left: 6.75em;
 }
 
 .inner_blogentry_header > a {
-	font-size: .9em;
+	font-size: 1.05em;
 	font-weight: 700;
 }
 
