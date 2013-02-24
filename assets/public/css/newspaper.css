@@ -1020,7 +1020,11 @@ article p {
 
 /* Comments */
 
-#comments-section, #wod_opinions_section {
+#wod_opinions_section {
+	margin-bottom: 1em;
+}
+
+#comments-section {
 	margin-top: 1em;
 }
 
