@@ -60,7 +60,7 @@ body .modal-backdrop.fade.in {
   background-color: #444 !important;
 }
 
-#events .item h5 {
+#events .item h3 {
   padding: .25em .75em;
   background-color: #444;
   height: 5.25em;
