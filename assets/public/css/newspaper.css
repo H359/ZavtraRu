@@ -1020,7 +1020,11 @@ article p {
 
 /* Comments */
 
-#comments-section, #wod_opinions_section {
+#wod_opinions_section {
+	margin-bottom: 1em;
+}
+
+#comments-section {
 	margin-top: 1em;
 }
 
@@ -1590,7 +1594,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_alphabet_name {
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	padding: .5em 0em;
 	min-height: 1.66em;
@@ -1631,7 +1635,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 #author_search_box {
 	padding: 0em 1em;
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	text-align: right;
 }
@@ -2168,15 +2172,15 @@ li.empty span.large {
 	width: 100%;
 	position: absolute;
 	left: 0em;
-	top: 9.5em;
+	top: 11.5em;
 	background: #444;
-    background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, 
+	background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, 
                 color-stop(0%,#333), color-stop(100%,#222));
-    background: -webkit-linear-gradient(top, #333, #222);
-    background: -o-linear-gradient(top, #333, #222); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #333, #222); /* IE10 */
-    background: linear-gradient(top, #333, #222); /* CSS3 */ 
+	background: -webkit-linear-gradient(top, #333, #222);
+	background: -o-linear-gradient(top, #333, #222); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #333, #222); /* IE10 */
+	background: linear-gradient(top, #333, #222); /* CSS3 */ 
 }
 
 .person_breadcrumb {
@@ -2445,7 +2449,7 @@ li.empty span.large {
 }
  
 .person_search_bar {
-    margin: 1em 0em 0em 0em;
+    padding: 0em 0em 0em 1em;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -2617,7 +2621,7 @@ li.empty span.large {
     width: 100%;
     position: absolute;
     left: 0em;
-    top: 9.5em;
+    top: 11.5em;
     height: 9em;
     background: #444;
     background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */

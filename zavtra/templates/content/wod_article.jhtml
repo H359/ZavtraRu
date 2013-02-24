@@ -142,7 +142,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="span8 offset1">{% block social_block %}{{super()}}{% endblock %}</div>
+          <div class="span8">{% block social_block %}{{super()}}{% endblock %}</div>
       </article>
     </div>
   </div>
@@ -151,6 +151,7 @@
       <div id="wod_opinions_section">
         <h3 class="inline">Экспертные оценки:</h3>
       </div>
+      <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
       {% for expert_comment in object.expert_comments.all() %}
       <div class="wod_opinion">
         <div class="wod_opinion_avatar">
@@ -174,7 +175,7 @@
   <div class="row">
     <div class="offset1_5 span9">
       <div id="comments-section" class="rubric-header no_margin">
-        <h3 class="inline">Комментарии ({{object.comments_count}}):</h3>
+        <<img src="/static/img/gradient_grayscale_line.png" class="onepxline"> class="inline">Комментарии ({{object.comments_count}}):</h3>
       </div>
       <div>{{render_comments(request, object, csrf_token)}}</div>
     </div>
