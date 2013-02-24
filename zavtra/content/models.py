@@ -4,7 +4,7 @@ from pytils.translit import slugify
 from urlparse import urlparse, parse_qs
 
 from django.db import models
-from django.db.models import Count, Sum
+from django.db.models import Sum
 from django.conf import settings
 from django.utils.html import strip_tags
 
@@ -36,20 +36,25 @@ class Rubric(models.Model):
     verbose_name = u'Рубрика'
     verbose_name_plural = u'Рубрики'
 
+  @property
+  def from_zeitung(self):
+    return self.id in [x.id for x in Rubric.get_gazette_rubrics()]
+
   @models.permalink
   def get_absolute_url(self):
     return ('content.view.rubric', (), {'slug': self.slug})
 
   @staticmethod
   def fetch_rubric(slug):
-    return cached(lambda: Rubric.objects.get(slug=slug), 'rubric:%s' % slug)
+    return cached(lambda: Rubric.objects.get(slug=slug), 'rubrics:rubric-%s' % slug, 3600)
 
   @staticmethod
   def get_gazette_rubrics():
-    # TODO: optimize this
-    rii = RubricInIssue.objects.filter(rubric__in_rubricator=True).distinct('rubric').\
-          values_list('rubric', flat=True).order_by('rubric', 'position')
-    return Rubric.objects.filter(pk__in = rii)
+    def inner():
+      rii = RubricInIssue.objects.filter(rubric__in_rubricator=True).distinct('rubric').\
+            values_list('rubric', flat=True).order_by('rubric', 'position')
+      return list(Rubric.objects.filter(pk__in = rii))
+    return cached(inner, 'rubrics:gazette', 3600)
 
 
 class Issue(models.Model):
@@ -210,15 +215,19 @@ class Article(OpenGraphMixin, models.Model):
   @property
   def issue(self):
     if not hasattr(self, '__issue_cache'):
-      try:
-        issue = RubricInIssue.objects.get(
-          issue__published_at = self.published_at,
-          rubric = self.rubric
-        ).issue
-      except RubricInIssue.DoesNotExist:
+      # early bailout for non-gazette articles
+      if not self.rubric.from_zeitung:
         issue = None
-      self.__issue_cache = issue
-    return self.__issue_cache
+      else:
+        try:
+          issue = RubricInIssue.objects.select_related().get(
+            issue__published_at = self.published_at,
+            rubric = self.rubric
+          ).issue
+        except RubricInIssue.DoesNotExist:
+          issue = None
+      setattr(self, '__issue_cache', issue)
+    return getattr(self, '__issue_cache')
 
   @property
   def open_graph_data(self):
@@ -247,8 +256,8 @@ class Article(OpenGraphMixin, models.Model):
         source = 'youtube:%s' % parse_qs(pc.query).get('v')[0].strip()
       else:
         source ='dentv:%s' % pc.path
-      self.__source_cached = source
-    return self.__source_cached
+      setattr(self, '__source_cached', source)
+    return getattr(self, '__source_cached')
 
   def render_content(self, width=640, height=480):
     # TODO: cache rendered content?

@@ -34,7 +34,7 @@ class FilteredArticlesView(ListView):
     }
     self.category = self.kwargs.get('category', None)
     qs = Article.published.select_related().\
-         prefetch_related('authors', 'expert_comments', 'topics') 
+         prefetch_related('authors', 'expert_comments__expert', 'topics') 
          #, 'rubric__issue_rubrics')
     for f, v in self.filters.items():
       if v != 0:

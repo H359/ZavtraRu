@@ -108,6 +108,7 @@
         <div class="relative span3">
           <div class="row">
             <div class="span3" id="events_block">
+              {% cache 3600 'home:events' %}
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
@@ -137,9 +138,12 @@
                   <a href="#events" class="carousel-control right" data-slide="next"></a>
                 </div>
               </div>
+              {% endcache %}
             </div>
           </div>
         </div>
+        {% cache 3600 'home:wod' %}
+        {% set wod = wod_qs.latest('published_at') %}
         <div class="span6" id="wod_block">
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
@@ -167,9 +171,11 @@
             </div>
           </div>
         </div>
+        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
+          {% cache 3600 'home:news' %}
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
@@ -186,6 +192,7 @@
               </div>
             </div>
           </div>
+          {% endcache %}
         </div>
       </div>
       <div class="row" id="navigation_holder">
@@ -229,6 +236,7 @@
       </div>
       #}
       <div class="row">
+        {% cache 3600 'home:selected_articles' %}
         {% for article in selected_articles %}
         <div class="span3">
           <div class="main_article_container">
@@ -247,6 +255,7 @@
           </div>
         </div>
         {% endfor %}
+        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
@@ -262,6 +271,7 @@
             </div>
           </div>
           <div class="row">
+            {% cache 3600 'home:blogs' %}
             {% for article in blogs %}
             <div class="span4_5">
               <div class="main_blog_entry">
@@ -309,11 +319,14 @@
               </div>
             </div>
             {% endfor %}
+            {% endcache %}
           </div>
         </div>
       </div>
     </div>
     <div class="span4">
+      {% cache 3600 'home:issue' %}
+      {% set issue = issue_qs.latest('published_at') %}
       <div class="row" id="newspaper_holder">
         <div class="span4" id="newspaper_block">
           <div class="relative" id="main_newspaper_box">
@@ -379,8 +392,11 @@
           </div>
         </div>
       </div>
+      {% endcache %}
       <div class="row">
         <div class="span4">
+          {% cache 3600 'home:video' %}
+          {% set video = video_qs.latest('published_at') %}
           <div class="main_box_frame">
             <div class="relative main_box_header">
               <h5><a href="#" class="gray gray_link">Видео</a></h5>
@@ -414,6 +430,7 @@
             </div>
             <div id="main_video_selected_description_container"><a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a></div>
           </div>
+          {% endcache %}
         </div>
       </div>
     </div>

@@ -111,8 +111,12 @@ class ArticleView(DetailView):
 
   def get_queryset(self):
     return Article.published.select_related().\
-           prefetch_related('expert_comments', 'expert_comments__expert', 'cites')
-
+           prefetch_related(
+            'expert_comments__expert',
+            'topics',
+            'authors',
+            'cites'
+           )
 
 
 class RubricView(ListView):
@@ -132,12 +136,12 @@ class RubricView(ListView):
   def get_queryset(self):
     self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
     #return self.rubric.articles.order_by('-published_at').all()
-    return Article.published.filter(rubric=self.rubric)
+    return Article.published.filter(rubric=self.rubric).select_related().\
+           prefetch_related('expert_comments__expert')
 
   def get_context_data(self, **kwargs):
     context = super(RubricView, self).get_context_data(**kwargs)
-    qs = RubricInIssue.objects.filter(rubric=self.rubric)
-    self.is_zeitung = qs.count() > 0
+    self.is_zeitung = self.rubric.from_zeitung
     context['rubric'] = self.rubric
     return context
 
