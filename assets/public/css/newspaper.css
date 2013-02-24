@@ -102,7 +102,7 @@ body {
 
 #main_header_search input {
 	width: 10em;
-	color: white;
+	color: #000;
 	border: 2px solid #BBB;
 	background-color: #EEE;
 	cursor: pointer;
@@ -1488,7 +1488,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #DDD;
 	padding-left: 1em;
 	padding-top: .25em;
-	height: 1.5em;
+	min-height: 1.5em;
 	border: 1px solid #C2C08C;
 	text-align: center;
 	font-family: 'Open Sans', Tahoma;
@@ -1500,6 +1500,7 @@ a.subject_nav_item, span.subject_nav_item {
 	font-size: 1em;
 	padding-right: 1.25em;
 	font-weight: bold;
+	text-transform: uppercase;
 }
 
 a.subject_nav_item:hover {
@@ -1801,6 +1802,10 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	line-height: 1.15em;
 }
 
+.inner_blogentry_author a {
+	font-size: 1.1em;
+}
+
 .inner_blogentry .inner_blogentry_author {
 	margin-left: 4.75em;
 	height: 3.25em;
@@ -1843,12 +1848,12 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_new .inner_blogentry_header {
-	height: 4.75em;
+	height: 6em;
 	margin-left: 6.75em;
 }
 
 .inner_blogentry_header > a {
-	font-size: .9em;
+	font-size: 1.05em;
 	font-weight: 700;
 }
 

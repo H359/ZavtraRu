@@ -133,7 +133,7 @@ body {
 
 #main_header_search input {
 	width: 10em;
-	color: white;
+	color: #000;
 	border: 2px solid #BBB;
 	background-color: #EEE;
 	cursor: pointer;
