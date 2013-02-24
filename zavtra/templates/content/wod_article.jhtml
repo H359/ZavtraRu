@@ -142,7 +142,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="span8 offset1">{% block social_block %}{{super()}}{% endblock %}</div>
+          <div class="span8">{% block social_block %}{{super()}}{% endblock %}</div>
       </article>
     </div>
   </div>
