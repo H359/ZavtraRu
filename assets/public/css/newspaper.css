@@ -1500,6 +1500,7 @@ a.subject_nav_item, span.subject_nav_item {
 	font-size: 1em;
 	padding-right: 1.25em;
 	font-weight: bold;
+	text-transform: uppercase;
 }
 
 a.subject_nav_item:hover {
