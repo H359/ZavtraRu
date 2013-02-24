@@ -112,7 +112,7 @@
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
-                    <a href="/content/events/" class="gray gray_link no_underline">
+                    <a href="/content/events/" class="no_underline">
                       <span class="main_header_category">События:</span>
                     </a>
                   </h2>
@@ -148,8 +148,10 @@
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
-                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">
+                <a href="/content/rubric/wod/" class="no_underline">
                   <span class="main_header_category">Слово Дня:</span>
+                </a>
+                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">     
                   <span class="main_header_name">{{wod.title}}</span>
                 </a>
               </h2>
