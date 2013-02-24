@@ -1,0 +1,47 @@
+{% extends "siteuser/cabinet.jhtml" %}
+
+{% from "macro.jhtml" import pagination %}
+
+{% block content %}
+<div class="span10 offset1 person_cab_content">
+  <div class="row">
+    <div class="span5 padding_one">
+      <span class="regular_button button_selected">Авторы</span>
+      <a href="{{url('siteuser.view.cabinet_subscriptions_articles')}}"><span class="regular_button">Статьи</span></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 offset1">
+      <div class="person_search_bar">
+        <div class="module_header rubric-header">
+          <h4 class="inline">Вы подписаны на следующих авторов:</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span8 offset1" id="person_subscriptions">
+      {% for object in object_list %}
+      <div class="person_entry">
+        <div class="person_entry_name">
+          <a href="{{object.get_absolute_url()}}" class="person_name mediumtext">{{object}}</a>
+        </div>
+        <div class="person_entry_pic">
+          <a href="{{object.get_absolute_url()}}">
+            {% if object.photo != "" %}
+            <img src="{{object.photo_90.url}}">
+            {% else %}
+            <img src="{{STATIC_URL}}img/no_avatar.gif">
+            {% endif %}
+          </a>
+        </div>
+        <div>
+          <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}" class="subscribe_button small_button"><span>Отписаться</span></a>
+          <a href="{{object.get_articles_url()}}" class="regular_button small_button"><span>Статьи</span></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -137,7 +137,7 @@
                   <ul class="middle_align">
                     <li{% if prev_date is none %} class="disabled"{% endif %}>
                       {% if prev_date is not none %}
-                      <a href="{{url('content.views.events')}}{{prev_date|ru_date('%d-%m-%Y')}}/">Предыдущий День</a>
+                      <a href="{{url('content.view.events')}}{{prev_date|ru_date('%d-%m-%Y')}}/">Предыдущий День</a>
                       {% else %}
                       <a href="#">Предыдущий День</a>
                       {% endif %}
@@ -147,7 +147,7 @@
                     </li>
                     <li{% if next_date is none %} class="disabled"{% endif %}>
                       {% if next_date is not none %}
-                      <a href="{{url('content.views.events')}}{{next_date|ru_date('%d-%m-%Y')}}/">Следующий День</a>
+                      <a href="{{url('content.view.events')}}{{next_date|ru_date('%d-%m-%Y')}}/">Следующий День</a>
                       {% else %}
                       <a href="#">Следующий День</a>
                       {% endif %}

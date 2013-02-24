@@ -336,11 +336,11 @@ abc {
 }
 
 .bordered {
-	background-image: url(/static/img/newspaper_bg.png);
+	background-image: url(../pic/newspaper_bg.png);
 }
 
 .bordered_wod {
-	background-image: url(/static/img/wod_bg.png);
+	background-image: url(../pic/wod_bg.png);
 }
 
 .bordered_clean {
@@ -413,7 +413,7 @@ abc {
 	border: 1px solid #DDD;
 	background-color: #FFF;/*#F7FAFA;*/
 	margin: 0em 1em 1em 1em;
-	padding: 1em 2em 2em 2em
+	padding: 1em 2em 2em 2em;
 }
 
 .article-illustration-container {
@@ -1026,6 +1026,7 @@ article p {
 
 #comments {
 	margin: 0;
+
 	padding-bottom: .75em;
 }
 
@@ -1033,6 +1034,7 @@ article p {
 	background-color: #F2F2F2;	
 }
 
+}
 
 .comment, #comment-form {
 	padding: 1em .75em .25em 5.5em;
@@ -1250,12 +1252,6 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 .module_header {
 	padding: .33em .75em;
 	background-color: #555;
-}
-
-.section_header_button .caret {
-	line-height: 1.4em;
-	vertical-align: middle;
-	border-top-color: #FFF;	
 }
 
 .article-page-module-footer {
@@ -1934,15 +1930,15 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .top_selection_details {
-	min-height: 5em;
+	min-height: 7em;
 	background: #444;
-	background: -moz-linear-gradient(top, #444, #333); /* Firefox 3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, 
+    background: -moz-linear-gradient(top, #444, #333); /* Firefox 3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, 
                 color-stop(0%,#444), color-stop(100%,#333));
-	background: -webkit-linear-gradient(top, #444, #333);
-	background: -o-linear-gradient(top, #444, #333); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #444, #333); /* IE10 */
-	background: linear-gradient(top, #444, #333); /* CSS3 */ 
+    background: -webkit-linear-gradient(top, #444, #333);
+    background: -o-linear-gradient(top, #444, #333); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #444, #333); /* IE10 */
+    background: linear-gradient(top, #444, #333); /* CSS3 */ 
 }
 
 .top_selection_item_author {
@@ -2032,69 +2028,6 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	height: 5.5em;
 }
 
-.datepicker_container {
-	position: absolute;
-	z-index: 1;
-	right: 0em;
-	width: 15em;
-	height: 14em;
-	line-height: 1em;
-	background: #EEE;
-	background: -moz-linear-gradient(top, #EEE, #AAA);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEE), color-stop(100%,#AAA));
-	background: -webkit-linear-gradient(top, #EEE, #AAA);
-	background: -o-linear-gradient(top, #EEE, #AAA);
-	background: -ms-linear-gradient(top, #EEE, #AAA);
-	background: linear-gradient(top, #EE, #AAA);
-	-webkit-box-shadow: 0 0 1px rgba(128, 128, 128, 1);
-	-moz-box-shadow: 0 0 1px rgba(128, 128, 128,1);
-	box-shadow: 0 0 1px rgba(128, 128, 128, 1);
-}
-
-.section_header_button_datepicker {
-	color:  #FFF;
-	background: #555;
-	background: -moz-linear-gradient(top, #555, #444);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#555), color-stop(100%,#444));
-	background: -webkit-linear-gradient(top, #555, #444);
-	background: -o-linear-gradient(top, #555, #444);
-	background: -ms-linear-gradient(top, #555, #444);
-	background: linear-gradient(top, #555, #444);
-	height: 2em;
-	margin: .25em 0em;
-	padding: 0em .5em;
-	font-size: 1em;
-	font-weight: 700;
-	-moz-box-sizing: border-box;  
-	-webkit-box-sizing: border-box;  
-	box-sizing: border-box;
-	border-radius: 3px;
-	line-height: 2em;
-	text-align:  center;
-	width: 13em;
-	cursor: pointer;
-}
-
-.section_header_button_datepicker.selected {
-	background: #777;
-	background: -moz-linear-gradient(top, #777, #555);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#777), color-stop(100%,#555));
-	background: -webkit-linear-gradient(top, #777, #555);
-	background: -o-linear-gradient(top, #777, #555);
-	background: -ms-linear-gradient(top, #777, #555);
-	background: linear-gradient(top, #777, #555);
-}
-
-.section_header_button_datepicker:hover {
-	background: #777;
-	background: -moz-linear-gradient(top, #777, #555);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#777), color-stop(100%,#555));
-	background: -webkit-linear-gradient(top, #777, #555);
-	background: -o-linear-gradient(top, #777, #555);
-	background: -ms-linear-gradient(top, #777, #555);
-	background: linear-gradient(top, #777, #555);
-}
-
 #datepicker .ui-widget {
 	font-size: 1em;
 }
@@ -2117,16 +2050,12 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #datepicker .ui-datepicker-header {
-	padding: .25em .75em;
-}
-
-#datepicker .ui-datepicker .ui-datepicker-prev, #datepicker .ui-datepicker .ui-datepicker-next {
-	height: 1.5em;
+	padding: .33em .75em;
 }
 
 #datepicker .ui-datepicker-title {
 	line-height: 1.4em;
-	font-size: .85em;
+	font-size: 1em;
 	color: #EEE;
 }
 
@@ -2147,10 +2076,6 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	cursor: pointer;
 }
 
-#datepicker .ui-datepicker table {
-	font-size: .85em;
-}
-
 .ui-datepicker .ui-datepicker-title {
 	margin: 0 !important;
 }
@@ -2158,6 +2083,9 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 li.empty span.large {
 	width: 7em !important;
 }
+
+
+/* person */
 
 #person_background {
 	width: 100%;
@@ -2229,6 +2157,7 @@ li.empty span.large {
 	max-height: 10.5em;
 	position: absolute;
 	bottom: 0;
+	
 }
 
 .person_navigation_container {
@@ -2245,6 +2174,10 @@ li.empty span.large {
 	font-size: .95em; 
 }
 
+#person_navigation_selected a:hover {
+	color: #FFF; 
+}
+
 .person_navigation {
 	line-height: 1.5em;
 	border-right: 1px solid #333;
@@ -2254,11 +2187,9 @@ li.empty span.large {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	text-align: center;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 }
 
-.person_navigation a {
+.person_navigation a, .person_navigation span {
 	font-size: .95em;
 	font-weight: 700;
 	vertical-align: baseline;
@@ -2280,7 +2211,7 @@ li.empty span.large {
 	border: 1px solid #777;
 }
 
-#person_content article {
+#person_content article, .person_cab_content article {
 	border-radius: 5px;
 	background-color: #FFF;
 	margin: 1em 0em;
@@ -2310,7 +2241,7 @@ li.empty span.large {
 }
 
 #person_subscriptions {
-	padding: 2em 0em 0em 1em;
+	padding: 1em 0em 0em 1em;
 	position: relative;
 }
 
@@ -2393,13 +2324,13 @@ li.empty span.large {
 	text-decoration: none;
 }
 
-.subscribe_button span {
+.subscribe_button, .regular_button, .publish_button span {
 	font-size: .85em;
 	color: #FFF;
 	vertical-align: bottom;
 }
 
-#person_content #datepicker {
+#person_content #datepicker, .person_cab_content #datepicker {
 	padding: 0em 0em 1em 0em;
 }
 
@@ -2416,11 +2347,11 @@ li.empty span.large {
 	margin-bottom: 1em;
 }
 
-#person_content .news-header-container {
+#person_content .news-header-container, .person_cab_content .news-header-container {
 	padding: 1.5em 1em 0em 1.5em;
 }
 
-#person_content .news-illustration-container {
+#person_content .news-illustration-container, .person_cab_content .news-illustration-container {
 	padding: 1.5em 1em 1.5em 1.5em;
 }
 
@@ -2432,11 +2363,10 @@ li.empty span.large {
 }
 
 .person_search_bar {
-	margin: 1em 0em;
+	margin: 1em 0em 0em 0em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	padding-left: 1em;
 }
 
 .person_search_bar > div {
@@ -2448,6 +2378,141 @@ li.empty span.large {
 	padding-left: 1em;
 	padding-top: 1em;
 }
+
+/* person cabinet */
+
+.person_cab_navigation_container {
+	position: absolute;
+	bottom: -2.25em;
+	border-left: 1px solid #333;
+}
+
+.person_cab_content {
+	padding-top: 13em;
+	padding-bottom: 2em;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: #EEE;
+	border: 1px solid #777;
+}
+
+.publish_button {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: #CF4444;
+	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
+	-moz-box-shadow: 0px 2px 9px 1px #AAA;
+	box-shadow: 0px 2px 9px 1px #AAA;
+	border-radius: 5px;
+	height: 1.75em;
+	margin-left: 1em;
+	display: block;
+	text-align: center;
+	line-height: 1.75em;
+	width: 12em;
+	float: right;
+	padding: 0em .25em;
+}
+
+
+.publish_button:hover {
+	background-color: #CF0000;
+	text-decoration: none;
+}
+
+.regular_button {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background: #444;
+	-webkit-box-shadow: 0px 2px 9px 1px #AAA;
+	-moz-box-shadow: 0px 2px 9px 1px #AAA;
+	box-shadow: 0px 2px 9px 1px #AAA;
+	border-radius: 5px;
+	height: 2em;
+	margin-left: 1em;
+	display: block;
+	text-align: center;
+	line-height: 2em;
+	width: 10em;
+	float: right;
+	padding: 0em .25em;
+	font-size: 1em;
+}
+
+.regular_button:hover {
+	background-color: #555;
+	text-decoration: none;
+}
+
+.button_selected {
+	background-color: #777;
+}
+
+.button_selected:hover {
+	background-color: #777 !important;
+	text-decoration: none;
+}
+
+.small_button {
+	padding: .1em;
+	width: 7em;
+	font-size: .75em;
+	height: 1.75em;
+	line-height: 1.75em;
+	margin: 0em .5em .5em .5em;
+}
+
+.publish_button span, .regular_button span, .subscribe_button span {
+	color: #FFF;
+}
+
+#person_about .form-horizontal {
+	margin: 1em 0em;
+}
+
+#person_about .form-horizontal label {
+	font-weight: 700;
+	font-size: 1.25em;
+}
+
+#person_about .form-horizontal input[type='text'] {
+	height: 2em;
+	width: 17em;
+	font-size: 1.05em;
+	padding: .15em .5em;
+	color: #000;
+}
+
+#person_about .form-horizontal textarea {
+	font-size: 1.05em;
+	padding: .5em .5em;
+	color: #000;
+}
+
+#regalii, #hobbies {
+	height: 6em;
+	width: 17em;
+}
+
+#bio {
+	height: 25em;
+	width: 17em;
+}
+
+#add_text {
+	height: 50em;
+	width: 98%;
+}
+
+#add_header, #add_subheader {
+	width: 24em !important;
+}
+
+/* person cabinet - end */
+
 
 /* registration */
 
@@ -2728,7 +2793,7 @@ li.empty span.large {
 	#person_background {
 		position: static;
 	}
-	#person_content {
+	#person_content, .person_cab_content {
 		padding-top: 1em;
 	}
 	#person_pic {
@@ -2752,7 +2817,7 @@ li.empty span.large {
 		position: static;
 		border-left: none;
 	}
-	#person_content article {
+	#person_content article, .person_cab_content article {
 		margin: 1em;
 	}
 	#person_statistics {
@@ -2761,6 +2826,11 @@ li.empty span.large {
 	#person_actions {
 		padding-right: 1em;
 		margin-bottom: 2em;
+	}
+	#datepicker {
+		width: 15em;
+		padding-left: 1em;
+		margin: auto;
 	}
 }
 

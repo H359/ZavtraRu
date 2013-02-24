@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="section_header_button">
-            <a href="{{url('content.views.archive')}}" class="btn btn-success baseline_align">Архив&nbsp;газеты</a>
+            <a href="{{url('content.view.archive')}}" class="btn btn-success baseline_align">Архив&nbsp;газеты</a>
           </div>
         </div>
       </div>

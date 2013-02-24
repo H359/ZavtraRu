@@ -72,7 +72,7 @@
           {% if issue.relative_number == number %}
           <span class="archive_selector_selected">{{issue.relative_number}} ({{issue.absolute_number}})</span>
           {% else %}
-          <a href="{{url('content.views.archive')}}?number={{issue.relative_number}}&{{built_attrs}}">{{issue.relative_number}} ({{issue.absolute_number}})</a>
+          <a href="{{url('content.view.archive')}}?number={{issue.relative_number}}&{{built_attrs}}">{{issue.relative_number}} ({{issue.absolute_number}})</a>
           {% endif %}
           {% endfor %}
         </div>

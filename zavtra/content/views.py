@@ -254,7 +254,8 @@ class SearchView(ListView):
       qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
     elif self.category == 'events':
       qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
-    return qs.select_related().prefetch_related('authors', 'topics').defer('content')
+    return qs.select_related().prefetch_related('authors', 'topics').\
+           defer('content').order_by('-published_at')
 
   def get_context_data(self, **kwargs):
     context = super(SearchView, self).get_context_data(**kwargs)

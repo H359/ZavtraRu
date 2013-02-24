@@ -24,7 +24,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
   first_name = models.CharField(max_length=250, verbose_name=u'Имя')
   last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
   level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
-  resume = models.CharField(max_length=1024, verbose_name=u'Короткое описание (регалии и т.п.)', blank=True)
+  resume = models.CharField(max_length=1024, verbose_name=u'Несколько слов о себе (регалии и т.п.)', blank=True)
   bio = models.TextField(verbose_name=u'Биография', blank=True)
   photo = models.ImageField(verbose_name=u'Фотография', blank=True, null=True, upload_to='authors')
   date_joined = models.DateTimeField(verbose_name=u'Дата регистрации', default=lambda: datetime.now())
@@ -85,23 +85,23 @@ class User(OpenGraphMixin, AbstractBaseUser):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('siteuser.views.profile', (), {'pk': self.pk})
+    return ('siteuser.view.profile', (), {'pk': self.pk})
 
   @models.permalink
   def get_subscribe_url(self):
-    return ('siteuser.views.subscribe', (), {'readee': self.pk})
+    return ('siteuser.view.subscribe', (), {'readee': self.pk})
 
   @models.permalink
   def get_unsubscribe_url(self):
-    return ('siteuser.views.unsubscribe', (), {'readee': self.pk})
+    return ('siteuser.view.unsubscribe', (), {'readee': self.pk})
 
   @models.permalink
   def get_articles_url(self):
-    return ('siteuser.views.profile_articles', (), {'pk': self.pk})
+    return ('siteuser.view.profile_articles', (), {'pk': self.pk})
 
   @models.permalink
   def get_comments_url(self):
-    return ('siteuser.views.profile_comments', (), {'pk': self.pk})    
+    return ('siteuser.view.profile_comments', (), {'pk': self.pk})    
 
   def get_pub_dates(self, quant='month', order='DESC', filters=None):
     if quant in ['day', 'month', 'year']:

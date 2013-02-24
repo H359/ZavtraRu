@@ -38,7 +38,7 @@ class Rubric(models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.rubric', (), {'slug': self.slug})
+    return ('content.view.rubric', (), {'slug': self.slug})
 
   @staticmethod
   def fetch_rubric(slug):
@@ -92,7 +92,7 @@ class Issue(models.Model):
       'year': self.published_at.year,
       'issue': self.relative_number
     }
-    return ('content.views.zeitung', (), kwargs)
+    return ('content.view.zeitung', (), kwargs)
 
   def get_pdf_link(self):
     return "http://zavtra.ru/media/content/pdfs/%dPDF.zip" % self.relative_number
@@ -100,7 +100,7 @@ class Issue(models.Model):
 
 class RubricInIssue(models.Model):
   issue = models.ForeignKey(Issue, verbose_name=u'Выпуск', related_name='issue_rubrics')
-  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика')
+  rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='issue_rubrics')
   position = models.PositiveIntegerField(verbose_name=u'Позиция')
 
   def __unicode__(self):
@@ -128,7 +128,7 @@ class Topic(models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.topic', (), {'slug': self.slug})
+    return ('content.view.topic', (), {'slug': self.slug})
 
   @staticmethod
   def autocomplete_search_fields():
@@ -205,7 +205,7 @@ class Article(OpenGraphMixin, models.Model):
 
   @models.permalink
   def get_absolute_url(self):
-    return ('content.views.article', (), {'slug': self.slug})
+    return ('content.view.article', (), {'slug': self.slug})
 
   @property
   def issue(self):

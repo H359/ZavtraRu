@@ -39,7 +39,7 @@ $().ready(function() {
       var date = '?year=' + dp.selectedYear +
                  '&month=' + (dp.selectedMonth + 1) +
                  '&day=' + dp.selectedDay;
-      window.location.href = "{{url('content.views.community')}}" + date;
+      window.location.href = "{{url('content.view.community')}}" + date;
     }
   });
 });
@@ -61,7 +61,7 @@ $().ready(function() {
                 </li>
                 {% if selected_date %}
                 <li>
-                  <a href="{{url('content.views.community')}}">Статьи</a>
+                  <a href="{{url('content.view.community')}}">Статьи</a>
                   <span class="divider">/</span>
                 </li>
                 <li class="active">Пуликации за {{selected_date|ru_date("%d %B %Y")}}</li>
