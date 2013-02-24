@@ -110,7 +110,7 @@
       <div class="row">
         <div class="span10 offset1">
           <div id="comments-section" class="rubric-header no_margin">
-            <h3 class="inline">Комментарии ({{object.comments.count()}}):</h3>
+            <h3 class="inline">Комментарии ({{object.comments_count}}):</h3>
             <a href="#" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
           </div>
           <div>{{render_comments(request, object, csrf_token)}}</div>

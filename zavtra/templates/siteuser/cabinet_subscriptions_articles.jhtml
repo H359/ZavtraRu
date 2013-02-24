@@ -81,6 +81,11 @@
                   <a href="{{article.get_absolute_url()}}">{{article.subtitle}}</a>
                 </h4>
               </header>
+              <div class="news-header">
+                {% for author in article.authors.all() %}
+                <a href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
               <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
               <span class="article-statistic">
                 <a href="{{article.get_absolute_url()}}">

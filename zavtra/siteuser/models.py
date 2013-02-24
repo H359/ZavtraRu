@@ -72,11 +72,12 @@ class User(OpenGraphMixin, AbstractBaseUser):
     if not hasattr(self, '__latest_article_cache'):
       thr = datetime.now() - timedelta(days=30)
       try:
-        self.__latest_article_cache = self.articles.select_related().prefetch_related('topics').\
-                                      filter(published_at__gte = thr).latest('published_at')
+        latest = self.articles.select_related().prefetch_related('topics').\
+                 filter(published_at__gte = thr).latest('published_at')
       except ObjectDoesNotExist:
-        self.__latest_article_cache = None
-    return self.__latest_article_cache
+        latest = None
+      setattr(self, '__latest_article_cache', latest)
+    return getattr(self, '__latest_article_cache', latest)
 
   @property
   def received_comments(self):
