@@ -106,11 +106,11 @@ class ArticleView(DetailView):
       except ArticleVote.DoesNotExist:
         context['has_voted'] = False
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
-      context['related'] = Article.published.defer('content')[0:5]
+      context['related'] = Article.wod.defer('content')[0:5]
     return context
 
   def get_queryset(self):
-    return Article.objects.select_related().\
+    return Article.published.select_related().\
            prefetch_related('expert_comments', 'expert_comments__expert', 'cites')
 
 
