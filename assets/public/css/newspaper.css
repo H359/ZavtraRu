@@ -1594,7 +1594,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_alphabet_name {
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	padding: .5em 0em;
 	min-height: 1.66em;
@@ -1635,7 +1635,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 #author_search_box {
 	padding: 0em 1em;
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	text-align: right;
 }
@@ -2449,7 +2449,7 @@ li.empty span.large {
 }
  
 .person_search_bar {
-    margin: 1em 0em 0em 0em;
+    padding: 0em 0em 0em 1em;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
