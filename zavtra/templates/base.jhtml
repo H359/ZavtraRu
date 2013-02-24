@@ -101,6 +101,13 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="span9">
+            {% for topic in top_topics %}
+            <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
     {% endblock %}

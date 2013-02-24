@@ -64,7 +64,7 @@ $().ready(function() {
                   <a href="{{url('content.view.community')}}">Статьи</a>
                   <span class="divider">/</span>
                 </li>
-                <li class="active">Пуликации за {{selected_date|ru_date("%d %B %Y")}}</li>
+                <li class="active">Публикации за {{selected_date|ru_date("%d %B %Y")}}</li>
                 {% else %}
                 <li class="active">Статьи</li>
                 {% endif %}

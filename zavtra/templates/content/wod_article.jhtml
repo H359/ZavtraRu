@@ -61,6 +61,7 @@
       </div>
     </div>
   </div>
+  {#
   <div class="row">
     <div class="span12">
       <div id="inner_subjects">
@@ -70,6 +71,7 @@
       </div>
     </div>
   </div>
+  #}
   <div class="row">
     <div class="span12">
       <div class="text-over-image y-margin-one">
