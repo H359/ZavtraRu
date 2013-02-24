@@ -134,8 +134,8 @@
                     </div>
                     {% endfor %}
                   </div>
-                  <a href="#events" class="carousel-control left" data-slide="prev"></a>
-                  <a href="#events" class="carousel-control right" data-slide="next"></a>
+                  <!--<a href="#events" class="carousel-control left" data-slide="prev"></a>
+                  <a href="#events" class="carousel-control right" data-slide="next"></a>-->
                 </div>
               </div>
               {% endcache %}
