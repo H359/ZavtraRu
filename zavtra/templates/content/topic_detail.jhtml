@@ -19,6 +19,15 @@
                 </li>
                 <li class="active">{{topic.title}}</li>
               </ul>
+        			<div class="section_header_button">
+      					<div class="section_header_button_datepicker">
+      						<span>Поиск по Дате</span>&nbsp;
+      						<span class="caret"></span>
+      					</div>
+      				</div>
+      			  <div class="datepicker_container" style="display: none;">
+					      <div id="datepicker" class="padding_one"></div>
+				      </div>
             </div>
           </div>
         </div>
