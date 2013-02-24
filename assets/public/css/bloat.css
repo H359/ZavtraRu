@@ -34,6 +34,9 @@ body .modal-backdrop.fade.in {
 
 #events {
   font-size: 15px;
+  -webkit-box-shadow: 0px 0px 12px 1px #444;
+  -moz-box-shadow: 0px 0px 12px 1px #444;
+  box-shadow: 0px 0px 12px 1px #444;
 }
 
 #events a:hover {
@@ -65,7 +68,7 @@ body .modal-backdrop.fade.in {
 
 #events .carousel-indicators {
   margin: 0;
-  padding: 0;
+  padding-left: .1em;
   position: absolute;
   top: 12.3em;
   left: 1em;
@@ -79,7 +82,7 @@ body .modal-backdrop.fade.in {
   */
   width: .75em;
   height: .75em;
-  margin-right: 0.3em;
+  margin-right: 0.6em;
   float: left;
   display: block;
   border-radius: 0;
@@ -97,7 +100,10 @@ body .modal-backdrop.fade.in {
     font-size: 14px;
   }
   #events .carousel-indicators li {
-    margin-right: 0.2em;
+    margin-right: 0.6em;
+  }
+  #events a.carousel-control {
+    top: 11.5em;
   }
 }
 
@@ -106,14 +112,13 @@ body .modal-backdrop.fade.in {
     font-size: 11px;
   }
   #events .carousel-indicators {
-    top: 12.6em;
+    top: 12.4em;
   }
   #events .carousel-indicators li {
-    font-size: 11px;
-    margin-right: 0.2em;
+    margin-right: 0.5em;
   }
   #events a.carousel-control {
-    top: 12.5em;
+    top: 9em;
   }
 }
 
