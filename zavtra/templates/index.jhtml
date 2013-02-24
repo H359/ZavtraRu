@@ -105,7 +105,6 @@
   <div class="row">
     <div class="span9">
       <div class="row">
-        {% cache 600 'home:events' %}
         <div class="relative span3">
           <div class="row">
             <div class="span3" id="events_block">
@@ -125,7 +124,7 @@
                     {% endfor %}
                   </ol>
                   <div class="carousel-inner">
-                    {% for event in events[0:8] %}
+                    {% for event in events %}
                     <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
                       <h5>
@@ -141,8 +140,6 @@
             </div>
           </div>
         </div>
-        {% endcache %}
-        {% cache 600 'home:wod' %}
         <div class="span6" id="wod_block">
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
@@ -170,11 +167,9 @@
             </div>
           </div>
         </div>
-        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
-          {% cache 600 'home:news' %}
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
@@ -191,7 +186,6 @@
               </div>
             </div>
           </div>
-          {% endcache %}
         </div>
       </div>
       <div class="row" id="navigation_holder">

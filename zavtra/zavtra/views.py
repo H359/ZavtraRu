@@ -5,6 +5,7 @@ from datetime import datetime
 
 from django.views.generic import TemplateView
 
+from zavtra.utils import cached
 from content.models import Article, Rubric, Issue
 from siteuser.models import User
 
@@ -28,10 +29,19 @@ class HomeView(TemplateView):
     #latest_news = Article.news.defer('content').all()
     context = {
       'issue': Issue.published.prefetch_related('issue_rubrics').latest('published_at'),
-      'events': Article.events.select_related().defer('content').all(),
-      'latest_news': Article.news.defer('content').all()[0:3],
+      'events': cached(
+        lambda: Article.events.select_related().defer('content')[0:8],
+        'events:latest'
+      ),
+      'latest_news': cached(
+        lambda: Article.news.defer('content').all()[0:3],
+        'news:latest'
+      ),
       'selected_articles': selected_articles,
-      'video': Article.published.filter(type = Article.TYPES.video).latest('published_at'),
+      'video': cached(
+        lambda: Article.published.filter(type = Article.TYPES.video).latest('published_at'),
+        'video:latest'
+      ),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
                select_related().all()[0:6],
