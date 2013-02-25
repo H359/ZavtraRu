@@ -59,6 +59,11 @@ function switchMainTabs(which) {
 
 $(document).ready(function(){
 	checkSizes();
+	$('.section_header_button_datepicker').on('click', function(){
+		$(this).toggleClass('selected');
+		$('.datepicker_container').toggle();
+		return false;
+	});
 	$('.main_tab').on('click', function(){switchMainTabs(this)});
 	$('.carousel-fast').carousel({interval: 8000});
 	$('.carousel-slow').carousel({interval: 14000});
