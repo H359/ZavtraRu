@@ -1,11 +1,11 @@
 #-*- coding: utf-8 -*-
 from urllib import urlencode
-from datetime import datetime
+from datetime import datetime, timedelta
 from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Max, Min, Q
+from django.db.models import Max, Min, Q, Count
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
@@ -22,14 +22,14 @@ class EventsView(ListView):
 
   def get_date(self):
     if 'date' in self.kwargs:
-      date = datetime.strptime(self.kwargs['date'], '%d-%m-%Y').date()
+      date = datetime.strptime(self.kwargs['date'], '%Y-%m-%d').date()
     else:
       date = datetime.now().date()
     return date
 
   def get_context_data(self, **kwargs):
     context = super(EventsView, self).get_context_data(**kwargs)
-    context['date'] = self.date    
+    context['date'] = self.date
     context['prev_date'] = self.date - oneday
     context['next_date'] = self.date + oneday
 
@@ -106,7 +106,23 @@ class ArticleView(DetailView):
       except ArticleVote.DoesNotExist:
         context['has_voted'] = False
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
-      context['related'] = Article.wod.defer('content')[0:5]
+      related = []
+      # TODO: this is nightmare...
+      prev = list(reversed(Article.wod.filter(published_at__lt = context['object'].published_at)[0:4]))
+      next = list(Article.wod.filter(published_at__gt = context['object'].published_at)[0:4])
+
+      related.append(context['object'])
+      while len(related) < 5:
+        try:
+          related.append(next.pop())
+        except IndexError:
+          pass
+        try:
+          related.insert(0, prev.pop())
+        except IndexError:
+          pass
+
+      context['related'] = related
     return context
 
   def get_queryset(self):
@@ -174,21 +190,39 @@ class IssueView(TemplateView):
       published_at__year = self.kwargs['year'],
       relative_number = self.kwargs['issue']
     )
-    context['latest_issues'] = Issue.published.all()[0:5]
+    related = []
+    # TODO: this is nightmare...
+    prev = list(reversed(Issue.published.filter(published_at__lt = context['issue'].published_at)[0:4]))
+    next = list(Issue.published.filter(published_at__gt = context['issue'].published_at)[0:4])
+
+    related.append(context['issue'])
+    while len(related) < 5:
+      try:
+        related.append(next.pop())
+      except IndexError:
+        pass
+      try:
+        related.insert(0, prev.pop())
+      except IndexError:
+        pass
+
+    context['related'] = related
     return context
 
 
 class CommunityView(ListView):
   template_name = 'content/community.jhtml'
   paginate_by = 15
-  #paginator_class = DiggPaginator
-  paginator_class = ExtendedDiggPaginator
+  paginator_class = DiggPaginator
   selected_date = None
 
   def get_queryset(self):
+    now = datetime.now()
     qs = Article.published.\
          filter(authors__level__gte = User.USER_LEVELS.trusted).\
          prefetch_related('authors').defer('content')
+    self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+    qs = qs.exclude(pk__in = [w.pk for w in self.newest])
     if 'year' in self.request.GET and \
        'month' in self.request.GET and \
        'day' in self.request.GET:
@@ -206,6 +240,7 @@ class CommunityView(ListView):
     context = super(CommunityView, self).get_context_data(**kwargs)
     if self.selected_date is not None:
       context['selected_date'] = self.selected_date
+    context['newest'] = self.newest
     context['most_commented'] = Article.get_most_commented()
     return context
 
@@ -223,29 +258,42 @@ class ArticleVoteView(RedirectView):
 
 
 class SearchView(ListView):
-  paginate_by = 15
+  paginate_by = 5
   paginator_class = DiggPaginator
   template_name = 'content/search.jhtml'
 
   def get_queryset(self):
-    qs = Article.searcher
+    self.category = self.kwargs.get('category')
+    self.found_authors = []
 
+    if self.category == 'authors':
+      qs = User.columnists.annotate(articles_count = Count('articles')).\
+           annotate(left_comments = Count('comments')).\
+           annotate(expert_comments_count = Count('expert_comments'))
+
+    else:
+      qs = Article.searcher
+    
     # process form
     self.form = SearchForm(self.request.GET)
     if self.form.is_valid():
       data = self.form.cleaned_data
       q = data['query']
-      qs = qs.search(query=q, rank_field='rank')
-      if data['start']:
-        qs = qs.filter(published_at__gte = data['start'])
-      if data['end']:
-        qs = qs.filter(published_at__lte = data['end'])
-      self.found_authors = User.columnists.filter(
-        Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-        Q(resume__icontains = q) | Q(bio__icontains = q)
-      )
-    else:
-      self.found_authors = []
+      if self.category != 'authors':
+        qs = qs.search(query=q, rank_field='rank')
+        if data['start']:
+          qs = qs.filter(published_at__gte = data['start'])
+        if data['end']:
+          qs = qs.filter(published_at__lte = data['end'])
+        self.found_authors = User.columnists.filter(
+          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
+          Q(resume__icontains = q) | Q(bio__icontains = q)
+        )
+      else:
+        qs = qs.filter(
+          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
+          Q(resume__icontains = q) | Q(bio__icontains = q)
+        )
     
     # pack params for GET reuse
     self.form_data = {}
@@ -253,13 +301,15 @@ class SearchView(ListView):
       self.form_data[k] = unicode(v).encode('utf-8')
 
     # apply rubric filter if any
-    self.category = self.kwargs.get('category')
     if self.category == 'wod':
       qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
     elif self.category == 'events':
       qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
-    return qs.select_related().prefetch_related('authors', 'topics').\
-           defer('content').order_by('-published_at')
+    if self.category == 'authors':
+      return qs.all()
+    else:
+      return qs.select_related().prefetch_related('authors', 'topics').\
+             defer('content').order_by('-published_at')
 
   def get_context_data(self, **kwargs):
     context = super(SearchView, self).get_context_data(**kwargs)

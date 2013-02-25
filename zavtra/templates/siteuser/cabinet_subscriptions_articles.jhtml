@@ -24,11 +24,11 @@
             {% else %}
             <a href="{{request.path|e}}">все</a>
             {% endif %}
-            {% for year in request.user.get_pub_dates(quant='year') %}
-            {% if year.year == filters['year'] %}
-            <span class="archive_selector_selected">{{year.year}}</span>
+            {% for year in range(1996, now.year + 1) %}
+            {% if year == filters['year'] %}
+            <span class="archive_selector_selected">{{year}}</span>
             {% else %}
-            <a href="?year={{year.year}}">{{year.year}}</a>
+            <a href="?year={{year}}">{{year}}</a>
             {% endif %}
             {% endfor %}
           </div>
@@ -41,11 +41,11 @@
             {% else %}
             <a href="?year={{filters['year']}}">все</a>
             {% endif %}
-            {% for month in request.user.get_pub_dates(quant='month', order='ASC', filters=["extract(year from published_at) = %d" % filters['year']]) %}
-            {% if month.month == filters['month'] %}
-            <span class="archive_selector_selected">{{month_names[month.month-1]}}</span>
+            {% for month in month_names %}
+            {% if loop.index == filters['month'] %}
+            <span class="archive_selector_selected">{{month}}</span>
             {% else %}
-            <a href="?year={{filters['year']}}&month={{month.month}}">{{month_names[month.month-1]}}</a>
+            <a href="?year={{filters['year']}}&month={{loop.index}}">{{month}}</a>
             {% endif %}
             {% endfor %}
           </div>

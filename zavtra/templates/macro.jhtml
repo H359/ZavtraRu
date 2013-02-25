@@ -50,6 +50,7 @@
             </p>
           </div>
         </article>
+        <div class="article-statistics"><span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> {{article.views_count|get_plural("просмотр,просмотра,просмотров")}}</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> {{article.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span></div>
       </section>
     </div>
     {% endfor %}
@@ -104,6 +105,7 @@
                 </p>
               </div>
             </article>
+            <div class="article-statistics"><span class="article-statistic"><a href="#"><i class="icon-eye-open"></i> {{article.views_count|get_plural("просмотр,просмотра,просмотров")}}</a></span><span class="article-statistic"><a href="#"><i class="icon-comment"></i> {{article.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span></div>
           </section>
         </div>
       </div>

@@ -6,6 +6,50 @@
 
 {% block navigation %}{{render_navigation(path="/content/events/")}}{% endblock %}
 
+{% block head %}
+<script>
+$().ready(function() {
+
+  $.datepicker.regional['ru'] = {
+    closeText: 'Закрыть',
+    prevText: '&#x3c;Пред',
+    nextText: 'След&#x3e;',
+    currentText: 'Сегодня',
+    monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь', 'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+    monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн', 'Июл','Авг','Сен','Окт','Ноя','Дек'],
+    dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+    dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+    dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+    weekHeader: 'Не',
+    dateFormat: 'dd.mm.yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''
+  };
+  $.datepicker.setDefaults($.datepicker.regional['ru']);
+  var n = new Date();
+  var correct_array = function(val, index) {
+    if (val < 10) return '0' + val;
+    return '' + val;
+  }
+  $('#datepicker').datepicker({
+    dateFormat: 'yy/mm/dd',
+    showOtherMonths: true,
+    {% if selected_date %}defaultDate: '{{day.strftime("%y/%m/%d")}}',{% endif %}
+    numberOfMonths: 1,
+    beforeShowDay: function(dt) {
+      return [dt < n];
+    },
+    onSelect: function(dt, dp) {
+      var date = $.map([dp.selectedYear, (dp.selectedMonth + 1), dp.selectedDay], correct_array);
+      window.location.href = "{{url('content.view.events')}}" + date.join('-') + '/';
+    }
+  });
+});
+</script>
+{% endblock %}
+
 {% block page_content %}
 <div class="container12">
   <div class="row">
@@ -53,6 +97,16 @@
                     </li>
                     <li class="active">События</li>
                   </ul>
+                  <div class="section_header_button">
+                    <div class="section_header_button_datepicker">
+                      <span>Поиск по Дате</span>&nbsp;
+                      <span class="caret"></span>
+                    </div>
+                  </div>
+                  <div class="datepicker_container" style="display: none;">
+                    <div id="datepicker" class="padding_one">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,7 +186,7 @@
                   <ul class="middle_align">
                     <li{% if prev_date is none %} class="disabled"{% endif %}>
                       {% if prev_date is not none %}
-                      <a href="{{url('content.view.events')}}{{prev_date|ru_date('%d-%m-%Y')}}/">Предыдущий День</a>
+                      <a href="{{url('content.view.events')}}{{prev_date|ru_date('%Y-%m-%d')}}/">Предыдущий День</a>
                       {% else %}
                       <a href="#">Предыдущий День</a>
                       {% endif %}
@@ -142,7 +196,7 @@
                     </li>
                     <li{% if next_date is none %} class="disabled"{% endif %}>
                       {% if next_date is not none %}
-                      <a href="{{url('content.view.events')}}{{next_date|ru_date('%d-%m-%Y')}}/">Следующий День</a>
+                      <a href="{{url('content.view.events')}}{{next_date|ru_date('%Y-%m-%d')}}/">Следующий День</a>
                       {% else %}
                       <a href="#">Следующий День</a>
                       {% endif %}
