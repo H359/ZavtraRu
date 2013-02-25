@@ -70,7 +70,6 @@
                 <div class="row">
                   <div class="span8 offset1">
                     {% for article in object_list %}
-                    <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
                     <section>
                       <article>
                         <div class="row">
@@ -86,6 +85,16 @@
                               {% endif %}
                             </header>
                             <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
+                            <span class="article-statistic">
+                              <a href="{{article.get_absolute_url()}}">
+                                <i class="icon-eye-open"> </i> {{article.views_count}}
+                              </a>
+                            </span>
+                            <span class="article-statistic">
+                              <a href="{{article.get_absolute_url()}}">
+                                <i class="icon-comment"> </i> {{article.comments_count}}
+                              </a>
+                            </span>
                           </div>
                           <div class="span3 right_align news-subject-container">
                             {% for topic in article.topics.all() %}
@@ -111,26 +120,12 @@
                                 </p>
                               </div>
                             </div>
-                            <div class="row">
-                              <div class="span5 article-statistics">
-                                <span class="article-statistic">
-                                  <a href="{{article.get_absolute_url()}}">
-                                    <i class="icon-eye-open"> </i> {{article.views_count}}
-                                  </a>
-                                </span>
-                                <span class="article-statistic">
-                                  <a href="{{article.get_absolute_url()}}">
-                                    <i class="icon-comment"> </i> {{article.comments_count}}
-                                  </a>
-                                </span>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </article>
                     </section>
-                    {% endfor %}
                     <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
+                    {% endfor %}
                   </div>
                 </div>
                 <div class="pagination center_align">

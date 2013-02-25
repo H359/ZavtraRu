@@ -112,7 +112,7 @@
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
-                    <a href="/content/events/" class="gray gray_link no_underline">
+                    <a href="/content/events/" class="no_underline">
                       <span class="main_header_category">События:</span>
                     </a>
                   </h2>
@@ -128,14 +128,14 @@
                     {% for event in events %}
                     <div class="item{% if loop.first %} active{% endif %}">
                       <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
-                      <h5>
+                      <h3>
                         <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
-                      </h5>
+                      </h3>
                     </div>
                     {% endfor %}
                   </div>
-                  <a href="#events" class="carousel-control left" data-slide="prev"></a>
-                  <a href="#events" class="carousel-control right" data-slide="next"></a>
+                  <!--<a href="#events" class="carousel-control left" data-slide="prev"></a>
+                  <a href="#events" class="carousel-control right" data-slide="next"></a>-->
                 </div>
               </div>
               {% endcache %}
@@ -148,8 +148,10 @@
           <div id="main_wod_box">
             <div class="main_upper_boxes_header">
               <h2>
-                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">
+                <a href="/content/rubric/wod/" class="no_underline">
                   <span class="main_header_category">Слово Дня:</span>
+                </a>
+                <a class="gray gray_link no_underline" href="{{wod.get_absolute_url()}}">     
                   <span class="main_header_name">{{wod.title}}</span>
                 </a>
               </h2>

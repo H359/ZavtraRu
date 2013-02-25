@@ -102,7 +102,7 @@ body {
 
 #main_header_search input {
 	width: 10em;
-	color: white;
+	color: #000;
 	border: 2px solid #BBB;
 	background-color: #EEE;
 	cursor: pointer;
@@ -1020,7 +1020,11 @@ article p {
 
 /* Comments */
 
-#comments-section, #wod_opinions_section {
+#wod_opinions_section {
+	margin-bottom: 1em;
+}
+
+#comments-section {
 	margin-top: 1em;
 }
 
@@ -1488,7 +1492,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #DDD;
 	padding-left: 1em;
 	padding-top: .25em;
-	height: 1.5em;
+	min-height: 1.5em;
 	border: 1px solid #C2C08C;
 	text-align: center;
 	font-family: 'Open Sans', Tahoma;
@@ -1500,6 +1504,7 @@ a.subject_nav_item, span.subject_nav_item {
 	font-size: 1em;
 	padding-right: 1.25em;
 	font-weight: bold;
+	text-transform: uppercase;
 }
 
 a.subject_nav_item:hover {
@@ -1589,7 +1594,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_alphabet_name {
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	padding: .5em 0em;
 	min-height: 1.66em;
@@ -1630,7 +1635,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 #author_search_box {
 	padding: 0em 1em;
-	background-color: #B4C3D7;
+	background-color: #DDD;
 	margin: 0em 1em 0em 1em;
 	text-align: right;
 }
@@ -1801,6 +1806,10 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	line-height: 1.15em;
 }
 
+.inner_blogentry_author a {
+	font-size: 1.1em;
+}
+
 .inner_blogentry .inner_blogentry_author {
 	margin-left: 4.75em;
 	height: 3.25em;
@@ -1843,12 +1852,12 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_new .inner_blogentry_header {
-	height: 4.75em;
+	height: 6em;
 	margin-left: 6.75em;
 }
 
 .inner_blogentry_header > a {
-	font-size: .9em;
+	font-size: 1.05em;
 	font-weight: 700;
 }
 
@@ -2163,15 +2172,15 @@ li.empty span.large {
 	width: 100%;
 	position: absolute;
 	left: 0em;
-	top: 9.5em;
+	top: 11.5em;
 	background: #444;
-    background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, 
+	background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, 
                 color-stop(0%,#333), color-stop(100%,#222));
-    background: -webkit-linear-gradient(top, #333, #222);
-    background: -o-linear-gradient(top, #333, #222); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #333, #222); /* IE10 */
-    background: linear-gradient(top, #333, #222); /* CSS3 */ 
+	background: -webkit-linear-gradient(top, #333, #222);
+	background: -o-linear-gradient(top, #333, #222); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #333, #222); /* IE10 */
+	background: linear-gradient(top, #333, #222); /* CSS3 */ 
 }
 
 .person_breadcrumb {
@@ -2440,7 +2449,7 @@ li.empty span.large {
 }
  
 .person_search_bar {
-    margin: 1em 0em 0em 0em;
+    padding: 0em 0em 0em 1em;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -2612,7 +2621,7 @@ li.empty span.large {
     width: 100%;
     position: absolute;
     left: 0em;
-    top: 9.5em;
+    top: 11.5em;
     height: 9em;
     background: #444;
     background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
