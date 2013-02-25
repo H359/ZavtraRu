@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from urllib import urlencode
-from datetime import datetime
+from datetime import datetime, timedelta
 from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
@@ -181,14 +181,16 @@ class IssueView(TemplateView):
 class CommunityView(ListView):
   template_name = 'content/community.jhtml'
   paginate_by = 15
-  #paginator_class = DiggPaginator
-  paginator_class = ExtendedDiggPaginator
+  paginator_class = DiggPaginator
   selected_date = None
 
   def get_queryset(self):
+    now = datetime.now()
     qs = Article.published.\
          filter(authors__level__gte = User.USER_LEVELS.trusted).\
          prefetch_related('authors').defer('content')
+    self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+    qs = qs.exclude(pk__in = [w.pk for w in self.newest])
     if 'year' in self.request.GET and \
        'month' in self.request.GET and \
        'day' in self.request.GET:
@@ -206,6 +208,7 @@ class CommunityView(ListView):
     context = super(CommunityView, self).get_context_data(**kwargs)
     if self.selected_date is not None:
       context['selected_date'] = self.selected_date
+    context['newest'] = self.newest
     context['most_commented'] = Article.get_most_commented()
     return context
 

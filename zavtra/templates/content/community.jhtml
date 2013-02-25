@@ -88,8 +88,7 @@ $().ready(function() {
               <div class="span9">
                 <div class="row">
                   <div class="span9 blogentries">
-                    {% for object in object_list %}
-                    {% if page_obj.number == 1 and loop.index in [1,2] %}
+                    {% for object in newest %}
                     <div class="inner_blogentry_new">
                       <div class="inner_blogentry_date_box_new">
                         <span class="inner_blogentry_new_tag">новое</span>
@@ -123,7 +122,8 @@ $().ready(function() {
                         </div>
                       </div>
                     </div>
-                    {% else %}
+                    {% endfor %}
+                    {% for object in object_list %}
                     <div class="inner_blogentry">
                       <div class="inner_blogentry_date_box">
                         <div class="inner_blogentry_date_content">{{object.published_at|ru_dt_distance_fuzzy}}</div>
@@ -156,7 +156,6 @@ $().ready(function() {
                         </div>
                       </div>
                     </div>
-                    {% endif %}
                     {% endfor %}
                   </div>
                   <div class="span9">{{pagination(request, page_obj)}}</div>
