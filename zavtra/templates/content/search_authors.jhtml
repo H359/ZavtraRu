@@ -35,14 +35,14 @@
             <div class="span6 author-description">{{object.resume}}</div>
           </div>
           <div class="row">
-            <div class="span6">
+            <div class="span5">
               <div class="row">
-                <div class="span6">
+                <div class="span5">
                   <div class="author_fresh_article_header">
                     <span class="bold dark">Активность:</span>
                   </div>
                 </div>
-                <div class="span6 article-header-container">
+                <div class="span5 article-header-container">
                   <span>
                     <a href="{{object.get_absolute_url()}}">{{object.articles_count|get_plural("статья,статьи,статей")}}, {{object.expert_comments_count|get_plural("экспертная оцена,экспертных оценки,экспертных оценок")}}, {{object.left_comments|get_plural("комментарий,комментария,комментариев")}}
                     </a>
@@ -53,11 +53,11 @@
             {% set fresh_article = object.latest_article %}
             {% if fresh_article is not none %}
             <div class="row">
-              <div class="span6">
+              <div class="span5">
                 <div class="author_fresh_article_header">
                   <span class="bold dark">Свежая статья:</span>
                 </div>
-                <div class="span6 article-header-container">
+                <div class="span5 article-header-container">
                   <header>
                     <h2 class="article-header">
                       <a href="{{fresh_article.get_absolute_url()}}">{{fresh_article.title}}</a>
@@ -69,7 +69,7 @@
             {% set issue = fresh_article.issue %}
             {% if issue is not none %}
             <div class="row">
-              <div class="span6 article-header-statistics">
+              <div class="span5 article-header-statistics">
                 <div class="row">
                   <div class="span3_5">
                     <a href="{{issue.get_absolute_url()}}" class="largetext dark">&laquo;Завтра&raquo; &mdash; №{{issue.relative_number}} &mdash; {{issue.published_at|ru_date("%d %B %Y")}}г.</a>
@@ -84,12 +84,12 @@
             </div>
             {% endif %}
             <div class="row">
-              <div class="span6 article-text">
+              <div class="span5 article-text">
                 <p class="article-paragraph"><a href="{{fresh_article.get_absolute_url()}}">{{fresh_article.announce|striptags}}</a></p>
               </div>
             </div>
             <div class="row">
-              <div class="span6 article-statistics">
+              <div class="span5 article-statistics">
                 <span class="article-statistic">
                   <a href="{{fresh_article.get_absolute_url()}}">
                     <i class="icon-eye-open"> </i> {{fresh_article.views_count|get_plural("просмотр,просмотра,просмотров")}}
