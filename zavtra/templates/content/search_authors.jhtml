@@ -107,7 +107,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="span9">
+        <div class="span8">
           <div class="author-actions">
             {% if request.user and request.user.is_authenticated() %}
             {% if object.id in user_reads %}
