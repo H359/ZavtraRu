@@ -5,7 +5,7 @@ from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Max, Min, Q
+from django.db.models import Max, Min, Q, Count
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
@@ -226,29 +226,42 @@ class ArticleVoteView(RedirectView):
 
 
 class SearchView(ListView):
-  paginate_by = 15
+  paginate_by = 5
   paginator_class = DiggPaginator
   template_name = 'content/search.jhtml'
 
   def get_queryset(self):
-    qs = Article.searcher
+    self.category = self.kwargs.get('category')
+    self.found_authors = []
 
+    if self.category == 'authors':
+      qs = User.columnists.annotate(articles_count = Count('articles')).\
+           annotate(left_comments = Count('comments')).\
+           annotate(expert_comments_count = Count('expert_comments'))
+
+    else:
+      qs = Article.searcher
+    
     # process form
     self.form = SearchForm(self.request.GET)
     if self.form.is_valid():
       data = self.form.cleaned_data
       q = data['query']
-      qs = qs.search(query=q, rank_field='rank')
-      if data['start']:
-        qs = qs.filter(published_at__gte = data['start'])
-      if data['end']:
-        qs = qs.filter(published_at__lte = data['end'])
-      self.found_authors = User.columnists.filter(
-        Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-        Q(resume__icontains = q) | Q(bio__icontains = q)
-      )
-    else:
-      self.found_authors = []
+      if self.category != 'authors':
+        qs = qs.search(query=q, rank_field='rank')
+        if data['start']:
+          qs = qs.filter(published_at__gte = data['start'])
+        if data['end']:
+          qs = qs.filter(published_at__lte = data['end'])
+        self.found_authors = User.columnists.filter(
+          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
+          Q(resume__icontains = q) | Q(bio__icontains = q)
+        )
+      else:
+        qs = qs.filter(
+          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
+          Q(resume__icontains = q) | Q(bio__icontains = q)
+        )
     
     # pack params for GET reuse
     self.form_data = {}
@@ -256,13 +269,15 @@ class SearchView(ListView):
       self.form_data[k] = unicode(v).encode('utf-8')
 
     # apply rubric filter if any
-    self.category = self.kwargs.get('category')
     if self.category == 'wod':
       qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
     elif self.category == 'events':
       qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
-    return qs.select_related().prefetch_related('authors', 'topics').\
-           defer('content').order_by('-published_at')
+    if self.category == 'authors':
+      return qs.all()
+    else:
+      return qs.select_related().prefetch_related('authors', 'topics').\
+             defer('content').order_by('-published_at')
 
   def get_context_data(self, **kwargs):
     context = super(SearchView, self).get_context_data(**kwargs)

@@ -17,5 +17,5 @@ urlpatterns = patterns('',
   url(r'^topic/(?P<slug>[^/]+)/$', TopicView.as_view(), name='content.view.topic'),
   url(r'^community/$', CommunityView.as_view(), name='content.view.community'),
   url(r'^search/$', SearchView.as_view(), name='content.view.search'),
-  url(r'^search/(?P<category>(articles|wod|events))/$', SearchView.as_view())
+  url(r'^search/(?P<category>(articles|wod|events|authors))/$', SearchView.as_view())
 )
