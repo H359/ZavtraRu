@@ -12,10 +12,10 @@
 </div>
 <div class="span4 right_align">
   <span class="largetext">Поделиться:</span>
-  <span st_title="{{object.title|e}}" class="st_vkontakte_large" displayText="ВКонтакте"></span>
-  <span st_title="{{object.title|e}}" class="st_twitter_large" displayText="Tweet"></span>
-  <span st_title="{{object.title|e}}" class="st_facebook_large" displayText="Facebook"></span>
-  <span st_title="{{object.title|e}}" class="st_googleplus_large" displayText="G+"></span>
+  <span st_title="{{object.title|e}}" class="st_vkontakte" displayText="ВКонтакте"></span>
+  <span st_title="{{object.title|e}}" class="st_twitter" displayText="Tweet"></span>
+  <span st_title="{{object.title|e}}" class="st_facebook" displayText="Facebook"></span>
+  <span st_title="{{object.title|e}}" class="st_googleplus" displayText="G+"></span>
 </div>
 {% endblock %}
 
