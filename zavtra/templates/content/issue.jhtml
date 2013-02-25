@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="row" id="newspaper_issues">
-      {% for other in latest_issues|reverse %}
+      {% for other in related %}
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
           <a href="{{other.get_absolute_url()}}">

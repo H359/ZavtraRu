@@ -106,7 +106,23 @@ class ArticleView(DetailView):
       except ArticleVote.DoesNotExist:
         context['has_voted'] = False
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
-      context['related'] = Article.wod.defer('content')[0:5]
+      related = []
+      # TODO: this is nightmare...
+      prev = list(reversed(Article.wod.filter(published_at__lt = context['object'].published_at)[0:4]))
+      next = list(Article.wod.filter(published_at__gt = context['object'].published_at)[0:4])
+
+      related.append(context['object'])
+      while len(related) < 5:
+        try:
+          related.append(next.pop())
+        except IndexError:
+          pass
+        try:
+          related.insert(0, prev.pop())
+        except IndexError:
+          pass
+
+      context['related'] = related
     return context
 
   def get_queryset(self):
@@ -174,7 +190,23 @@ class IssueView(TemplateView):
       published_at__year = self.kwargs['year'],
       relative_number = self.kwargs['issue']
     )
-    context['latest_issues'] = Issue.published.all()[0:5]
+    related = []
+    # TODO: this is nightmare...
+    prev = list(reversed(Issue.published.filter(published_at__lt = context['issue'].published_at)[0:4]))
+    next = list(Issue.published.filter(published_at__gt = context['issue'].published_at)[0:4])
+
+    related.append(context['issue'])
+    while len(related) < 5:
+      try:
+        related.append(next.pop())
+      except IndexError:
+        pass
+      try:
+        related.insert(0, prev.pop())
+      except IndexError:
+        pass
+
+    context['related'] = related
     return context
 
 
