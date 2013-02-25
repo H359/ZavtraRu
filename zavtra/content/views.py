@@ -22,14 +22,14 @@ class EventsView(ListView):
 
   def get_date(self):
     if 'date' in self.kwargs:
-      date = datetime.strptime(self.kwargs['date'], '%d-%m-%Y').date()
+      date = datetime.strptime(self.kwargs['date'], '%Y-%m-%d').date()
     else:
       date = datetime.now().date()
     return date
 
   def get_context_data(self, **kwargs):
     context = super(EventsView, self).get_context_data(**kwargs)
-    context['date'] = self.date    
+    context['date'] = self.date
     context['prev_date'] = self.date - oneday
     context['next_date'] = self.date + oneday
 
