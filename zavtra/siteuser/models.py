@@ -104,38 +104,6 @@ class User(OpenGraphMixin, AbstractBaseUser):
   def get_comments_url(self):
     return ('siteuser.view.profile_comments', (), {'pk': self.pk})    
 
-  def get_pub_dates(self, quant='month', order='DESC', filters=None):
-    if quant in ['day', 'month', 'year']:
-      typecast = 'date'
-    else:
-      typecast = 'timestamp'
-    from django.db import connection
-    # apply filters
-    if filters is not None:
-      cfilters = "AND " + ' AND '.join(filters)
-    else:
-      cfilters = ""
-    cursor = connection.cursor()
-    query = """
-      SELECT
-        DISTINCT date_trunc('%s', published_at)::%s as quant
-      FROM
-        content_article
-      WHERE id IN (
-        SELECT
-          article_id
-        FROM
-          content_article_authors
-        WHERE
-          user_id = %s
-      )
-      %s
-      ORDER BY quant %s
-    """ % (quant, typecast, self.pk, cfilters, order)
-    cursor.execute(query)
-    for x in cursor:
-      yield x[0]
-
   @staticmethod
   def autocomplete_search_fields():
     return ("id__iexact", "last_name__icontains",)
