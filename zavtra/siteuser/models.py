@@ -47,6 +47,11 @@ class User(OpenGraphMixin, AbstractBaseUser):
     ordering = ('last_name', 'first_name')
 
   @property
+  def published_articles(self):
+    from content.models import Article
+    return Article.published.filter(authors__in = [self])
+
+  @property
   def open_graph_data(self):
     yield ('og:type', 'profile')
     if self.photo != "":
