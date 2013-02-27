@@ -156,6 +156,9 @@ INSTALLED_APPS = (
 
 #CUSTOM_USER_MODEL = 'siteuser.User'
 AUTH_USER_MODEL = 'siteuser.User'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/authors/login/'
+LOGOUT_URL = '/authors/logout/'
 
 AUTOSLUG_SLUGIFY_FUNCTION = 'pytils.translit.slugify'
 

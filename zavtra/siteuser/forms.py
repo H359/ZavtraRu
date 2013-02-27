@@ -3,6 +3,21 @@ from django import forms
 from django.forms import widgets
 
 from siteuser.models import User
+from content.models import Article
+
+
+class ArticleForm(forms.ModelForm):
+  class Meta:
+    model = Article
+    exclude = (
+      'rubric', 'status', 'type', 'published_at', 'selected_at', 
+      'authors', 'topics', 'cover_source', 'announce'
+    )
+    widgets = {
+      'title': widgets.TextInput(attrs={'id': 'add_header'}),
+      'subtitle': widgets.TextInput(attrs={'id': 'add_subheader'}),
+      'content': widgets.Textarea(attrs={'id': 'add_text'})
+    }
 
 
 class UserInfoForm(forms.ModelForm):

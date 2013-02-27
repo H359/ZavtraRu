@@ -165,7 +165,7 @@
                 <h5>Экспертные оценки:</h5>
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
-                  <span class="person_name">{{expert_comment.expert}}</span>
+                  <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>
                   {% if not loop.last %} &bull; {% endif %}
                   {% endfor %}
                 </span>

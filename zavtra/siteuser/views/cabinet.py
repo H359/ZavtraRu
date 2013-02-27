@@ -7,8 +7,10 @@ from django.shortcuts import redirect
 from django.db.models import Q
 
 from base import FilteredArticlesView
-from siteuser.forms import UserInfoForm
+from siteuser.forms import UserInfoForm, ArticleForm
 from siteuser.models import User
+from content.models import Rubric
+
 
 class CabinetView(TemplateView, FormView):
   template_name = 'siteuser/cabinet_about.jhtml'
@@ -72,7 +74,10 @@ class CabinetArticlesSubscriptionsView(FilteredArticlesView):
   def get_queryset(self):
     qs = super(CabinetArticlesSubscriptionsView, self).get_queryset()
     #reads = Reader.objects.filter(reader=self.request.user)
-    return qs.filter(authors__readees__reader = self.request.user)
+    return qs.filter(
+      Q(authors__readees__reader = self.request.user) |
+      Q(expert_comments__expert__readees__reader = self.request.user)
+    )
 
 
 class CabinetAuthorsSubscriptionsView(ListView):
@@ -85,3 +90,29 @@ class CabinetAuthorsSubscriptionsView(ListView):
 
   def get_queryset(self):
     return User.columnists.filter(readees__reader = self.request.user)
+
+
+class CabinetPostArticleView(TemplateView, FormView):
+  template_name = 'siteuser/cabinet_post_article.jhtml'
+
+  def get_context_data(self, **kwargs):
+    context = super(CabinetPostArticleView, self).get_context_data(**kwargs)
+    context['part'] = 'articles'
+    return context
+
+  def return_form(self, form):
+    return self.render_to_response(self.get_context_data(form=form))
+
+  def post(self, request, *args, **kwargs):
+    form = ArticleForm(request.POST)
+    if form.is_valid():
+      #messages.info(request, u'Запрос на публикацию статьи отправлен редактору')
+      instance = form.save(commit=False)
+      instance.rubric = Rubric.fetch_rubric('blogi')
+      instance.save()
+      instance.authors.add(request.user)
+      return redirect('siteuser.view.cabinet_articles')
+    return self.return_form(form)
+
+  def get(self, request, *args, **kwargs):
+    return self.return_form(ArticleForm())

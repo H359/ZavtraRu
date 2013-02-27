@@ -25,7 +25,8 @@ from siteuser.models import User, Reader
 from profile import ProfileView, ProfileArticlesView, ProfileCommentsView
 from cabinet import CabinetView, CabinetArticlesView,\
                     CabinetArticlesSubscriptionsView,\
-                    CabinetAuthorsSubscriptionsView
+                    CabinetAuthorsSubscriptionsView,\
+                    CabinetPostArticleView
 from subscribe import SubscribeUserView, UnSubscribeUserView
 from register import RegisterView, RegisterDoneView
 

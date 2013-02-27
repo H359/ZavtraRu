@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
+from siteuser.forms import RegisterUserForm
+
 
 class RegisterView(TemplateView, FormView):
   template_name = 'siteuser/register.jhtml'
