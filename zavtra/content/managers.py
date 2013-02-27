@@ -51,3 +51,10 @@ class ColumnsManager(PublishedManager):
     from content.models import Rubric
     return super(ColumnsManager, self).get_query_set().\
            filter(rubric=Rubric.fetch_rubric('columnists'))
+
+
+class EditorialManager(PublishedManager):
+  def get_query_set(self):
+    from content.models import Rubric
+    return super(EditorialManager, self).get_query_set().\
+           filter(rubric=Rubric.fetch_rubric('editorial'))

@@ -5,7 +5,7 @@ from datetime import datetime
 
 from django.views.generic import TemplateView
 
-from content.models import Article, Rubric, Issue
+from content.models import Article, Rubric, Issue, DailyQuote
 from siteuser.models import User
 
 
@@ -25,8 +25,18 @@ class HomeView(TemplateView):
                         prefetch_related('authors').\
                         order_by('-selected_at').\
                         select_related()[0:6]
+    try:
+      editorial = Article.editorial.select_related().\
+                  prefetch_related('authors').\
+                  latest('published_at')
+      if len(editorial.authors.all()) != 1:
+        editorial = None
+    except Article.DoesNotExist:
+      editorial = None
     context = {
       'issue_qs': Issue.published.prefetch_related('issue_rubrics'),
+      'editorial': editorial,
+      'quote': DailyQuote.get_current(),
       'events': Article.events.select_related().defer('content')[0:8],
       'latest_news': Article.news.defer('content').all()[0:3],
       'selected_articles': selected_articles,

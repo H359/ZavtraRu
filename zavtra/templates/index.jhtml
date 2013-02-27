@@ -211,12 +211,13 @@
           </div>
         </div>
       </div>
-      {#
+      {% if editorial is not none %}
       <div class="row">
         <div class="span9">
           <div class="main_editor_container">
             <div class="main_editor_message">
-              <img src="http://placekitten.com/g/146/83" class="main_editor_message_img">
+              {% set author = editorial.authors.all()[0] %}
+              <img src="{{author.photo_90.url}}" class="main_editor_message_img">
               <div class="main_editor_message_header">
                 <h3>
                   <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline">{{editorial.rubric.title}}</a>
@@ -227,16 +228,29 @@
                   <a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.title}}</a>
                 </h5>
                 <h5 class="right_align dark">
-                  {% for author in editorial.authors.all() %}
                   <a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
-                  {% endfor %}
                 </h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-      #}
+      {% endif %}
+      {% if quote is not none %}
+      <div class="row">
+        <div class="span9">
+          <div class="main_editor_container">
+            <div class="main_editor_message">
+              <div class="main_editor_message_text">
+                <h5>
+                  <a href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
       <div class="row">
         {% cache 3600 'home:selected_articles' %}
         {% for article in selected_articles %}

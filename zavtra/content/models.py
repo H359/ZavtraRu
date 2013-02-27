@@ -20,7 +20,8 @@ from imagekit.processors.crop import Crop, Anchor
 from siteuser.models import User as UserModel
 
 from managers import PublishedManager, EventsManager, WODManager,\
-                     NewsManager, ColumnsManager, BaseNewsManager
+                     NewsManager, ColumnsManager, BaseNewsManager,\
+                     EditorialManager
 from zavtra.utils import cached, oneday, OpenGraphMixin
 
 
@@ -178,6 +179,7 @@ class Article(OpenGraphMixin, models.Model):
   common_news = BaseNewsManager()
   wod = WODManager()
   columns = ColumnsManager()
+  editorial = EditorialManager()
 
   searcher = SearchManager(
     fields = (('title', 'A'), ('subtitle', 'B'), ('content', 'C')),
@@ -278,6 +280,9 @@ class Article(OpenGraphMixin, models.Model):
     #start = end - oneday * 30
     return Article.published.prefetch_related('authors').select_related().all()[0:5]
 
+  @staticmethod
+  def autocomplete_search_fields():
+    return ("id__iexact", "title__icontains",)
 
 class ArticleVote(models.Model):
   article = models.ForeignKey(Article, related_name='votes')
@@ -293,6 +298,7 @@ class ArticleVote(models.Model):
     Article.published.filter(id=self.article_id).update(
       **ArticleVote.objects.filter(article=self.article).aggregate(rating=Sum('vote'))
     )
+
 
 class ExpertComment(models.Model):
   expert = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'Эксперт', related_name='expert_comments')
@@ -332,3 +338,10 @@ class DailyQuote(models.Model):
     ordering = ['-day']
     verbose_name = u'Цитата дня'
     verbose_name_plural = u'Цитаты дня'
+
+  @staticmethod
+  def get_current():
+    try:
+      return DailyQuote.objects.select_related().get(day=datetime.now().date())
+    except DailyQuote.DoesNotExist:
+      return None

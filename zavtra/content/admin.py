@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
                            DailyQuote, WodCite
-from content.proxies import News, Wod, Video, Columns
+from content.proxies import News, Wod, Video, Columns, Editorial
 
 
 class ExpertCommentAdminInline(admin.StackedInline):
@@ -141,6 +141,24 @@ class ColumnsAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class EditorialAdmin(admin.ModelAdmin):
+  exclude = ('rubric', 'selected_at',)
+  list_display = ('title', 'status', 'published_at')
+  search_fields = ('title',)
+  raw_id_fields = ('authors', 'topics')
+  form = ArticleAdminForm
+  autocomplete_lookup_fields = {
+    'm2m': ['authors', 'topics']
+  }
+
+  def queryset(self, request):
+    return Article.editorial.all()
+
+  def save_model(self, request, obj, form, change):
+    obj.rubric = Rubric.fetch_rubric('editorial')
+    obj.save()
+
+
 class TopicAdmin(admin.ModelAdmin):
   list_display = ('title', 'position')
   list_editable = ('position',)
@@ -152,12 +170,21 @@ class IssueAdmin(admin.ModelAdmin):
   inlines = [RubricInIssueAdminInline]
 
 
+class DailyQuoteAdmin(admin.ModelAdmin):
+  list_display = ('day', 'quote', 'source',)
+  raw_id_fields = ('source',)
+  autocomplete_lookup_fields = {
+    'fk': ['source']
+  }
+
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Wod, WodAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Columns, ColumnsAdmin)
+admin.site.register(Editorial, EditorialAdmin)
 admin.site.register(Rubric)
 admin.site.register(Issue, IssueAdmin)
-admin.site.register(DailyQuote)
+admin.site.register(DailyQuote, DailyQuoteAdmin)
