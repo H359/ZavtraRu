@@ -2305,7 +2305,7 @@ li.empty span.large {
 	box-sizing: border-box;
 }
 
-#person_about {
+#person_about .text_area {
 	border-radius: 5px;
 	background-color: #FFF;
 	margin: 0em 1em;
@@ -2318,7 +2318,7 @@ li.empty span.large {
 	box-sizing: border-box;
 }
 
-#person_about p {
+#person_about p, .text_area p {
 	padding: .5em 0em;
 }
 
@@ -2709,7 +2709,7 @@ li.empty span.large {
  
 .search_dates select {
     height: 1.75em;
-    padding: .5em 0em;
+    padding: 0em;
     font-size: .8em;
     display: inline-block;
     margin: 0;
