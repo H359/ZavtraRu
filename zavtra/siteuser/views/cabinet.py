@@ -74,7 +74,10 @@ class CabinetArticlesSubscriptionsView(FilteredArticlesView):
   def get_queryset(self):
     qs = super(CabinetArticlesSubscriptionsView, self).get_queryset()
     #reads = Reader.objects.filter(reader=self.request.user)
-    return qs.filter(authors__readees__reader = self.request.user)
+    return qs.filter(
+      Q(authors__readees__reader = self.request.user) |
+      Q(expert_comments__expert__readees__reader = self.request.user)
+    )
 
 
 class CabinetAuthorsSubscriptionsView(ListView):

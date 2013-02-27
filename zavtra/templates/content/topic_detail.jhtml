@@ -115,12 +115,12 @@
                           <div class="span{{span}} article-statistics">
                             <span class="article-statistic">
                               <a href="{{object.get_absolute_url()}}">
-                                <i class="icon-eye-open"> </i> 100
+                                <i class="icon-eye-open"> </i> {{object.views_count}}
                               </a>
                             </span>
                             <span class="article-statistic">
                               <a href="{{object.get_absolute_url()}}">
-                                <i class="icon-comment"> </i> {{object.comments.count()}}
+                                <i class="icon-comment"> </i> {{object.comments_count}}
                               </a>
                             </span>
                           </div>
