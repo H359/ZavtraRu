@@ -216,7 +216,7 @@
         <div class="span9">
           <div class="main_editor_container">
             <div class="main_editor_message">
-              {% set author = editorial.authors.all()[0] %}
+              {%- set author = editorial.authors.all()[0] -%}
               <img src="{{author.photo_90.url}}" class="main_editor_message_img">
               <div class="main_editor_message_header">
                 <h3>
