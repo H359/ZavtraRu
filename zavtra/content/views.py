@@ -33,12 +33,9 @@ class EventsView(ListView):
     context['prev_date'] = self.date - oneday
     context['next_date'] = self.date + oneday
 
-    dates = Article.news.aggregate(start = Min('published_at'), end = Max('published_at'))
-    if context['prev_date'] < dates['start'].date():
-      context['prev_date'] = None
-    if context['next_date'] > dates['end'].date():
-      context['next_date'] = None
-
+    dates = Article.common_news.aggregate(start = Min('published_at'), end = Max('published_at'))
+    if context['prev_date'] < dates['start'].date(): context['prev_date'] = None
+    if context['next_date'] > dates['end'].date(): context['next_date'] = None
     context['latest_events'] = Article.events.all()[0:5]
     return context
 

@@ -60,7 +60,7 @@
                     <span class="main_header_login_text"> &bull; </span>
                     <a href="{{url('siteuser.view.register')}}" class="main_header_login_link">Регистрация</a>
                     {% else %}
-                    <a href="{{url('siteuser.view.cabinet')}}" class="main_header_login_link">Личный кабинет</a>
+                    <a href="{{url('siteuser.view.cabinet_subscriptions_articles')}}" class="main_header_login_link">Личный кабинет</a>
                     <span class="main_header_login_text"> &bull; </span>
                     <a class="main_header_login_link" href="{{url('siteuser.view.logout')}}?next={{request.path|e}}">Выход</a>
                     {% endif %}

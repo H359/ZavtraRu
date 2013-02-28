@@ -35,7 +35,7 @@
             <span class="main_header_login_text"> &bull; </span>
             <a href="{{url('siteuser.view.register')}}" class="main_header_login_link">Регистрация</a>
             {% else %}
-            <a href="{{url('siteuser.view.cabinet')}}" class="main_header_login_link">Личный кабинет</a>
+            <a href="{{url('siteuser.view.cabinet_subscriptions_articles')}}" class="main_header_login_link">Личный кабинет</a>
             <span class="main_header_login_text"> &bull; </span>
             <a class="main_header_login_link" href="{{url('siteuser.view.logout')}}?next={{request.path|e}}">Выход</a>
             {% endif %}
@@ -211,12 +211,13 @@
           </div>
         </div>
       </div>
-      {#
+      {% if editorial is not none %}
       <div class="row">
         <div class="span9">
           <div class="main_editor_container">
             <div class="main_editor_message">
-              <img src="http://placekitten.com/g/146/83" class="main_editor_message_img">
+              {%- set author = editorial.authors.all()[0] -%}
+              <img src="{{author.photo_90.url}}" class="main_editor_message_img">
               <div class="main_editor_message_header">
                 <h3>
                   <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline">{{editorial.rubric.title}}</a>
@@ -227,18 +228,30 @@
                   <a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.title}}</a>
                 </h5>
                 <h5 class="right_align dark">
-                  {% for author in editorial.authors.all() %}
                   <a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
-                  {% endfor %}
                 </h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-      #}
+      {% endif %}
+      {% if quote is not none %}
       <div class="row">
-        {% cache 3600 'home:selected_articles' %}
+        <div class="span9">
+          <div class="main_editor_container">
+            <div class="main_editor_message">
+              <div class="main_editor_message_text">
+                <h5>
+                  <a href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <div class="row">
         {% for article in selected_articles %}
         <div class="span3">
           <div class="main_article_container">
@@ -248,7 +261,7 @@
             {% endif %}
             <div class="main_article_header">
               <div class="main_article_author">
-                <span class="person_name">{% for author in article.authors.all() %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}</span>
+                <span class="person_name">{% for author in article.authors.all() %}{{author}}{% if not loop.last %}, {% endif %}{% endfor %}</span>
               </div>
               <div class="main_article_name">
                 <h6>{{article.title}}</h6>
@@ -257,7 +270,6 @@
           </div>
         </div>
         {% endfor %}
-        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
@@ -273,7 +285,6 @@
             </div>
           </div>
           <div class="row">
-            {% cache 3600 'home:blogs' %}
             {% for article in blogs %}
             <div class="span4_5">
               <div class="main_blog_entry">
@@ -321,13 +332,11 @@
               </div>
             </div>
             {% endfor %}
-            {% endcache %}
           </div>
         </div>
       </div>
     </div>
     <div class="span4">
-      {% cache 3600 'home:issue' %}
       {% set issue = issue_qs.latest('published_at') %}
       <div class="row" id="newspaper_holder">
         <div class="span4" id="newspaper_block">
@@ -394,10 +403,8 @@
           </div>
         </div>
       </div>
-      {% endcache %}
       <div class="row">
         <div class="span4">
-          {% cache 3600 'home:video' %}
           {% set video = video_qs.latest('published_at') %}
           <div class="main_box_frame">
             <div class="relative main_box_header">
@@ -432,7 +439,6 @@
             </div>
             <div id="main_video_selected_description_container"><a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a></div>
           </div>
-          {% endcache %}
         </div>
       </div>
     </div>

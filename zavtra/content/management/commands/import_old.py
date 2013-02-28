@@ -21,6 +21,7 @@ class Command(BaseCommand):
         'position': rubric.position
       }
     self.blogs = Rubric.objects.create(title=u'Блоги')
+    Rubric.objects.create(title=u'Колонка редактора', slug='editorial')
     print 'done'
 
   def migrate_users(self):

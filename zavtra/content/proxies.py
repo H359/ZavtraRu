@@ -29,3 +29,10 @@ class Columns(Article):
     proxy = True
     verbose_name = u'Колонка колумниста'
     verbose_name_plural = u'Колонки колумнистов'
+
+
+class Editorial(Article):
+  class Meta:
+    proxy = True
+    verbose_name = u'Объявление в колонке редактора'
+    verbose_name_plural = u'Объявления в колонке редактора'
