@@ -124,8 +124,9 @@ class VideoAdmin(admin.ModelAdmin):
 
 
 class ColumnsAdmin(admin.ModelAdmin):
-  exclude = ('rubric', 'selected_at',)
-  list_display = ('title', 'status', 'published_at')
+  exclude = ('rubric',)
+  list_display = ('title', 'status', 'published_at', 'selected_at')
+  list_editable = ('selected_at',)
   search_fields = ('title',)
   raw_id_fields = ('authors', 'topics')
   form = ArticleAdminForm
