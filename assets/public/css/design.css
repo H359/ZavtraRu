@@ -339,7 +339,11 @@ a:hover .main_header_name {
 }
 
 #main_wod_details {
-	padding: .25em .75em .75em .75em;
+	padding: .5em .75em .75em .75em;
+}
+
+#main_wod_details h3 {
+padding-bottom: .25em;
 }
 
 #main_wod_details h4 {
