@@ -47,7 +47,7 @@
                     <button class="trans-button" type="submit"><i class="icon-search baseline_align"> </i></buton>
                   </form>
                 </div>
-                <h5 class="search_results_header">Результаты поиска (7):</h5>
+                <h5 class="search_results_header">Результаты поиска ({{paginator.count}}):</h5>
                 {% for object in object_list %}
                 <section class="person_search_result">
                   <div class="row">
