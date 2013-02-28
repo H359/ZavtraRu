@@ -407,7 +407,7 @@
           {% set video = video_qs.latest('published_at') %}
           <div class="main_box_frame">
             <div class="relative main_box_header">
-              <h5><a href="#" class="gray gray_link">Видео</a></h5>
+              <h5><a href="{[video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a></h5>
               <div id="main_video_dentv_link">
                 <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
@@ -418,7 +418,7 @@
                   {% if video.cover_source != "" %}
                   <img src="{{video.cover_for_video.url}}" id="main_video_selected_video">
                   {% else %}
-                  <img src="http://placekitten.com/246/184" id="main_video_selected_video">
+                  <img src="{{video.external_image}}" id="main_video_selected_video">
                   {% endif %}
                 </a>
               </div>
