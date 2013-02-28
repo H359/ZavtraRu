@@ -52,7 +52,8 @@
               </form>
             </div>
             <div id="main_search_image">
-              <a href="#"><i class="icon-search icon-white"> </i></a>
+              <button class="trans-button" type="submit"><i class="icon-search icon-white middle_align"> </i>
+              </button>
             </div>
           </div>
         </div>
