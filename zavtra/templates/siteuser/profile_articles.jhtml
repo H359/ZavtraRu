@@ -121,7 +121,7 @@
             <div class="span2 right_align news-subject-container">
               {% for topic in article.topics.all() %}
               <span class="label label-info mediumtext">
-                <a href="{{topic.get_absolute_url()}}">{{topic.title}}</a>
+                <a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a>
               </span>
               {% endfor %}
             </div>
