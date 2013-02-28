@@ -1636,6 +1636,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 #author_search_box input {
 	border: 1px solid #999;
+	width: 15em;
 }
 
 #selected_letter {
