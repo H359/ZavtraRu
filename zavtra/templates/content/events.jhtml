@@ -111,15 +111,6 @@ $().ready(function() {
               </div>
             </div>
             <div class="row">
-              <div class="span12">
-                <div id="inner_subjects">
-                  {% for t in top_topics %}
-                  <a href="{{t.get_absolute_url()}}" class="subject_nav_item">{{t.title}}</a>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="span10 offset1 article_background">
                 <div class="row">
                   <div class="span8 offset1">
