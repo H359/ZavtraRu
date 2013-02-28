@@ -19,24 +19,6 @@
                 </li>
                 <li class="active">{{topic.title}}</li>
               </ul>
-        			<div class="section_header_button">
-      					<div class="section_header_button_datepicker">
-      						<span>Поиск по Дате</span>&nbsp;
-      						<span class="caret"></span>
-      					</div>
-      				</div>
-      			  <div class="datepicker_container" style="display: none;">
-					      <div id="datepicker" class="padding_one"></div>
-				      </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="span12">
-            <div id="inner_subjects">
-              {% for t in top_topics %}
-              <a href="{{t.get_absolute_url()}}" class="subject_nav_item">{{t.title}}</a>
-              {% endfor %}
             </div>
           </div>
         </div>

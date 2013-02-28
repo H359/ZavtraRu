@@ -36,15 +36,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="span12">
-        <div id="inner_subjects">
-          {% for t in top_topics %}
-          <a href="{{t.get_absolute_url()}}" class="subject_nav_item">{{t.title}}</a>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
     {% for object in objects %}
     <div class="row wod_entry_header">
       <div class="span12">
