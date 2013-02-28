@@ -134,7 +134,9 @@
             <div class="span5">
               <div class="row">
                 <div class="span5 news-text">
-                  <p class="news-paragraph">{{article.announce|striptags}}</p>
+                  <a href="{{article.get_absolute_url()}}" class="no_underline"
+                    <p class="news-paragraph">{{article.announce|striptags}}</p>
+                  </a>
                   {% if article.rubric.id == wod_rubric.id %}
                   <div>
                     <br><h4>Экспертные оценки:</h4><br>
