@@ -83,7 +83,7 @@ class Command(BaseCommand):
         if obj.enabled:
           self.migrate_article(obj)
     print 'Articles done.'
-    anumber = 149
+    anumber = 148
     rnumber = 41
     ldate = datetime(year=1950, month=1, day=1).date()
     invrubrics = {r['rubric'].id: r['position'] for r in self.rubrics.values()}

@@ -215,6 +215,15 @@ class Article(OpenGraphMixin, models.Model):
     return ('content.view.article', (), {'slug': self.slug})
 
   @property
+  def external_image(self):
+    pc = urlparse(self.content)
+    if pc.netloc.endswith("youtube.com"):
+      vid = parse_qs(pc.query).get('v')[0].strip()
+      return 'http://img.youtube.com/vi/%s/0.jpg' % vid
+    else:
+      return ''
+
+  @property
   def issue(self):
     if not hasattr(self, '__issue_cache'):
       # early bailout for non-gazette articles

@@ -108,7 +108,6 @@
         <div class="relative span3">
           <div class="row">
             <div class="span3" id="events_block">
-              {% cache 3600 'home:events' %}
               <div id="main_events_box">
                 <div class="main_upper_boxes_header">
                   <h2 class="white">
@@ -138,11 +137,9 @@
                   <a href="#events" class="carousel-control right" data-slide="next"></a>-->
                 </div>
               </div>
-              {% endcache %}
             </div>
           </div>
         </div>
-        {% cache 3600 'home:wod' %}
         {% set wod = wod_qs.latest('published_at') %}
         <div class="span6" id="wod_block">
           <div id="main_wod_box">
@@ -173,11 +170,9 @@
             </div>
           </div>
         </div>
-        {% endcache %}
       </div>
       <div class="row">
         <div class="span9">
-          {% cache 3600 'home:news' %}
           <div id="main_news_box">
             <div id="main_news_box_header">
               <h3>
@@ -194,7 +189,6 @@
               </div>
             </div>
           </div>
-          {% endcache %}
         </div>
       </div>
       <div class="row" id="navigation_holder">
@@ -413,7 +407,7 @@
           {% set video = video_qs.latest('published_at') %}
           <div class="main_box_frame">
             <div class="relative main_box_header">
-              <h5><a href="#" class="gray gray_link">Видео</a></h5>
+              <h5><a href="{[video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a></h5>
               <div id="main_video_dentv_link">
                 <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
@@ -424,7 +418,7 @@
                   {% if video.cover_source != "" %}
                   <img src="{{video.cover_for_video.url}}" id="main_video_selected_video">
                   {% else %}
-                  <img src="http://placekitten.com/246/184" id="main_video_selected_video">
+                  <img src="{{video.external_image}}" id="main_video_selected_video">
                   {% endif %}
                 </a>
               </div>
