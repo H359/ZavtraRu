@@ -26,9 +26,6 @@
           <div class="span9">
             <div class="row">
               <div class="span9 person_search_bar">
-                <div class="module_header rubric-header">
-                  <h4 class="inline">Участники сообщества:</h4>
-                </div>
                 <div id="author_alphabet_name">
                   {% for l in alphabet %}
                   {% if l == letter %}
