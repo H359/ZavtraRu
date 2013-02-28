@@ -398,7 +398,7 @@ abc {
 
 .rubric-header .icon-chevron-right {
 	vertical-align: -10%;
-	background-image: url("../img/glyphicons-halflings-white.png")
+	background-image: url("/static/img/glyphicons-halflings-white.png")
 }
 
 .rubric-header a {
@@ -1286,7 +1286,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 
 .wod_quote_source {
 	font-size: .9em;
-	padding: 0em 2em 1em 1em;
+	padding: .5em 0em 1em 1em;
 	text-align: right;
 	color: #444;
 	display: block;
@@ -1588,10 +1588,6 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_alphabet_name {
-	background-color: #DDD;
-	margin: 0em 1em 0em 1em;
-	padding: .5em 0em;
-	min-height: 1.66em;
 	text-align: center;
 }
 
@@ -1607,17 +1603,18 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_alphabet_name a {
-	padding: 0em .25em;
+	padding: 0em .15em;
 	text-decoration: underline;
 	font-weight: 600;
-	color: #333;
-	font-size: .9em;
+	color: #FFF;
+	font-size: 1em;
 	font-family: 'Open Sans', Tahoma;
+	line-height: 1.4em;
 }
 
 #author_alphabet_name a:hover {
 	text-decoration: none;
-	color: #444;
+	color: #EEE;
 }
 
 #author_alphabet_name span {
@@ -1628,14 +1625,23 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #author_search_box {
-	padding: 0em 1em;
-	background-color: #DDD;
-	margin: 0em 1em 0em 1em;
+	padding: .75em 1.75em 0em 0em;
 	text-align: right;
 }
 
 #author_search_box input {
 	border: 1px solid #999;
+	width: 15em;
+}
+
+.search_results_header {
+	margin: 1em 1em 0em 1em;
+	padding: .5em 1.5em;
+	background-color: #444;
+	color: #EEE;
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .66);
+	-moz-box-shadow: 0 0 3px rgba(0,0,0,.66);
+	box-shadow: 0 0 3px rgba(0, 0, 0, .66);
 }
 
 #selected_letter {
@@ -1658,13 +1664,14 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
-	margin: 1em 1em 0em 1em;
+	margin: 0em 2em 2em 2em;
 	text-align: center;
 	padding: .25em 2em;
-	background-image: url('/static/img/gradient_grayscale_line_opacity.png');
-	background-repeat: repeat-y;
-	background-position: center;
-	background-size: contain; 
+	background-color: #444;
+}
+
+.author-actions a {
+	color: #FFF;
 }
 
 .author_link {
@@ -1795,22 +1802,25 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_author {
-	padding: .5em;
+	padding: .5em .5em 0em .5em;
 	position: relative;
 	line-height: 1.15em;
 }
 
 .inner_blogentry_author a {
-	font-size: 1.1em;
+	font-size: 1em;
+	display: inline-block;
+	padding-bottom: .33em;
 }
+
 
 .inner_blogentry .inner_blogentry_author {
 	margin-left: 4.75em;
-	height: 3.25em;
+	min-height: 3.25em;
 }
 
 .inner_blogentry_new .inner_blogentry_author {
-	margin-left: 7em;
+	margin-left: 7.25em;
 	height: 2em;
 }
 
@@ -1838,7 +1848,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .inner_blogentry_header {
 	position: relative;
-	padding: .75em .75em 0em .75em;
+	padding: 1em .75em 0em 1em;
 }
 
 .inner_blogentry .inner_blogentry_header {
@@ -1847,7 +1857,8 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .inner_blogentry_new .inner_blogentry_header {
 	height: 6em;
-	margin-left: 6.75em;
+	margin-left: 7em;
+	margin-top: .75em;
 }
 
 .inner_blogentry_header > a {
@@ -1952,6 +1963,8 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	border-top: 1px solid #AAA;
 	padding-left: 4.5em;
 	padding-top: .5em;
+	padding-right: .5em;
+	color: #FFF;
 }
 
 .top_selection_item_author a {
@@ -2142,7 +2155,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 #datepicker .ui-widget-header .ui-icon {
-	background-image: url("../img/glyphicons-halflings-white.png");
+	background-image: url("/static/img/glyphicons-halflings-white.png");
 }
 
 #datepicker .ui-state-hover {
@@ -2166,7 +2179,7 @@ li.empty span.large {
 	width: 100%;
 	position: absolute;
 	left: 0em;
-	top: 11.5em;
+	top: 11.25em;
 	background: #444;
 	background: -moz-linear-gradient(top, #333, #222); /* Firefox 3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, 
@@ -2446,7 +2459,7 @@ li.empty span.large {
 }
  
 .person_search_bar {
-    padding: 0em 0em 0em 1em;
+    padding: 0em 1em 0em 1em;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

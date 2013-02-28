@@ -85,7 +85,7 @@
             {% endif %}
             <div class="row">
               <div class="span5 article-text">
-                <p class="article-paragraph"><a href="{{fresh_article.get_absolute_url()}}">{{fresh_article.announce|striptags}}</a></p>
+                <p class="article-paragraph"><a href="{{fresh_article.get_absolute_url()}}" class="no_underline">{{fresh_article.announce|striptags}}</a></p>
               </div>
             </div>
             <div class="row">
