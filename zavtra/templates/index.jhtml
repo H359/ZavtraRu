@@ -275,65 +275,68 @@
       </div>
       <div class="row">
         <div class="span9">
-          <div class="row">
-            <div class="span9">
+          <div class="span4">
+            <div class="span4">
               <div class="main_box_frame">
-                <div class="relative main_box_header">
-                  <h4 class="white inline">
-                    <a href="/community/" class="gray gray_link">Сообщество</a>
-                  </h4>
+    						<div class="relative main_box_header">
+  								<h4 class="white inline">
+  									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
+  								</h4>
+  							</div>
+  						</div>
+            </div>
+            <div class="span4">
+              <div class="main_blog_entries_container">
+                {% for article in blogs %}
+                <div class="main_blog_entry">
+                  <div class="main_blog_entry_date_box">
+                     <span class="main_blog_entry_date_content">
+                      {{article.published_at|ru_dt_distance}}
+                     </span>
+                  </div>
+                  <div class="main_blog_entry_box">
+                    {% for author in article.authors.all() %}
+                    <a href="{{author.get_absolute_url()}}" class="person_name">
+                      {{author}}
+                    </a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                    <h5>
+                      <a href="{{article.get_absolute_url()}}" class="black black_link">
+                        {{article.title}}
+                      </a>
+                    </h5>
+                    <div class="main_blog_entry_statistics">
+                      <i class="icon-eye-open"> </i>
+                      <span class="smalltext">
+                        <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.views_count}}</a>
+                      </span>
+                      &nbsp;
+                      <i class="icon-comment"> </i>
+                      <span class="smalltext">
+                        <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.comments_count}}</a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="main_person_pic_small">
+                    {% set authors = article.authors.all()|list %}
+                    {% if authors|length > 0 %}
+                    {% set author = article.authors.all()[0] %}
+                    <a href="{{author.get_absolute_url()}}">
+                      {% if author.photo != "" %}
+                      <img src="{{author.photo_90.url}}">
+                      {% else %}
+                      <img src="{{STATIC_URL}}img/no_avatar.gif">
+                      {% endif %}
+                    </a>
+                    {% endif %}
+                  </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
           </div>
-          <div class="row">
-            {% for article in blogs %}
-            <div class="span4_5">
-              <div class="main_blog_entry">
-                <div class="main_blog_entry_date_box">
-                   <span class="main_blog_entry_date_content">
-                    {{article.published_at|ru_dt_distance}}
-                   </span>
-                </div>
-                <div class="main_blog_entry_box">
-                  {% for author in article.authors.all() %}
-                  <a href="{{author.get_absolute_url()}}" class="person_name">
-                    {{author}}
-                  </a>{% if not loop.last %}, {% endif %}
-                  {% endfor %}
-                  <h5>
-                    <a href="{{article.get_absolute_url()}}" class="black black_link">
-                      {{article.title}}
-                    </a>
-                  </h5>
-                  <div class="main_blog_entry_statistics">
-                    <i class="icon-eye-open"> </i>
-                    <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.views_count}}</a>
-                    </span>
-                    &nbsp;
-                    <i class="icon-comment"> </i>
-                    <span class="smalltext">
-                      <a href="{{article.get_absolute_url()}}" class="dark dark_link">{{article.comments_count}}</a>
-                    </span>
-                  </div>
-                </div>
-                <div class="main_person_pic_small">
-                  {% set authors = article.authors.all()|list %}
-                  {% if authors|length > 0 %}
-                  {% set author = article.authors.all()[0] %}
-                  <a href="{{author.get_absolute_url()}}">
-                    {% if author.photo != "" %}
-                    <img src="{{author.photo_90.url}}">
-                    {% else %}
-                    <img src="{{STATIC_URL}}img/no_avatar.gif">
-                    {% endif %}
-                  </a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-            {% endfor %}
+          <div class="span5">
+            <!-- place Special project here -->
           </div>
         </div>
       </div>
