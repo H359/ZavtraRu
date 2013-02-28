@@ -175,7 +175,6 @@ TINYMCE_SPELLCHECKER = True
 GRAPPELLI_ADMIN_TITLE = u'Газета &laquo;Завтра&raquo;'
 AUTOCOMPLETE_LIMIT = 20
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
-FILEBROWSER_DIRECTORY = os.path.join(MEDIA_ROOT, 'useruploads')
 
 INTERNAL_IPS = ('127.0.0.1',)
 
