@@ -808,7 +808,7 @@ pre code {
   font-size: 11.844px;
   font-weight: bold;
   line-height: 1.33em; /* SDK */
-  color: #ffffff !important;
+  color: #ffffff;
   vertical-align: baseline;
   white-space: nowrap;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -4838,7 +4838,7 @@ a.thumbnail:hover {
 }
 .accordion-heading {
   border-bottom: 0;
-  background-color: #CCC; /* SDK */
+  background-color: #DDD; /* SDK */
 }
 .accordion-heading .accordion-toggle {
   display: block;
