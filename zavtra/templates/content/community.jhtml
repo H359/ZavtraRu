@@ -71,7 +71,7 @@ $().ready(function() {
               </ul>
         			<div class="section_header_button">
       					<div class="section_header_button_datepicker">
-      						<span>Поиск по Дате</span>&nbsp;
+      						<span>Поиск по дате</span>&nbsp;
       						<span class="caret"></span>
       					</div>
       				</div>
