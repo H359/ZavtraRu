@@ -73,6 +73,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
     return self.is_staff
 
   @property
+  def username(self):
+    return self.email
+
+  @property
   def latest_article(self):
     if not hasattr(self, '__latest_article_cache'):
       thr = datetime.now() - timedelta(days=30)
