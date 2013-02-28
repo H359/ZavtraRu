@@ -220,13 +220,15 @@
               <img src="{{author.photo_90.url}}" class="main_editor_message_img">
               <div class="main_editor_message_header">
                 <h3>
-                  <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline">{{editorial.rubric.title}}</a>
+                  <a href="{{editorial.rubric.get_absolute_url()}}" class="no_underline">
+                    <span class="main_header_category middle_align top_align">{{editorial.rubric.title}}</span>
+                  </a>
                 </h3>
               </div>
               <div class="main_editor_message_text">
-                <h5>
+                <h4>
                   <a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.title}}</a>
-                </h5>
+                </h4>
                 <h5 class="right_align dark">
                   <a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
                 </h5>
