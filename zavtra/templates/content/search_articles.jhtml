@@ -89,7 +89,7 @@
             </div>
             <div class="row">
               <div class="span{{span}} article-text">
-                <a href="{{topic.get_absolute_url()}}" class="no_underline">
+                <a href="{{object.get_absolute_url()}}" class="no_underline">
                  <p class="article-paragraph">{{object.announce|striptags}}</p>
                 </a>
               </div>
