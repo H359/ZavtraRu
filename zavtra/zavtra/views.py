@@ -24,7 +24,7 @@ class HomeView(TemplateView):
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
                         order_by('-selected_at').\
-                        select_related()[0:6]
+                        select_related()[0:4]
     try:
       editorial = Article.editorial.select_related().\
                   prefetch_related('authors').\
