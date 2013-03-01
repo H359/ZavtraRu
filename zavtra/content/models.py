@@ -165,7 +165,7 @@ class Article(OpenGraphMixin, models.Model):
 
   rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
   title = models.CharField(max_length=1024, verbose_name=u'Заголовок')
-  slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from=lambda i: u'%s-%s' % (i.title, i.published_at))
+  slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from=lambda i: u'%s-%s-%s-%d' % (i.title, i.published_at.year, i.published_at.month, i.published_at.day))
   subtitle = models.CharField(max_length=1024, verbose_name=u'Подзаголовок', blank=True)
   status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20, verbose_name=u'Статус')
   type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20, verbose_name=u'Тип содержимого')
