@@ -4,7 +4,7 @@ from pytils.translit import slugify
 from urlparse import urlparse, parse_qs
 
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.conf import settings
 from django.utils.html import strip_tags
 
@@ -91,6 +91,18 @@ class Issue(models.Model):
     ).prefetch_related('authors').select_related().defer('content')
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
+
+  @property
+  def gazette_selected(self):
+    issue_rubrics = list(self.issue_rubrics.select_related().all())
+    articles = Article.objects.filter(
+      Q(selected_at__isnull = False) | Q(rubric = Rubric.fetch_rubric('peredovitsa')),
+      published_at__year = self.published_at.year,
+      published_at__month = self.published_at.month,
+      published_at__day = self.published_at.day,
+      rubric__in = [x.rubric for x in issue_rubrics]
+    ).prefetch_related('authors').select_related().defer('content').\
+    order_by('selected_at')
 
   @models.permalink
   def get_absolute_url(self):
