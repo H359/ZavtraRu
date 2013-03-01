@@ -111,7 +111,7 @@ class ArticleView(DetailView):
       next = list(Article.wod.filter(published_at__gt = context['object'].published_at)[0:4])
 
       related.append(context['object'])
-      while len(related) < 5 or (len(prev) + len(next) == 0):
+      while len(related) < 5 and (len(prev) + len(next) > 0):
         try:
           related.append(next.pop())
         except IndexError:
