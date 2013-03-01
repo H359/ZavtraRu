@@ -362,5 +362,10 @@ class SpecialProject(models.Model):
     verbose_name_plural = u'Спецпроекты'
 
   title = models.CharField(max_length=128, verbose_name=u'Название')
+  slug = AutoSlugField(max_length=256, unique=True, editable=False, populate_from='title')
   date = models.DateField(verbose_name=u'Дата', default=lambda: datetime.now())
   articles = models.ManyToManyField(Article, verbose_name=u'Статьи')
+
+  @models.permalink
+  def get_absolute_url(self):
+    return ('content.view.special_project', (), {'slug': self.slug})

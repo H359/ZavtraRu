@@ -5,7 +5,7 @@ from datetime import datetime
 
 from django.views.generic import TemplateView
 
-from content.models import Article, Rubric, Issue, DailyQuote
+from content.models import Article, Rubric, Issue, DailyQuote, SpecialProject
 from siteuser.models import User
 
 
@@ -33,12 +33,17 @@ class HomeView(TemplateView):
         editorial = None
     except Article.DoesNotExist:
       editorial = None
+    try:
+      spec_project = SpecialProject.objects.prefetch_related('articles').get(date=now.date())
+    except SpecialProject.DoesNotExist:
+      spec_project = None
     context = {
       'issue_qs': Issue.published.prefetch_related('issue_rubrics'),
       'editorial': editorial,
       'quote': DailyQuote.get_current(),
       'events': Article.events.select_related().defer('content')[0:8],
       'latest_news': Article.news.defer('content').all()[0:3],
+      'spec_project': spec_project,
       'selected_articles': selected_articles,
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\

@@ -11,7 +11,9 @@ from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
 from zavtra.utils import oneday
 
-from content.models import Article, Rubric, Topic, Issue, RubricInIssue, ArticleVote
+from content.models import Article, Rubric, Topic,\
+                           Issue, RubricInIssue, ArticleVote,\
+                           SpecialProject
 from content.forms import SearchForm
 
 from siteuser.models import User
@@ -315,6 +317,28 @@ class SearchView(ListView):
     context['page_suffix'] = urlencode(self.form_data)
     context['category'] = self.category
     return context
+
+
+class SpecProjectsView(RedirectView):
+  def get(self, request, *args, **kwargs):
+    self.url = SpecialProject.objects.filter(date__lte = datetime.now().date()).\
+               latest('date').get_absolute_url()
+    return super(SpecProjectsView, self).get(request, *args, **kwargs)
+
+
+class SpecProjectView(DetailView):
+  template_name = 'content/special_projects.jhtml'
+
+  def get_context_data(self, **kwargs):
+    context = super(SpecProjectView, self).get_context_data(**kwargs)
+    context['others'] = SpecialProject.objects.filter(date__lte=self.now).\
+                        order_by('date')[0:4]
+    return context
+
+  def get_queryset(self):
+    self.now = datetime.now().date()
+    return SpecialProject.objects.filter(date__lte = self.now).\
+           prefetch_related('articles', 'articles__topics')
 
 
 def current_issue_redirect(request):

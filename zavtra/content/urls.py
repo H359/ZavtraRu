@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url
 
 from content.views import ArticleView, RubricView, IssueView,\
                           ArchiveView, EventsView, TopicView,\
-                          CommunityView, ArticleVoteView, SearchView
+                          CommunityView, ArticleVoteView, SearchView,\
+                          SpecProjectsView, SpecProjectView
 
 
 urlpatterns = patterns('',
@@ -17,5 +18,7 @@ urlpatterns = patterns('',
   url(r'^topic/(?P<slug>[^/]+)/$', TopicView.as_view(), name='content.view.topic'),
   url(r'^community/$', CommunityView.as_view(), name='content.view.community'),
   url(r'^search/$', SearchView.as_view(), name='content.view.search'),
-  url(r'^search/(?P<category>(articles|wod|events|authors))/$', SearchView.as_view())
+  url(r'^search/(?P<category>(articles|wod|events|authors))/$', SearchView.as_view()),
+  url(r'^special-projects/$', SpecProjectsView.as_view(), name='content.view.special_projects'),
+  url(r'^special-projects/(?P<slug>[^/]+)/$', SpecProjectView.as_view(), name='content.view.special_project')
 )
