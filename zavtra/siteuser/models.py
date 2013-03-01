@@ -89,10 +89,6 @@ class User(OpenGraphMixin, AbstractBaseUser):
     return getattr(self, '__latest_article_cache', latest)
 
   @property
-  def published_articles(self):
-    return Article.published.filter(authors__in = [self.pk])
-
-  @property
   def received_comments(self):
     from comments.models import Comment
     return Comment.enabled.filter(article__authors__in = [self.pk])
