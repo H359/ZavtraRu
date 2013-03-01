@@ -165,7 +165,7 @@ $().ready(function() {
                             <div class="row">
                               <div class="span5 news-text">
                                 <p class="news-paragraph">
-                                  <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.announce}}</a>
+                                  <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.announce|striptags}}</a>
                                 </p>
                               </div>
                             </div>
