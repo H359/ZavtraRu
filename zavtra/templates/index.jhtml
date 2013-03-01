@@ -398,7 +398,7 @@
               <h4 class="right_align">
                 <a href="{{gazette[0].get_absolute_url()}}" class="black black_link">{{gazette[0].title}}</a>
               </h4>
-              {% for author in gazette[0].authors.all() %}<a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}
+              {% for author in gazette[0].authors.all() %}<a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% endfor %}
               <p class="light_padding_vertical no_margin"><a href="{{gazette[0].get_absolute_url()}}" class="black black_link article_text no_underline">{{gazette[0].announce}}</a></p>
               <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
             </div>
@@ -416,7 +416,7 @@
                 <a href="{{article.get_absolute_url()}}" class="dark no_underline">{{article.subtitle}}</a>
               </h6>
               {% for author in article.authors.all() %}
-              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}<br>{% endif %}
+              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>
               {% endfor %}
               {% if not loop.last %}
               <div>
