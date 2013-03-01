@@ -1,7 +1,7 @@
 {% extends "base.jhtml" %}
 
 {% block social_block %}
-<div class="offset1 span4">
+<div class="span4">
   {% if request.user and request.user.is_authenticated() %}
   <h6 class="big_padding_vertical">Оценить:</h6>
   <div class="btn-toolbar">
