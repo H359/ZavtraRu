@@ -52,7 +52,7 @@ class Rubric(models.Model):
   @staticmethod
   def get_gazette_rubrics():
     def inner():
-      rii = RubricInIssue.objects.filter(rubric__in_rubricator=True).distinct('rubric').\
+      rii = RubricInIssue.objects.distinct('rubric').\
             values_list('rubric', flat=True).order_by('rubric', 'position')
       return list(Rubric.objects.filter(pk__in = rii))
     return cached(inner, 'rubrics:gazette', 3600)
