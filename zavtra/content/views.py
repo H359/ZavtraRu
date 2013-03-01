@@ -219,7 +219,7 @@ class CommunityView(ListView):
     now = datetime.now()
     qs = Article.published.\
          filter(authors__level__gte = User.USER_LEVELS.trusted).\
-         prefetch_related('authors').defer('content')
+         prefetch_related('authors').defer('content').distinct()
     try:
       p = int(self.request.GET.get('page'))
     except (TypeError, ValueError):
