@@ -99,7 +99,7 @@ $().ready(function() {
                       <a href="{{url('content.view.events')}}">События</a>
                       <span class="divider">/</span>
                     </li>
-                    <li class="acitve">{% if now.date() == date %}Сегодня{% else %}{{date|ru_date("%d %B %Y")}}{% endif %}</li>
+                    <li class="active">{% if now.date() == date %}Сегодня{% else %}{{date|ru_date("%d %B %Y")}}{% endif %}</li>
                   </ul>
                   <div class="section_header_button">
                     <div class="section_header_button_datepicker">

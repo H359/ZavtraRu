@@ -3422,7 +3422,7 @@ input[type="submit"].btn.btn-mini {
   margin-top: 0;
 }
 .navbar-search {
-  position: relative;
+  /*position: relative;*/
   float: left;
   margin-bottom: 0;
 }
@@ -3852,7 +3852,7 @@ input[type="submit"].btn.btn-mini {
 .pagination ul > .disabled > a,
 .pagination ul > .disabled > a:hover {
   color: #999999;
-  background-color: transparent;
+  /*background-color: transparent;*/
   cursor: default;
 }
 
