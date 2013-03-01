@@ -34,7 +34,9 @@
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
           <a href="{{other.get_absolute_url()}}">
-            <img src="{{other.illustration}}" class="newspaper_selection_item_img">
+            {% if other.illustration != "" %}
+            <img src="{{other.cover_for_sidebar.url}}" class="newspaper_selection_item_img">
+            {% endif %}
             <div class="text-bottom white">
               <span class="largetext bold">№{{other.relative_number}}</span>
               <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.published_at|ru_date("%d %B")}}</span>
