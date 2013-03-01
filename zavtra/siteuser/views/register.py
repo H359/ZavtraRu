@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from siteuser.forms import RegisterUserForm
+from siteuser.models import User
 
 
 class RegisterView(TemplateView, FormView):
