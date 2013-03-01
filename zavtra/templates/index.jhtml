@@ -416,7 +416,7 @@
                 <a href="{{article.get_absolute_url()}}" class="dark no_underline">{{article.subtitle}}</a>
               </h6>
               {% for author in article.authors.all() %}
-              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
+              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}<br>{% endif %}
               {% endfor %}
               {% if not loop.last %}
               <div>
