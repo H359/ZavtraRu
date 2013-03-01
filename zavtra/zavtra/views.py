@@ -24,7 +24,7 @@ class HomeView(TemplateView):
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
                         order_by('-selected_at').\
-                        select_related()[0:4]
+                        select_related()[0:6]
     try:
       editorial = Article.editorial.select_related().\
                   prefetch_related('authors').\
@@ -48,7 +48,7 @@ class HomeView(TemplateView):
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
-               select_related().all()[0:6],
+               select_related().all()[0:4],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
              defer('content').select_related()
     }
