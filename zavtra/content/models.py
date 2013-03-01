@@ -103,6 +103,7 @@ class Issue(models.Model):
       rubric__in = [x.rubric for x in issue_rubrics]
     ).prefetch_related('authors').select_related().defer('content').\
     order_by('selected_at')
+    return list(articles)
 
   @models.permalink
   def get_absolute_url(self):
