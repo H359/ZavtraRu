@@ -220,7 +220,14 @@ class CommunityView(ListView):
     qs = Article.published.\
          filter(authors__level__gte = User.USER_LEVELS.trusted).\
          prefetch_related('authors').defer('content')
-    self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+    try:
+      p = int(self.request.GET.get('page'))
+    except ValueError:
+      p = None
+    if p is None or p == 1:
+      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+    else:
+      self.newest = []
     qs = qs.exclude(pk__in = [w.pk for w in self.newest])
     if 'year' in self.request.GET and \
        'month' in self.request.GET and \
