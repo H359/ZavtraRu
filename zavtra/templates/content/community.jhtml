@@ -106,7 +106,7 @@ $().ready(function() {
                           {% if author.photo != "" %}
                           <img src="{{author.photo_90.url}}">
                           {% else %}
-                          <img src="{{STATIC_URL}}img/no_avatar.gif">
+                          <img src="{{STATIC_URL}}img/no_avatar.png">
                           {% endif %}
                         </a>
                       </div>
@@ -140,7 +140,7 @@ $().ready(function() {
                           {% if author.photo != "" %}
                           <img src="{{author.photo_90.url}}">
                           {% else %}
-                          <img src="{{STATIC_URL}}img/no_avatar.gif">
+                          <img src="{{STATIC_URL}}img/no_avatar.png">
                           {% endif %}
                         </a>
                       </div>
