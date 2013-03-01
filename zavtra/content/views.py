@@ -222,7 +222,7 @@ class CommunityView(ListView):
          prefetch_related('authors').defer('content')
     try:
       p = int(self.request.GET.get('page'))
-    except ValueError:
+    except (TypeError, ValueError):
       p = None
     if p is None or p == 1:
       self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
