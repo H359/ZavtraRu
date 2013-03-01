@@ -340,7 +340,7 @@
                 {% for article in spec_project.articles.all() %}
                 <div class="accordion-group">
                   <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="accordion2" href="#collapse-{{loop.index}}"><h4>{{article.title}} <i class="icon-chevron-right top_align"></i></h4></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse-{{loop.index}}"><h4>{{article.title}} <i class="icon-chevron-right top_align"></i></h4></a>
                   </div>
                   <div id="collapse-{{loop.index}}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
                     <div class="accordion-inner">
