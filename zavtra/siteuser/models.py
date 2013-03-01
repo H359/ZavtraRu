@@ -28,6 +28,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
   bio = models.TextField(verbose_name=u'Биография', blank=True)
   photo = models.ImageField(verbose_name=u'Фотография', blank=True, null=True, upload_to='authors')
   date_joined = models.DateTimeField(verbose_name=u'Дата регистрации', default=lambda: datetime.now())
+  allow_login = models.BooleanField(verbose_name=u'Разрешить вход', default=True)
 
   USERNAME_FIELD = 'email'
 
@@ -64,6 +65,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
   @property
   def is_staff(self):
     return self.level >= self.USER_LEVELS.staff
+
+  @property
+  def is_active(self):
+    return self.allow_login
 
   def has_module_perms(self, app_label):
     # stub
