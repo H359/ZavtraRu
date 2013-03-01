@@ -354,3 +354,13 @@ class DailyQuote(models.Model):
       return DailyQuote.objects.select_related().get(day=datetime.now().date())
     except DailyQuote.DoesNotExist:
       return None
+
+
+class SpecialProject(models.Model):
+  class Meta:
+    verbose_name = u'Спецпроект'
+    verbose_name_plural = u'Спецпроекты'
+
+  title = models.CharField(max_length=128, verbose_name=u'Название')
+  date = models.DateField(verbose_name=u'Дата', default=lambda: datetime.now())
+  articles = models.ManyToManyField(Article, verbose_name=u'Статьи')

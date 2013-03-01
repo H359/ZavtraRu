@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
-                           DailyQuote, WodCite
+                           DailyQuote, WodCite, SpecialProject
 from content.proxies import News, Wod, Video, Columns, Editorial
 
 
@@ -179,6 +179,14 @@ class DailyQuoteAdmin(admin.ModelAdmin):
   }
 
 
+class SpecialProjectAdmin(admin.ModelAdmin):
+  list_display = ('title', 'date')
+  raw_id_fields = ('articles',)
+  autocomplete_lookup_fields = {
+    'm2m': ['articles']
+  }
+
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Wod, WodAdmin)
@@ -189,3 +197,4 @@ admin.site.register(Editorial, EditorialAdmin)
 admin.site.register(Rubric)
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
+admin.site.register(SpecialProject, SpecialProjectAdmin)
