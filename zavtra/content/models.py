@@ -4,7 +4,7 @@ from pytils.translit import slugify
 from urlparse import urlparse, parse_qs
 
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.conf import settings
 from django.utils.html import strip_tags
 
@@ -52,7 +52,7 @@ class Rubric(models.Model):
   @staticmethod
   def get_gazette_rubrics():
     def inner():
-      rii = RubricInIssue.objects.filter(rubric__in_rubricator=True).distinct('rubric').\
+      rii = RubricInIssue.objects.distinct('rubric').\
             values_list('rubric', flat=True).order_by('rubric', 'position')
       return list(Rubric.objects.filter(pk__in = rii))
     return cached(inner, 'rubrics:gazette', 3600)
@@ -91,6 +91,24 @@ class Issue(models.Model):
     ).prefetch_related('authors').select_related().defer('content')
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
+
+  @property
+  def gazette_selected(self):
+    issue_rubrics = list(self.issue_rubrics.select_related().all())
+    articles = Article.objects.filter(
+      Q(selected_at__isnull = False) | Q(rubric = Rubric.fetch_rubric('peredovitsa')),
+      published_at__year = self.published_at.year,
+      published_at__month = self.published_at.month,
+      published_at__day = self.published_at.day,
+      rubric__in = [x.rubric for x in issue_rubrics]
+    ).prefetch_related('authors').select_related().defer('content').\
+    order_by('selected_at')
+    def keyer(a):
+      if a.is_peredovitsa:
+        return 1
+      else:
+        return a.selected_at.toordinal()
+    return sorted(list(articles), key=keyer)
 
   @models.permalink
   def get_absolute_url(self):
@@ -147,7 +165,7 @@ class Article(OpenGraphMixin, models.Model):
 
   rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
   title = models.CharField(max_length=1024, verbose_name=u'Заголовок')
-  slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from=lambda i: u'%s-%s' % (i.title, i.published_at))
+  slug = AutoSlugField(max_length=1024, unique=True, editable=False, populate_from=lambda i: u'%s-%s-%s-%d' % (i.title, i.published_at.year, i.published_at.month, i.published_at.day))
   subtitle = models.CharField(max_length=1024, verbose_name=u'Подзаголовок', blank=True)
   status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20, verbose_name=u'Статус')
   type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20, verbose_name=u'Тип содержимого')
@@ -192,7 +210,8 @@ class Article(OpenGraphMixin, models.Model):
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], image_field='cover_source', format='JPEG')
-  cover_for_main_selection = ImageSpec([ResizeToFill(140, 128)], image_field='cover_source', format='JPEG')
+  #cover_for_main_selection = ImageSpec([ResizeToFill(140, 128)], image_field='cover_source', format='JPEG')
+  cover_for_main_selection = ImageSpec([ResizeToFill(203, 152)], image_field='cover_source')
   inside_article_cover = ImageSpec([ResizeToFill(345, 345)], image_field='cover_source', format='JPEG')
   inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 399)], image_field='cover_source', format='JPEG')
   cover_for_wodlist = ImageSpec([ResizeToFill(390, 170)], image_field='cover_source', format='JPEG')
@@ -354,3 +373,18 @@ class DailyQuote(models.Model):
       return DailyQuote.objects.select_related().get(day=datetime.now().date())
     except DailyQuote.DoesNotExist:
       return None
+
+
+class SpecialProject(models.Model):
+  class Meta:
+    verbose_name = u'Спецпроект'
+    verbose_name_plural = u'Спецпроекты'
+
+  title = models.CharField(max_length=128, verbose_name=u'Название')
+  slug = AutoSlugField(max_length=256, unique=True, editable=False, populate_from='title')
+  date = models.DateField(verbose_name=u'Дата', default=lambda: datetime.now())
+  articles = models.ManyToManyField(Article, verbose_name=u'Статьи')
+
+  @models.permalink
+  def get_absolute_url(self):
+    return ('content.view.special_project', (), {'slug': self.slug})

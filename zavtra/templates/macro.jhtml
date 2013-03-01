@@ -147,7 +147,7 @@
       {% for comment in object.comments.all() %}{{render_comment(comment)}}{% endfor %}
     </ul>
   </div>
-  {% if request.user and request.user.is_authenticated() %}
+  {% if request.user and request.user.is_authenticated() and request.user.level > 0 %}
   <div id="comment-form" class="clearfixer">
     <div class="avatar">
       <a href="#" rel="author"><img src="http://placekitten.com/62/62"></a>

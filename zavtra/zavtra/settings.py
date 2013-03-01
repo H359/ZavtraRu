@@ -41,7 +41,7 @@ USE_I18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
-USE_L10N = False
+USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = False
@@ -126,6 +126,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jhtml'
+JINJA2_EXTENSIONS = ['content.templatetags.misc.CachedExtension']
 
 INSTALLED_APPS = (
     'grappelli.dashboard',
@@ -175,7 +176,6 @@ TINYMCE_SPELLCHECKER = True
 GRAPPELLI_ADMIN_TITLE = u'Газета &laquo;Завтра&raquo;'
 AUTOCOMPLETE_LIMIT = 20
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
-FILEBROWSER_DIRECTORY = os.path.join(MEDIA_ROOT, 'useruploads')
 
 INTERNAL_IPS = ('127.0.0.1',)
 

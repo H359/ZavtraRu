@@ -23,7 +23,7 @@ class ArticleForm(forms.ModelForm):
 class UserInfoForm(forms.ModelForm):
   class Meta:
     model = User
-    exclude = ('password', 'level', 'email', 'date_joined', 'last_login', 'photo')
+    exclude = ('password', 'level', 'email', 'date_joined', 'last_login', 'photo', 'allow_login')
     widgets = {
       'bio': widgets.Textarea(attrs={'cols': 28, 'rows': 8})
     }

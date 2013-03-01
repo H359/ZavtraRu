@@ -17,11 +17,11 @@
             <div class="btn-group dropdown">
               <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for rubric in gazette_rubrics %}
+                {% for rubric in gazette_rubrics %}{% if rubric.in_rubricator %}
                 <li>
                   <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}
+                {% endif %}{% endfor %}
               </ul>
             </div>
           </div>

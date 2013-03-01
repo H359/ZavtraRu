@@ -1,7 +1,9 @@
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from siteuser.forms import RegisterUserForm
+from siteuser.models import User
 
 
 class RegisterView(TemplateView, FormView):
@@ -18,7 +20,7 @@ class RegisterView(TemplateView, FormView):
       user.first_name = data.get('first_name')
       user.last_name = data.get('last_name')
       user.save()
-      return redirect('siteuser.views.register_done')
+      return redirect('siteuser.view.register_done')
     return self.return_form(form)
 
   def get(self, request, *args, **kwargs):

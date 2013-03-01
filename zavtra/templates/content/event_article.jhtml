@@ -121,10 +121,10 @@
                         {% endif %}
                         <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
                         <span class="article-statistic">
-                          <i class="icon-eye-open"> </i>199
+                          <i class="icon-eye-open"> </i>{{object.views_count}}
                         </span>
                         <span class="article-statistic">
-                          <i class="icon-comment"> </i>{{ object.comments.count() }}
+                          <i class="icon-comment"> </i>{{object.comments_count}}
                         </span>
                       </div>
                     </div>

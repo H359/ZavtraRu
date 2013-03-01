@@ -1,0 +1,35 @@
+{% extends "base.jhtml" %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="row">
+    <div class="span12">
+      <div class="bordered_clean">
+        <div class="row">
+          <div class="span12">
+            <div class="section-header">
+              <ul class="breadcrumb inline">
+                <li>
+                  <a href="/">Главная</a>
+                  <span class="divider">/</span>
+                </li>
+                <li class="active">О нас</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            <h4>О нас</h4>
+            <p>{% for x in range(0,10) %}текст {% endfor %}</p>
+            <img src="http://static-maps.yandex.ru/1.x/?ll=37.592387%2C55.729434&spn=0.011008%2C0.003493&z=17&l=map&pt=37.592387,55.729434">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

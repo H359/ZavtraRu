@@ -15,11 +15,11 @@
             <div class="btn-group dropdown">
               <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for rubric in gazette_rubrics %}
+                {% for rubric in gazette_rubrics %}{% if rubric.in_rubricator %}
                 <li>
                   <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}
+                {% endif %}{% endfor %}
               </ul>
             </div>
           </div>
@@ -34,7 +34,9 @@
       <div class="span2_4">
         <div class="text-over-image newspaper_selection_item{% if other.id == issue.id %} newspaper_selection_item_selected{% endif %}">
           <a href="{{other.get_absolute_url()}}">
-            <img src="{{other.illustration}}" class="newspaper_selection_item_img">
+            {% if other.illustration != "" %}
+            <img src="{{other.cover_for_sidebar.url}}" class="newspaper_selection_item_img">
+            {% endif %}
             <div class="text-bottom white">
               <span class="largetext bold">№{{other.relative_number}}</span>
               <span class="mediumtext">&nbsp;&ndash;&nbsp;{{other.published_at|ru_date("%d %B")}}</span>
@@ -110,11 +112,11 @@
             <div class="btn-group dropdown">
               <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for rubric in gazette_rubrics %}
+                {% for rubric in gazette_rubrics %}{% if rubric.in_rubricator %}
                 <li>
                   <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}
+                {% endif %}{% endfor %}
               </ul>
             </div>
           </div>

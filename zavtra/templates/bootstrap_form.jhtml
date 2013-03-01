@@ -29,8 +29,8 @@
 {% endif %}
 {% endmacro %}
 
-{% macro render_form(form) %}
-{% if form.non_field_errors() %}
+{% macro render_form(form, non_field=True) %}
+{% if form.non_field_errors() and non_field %}
 <div class="alert alert-error">
   <a class="close" data-dismiss="alert">&times;</a>
   {% for non_field_error in form.non_field_errors() %}{{non_field_error}}{% endfor %}

@@ -91,9 +91,7 @@
           </div>
         </div>
         <div class="span5">
-          <div id="footer_text">
-            Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. Какой-то манифест про то что это за сайт. 
-          </div>
+          <div id="footer_text">Все тексты и иллюстрации к ним принадлежат их авторам. Сайт может содержать контент не предназначенный для лиц моложе 16 лет.</div>
         </div>
       </div>
     </div>
@@ -102,6 +100,7 @@
 {% endblock %}
 
 {% block page_content %}
+{% cached 60 'hardcore-index-cache' %}
 <div class="container">
   <div class="row">
     <div class="span9">
@@ -320,7 +319,7 @@
                       {% if author.photo != "" %}
                       <img src="{{author.photo_90.url}}">
                       {% else %}
-                      <img src="{{STATIC_URL}}img/no_avatar.gif">
+                      <img src="{{STATIC_URL}}img/no_avatar.png">
                       {% endif %}
                     </a>
                     {% endif %}
@@ -331,7 +330,41 @@
             </div>
           </div>
           <div class="span5">
-            <!-- place Special project here -->
+            {% if spec_project is not none %}
+            <div class="main_spec_frame">
+              <div class="main_box_header">
+                <a href="{{url('content.view.special_projects')}}"><img src="{{STATIC_URL}}img/specproekt.png"></a>
+                <h3 class="right_align"><a href="{{spec_project.get_absolute_url()}}" class="beige gray_link">{{spec_project.title}}</a></h3>
+              </div>
+              <div class="accordion" id="accordion2">
+                {% for article in spec_project.articles.all() %}
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse-{{loop.index}}"><h4>{{article.title}} <i class="icon-chevron-right top_align"></i></h4></a>
+                  </div>
+                  <div id="collapse-{{loop.index}}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
+                    <div class="accordion-inner">
+                      {% if article.cover_source != "" %}
+                      <div class="center_align big_padding_vertical">
+                        <img src="{{article.cover_for_topbar.url}}" class="img-polaroid main_special_project_img">
+                      </div>
+                      <p>{{article.announce|striptags}}</p>
+                      <h5 class="right_align average_padding_vertical">
+                        <a href="{{article.get_absolute_url()}}" class="brown brown_link">продолжение статьи &gt;</a>
+                      </h5>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="main_box_footer">
+                <h5 class="right_align">
+                  <a href="{{url('content.view.special_projects')}}" class="dark dark_link">Другие проекты</a>
+                </h5>
+              </div>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -357,7 +390,7 @@
               <a href="/content/issue/"><img src="{{issue.gazette_box.url}}"></a>
               {% endif %}
             </div>
-            {% set gazette = issue.gazette %}
+            {% set gazette = issue.gazette_selected %}
             <div class="main_box_header">
               <h5>
                 <a href="{{gazette[0].rubric.get_absolute_url()}}" class="gray gray_link">{{gazette[0].rubric.title}}</a>
@@ -367,7 +400,7 @@
               <h4 class="right_align">
                 <a href="{{gazette[0].get_absolute_url()}}" class="black black_link">{{gazette[0].title}}</a>
               </h4>
-              {% for author in gazette[0].authors.all() %}<a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+              {% for author in gazette[0].authors.all() %}<a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% endfor %}
               <p class="light_padding_vertical no_margin"><a href="{{gazette[0].get_absolute_url()}}" class="black black_link article_text no_underline">{{gazette[0].announce}}</a></p>
               <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
             </div>
@@ -385,7 +418,7 @@
                 <a href="{{article.get_absolute_url()}}" class="dark no_underline">{{article.subtitle}}</a>
               </h6>
               {% for author in article.authors.all() %}
-              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% if not loop.last %}, {% endif %}
+              <a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>
               {% endfor %}
               {% if not loop.last %}
               <div>
@@ -408,7 +441,7 @@
           {% set video = video_qs.latest('published_at') %}
           <div class="main_box_frame">
             <div class="relative main_box_header">
-              <h5><a href="{[video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a></h5>
+              <h5><a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a></h5>
               <div id="main_video_dentv_link">
                 <a href="http://dentv.ru"><img height="20" width="95" src="{{STATIC_URL}}img/dentv.png"></a>
               </div>
@@ -445,4 +478,5 @@
   </div>
 </div>
 <div id="video-modal" class="modal hide fade" data-width="760"></div>
+{% endcached %}
 {% endblock %}

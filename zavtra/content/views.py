@@ -11,7 +11,9 @@ from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
 from zavtra.utils import oneday
 
-from content.models import Article, Rubric, Topic, Issue, RubricInIssue, ArticleVote
+from content.models import Article, Rubric, Topic,\
+                           Issue, RubricInIssue, ArticleVote,\
+                           SpecialProject
 from content.forms import SearchForm
 
 from siteuser.models import User
@@ -109,7 +111,7 @@ class ArticleView(DetailView):
       next = list(Article.wod.filter(published_at__gt = context['object'].published_at)[0:4])
 
       related.append(context['object'])
-      while len(related) < 5:
+      while len(related) < 5 and (len(prev) + len(next) > 0):
         try:
           related.append(next.pop())
         except IndexError:
@@ -217,8 +219,15 @@ class CommunityView(ListView):
     now = datetime.now()
     qs = Article.published.\
          filter(authors__level__gte = User.USER_LEVELS.trusted).\
-         prefetch_related('authors').defer('content')
-    self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+         prefetch_related('authors').defer('content').distinct()
+    try:
+      p = int(self.request.GET.get('page'))
+    except (TypeError, ValueError):
+      p = None
+    if p is None or p == 1:
+      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+    else:
+      self.newest = []
     qs = qs.exclude(pk__in = [w.pk for w in self.newest])
     if 'year' in self.request.GET and \
        'month' in self.request.GET and \
@@ -315,6 +324,28 @@ class SearchView(ListView):
     context['page_suffix'] = urlencode(self.form_data)
     context['category'] = self.category
     return context
+
+
+class SpecProjectsView(RedirectView):
+  def get(self, request, *args, **kwargs):
+    self.url = SpecialProject.objects.filter(date__lte = datetime.now().date()).\
+               latest('date').get_absolute_url()
+    return super(SpecProjectsView, self).get(request, *args, **kwargs)
+
+
+class SpecProjectView(DetailView):
+  template_name = 'content/special_projects.jhtml'
+
+  def get_context_data(self, **kwargs):
+    context = super(SpecProjectView, self).get_context_data(**kwargs)
+    context['others'] = SpecialProject.objects.filter(date__lte=self.now).\
+                        order_by('date')[0:4]
+    return context
+
+  def get_queryset(self):
+    self.now = datetime.now().date()
+    return SpecialProject.objects.filter(date__lte = self.now).\
+           prefetch_related('articles', 'articles__topics')
 
 
 def current_issue_redirect(request):

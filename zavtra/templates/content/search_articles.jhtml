@@ -24,7 +24,7 @@
           {% if author.photo != "" %}
           <img src="{{author.photo_90.url}}">
           {% else %}
-          <img src="{{STATIC_URL}}img/no_avatar.gif">
+          <img src="{{STATIC_URL}}img/no_avatar.png">
           {% endif %}
         </a>
       </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="row">
               <div class="span{{span}} article-text">
-                <a href="{{topic.get_absolute_url()}}" class="no_underline">
+                <a href="{{object.get_absolute_url()}}" class="no_underline">
                  <p class="article-paragraph">{{object.announce|striptags}}</p>
                 </a>
               </div>

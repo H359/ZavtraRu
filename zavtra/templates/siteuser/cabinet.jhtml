@@ -47,7 +47,7 @@
         {% if request.user.photo != "" %}
         <img src="{{request.user.photo_225.url}}">
         {% else %}
-        <img src="{{STATIC_URL}}img/no_avatar.gif">
+        <img src="{{STATIC_URL}}img/no_avatar.png">
         {% endif %}
       </div>
     </div>

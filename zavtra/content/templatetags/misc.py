@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from jinja2.ext import Extension
+from django.core.cache import cache
 from django_jinja.base import Library
 from django.utils.datastructures import SortedDict
 import jinja2
@@ -73,3 +75,25 @@ def get_issues_from_list(ctx, value, rubric):
     }
     if len(group['items']) == 0: continue
     yield (issue, [group])
+
+
+class CachedExtension(Extension):
+  tags = set(['cached'])
+
+  def parse(self, parser):
+    lineno = next(parser.stream).lineno
+    duration = parser.parse_expression()
+    name = parser.parse_expression()
+    body = parser.parse_statements(['name:endcached'], drop_needle=True)
+    return jinja2.nodes.CallBlock(
+      self.call_method('_cache_support', [name, duration]),
+      [], [], body
+    ).set_lineno(lineno)
+
+  def _cache_support(self, name, duration, caller):
+    key = 'templates:%s' % name
+    rv = cache.get(key)
+    if rv is None:
+      rv = caller()
+      cache.set(key, rv, duration)
+    return rv
