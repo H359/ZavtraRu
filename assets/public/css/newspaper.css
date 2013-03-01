@@ -131,10 +131,12 @@ body {
 
 .nav_item {
 	font-family: 'Open Sans', sans-serif;
+	font-family: 'Helvetica', sans-serif\0/;
 	font-size: 1.05em;
 	font-weight: 900;
 	color: white;
 	letter-spacing: .1em;
+	letter-spacing: 0em\0/;
 	margin: 0em .5em 0em .75em;
 	height: 2.33em;
 	padding: 0em .5em;
@@ -253,6 +255,7 @@ body {
 	right: 0;
 	bottom: 0;
 	padding: .25em .5em;
+	background: #444\0/;
 	background: rgba(51, 51, 51, 0.95);
 }
 
@@ -821,8 +824,8 @@ h4,
 h5,
 h6 {
 	margin: 0px;
-	text-rendering: optimizelegibility;
 	font-family: 'Open Sans', san-serif;
+	font-family: 'Helvetica', san-serif\0/;
 	font-weight: 700;
 }
 
@@ -1617,11 +1620,12 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	color: #EEE;
 }
 
-#author_alphabet_name span {
-	padding: 0em .15em;
+author_alphabet_name span {
+	padding: 0em .5em;
 	text-decoration: none;
-	font-weight: 600;
-	color: #777;
+	font-weight: 700;
+	color: #EEE;
+	font-size: 1.1em;
 }
 
 #author_search_box {
@@ -2739,8 +2743,8 @@ li.empty span.large {
 }
  
 .search_dates span {
-    display: inline-block;
-    margin-right: .25em;
+    display: inlin.25-block;
+    margin-right: 1em;
     vertical-align: top;
     color: white;
     font-size: 1em;
