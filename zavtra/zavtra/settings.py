@@ -126,6 +126,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jhtml'
+JINJA2_EXTENSIONS = ['content.templatetags.misc.CachedExtension']
 
 INSTALLED_APPS = (
     'grappelli.dashboard',

@@ -99,6 +99,7 @@
 {% endblock %}
 
 {% block page_content %}
+{% cached 3600 'hardcore-index-cache' %}
 <div class="container">
   <div class="row">
     <div class="span9">
@@ -476,4 +477,5 @@
   </div>
 </div>
 <div id="video-modal" class="modal hide fade" data-width="760"></div>
+{% endcached %}
 {% endblock %}
