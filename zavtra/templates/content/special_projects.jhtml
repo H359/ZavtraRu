@@ -22,7 +22,7 @@
             <h4 class="inline-block">
               <a href="{{other.get_absolute_url()}}">
                 <span class="dark dark_link">{{other.title}}</span>
-                <span class="mediumtext">({{other|ru_date("%B %Y")}})</span>
+                <span class="mediumtext">({{other.published_at|ru_date("%B %Y")}})</span>
               </a>
             </h4>
             {% endfor %}
