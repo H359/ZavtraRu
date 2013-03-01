@@ -388,7 +388,7 @@
               <a href="/content/issue/"><img src="{{issue.gazette_box.url}}"></a>
               {% endif %}
             </div>
-            {% set gazette = issue.gazette %}
+            {% set gazette = issue.gazette_selected %}
             <div class="main_box_header">
               <h5>
                 <a href="{{gazette[0].rubric.get_absolute_url()}}" class="gray gray_link">{{gazette[0].rubric.title}}</a>
