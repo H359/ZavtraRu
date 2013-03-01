@@ -3,6 +3,7 @@
 {% block social_block %}
 <div class="offset1 span4">
   {% if request.user and request.user.is_authenticated() %}
+  <h6 class="big_padding_vertical">Оценить:</h6>
   <div class="btn-toolbar">
     <div class="btn-group">
       <a href="/content/vote/{{object.slug|e}}/up/" class="vote-plus btn btn-mini {% if has_voted and vote.vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг статьи" class="btn btn-disabled btn-mini comment-rating">{{object.rating}}</a><a href="/content/vote/{{object.slug|e}}/down/" class="vote-minus btn btn-mini {% if has_voted and vote.vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
@@ -10,8 +11,8 @@
   </div>
   {% endif %}
 </div>
-<div class="span4 right_align">
-  <span class="largetext">Поделиться:</span>
+<div class="span4">
+  <h6 class="big_padding_vertical">Поделиться:</h6>
   <span st_title="{{object.title|e}}" class="st_vkontakte" displayText="ВКонтакте"></span>
   <span st_title="{{object.title|e}}" class="st_twitter" displayText="Tweet"></span>
   <span st_title="{{object.title|e}}" class="st_facebook" displayText="Facebook"></span>

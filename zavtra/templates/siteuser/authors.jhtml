@@ -26,30 +26,28 @@
           <div class="span9">
             <div class="row">
               <div class="span9 person_search_bar">
-                <div class="module_header rubric-header">
-                  <h4 class="inline">Участники сообщества:</h4>
+                <div class="module_header rubric-header-red">
+                  <div id="author_alphabet_name">
+                    {% for l in alphabet %}
+                    {% if l == letter %}
+                    <span class="selected_letter">{{l}}</span>
+                    {% else %}
+                    <a href="?letter={{l}}">{{l}}</a>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
                 </div>
-                <div id="author_alphabet_name">
-                  {% for l in alphabet %}
-                  {% if l == letter %}
-                  <span class="selected_letter">{{l}}</span>
-                  {% else %}
-                  <a href="?letter={{l}}">{{l}}</a>
-                  {% endif %}
-                  {% endfor %}
-                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span9">
                 <div id="author_search_box">
                   <form action="." method="get">
                     <input type="search" name="query" {% if query %}value="{{query}}"{% endif %} placeholder="Поиск по фамилии автора...">
                     <button class="trans-button" type="submit"><i class="icon-search baseline_align"> </i></buton>
                   </form>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="span9">
-                <h3 class="padding_one">Результаты поиска ({{paginator.count}}):</h3>
-                <img src="/static/img/gradient_grayscale_line.png" class="onepxline">
+                <h5 class="search_results_header">Результаты поиска ({{paginator.count}}):</h5>
                 {% for object in object_list %}
                 <section class="person_search_result">
                   <div class="row">
@@ -163,9 +161,6 @@
                     </div>
                   </div>
                 </section>
-                {% if not loop.last %}
-                <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-                {% endif %}
                 {% endfor %}
               </div>
               {%- if query and query != "" -%}
