@@ -341,7 +341,7 @@
                   <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="accordion2" href="#collapse-{{loop.index}}"><h4>{{article.title}} <i class="icon-chevron-right top_align"></i></a>
                   </div>
-                  <div id="collapse-{{loop.index}}" class="accordion-body in collapse">
+                  <div id="collapse-{{loop.index}}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
                     <div class="accordion-inner">
                       {% if article.cover_source != "" %}
                       <div class="center_align big_padding_vertical">
