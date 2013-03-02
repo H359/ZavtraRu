@@ -225,7 +225,7 @@ class CommunityView(ListView):
     except (TypeError, ValueError):
       p = None
     if p is None or p == 1:
-      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12))[0:2])
     else:
       self.newest = []
     qs = qs.exclude(pk__in = [w.pk for w in self.newest])
