@@ -75,6 +75,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
     return self.is_staff
 
   def has_perm(self, permission):
+    # stub
     return self.is_staff
 
   @property

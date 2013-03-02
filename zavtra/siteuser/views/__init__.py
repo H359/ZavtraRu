@@ -1,9 +1,12 @@
 #-*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.views.generic import ListView
 from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from siteuser.models import User, Reader
+from content.models import Article
 
 from profile import ProfileView, ProfileArticlesView, ProfileCommentsView
 from cabinet import CabinetView, CabinetArticlesView,\
@@ -36,7 +39,7 @@ class AuthorsView(ListView):
       context['letter'] = self.letter
     if self.request.user is not None and self.request.user.is_authenticated():
       context['user_reads'] = Reader.objects.filter(
-        author__in=context['object_list'],
+        author__in = context['object_list'],
         reader = self.request.user
       ).values_list('author_id', flat=True)
     return context
@@ -50,7 +53,4 @@ class AuthorsView(ListView):
       query = self.request.GET.get('letter', u'А')
       self.letter = query
       fopts = Q(last_name__istartswith=query)
-    return User.columnists.filter(fopts).\
-           annotate(articles_count = Count('articles')).\
-           annotate(left_comments = Count('comments')).\
-           annotate(expert_comments_count = Count('expert_comments'))
+    return User.columnists.filter(fopts)

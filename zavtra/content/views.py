@@ -276,10 +276,7 @@ class SearchView(ListView):
     self.found_authors = []
 
     if self.category == 'authors':
-      qs = User.columnists.annotate(articles_count = Count('articles')).\
-           annotate(left_comments = Count('comments')).\
-           annotate(expert_comments_count = Count('expert_comments'))
-
+      qs = User.columnists.annotate(articles_count = Count('articles'))
     else:
       qs = Article.searcher
     
