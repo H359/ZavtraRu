@@ -44,7 +44,7 @@
                 {% for object in object_list %}
                 <section>
                   <article>
-                    <div class="row">
+                    <div class="row topic_article">
                       {% if object.cover_source != "" %}
                       {% set span = 6 %}
                       <div class="span3">
