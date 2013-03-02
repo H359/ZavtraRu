@@ -57,7 +57,7 @@
                           {% if object.photo != "" %}
                           <img src="{{object.photo_152.url}}" class="article-illustration">
                           {% else %}
-                          <img src="{{STATIC_URL}}img/no_avatar.png" class="article-illustration">
+                          <img src="{{STATIC_URL}}img/no_avatar.png" class="article-illustration-none">
                           {% endif %}
                         </a>
                       </div>
