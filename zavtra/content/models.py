@@ -207,15 +207,15 @@ class Article(OpenGraphMixin, models.Model):
   )
 
   # thumbs
-  main_cover_for_wod = ImageSpec([ResizeToFill(428, 281)], image_field='cover_source', format='JPEG')
+  main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], image_field='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], image_field='cover_source', format='JPEG')
   #cover_for_main_selection = ImageSpec([ResizeToFill(140, 128)], image_field='cover_source', format='JPEG')
   cover_for_main_selection = ImageSpec([ResizeToFill(203, 152)], image_field='cover_source')
-  inside_article_cover = ImageSpec([ResizeToFill(345, 345)], image_field='cover_source', format='JPEG')
-  inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 399)], image_field='cover_source', format='JPEG')
-  cover_for_wodlist = ImageSpec([ResizeToFill(390, 170)], image_field='cover_source', format='JPEG')
-  cover_for_topbar = ImageSpec([ResizeToFill(150, 105)], image_field='cover_source', format='JPEG')
+  inside_article_cover = ImageSpec([ResizeToFill(345, 259)], image_field='cover_source', format='JPEG')
+  inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 675)], image_field='cover_source', format='JPEG')
+  cover_for_wodlist = ImageSpec([ResizeToFill(390, 292)], image_field='cover_source', format='JPEG')
+  cover_for_topbar = ImageSpec([ResizeToFill(150, 79)], image_field='cover_source', format='JPEG')
   cover_for_video = ImageSpec([Crop(640, 360, anchor=Anchor.BOTTOM), ResizeToFill(246, 184)], image_field='cover_source', format='JPEG')
 
   def __unicode__(self):
