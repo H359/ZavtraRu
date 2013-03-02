@@ -64,6 +64,7 @@ class AuthorsView(ListView):
       query = self.request.GET['query']
       self.query = query
       kwargs['last_name__icontains'] = query
+      kwargs['first_name__icontains'] = query
     else:
       query = self.request.GET.get('letter', u'А')
       self.letter = query
