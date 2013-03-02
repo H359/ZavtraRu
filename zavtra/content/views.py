@@ -227,6 +227,8 @@ class CommunityView(ListView):
       p = None
     if p is None or p == 1:
       self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12))[0:2])
+      if len(self.newest) != 2:
+        self.newest = []
     else:
       self.newest = []
     qs = qs.exclude(pk__in = [w.pk for w in self.newest])
