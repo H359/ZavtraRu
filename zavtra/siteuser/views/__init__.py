@@ -1,23 +1,6 @@
 #-*- coding: utf-8 -*-
-"""
-from datetime import datetime
-from pytils.dt import MONTH_NAMES
-
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, ListView, TemplateView, RedirectView
-from django.views.generic.edit import FormView
-from django.db.models import Count, Q
-
-from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
-from zavtra.utils import oneday
-
-from content.models import Article, Rubric
-from siteuser.models import User, Reader
-from siteuser.forms import UserInfoForm, RegisterUserForm
-"""
 from django.views.generic import ListView
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 from siteuser.models import User, Reader
@@ -59,17 +42,15 @@ class AuthorsView(ListView):
     return context
 
   def get_queryset(self):
-    kwargs = {}
     if 'query' in self.request.GET:
       query = self.request.GET['query']
+      fopts = Q(last_name__icontains=query) | Q(first_name__icontains=query)
       self.query = query
-      kwargs['last_name__icontains'] = query
-      kwargs['first_name__icontains'] = query
     else:
       query = self.request.GET.get('letter', u'А')
       self.letter = query
-      kwargs['last_name__istartswith'] = query
-    return User.columnists.filter(**kwargs).\
+      fopts = Q(last_name__istartswith=query)
+    return User.columnists.filter(fopts).\
            annotate(articles_count = Count('articles')).\
            annotate(left_comments = Count('comments')).\
            annotate(expert_comments_count = Count('expert_comments'))
