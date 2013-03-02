@@ -448,7 +448,7 @@ abc {
 	line-height: 1.5em;
 }
 
-.topic_article .span9.article-header-container {
+.topic_article .span9.article-header-statistics {
 	margin-left: 2em;	
 }
 
@@ -470,6 +470,10 @@ abc {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 1em 2em 0em 0em;
+}
+
+.topic_article .span9.article-text {
+	margin-left: 2em;	
 }
 
 .article-paragraph {
@@ -2933,6 +2937,11 @@ li.empty span.large {
 	}
 
 	.author_fresh_article_header, .article-header-container, .author-description, .article-header-statistics, .article-text {
+		margin-left: 1em;
+		margin-bottom: .5em;
+	}
+	
+	.topic_article .span9.article-header-statistics,  .topic_article .span9.article-header-container, .topic_article .span9.article-text{
 		margin-left: 1em;
 		margin-bottom: .5em;
 	}
