@@ -1267,7 +1267,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
-.section_header_button .caret {
+.dropdown .section_header_button .caret {
 	line-height: 1.4em;
 	vertical-align: middle;
 	border-top-color: #FFF;	
