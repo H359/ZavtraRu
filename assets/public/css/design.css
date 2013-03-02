@@ -488,11 +488,6 @@ padding-bottom: .25em;
 	border-color: #888;
 }
 
-/*#main_video_selected {
-	position: relative;
-	margin: 1em 1em 0em 1em;
-}*/
-
 #main_video_selected_media {
 	text-align: center;
 }
@@ -503,8 +498,8 @@ padding-bottom: .25em;
 	box-sizing: border-box;
 	width: 92%;
 	position: absolute;
-	height: 40%;
-	top: 60%;
+	height: 30%;
+	top: 70%;
 	padding: .25em .75em;
 	left: 4%;
 	z-index: 2;
@@ -517,8 +512,8 @@ padding-bottom: .25em;
 	width: 96%;
 	background-color: #000;
 	position: absolute;
-	height: 40%;
-	top: 60%;
+	height: 30%;
+	top: 70%;
 	left: 2%;
 	opacity: .9;
 	z-index:1
@@ -641,7 +636,7 @@ padding-bottom: .25em;
 }
 
 .main_box_frame {
-	margin: .75em .75em 0em .75em;
+	margin: .75em .75em 1em .75em;
 }
 
 .main_spec_frame {

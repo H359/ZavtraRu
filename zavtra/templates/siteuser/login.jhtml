@@ -28,29 +28,27 @@
               </div>
             </div>
             <div class="row">
-              <div class="span9 offset1_5">
-                <div class="row">
-                  <div class="span6 offset1_5">
-                    <section class="person_search_result">
-                      <div class="row">
-                        <div class="span6 padding_one">
-                          <form action="." method="post">
-                            {% if form.errors %}
-                            <div class="alert alert-error">Мы не можем опознать вас, возможно вы ошиблись?</div>
-                            {% endif %}
-                            {{render_form(form, False)}}
-                            <div class="control-group">
-                              <div class="controls">
-                                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-                                <button type="submit" class="btn">Войти</button>
-                              </div>
+              <div class="span10 offset1">
+                <section class="person_search_result">
+                  <div class="row">
+                    <div class="span6 offset2">
+                      <form action="." method="post">
+                        {% if form.errors %}
+                        <div class="alert alert-error">Мы не можем опознать вас, возможно вы ошиблись?</div>
+                        {% endif %}
+                        <div class="span2 offset2">
+                          {{render_form(form, False)}}
+                          <div class="control-group">
+                            <div class="controls">
+                              <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                              <button type="submit" class="btn">Войти</button>
                             </div>
-                          </form>
+                          </div>
                         </div>
-                      </div>
-                    </section>
+                      </form>
+                    </div>
                   </div>
-                </div>
+                </section>
               </div>
             </div>
           </div>
