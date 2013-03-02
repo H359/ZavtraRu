@@ -34,7 +34,8 @@ class HomeView(TemplateView):
     except Article.DoesNotExist:
       editorial = None
     try:
-      spec_project = SpecialProject.objects.prefetch_related('articles').get(date=now.date())
+      spec_project = SpecialProject.objects.prefetch_related('articles').\
+                     filter(date__lte = now.date()).latest('date')
     except SpecialProject.DoesNotExist:
       spec_project = None
     context = {
