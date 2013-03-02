@@ -435,6 +435,10 @@ abc {
 	padding: 1em 2em 0em 0em;
 }
 
+.topic_article .span9.article-header-container {
+	margin-left: 2em;	
+}
+
 .article-header-statistics {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -442,6 +446,10 @@ abc {
 	padding: 0em 2em 0em 0em;
 
 	line-height: 1.5em;
+}
+
+.topic_article .span9.article-header-statistics {
+	margin-left: 2em;	
 }
 
 .article-header {
@@ -462,6 +470,10 @@ abc {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 1em 2em 0em 0em;
+}
+
+.topic_article .span9.article-text {
+	margin-left: 2em;	
 }
 
 .article-paragraph {
@@ -1255,7 +1267,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
-.section_header_button .caret {
+.dropdown .section_header_button .caret {
 	line-height: 1.4em;
 	vertical-align: middle;
 	border-top-color: #FFF;	
@@ -1620,7 +1632,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	color: #EEE;
 }
 
-author_alphabet_name span {
+#author_alphabet_name span {
 	padding: 0em .5em;
 	text-decoration: none;
 	font-weight: 700;
@@ -2851,7 +2863,22 @@ li.empty span.large {
 	padding: .5em 0em 1em 2em;
 }
 
+
 /* spec page - end */
+
+/* 404 */
+.four_o_four_text {
+	padding-bottom: 1em;	
+}
+
+.four_o_four_logo {
+	padding: 1em;
+}
+
+.four_o_four_logo span {
+	font-size: 3em;
+}
+/* 404 end */
 
 @media (min-width: 1025px) and (max-width: 1199px) {
 	body {
@@ -2910,6 +2937,11 @@ li.empty span.large {
 	}
 
 	.author_fresh_article_header, .article-header-container, .author-description, .article-header-statistics, .article-text {
+		margin-left: 1em;
+		margin-bottom: .5em;
+	}
+	
+	.topic_article .span9.article-header-statistics,  .topic_article .span9.article-header-container, .topic_article .span9.article-text{
 		margin-left: 1em;
 		margin-bottom: .5em;
 	}
