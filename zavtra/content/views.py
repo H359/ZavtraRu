@@ -171,7 +171,7 @@ class TopicView(ListView):
     context = super(TopicView, self).get_context_data(**kwargs)
     context['topic'] = self.topic
     # TODO: fix this
-    context['most_commented'] = self.topic.articles.all()[0:5]
+    context['most_commented'] = Article.get_most_commented()
     return context
 
   def get_queryset(self):
