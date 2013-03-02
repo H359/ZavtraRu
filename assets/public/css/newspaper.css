@@ -1620,7 +1620,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	color: #EEE;
 }
 
-author_alphabet_name span {
+#author_alphabet_name span {
 	padding: 0em .5em;
 	text-decoration: none;
 	font-weight: 700;
