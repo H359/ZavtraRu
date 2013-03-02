@@ -5,7 +5,7 @@ from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Max, Min, Q, Count
+from django.db.models import Max, Min, Q, Count, F
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
@@ -95,6 +95,7 @@ class ArticleView(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super(ArticleView, self).get_context_data(**kwargs)
+    Article.objects.filter(id=context['object'].id).update(views_count = F('views_count') + 1)
     self.issue = self.object.issue
     context['issue'] = self.issue
     if self.request.user and self.request.user.is_authenticated():
