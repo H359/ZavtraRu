@@ -35,8 +35,8 @@ class User(OpenGraphMixin, AbstractBaseUser):
   objects = UserManager()
   columnists = ColumnistsManager()
 
-  photo_90 = ImageSpec([ResizeToFit(90, 90, True, 0xFFFFFF)], image_field='photo')
-  photo_60 = ImageSpec([ResizeToFit(60, 60, True, 0xFFFFFF)], image_field='photo')
+  photo_90 = ImageSpec([ResizeToFill(90, 90)], image_field='photo')
+  photo_60 = ImageSpec([ResizeToFill(60, 60)], image_field='photo')
   photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], image_field='photo')
   photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], image_field='photo')
 
