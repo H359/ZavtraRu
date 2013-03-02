@@ -416,7 +416,7 @@ abc {
 	border: 1px solid #DDD;
 	background-color: #FFF;
 	margin: 0em 1em 1em 1em;
-	padding: 1em 2em 2em 2em;
+	padding: 1em 2em 0em 2em;
 }
 
 .article-illustration-container {
@@ -1267,7 +1267,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
-.dropdown .section_header_button .caret {
+.dropdown .section_header_button .caret, .section_header_button_datepicker .caret {
 	line-height: 1.4em;
 	vertical-align: middle;
 	border-top-color: #FFF;	
@@ -2946,6 +2946,14 @@ li.empty span.large {
 		margin-bottom: .5em;
 	}
 
+	.section-header {
+		height: auto;
+	}
+	
+	.section_header_button, .section_header_button2 {
+		display: block;
+		position: static;
+	}
 
     /* to make search page work */
     .search {
