@@ -141,8 +141,7 @@
             {{object.render_content()}}
           </div>
         </div>
-        <div class="row">
-          <div class="span8">{% block social_block %}{{super()}}{% endblock %}</div>
+        <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
       </article>
     </div>
   </div>

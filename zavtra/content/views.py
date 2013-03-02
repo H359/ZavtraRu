@@ -5,7 +5,7 @@ from calendar import isleap
 from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Max, Min, Q, Count
+from django.db.models import Max, Min, Q, Count, F
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator,\
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
@@ -95,6 +95,7 @@ class ArticleView(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super(ArticleView, self).get_context_data(**kwargs)
+    Article.objects.filter(id=context['object'].id).update(views_count = F('views_count') + 1)
     self.issue = self.object.issue
     context['issue'] = self.issue
     if self.request.user and self.request.user.is_authenticated():
@@ -170,7 +171,7 @@ class TopicView(ListView):
     context = super(TopicView, self).get_context_data(**kwargs)
     context['topic'] = self.topic
     # TODO: fix this
-    context['most_commented'] = self.topic.articles.all()[0:5]
+    context['most_commented'] = Article.get_most_commented()
     return context
 
   def get_queryset(self):
@@ -225,7 +226,9 @@ class CommunityView(ListView):
     except (TypeError, ValueError):
       p = None
     if p is None or p == 1:
-      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12)))
+      self.newest = list(qs.filter(published_at__gte = now - timedelta(hours=12))[0:2])
+      if len(self.newest) != 2:
+        self.newest = []
     else:
       self.newest = []
     qs = qs.exclude(pk__in = [w.pk for w in self.newest])
@@ -273,10 +276,7 @@ class SearchView(ListView):
     self.found_authors = []
 
     if self.category == 'authors':
-      qs = User.columnists.annotate(articles_count = Count('articles')).\
-           annotate(left_comments = Count('comments')).\
-           annotate(expert_comments_count = Count('expert_comments'))
-
+      qs = User.columnists.annotate(articles_count = Count('articles'))
     else:
       qs = Article.searcher
     

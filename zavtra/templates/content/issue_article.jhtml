@@ -61,7 +61,7 @@
                   {% if object.cover_source != "" %}
                   <div class="span4">
                     <div class="article-page-illustration">
-                      <img src="{{object.inside_article_cover.url}}">
+                      <img src="{{MEDIA_URL}}{{object.cover_source}}">
                     </div>
                   </div>
                   {% else %}
@@ -103,7 +103,7 @@
             <div class="row">
               <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
             </div>
-            <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>          
+            <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
           </article>
         </div>
       </div>
