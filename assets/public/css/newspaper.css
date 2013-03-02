@@ -435,6 +435,10 @@ abc {
 	padding: 1em 2em 0em 0em;
 }
 
+.topic_article .span9.article-header-container {
+	margin-left: 2em;	
+}
+
 .article-header-statistics {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -442,6 +446,10 @@ abc {
 	padding: 0em 2em 0em 0em;
 
 	line-height: 1.5em;
+}
+
+.topic_article .span9.article-header-container {
+	margin-left: 2em;	
 }
 
 .article-header {
