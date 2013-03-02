@@ -108,7 +108,7 @@
         <div class="section-header">
           <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
           <div class="section_header_button">
-            <div class="btn-group dropdown">
+            <div class="btn-group dropup">
               <a href="#" class="btn btn-success dropdown-toggle baseline_align" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 {% for rubric in gazette_rubrics %}{% if rubric.in_rubricator %}
