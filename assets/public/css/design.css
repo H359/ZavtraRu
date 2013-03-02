@@ -295,12 +295,10 @@ body {
 #main_subjects {
 	background-color: #B4C3D7;
 	margin: 0em -21.5em .75em -1.5em;
-	padding-left: 2.25em;
+	padding-left: 2.5em;
 	padding-top: .25em;
 	height: 1.5em;
 	line-height: 1.33em;
-	padding-right: 21.5em;
-	text-align: center;
 }
 
 .subject_nav_item {
