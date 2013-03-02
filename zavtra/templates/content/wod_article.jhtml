@@ -141,7 +141,7 @@
             {{object.render_content()}}
           </div>
         </div>
-        <div class="row">{% block social_block %}{% endblock %}</div>
+        <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
       </article>
     </div>
   </div>
