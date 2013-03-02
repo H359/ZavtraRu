@@ -2851,7 +2851,22 @@ li.empty span.large {
 	padding: .5em 0em 1em 2em;
 }
 
+
 /* spec page - end */
+
+/* 404 */
+.four_o_four_text {
+	padding-bottom: 1em;	
+}
+
+.four_o_four_logo {
+	padding: 1em;
+}
+
+.four_o_four_logo span {
+	font-size: 3em;
+}
+/* 404 end */
 
 @media (min-width: 1025px) and (max-width: 1199px) {
 	body {
