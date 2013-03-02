@@ -10,6 +10,22 @@ from content.models import Rubric, Issue, RubricInIssue,\
 from content.proxies import News, Wod, Video, Columns, Editorial
 
 
+class RestrictedImageField(forms.ImageField):
+  def __init__(self, *args, **kwargs):
+    self.max_upload_size = kwargs.pop('max_upload_size')
+    kwargs['label'] = u'%s (макс. размер файла: %d)' % (kwargs['label'], self.max_upload_size)
+    super(RestrictedImageField, self).__init__(*args, **kwargs)
+
+  def clean(self, *args, **kwargs):
+    data = super(RestrictedImageField, self).clean(*args, **kwargs)
+    try:
+      if data.size > self.max_upload_size:
+        raise forms.ValidationError(u'Размер изображения не может быть больше %d' % self.max_upload_size)
+    except AttributeError:
+      pass
+    return data
+
+
 class ExpertCommentAdminInline(admin.StackedInline):
   model = ExpertComment
   max_num = None
@@ -31,6 +47,7 @@ class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+  cover_source = RestrictedImageField(label=u'Обложка', max_upload_size=524288)
 
 
 class WodAdminForm(forms.ModelForm):
