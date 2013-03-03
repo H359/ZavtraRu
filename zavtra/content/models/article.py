@@ -83,6 +83,11 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   def __unicode__(self):
     return u'%s' % self.title
   
+  def save(self, *args, **kwargs):
+    if self._issue > 0:
+      self._issue = -1
+    super(Article, self).save(*args, **kwargs)
+
   def update_search_field(self, *args, **kwargs):
     self._fts_manager.update_search_field(pk=self.pk)
 
