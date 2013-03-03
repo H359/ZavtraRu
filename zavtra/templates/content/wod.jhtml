@@ -75,7 +75,6 @@
         </div>
       </div>
     </div>
-    <img src="/static/img/gradient_grayscale_line.png" class="onepxline">
     {% endfor %}
     <div class="row">
       <div class="span12">
