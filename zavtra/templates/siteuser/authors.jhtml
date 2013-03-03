@@ -155,7 +155,7 @@
                         <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}{% if letter %}?letter={{letter}}{% endif %}" class="author_link">Подписаться</a>
                         {% endif %}
                         {% endif %}
-                        <a href="{{object.get_articles_url()}}" class="author_link">Статьи ({{object.articles_count}})</a>
+                        <a href="{{object.get_articles_url()}}" class="author_link">Статьи ({{object.articles.count()}})</a>
                         <a href="{{object.get_absolute_url()}}" class="author_link">Профиль учатсника</a>
                       </div>
                     </div>

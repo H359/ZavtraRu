@@ -143,17 +143,13 @@ INSTALLED_APPS = (
     'siteuser',
     'grappelli',
     'django.contrib.admin',
-    #'mptt',
     'filebrowser',
     'tinymce',
     'comments',
-    #'devserver'
-    #'debug_toolbar',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
+
+if DEBUG:
+    INSTALLED_APPS += ('devserver',)
 
 #CUSTOM_USER_MODEL = 'siteuser.User'
 AUTH_USER_MODEL = 'siteuser.User'

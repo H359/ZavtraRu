@@ -6,4 +6,4 @@ from comments.models import Comment
 class CommentForm(ModelForm):
   class Meta:
     model = Comment
-    exclude = ('author', 'rating')
+    exclude = ('author', 'rating', 'active')
