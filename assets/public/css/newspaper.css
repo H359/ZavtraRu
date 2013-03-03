@@ -149,6 +149,8 @@ body {
 	background-color: #656565;
 	border-bottom: 1px solid #444;
 	border-top: 1px solid #777;
+	border-bottom: 0px solid #444\0/; /* IE8 */
+	border-top: 0px solid #777\0/; /* IE8 */
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -213,6 +215,9 @@ body {
 	-webkit-box-shadow: 0 0 3px rgba(128, 128, 128, 1);
 	-moz-box-shadow: 0 0 3px rgba(128, 128, 128,1);
 	box-shadow: 0 0 3px rgba(128, 128, 128, 1);
+	border-top: 1px solid #AAA\0/; /* IE8 */
+	border-bottom: 1px solid #AAA\0/; /* IE8 */
+	box-sizing: border-box\0/; /* IE8 */
 	padding: 0em 1em;
 	color: #444;
 	height: 2.5em;
@@ -334,6 +339,7 @@ abc {
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
 	-moz-box-shadow: 0 0 3px rgba(0,0,0,0.33);
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+
 	margin: 2em 0em 0em 0em;
 	/*border-top: 1px solid #555;*/
 }
@@ -416,7 +422,7 @@ abc {
 	border: 1px solid #DDD;
 	background-color: #FFF;
 	margin: 0em 1em 1em 1em;
-	padding: 1em 2em 2em 2em;
+	padding: 1em 2em 0em 2em;
 }
 
 .article-illustration-container {
@@ -1267,7 +1273,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	background-color: #555;
 }
 
-.dropdown .section_header_button .caret {
+.dropdown .section_header_button .caret, .section_header_button_datepicker .caret {
 	line-height: 1.4em;
 	vertical-align: middle;
 	border-top-color: #FFF;	
@@ -1354,6 +1360,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 .wod_entry_header {
 	background-color: #FFF;
 	margin-top: 2em;
+	border-top: 1px solid #DDD;
 }
 
 .wod_entry_header div, .wod_entry_header2 {
@@ -1363,6 +1370,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 .wod_entry_content {
 	background-color: #FFF;
 	margin-bottom: 1em;
+	border-bottom: 1px solid #DDD;
 }
 
 .wod_entry_img {
@@ -1409,6 +1417,10 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 
 .news_selection_item .text-bottom {
 	min-height: 2.25em;
+}
+
+.news_selection_item  .selection_item_statistics a {
+	font-size: .65em;
 }
 
 .news_selection_item_img_small {
@@ -1468,8 +1480,11 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 }
 
 .selection_item_statistics img {
-	width: 1.33em;
-	padding-left: .33em;
+	width: 1.2em;
+	padding-left: .25em;
+	width: .8em\0/;
+	padding-left: 0em\0/;
+	vertical-align: -15%;
 }
 
 .page-module-article {
@@ -1502,6 +1517,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 #inner_subjects {
 	background-color: #DDD;
 	/*padding-top: .25em;*/
+	margin-top: .25em\0/; /* IE8 */
 	min-height: 1.5em;
 	border-bottom: 1px solid #BBB;
 	text-align: center;
@@ -1621,7 +1637,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	padding: 0em .15em;
 	text-decoration: underline;
 	font-weight: 600;
-	color: #FFF;
+	color: #CCC;
 	font-size: 1em;
 	font-family: 'Open Sans', Tahoma;
 	line-height: 1.4em;
@@ -1636,7 +1652,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	padding: 0em .5em;
 	text-decoration: none;
 	font-weight: 700;
-	color: #EEE;
+	color: #FFF;
 	font-size: 1.1em;
 }
 
@@ -1742,9 +1758,9 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	line-height: 1.5em;
 }
 
-.news-header {
+/*.news-header {
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
-}
+}*/
 
 .news-text {
 	-moz-box-sizing: border-box;
@@ -1786,6 +1802,10 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .blogentries {
 	padding-right: 1em;
+}
+
+.blogentries .blogentry_container {
+	clear: both;
 }
 
 .inner_blogentry, .inner_blogentry_new, .inner_blogentry_top {
@@ -2269,7 +2289,9 @@ li.empty span.large {
 }
 
 #person_navigation_selected {
-	background-color: #EEE; 
+	background-color: #EEE;
+	border-left: 1px solid #777;
+	border-right: 1px solid #777;
 }
 
 #person_navigation_selected a {
@@ -2946,6 +2968,18 @@ li.empty span.large {
 		margin-bottom: .5em;
 	}
 
+	.section-header {
+		height: auto;
+	}
+	
+	.section_header_button, .section_header_button2 {
+		display: block;
+		position: static;
+	}
+
+	.blogentries .blogentry_container {
+		clear: none;
+	}
 
     /* to make search page work */
     .search {

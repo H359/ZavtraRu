@@ -126,7 +126,9 @@
                   <div class="carousel-inner">
                     {% for event in events %}
                     <div class="item{% if loop.first %} active{% endif %}">
-                      <a href="{{event.get_absolute_url()}}"><img id="main_event_image" src="{{event.cover_for_eventbox.url}}"></a>
+                      <div class="main_event_image">
+                        <a href="{{event.get_absolute_url()}}"><img src="{{event.cover_for_eventbox.url}}"></a>
+                      </div>
                       <h4>
                         <a href="{{event.get_absolute_url()}}" class="white white_link">{{event.title}}</a>
                       </h4>
@@ -272,7 +274,7 @@
           <div class="span4">
             <div class="span4">
               <div class="main_box_frame">
-    						<div class="relative main_box_header">
+      					<div class="relative main_box_header">
   								<h4 class="white inline">
   									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
   								</h4>
