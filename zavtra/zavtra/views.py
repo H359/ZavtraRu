@@ -10,13 +10,6 @@ from siteuser.models import User
 from zavtra.utils import oneday
 
 
-"""
-def group_by(coll, sep):
-  steps = int(math.ceil(len(coll) / (1.0*sep)))
-  return [coll[sep*p:sep*(p+1)] for p in range(0, steps)]
-"""
-
-
 class HomeView(TemplateView):
   template_name = 'index.jhtml'
 
@@ -62,3 +55,4 @@ class HomeView(TemplateView):
     return context
 
 home = HomeView.as_view()
+view404 = TemplateView.as_view(template_name='404.jhtml')

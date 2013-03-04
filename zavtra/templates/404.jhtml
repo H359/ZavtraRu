@@ -1,0 +1,40 @@
+{% extends "base.jhtml" %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="row">
+    <div class="span12">
+      <div class="bordered_clean">
+        <div class="row">
+          <div class="span12">
+            <div class="row">
+              <div class="span12">
+                <div class="section-header">
+                  <ul class="breadcrumb inline">
+                    <li>
+                      <a href="/">Главная</a>
+                      <span class="divider">/</span>
+                    </li>
+                    <li class="active">Страница не найдена</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span10 offset1 right_align">
+          <h1 class="four_o_four_logo"><span>404</span></h1>
+        </div>
+        <div class="span8 offset2">
+          <h2 class="four_o_four_text">К сожалению, запрашивая Вами страница не найдена.</h2>
+          <h5 class="four_o_four_text">Возможно, она была перемещена. Попробуйте воспользоваться формой поиска и найти её новый адрес.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
