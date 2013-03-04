@@ -47,7 +47,23 @@ class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=524288)
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072)
+
+
+class NewsAdminForm(forms.ModelForm):
+  class Meta:
+    model = News
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+  selected_at = forms.BooleanField(label=u'Выделить')
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072, help_text=u'Если заполнено -- новость считается событием')
+
+  def clean(self):
+    data = super(NewsAdminForm, self).clean()
+    if data['selected_at']:
+      data['selected_at'] = data['published_at']
+    else:
+      data['selected_at'] = None
+    return data
 
 
 class WodAdminForm(forms.ModelForm):
@@ -105,10 +121,10 @@ class WodAdmin(admin.ModelAdmin):
 
 
 class NewsAdmin(admin.ModelAdmin):
-  exclude = ('authors', 'rubric', 'type', 'selected_at',)
+  exclude = ('authors', 'rubric', 'type',)
   list_display = ('title', 'status', 'published_at')
   search_fields = ('title',)
-  form = ArticleAdminForm
+  form = NewsAdminForm
   raw_id_fields = ('topics',)
   autocomplete_lookup_fields = {
     'm2m': ['topics']

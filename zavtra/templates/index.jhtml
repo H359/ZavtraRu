@@ -176,6 +176,7 @@
       <div class="row">
         <div class="span9">
           <div id="main_news_box">
+            {% if latest_news|length > 0 %}
             <div id="main_news_box_header">
               <h3>
                 <a href="/content/events/" class="no_underline"><span class="main_header_category middle_align">Коротко:</span></a>
@@ -183,13 +184,19 @@
             </div>
             <div id="main_news_box_content" class="carousel slide carousel-slow">
               <div class="carousel-inner">
-                {% for item in latest_news %}
+                {% for item in latest_news[0:3] %}
                 <div class="item{% if loop.first %} active{% endif %}">
                   <a href="{{item.get_absolute_url()}}" class="largetext middle_align">{{item.title}}</a>
                 </div>
                 {% endfor %}
+                {% if latest_news|length > 3 %}
+                <div class="item">
+                  <a href="/content/events/" class="largetext middle_align">перейти к остальным новостям</a>
+                </div>
+                {% endif %}
               </div>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>

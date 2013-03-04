@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 from content.models import Article, Rubric, Issue, DailyQuote, SpecialProject
 from siteuser.models import User
+from zavtra.utils import oneday
 
 
 """
@@ -21,6 +22,9 @@ class HomeView(TemplateView):
 
   def get_context_data(self, **kwargs):
     now = datetime.now()
+    morning = (now if now.hour >= 7 else now - oneday).replace(hour=7, minute=0, second=0, microsecond=0)
+    news_date_range = (morning, morning + oneday)
+    print morning, morning + oneday
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
                         order_by('-selected_at').\
@@ -43,7 +47,9 @@ class HomeView(TemplateView):
       'editorial': editorial,
       'quote': DailyQuote.get_current(),
       'events': Article.events.select_related().defer('content')[0:8],
-      'latest_news': Article.news.defer('content').all()[0:3],
+      'latest_news': Article.news.defer('content').\
+                     filter(published_at__range = news_date_range).\
+                     order_by('-selected_at', '-published_at')[0:4],
       'spec_project': spec_project,
       'selected_articles': selected_articles,
       'video_qs': Article.published.filter(type = Article.TYPES.video),
