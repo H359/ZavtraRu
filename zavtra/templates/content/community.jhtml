@@ -7,7 +7,6 @@
 {% block head %}
 <script>
 $().ready(function() {
-
   $.datepicker.regional['ru'] = {
     closeText: 'Закрыть',
     prevText: '&#x3c;Пред',
@@ -88,41 +87,43 @@ $().ready(function() {
               <div class="span9">
                 <div class="row">
                   <div class="span9 blogentries">
-                    {% for object in newest %}
-                    <div class="inner_blogentry_new">
-                      <div class="inner_blogentry_date_box_new">
-                        <span class="inner_blogentry_new_tag">новое</span>
-                        <span class="inner_blogentry_date_content">{{object.published_at|ru_dt_distance_fuzzy}}</span>
-                      </div>
-                      <div class="inner_blogentry_author">
-                        {% for author in object.authors.all() %}
-                        <a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>
-                        {% if not loop.last %}<br>{% endif %}
-                        {% endfor %}
-                      </div>
-                      <div class="inner_blogentry_author_pic">
-                        {% set author = object.authors.all()[0] %}
-                        <a href="{{author.get_absolute_url()}}">
-                          {% if author.photo != "" %}
-                          <img src="{{author.photo_90.url}}">
-                          {% else %}
-                          <img src="{{STATIC_URL}}img/no_avatar.png">
-                          {% endif %}
-                        </a>
-                      </div>
-                      <div class="inner_blogentry_header">
-                        <a class="header" href="{{object.get_absolute_url()}}">{{object.title}}</a>
-                        <div class="inner_blogentry_statistics">
-                          <a href="{{object.get_absolute_url()}}">
-                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
-                          </a>
-                          <a href="{{object.get_absolute_url()}}">
-                            <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                    <div class="blogentry_container">
+                      {% for object in newest %}
+                      <div class="inner_blogentry_new">
+                        <div class="inner_blogentry_date_box_new">
+                          <span class="inner_blogentry_new_tag">новое</span>
+                          <span class="inner_blogentry_date_content">{{object.published_at|ru_dt_distance_fuzzy}}</span>
+                        </div>
+                        <div class="inner_blogentry_author">
+                          {% for author in object.authors.all() %}
+                          <a class="person_name largetext" href="{{author.get_absolute_url()}}">{{author}}</a>
+                          {% if not loop.last %}<br>{% endif %}
+                          {% endfor %}
+                        </div>
+                        <div class="inner_blogentry_author_pic">
+                          {% set author = object.authors.all()[0] %}
+                          <a href="{{author.get_absolute_url()}}">
+                            {% if author.photo != "" %}
+                            <img src="{{author.photo_90.url}}">
+                            {% else %}
+                            <img src="{{STATIC_URL}}img/no_avatar.png">
+                            {% endif %}
                           </a>
                         </div>
+                        <div class="inner_blogentry_header">
+                          <a class="header" href="{{object.get_absolute_url()}}">{{object.title}}</a>
+                          <div class="inner_blogentry_statistics">
+                            <a href="{{object.get_absolute_url()}}">
+                              <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
+                            </a>
+                            <a href="{{object.get_absolute_url()}}">
+                              <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                            </a>
+                          </div>
+                        </div>
                       </div>
+                      {% endfor %}
                     </div>
-                    {% endfor %}
                     {% set objects = object_list|group_by(3) %}
                     {% for row in objects %}
                     <div class="blogentry_container">
