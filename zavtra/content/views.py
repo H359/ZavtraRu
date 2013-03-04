@@ -26,7 +26,7 @@ class EventsView(ListView):
     if 'date' in self.kwargs:
       date = datetime.strptime(self.kwargs['date'], '%Y-%m-%d').date()
     else:
-      date = datetime.now().date()
+      date = Article.common_news.aggregate(latest = Max('published_at')).pop('latest').date()
     return date
 
   def get_context_data(self, **kwargs):
