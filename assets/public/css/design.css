@@ -402,6 +402,7 @@ padding-bottom: .25em;
 	background-color: white;
 	min-height:5.5em;
 	width: 43.5em;
+	width: 41.5em\0/;/* IE8 */
 	z-index:1;
 	position: relative;
 }

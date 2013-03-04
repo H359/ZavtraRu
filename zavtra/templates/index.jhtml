@@ -165,7 +165,7 @@
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
                   <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>
-                  {% if not loop.last %} &bull; {% endif %}
+                  {% if not loop.last %}, {% endif %}
                   {% endfor %}
                 </span>
               </div>
@@ -411,7 +411,9 @@
               </h4>
               {% for author in gazette[0].authors.all() %}<a class="person_name" href="{{author.get_absolute_url()}}">{{author}}</a>{% endfor %}
               <p class="light_padding_vertical no_margin"><a href="{{gazette[0].get_absolute_url()}}" class="black black_link article_text no_underline">{{gazette[0].announce}}</a></p>
-              <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
+              <h5 class="right_align average_padding_vertical">
+                <a class="brown brown_link" href="{{gazette[0].get_absolute_url()}}">продолжение статьи &raquo;</a>
+              </h5>
             </div>
             <div class="main_box_header">
               <h5>
