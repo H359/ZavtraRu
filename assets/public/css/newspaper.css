@@ -1524,6 +1524,12 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	font-family: 'Open Sans', Tahoma;
 }
 
+@-moz-document url-prefix() {
+	#inner_subjects {
+		margin-top: .25em; /* temp solution for Firefox */
+	}	
+}
+
 a.subject_nav_item, span.subject_nav_item {
 	font-family: 'Open Sans', Tahoma;
 	font-size: .85em;
