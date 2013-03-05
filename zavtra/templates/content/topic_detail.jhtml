@@ -80,7 +80,7 @@
                             {% endif %}
                             <div class="row">
                               <div class="span3_5">
-                                <a href="{{object.rubric.get_absolute_url()}}" class="block mediumtext dark">{{object.rubric.title}} &ndash; {{object.published_at|ru_date("%d %B %Y")}}</a>
+                                <a href="{{object.get_absolute_url()}}" class="block mediumtext dark">{{object.rubric.title}} &ndash; {{object.published_at|ru_date("%d %B %Y")}}</a>
                               </div>
                               {% if object.topics.count() > 0 %}
                               <div class="span2 right_align">
