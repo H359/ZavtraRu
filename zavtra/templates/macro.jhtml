@@ -144,7 +144,9 @@
 <div class="comments">
   <div class="content">
     <ul id="comments" class="unstyled">
-      {% for comment in object.comments.all() %}{{render_comment(comment)}}{% endfor %}
+      {% if object.comments_count > 0 %}
+      {% for comment in object.comments.select_related('author').filter(active=True) %}{{render_comment(comment)}}{% endfor %}
+      {% endif %}
     </ul>
   </div>
   {% if request.user and request.user.is_authenticated() and request.user.level > 0 %}

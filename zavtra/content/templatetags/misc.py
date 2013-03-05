@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 from datetime import datetime
 from jinja2.ext import Extension
 from django.core.cache import cache
@@ -10,6 +11,12 @@ from pytils.numeral import get_plural as _get_plural
 from content.models import Issue
 
 register = Library()
+
+@register.filter
+@jinja2.contextfilter
+def group_by(ctx, coll, step):
+  steps = int(math.ceil(len(coll) / (1.0*step)))
+  return [coll[step*p:step*(p+1)] for p in range(0, steps)]
 
 @register.filter
 @jinja2.contextfilter

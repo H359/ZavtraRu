@@ -2,7 +2,7 @@
 import os
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -143,17 +143,13 @@ INSTALLED_APPS = (
     'siteuser',
     'grappelli',
     'django.contrib.admin',
-    #'mptt',
     'filebrowser',
     'tinymce',
     'comments',
-    #'devserver'
-    #'debug_toolbar',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
+
+if DEBUG:
+    INSTALLED_APPS += ('devserver',)
 
 #CUSTOM_USER_MODEL = 'siteuser.User'
 AUTH_USER_MODEL = 'siteuser.User'
@@ -176,6 +172,7 @@ TINYMCE_SPELLCHECKER = True
 GRAPPELLI_ADMIN_TITLE = u'Газета &laquo;Завтра&raquo;'
 AUTOCOMPLETE_LIMIT = 20
 GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+OVERWRITE_EXISTING = False
 
 INTERNAL_IPS = ('127.0.0.1',)
 

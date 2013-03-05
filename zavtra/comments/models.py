@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models.signals import post_save, pre_delete
 from django.conf import settings
 
 from content.models import Article
-from siteuser.models import User as UserModel
 from managers import ActiveManager
 
 
@@ -18,3 +18,13 @@ class Comment(models.Model):
 
   objects = models.Manager()
   enabled = ActiveManager()
+
+
+def recalc_count(sender, instance, *args, **kwargs):
+  Article.objects.filter(id=instance.article.id).update(
+    comments_count = Comment.enabled.filter(article=instance.article).count()
+  )
+  print Comment.enabled.filter(article=instance.article).count()
+
+post_save.connect(recalc_count, sender=Comment, dispatch_uid='comments.signals.post_save')
+pre_delete.connect(recalc_count, sender=Comment, dispatch_uid='comments.signals.pre_delete')

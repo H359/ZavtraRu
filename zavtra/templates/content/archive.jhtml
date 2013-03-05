@@ -159,7 +159,7 @@
                 {% endfor %}
                 <div class="newspaper_review_statistics">
                   <span class="article-statistic">
-                    <i class="icon-eye-open"> </i> 172
+                    <i class="icon-eye-open"> </i> {{object.views_count}}
                   </span>
                   <span class="article-statistic">
                     <i class="icon-comment"> </i> {{object.comments_count}}

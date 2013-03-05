@@ -23,10 +23,11 @@ class EventsView(ListView):
   template_name = 'content/events.jhtml'
 
   def get_date(self):
+    self.dates = Article.common_news.aggregate(start = Min('published_at'), end = Max('published_at'))
     if 'date' in self.kwargs:
       date = datetime.strptime(self.kwargs['date'], '%Y-%m-%d').date()
     else:
-      date = datetime.now().date()
+      date = self.dates['end'].date()
     return date
 
   def get_context_data(self, **kwargs):
@@ -35,9 +36,8 @@ class EventsView(ListView):
     context['prev_date'] = self.date - oneday
     context['next_date'] = self.date + oneday
 
-    dates = Article.common_news.aggregate(start = Min('published_at'), end = Max('published_at'))
-    if context['prev_date'] < dates['start'].date(): context['prev_date'] = None
-    if context['next_date'] > dates['end'].date(): context['next_date'] = None
+    if context['prev_date'] < self.dates['start'].date(): context['prev_date'] = None
+    if context['next_date'] > self.dates['end'].date(): context['next_date'] = None
     context['latest_events'] = Article.events.all()[0:5]
     return context
 

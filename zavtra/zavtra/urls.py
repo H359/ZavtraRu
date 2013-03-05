@@ -17,8 +17,10 @@ urlpatterns = patterns('',
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/filebrowser/', include(site.urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^about/$', TemplateView.as_view(template_name='static/about.jhtml'), name='about-us')
+    url(r'^about/$', TemplateView.as_view(template_name='static/about.jhtml'), name='about-us'),
 )
+
+handler404 = 'zavtra.views.view404'
 
 if settings.DEBUG:
   urlpatterns += patterns('',
