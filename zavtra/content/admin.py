@@ -54,16 +54,9 @@ class NewsAdminForm(forms.ModelForm):
   class Meta:
     model = News
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-  selected_at = forms.BooleanField(label=u'Выделить')
+  selected_at = forms.DateTimeField(label=u'Выделить', required=False, help_text=u'Дата привязки')
   cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072, help_text=u'Если заполнено -- новость считается событием')
 
-  def clean(self):
-    data = super(NewsAdminForm, self).clean()
-    if data['selected_at']:
-      data['selected_at'] = data['published_at']
-    else:
-      data['selected_at'] = None
-    return data
 
 
 class WodAdminForm(forms.ModelForm):
