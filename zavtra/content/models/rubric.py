@@ -35,5 +35,5 @@ class Rubric(TitledSluggedModel):
       from issue import RubricInIssue
       rii = RubricInIssue.objects.distinct('rubric').\
             values_list('rubric', flat=True).order_by('rubric', 'position')
-      return list(Rubric.objects.filter(pk__in = rii))
+      return sorted(list(Rubric.objects.filter(pk__in = rii)), key=lambda w: w.title)
     return cached(inner, 'rubrics:gazette', 3600)
