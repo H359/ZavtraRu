@@ -132,11 +132,11 @@ body {
 .nav_item {
 	font-family: 'Open Sans', sans-serif;
 	font-family: 'Helvetica', sans-serif\0/;
-	font-size: 1.05em;
-	font-weight: 900;
+	font-size: 1.1em;
+	font-weight: 800;
 	color: white;
 	letter-spacing: .1em;
-	letter-spacing: 0em\0/;
+	letter-spacing: 0em\0/;/* IE8 */
 	margin: 0em .5em 0em .75em;
 	height: 2.33em;
 	padding: 0em .5em;
@@ -154,6 +154,8 @@ body {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	height: 2.25em;
+	height: 2.15em\0/;/* IE8 */
 }
 
 .nav_item_selected:hover {
