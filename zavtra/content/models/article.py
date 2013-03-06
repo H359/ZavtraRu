@@ -180,8 +180,9 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   def get_most_commented():
     def most_commented():
       return Article.published.\
+             exclude(rubric = Rubric.fetch_rubric('novosti')).\
              filter(published_at__gte = datetime.now() - oneday * 30).\
-             order_by('comments_count', '-published_at').\
+             order_by('-comments_count', '-published_at').\
              prefetch_related('authors').\
              select_related().\
              defer('content')[0:5]

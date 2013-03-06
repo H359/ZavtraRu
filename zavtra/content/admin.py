@@ -10,6 +10,13 @@ from content.models import Rubric, Issue, RubricInIssue,\
 from content.proxies import News, Wod, Video, Columns, Editorial
 
 
+mce_attrs = {
+	'plugins': 'paste',
+	'theme': 'advanced',
+	'paste_auto_cleanup_on_paste': True,
+	'theme_advanced_buttons3_add': 'pastetext,pasteword,selectall'
+}
+
 class RestrictedImageField(forms.ImageField):
   def __init__(self, *args, **kwargs):
     self.max_upload_size = kwargs.pop('max_upload_size')
@@ -46,17 +53,16 @@ class RubricInIssueAdminInline(admin.StackedInline):
 class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
-  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072)
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
 
 
 class NewsAdminForm(forms.ModelForm):
   class Meta:
     model = News
-  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
   selected_at = forms.DateTimeField(label=u'Выделить', required=False, help_text=u'Дата привязки')
   cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072, help_text=u'Если заполнено -- новость считается событием')
-
 
 
 class WodAdminForm(forms.ModelForm):
@@ -64,8 +70,14 @@ class WodAdminForm(forms.ModelForm):
     model = Wod
   title = forms.CharField(label=u'Слово', widget=TextInput(attrs={'style': 'width: 760px'}))
   subtitle = forms.CharField(label=u'Заголовок', widget=TextInput(attrs={'style': 'width: 760px'}))
-  cover_source = forms.ImageField(label=u'Обложка')
-  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+  cover_source = forms.ImageField(label=u'Обложка', required=False)
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
+
+  def clean(self):
+    data = self.cleaned_data
+    if data['status'] == Article.STATUS.ready and data['cover_source'] is None:
+      raise forms.ValidationError(u'Обложка пустая, невозможно сменить статус на "Готово к публикации"')
+    return data
 
 
 class VideoArticleForm(forms.ModelForm):
@@ -186,6 +198,11 @@ class EditorialAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class RubricAdmin(admin.ModelAdmin):
+  list_display = ('title', 'in_rubricator')
+  list_editable = ('in_rubricator',)
+
+
 class TopicAdmin(admin.ModelAdmin):
   list_display = ('title', 'position')
   list_editable = ('position',)
@@ -220,7 +237,7 @@ admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Columns, ColumnsAdmin)
 admin.site.register(Editorial, EditorialAdmin)
-admin.site.register(Rubric)
+admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
 admin.site.register(SpecialProject, SpecialProjectAdmin)

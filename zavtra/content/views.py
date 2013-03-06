@@ -276,7 +276,7 @@ class SearchView(ListView):
     self.found_authors = []
 
     if self.category == 'authors':
-      qs = User.columnists.annotate(articles_count = Count('articles'))
+      qs = User.objects.filter(level__gt = 0).annotate(articles_count = Count('articles'))
     else:
       qs = Article.searcher
     
@@ -285,21 +285,23 @@ class SearchView(ListView):
     if self.form.is_valid():
       data = self.form.cleaned_data
       q = data['query']
+      tokens = q.split(' ')
+      usearch = []
+      for token in tokens:
+        usearch.append(
+          Q(first_name__icontains = token) | Q(last_name__icontains = token) |
+          Q(resume__icontains = token) | Q(bio__icontains = token)
+        )
+      user_subq = reduce(lambda x,y: x | y, usearch)
       if self.category != 'authors':
-        qs = qs.search(query=q, rank_field='rank')
+        qs = qs.search(query=u' | '.join(tokens), rank_field='rank')
         if data['start']:
           qs = qs.filter(published_at__gte = data['start'])
         if data['end']:
           qs = qs.filter(published_at__lte = data['end'])
-        self.found_authors = User.columnists.filter(
-          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-          Q(resume__icontains = q) | Q(bio__icontains = q)
-        )
+        self.found_authors = User.objects.filter(level__gt = 0).filter(user_subq)
       else:
-        qs = qs.filter(
-          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-          Q(resume__icontains = q) | Q(bio__icontains = q)
-        )
+        qs = qs.filter(level__gt = 0).filter(user_subq)
     
     # pack params for GET reuse
     self.form_data = {}
@@ -311,7 +313,7 @@ class SearchView(ListView):
       qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
     elif self.category == 'events':
       qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
-    if self.category == 'authors':
+    elif self.category == 'authors':
       return qs.all()
     else:
       return qs.select_related().prefetch_related('authors', 'topics').\

@@ -220,7 +220,7 @@
           <div class="main_editor_container">
             <div class="main_editor_message">
               {%- set author = editorial.authors.all()[0] -%}
-              <img src="{{author.photo_90.url}}" class="main_editor_message_img">
+              {#<img src="{{author.photo_90.url}}" class="main_editor_message_img">#}
               <div class="main_editor_message_header">
                 <h3>
                   <a href="{{editorial.get_absolute_url()}}" class="no_underline">
@@ -230,7 +230,7 @@
               </div>
               <div class="main_editor_message_text">
                 <h4>
-                  <a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.title}}</a>
+                  <a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.announce}}</a>
                 </h4>
                 <h5 class="right_align dark">
                   <a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
@@ -421,7 +421,7 @@
               </h5>
             </div>
             <div class="main_newspaper_block right_align">
-              {% for article in gazette[1:6] %}
+              {% for article in gazette[1:] %}
               <h4>
                 <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
               </h4>

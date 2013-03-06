@@ -122,7 +122,11 @@
   <div class="comment">
     <div class="avatar">
       <a href="{{comment.author.get_absolute_url()}}" rel="author">
-        <img src="http://placekitten.com/62/62">
+	{% if comment.author.photo != "" %}
+        <img src="{{comment.author.photo_60.url}}">
+	{% else %}
+	<img src="/static/img/no_avatar.png">
+	{% endif %}
       </a>
     </div>
     <div class="inner">
@@ -152,7 +156,7 @@
   {% if request.user and request.user.is_authenticated() and request.user.level > 0 %}
   <div id="comment-form" class="clearfixer">
     <div class="avatar">
-      <a href="#" rel="author"><img src="http://placekitten.com/62/62"></a>
+      <a href="#" rel="author">{% if request.user.photo != "" %}<img src="{{request.user.photo_60.url}}">{% else %}<img src="/static/img/no_avatar.png">{% endif %}</a>
     </div>
     <form class="inner" method="post" action="{{url('comments.views.add')}}">
       <fieldset class="body">

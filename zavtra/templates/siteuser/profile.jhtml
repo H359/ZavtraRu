@@ -38,7 +38,7 @@
                 <a {% if part != 'profile' %}href="{{object.get_absolute_url()}}"{% endif %} title="Об участнике">Об участнике</a>
               </div>
               <div class="span2 person_navigation" {% if part == 'articles' %}id="person_navigation_selected"{% endif %}>
-                <a {% if part != 'articles' %}href="{{object.get_articles_url()}}"{% endif %} title="Публикации">Публикации ({{object.articles.count()}})</a>
+                <a {% if part != 'articles' %}href="{{object.get_articles_url()}}"{% endif %} title="Публикации">Публикации ({{object.occurences.count()}})</a>
               </div>
               <div class="span2 person_navigation" {% if part == 'comments' %}id="person_navigation_selected"{% endif %}>
                 <a {% if part != 'comments' %}href="{{object.get_comments_url()}}"{% endif %} title="Комментарии" href="#">Комментарии</a>
