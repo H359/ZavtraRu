@@ -198,6 +198,11 @@ class EditorialAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class RubricAdmin(admin.ModelAdmin):
+  list_display = ('title', 'in_rubricator')
+  list_editable = ('in_rubricator',)
+
+
 class TopicAdmin(admin.ModelAdmin):
   list_display = ('title', 'position')
   list_editable = ('position',)
@@ -232,7 +237,7 @@ admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Columns, ColumnsAdmin)
 admin.site.register(Editorial, EditorialAdmin)
-admin.site.register(Rubric)
+admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(DailyQuote, DailyQuoteAdmin)
 admin.site.register(SpecialProject, SpecialProjectAdmin)
