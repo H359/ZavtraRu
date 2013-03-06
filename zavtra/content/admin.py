@@ -54,7 +54,7 @@ class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072)
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
 
 
 class NewsAdminForm(forms.ModelForm):
