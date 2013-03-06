@@ -46,15 +46,15 @@
       <div class="row">
         <div class="span4_5">
           <div id="main_header_search">
-            <div id="main_search_form">
-              <form action="/content/search/" method="get" class="navbar-search">
+            <form action="/content/search/" method="get" class="navbar-search">
+              <div id="main_search_form">
                 <input class="search-query" type="search" name="query" placeholder="поиск...">
-              </form>
-            </div>
-            <div id="main_search_image">
-              <button class="trans-button" type="submit"><i class="icon-search icon-white middle_align"> </i>
-              </button>
-            </div>
+              </div>
+              <div id="main_search_image">
+                <button class="trans-button" type="submit"><i class="icon-search icon-white middle_align"> </i>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
