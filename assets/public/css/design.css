@@ -523,12 +523,12 @@ padding-bottom: .25em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	width: 96%;
+	width: 100%;
 	background-color: #000;
 	position: absolute;
 	height: 30%;
 	top: 70%;
-	left: 2%;
+	/*left: 2%;*/
 	opacity: .9;
 	z-index:1
 }
