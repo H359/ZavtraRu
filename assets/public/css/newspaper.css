@@ -1012,9 +1012,9 @@ article {
 
 article p {
 	font-family: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
-	line-height: 1.25em;
+	line-height: 1.5em;
 	padding-bottom: .5em;
-	font-size: .9em;
+	font-size: 1em;
 }
 
 .article_background {
