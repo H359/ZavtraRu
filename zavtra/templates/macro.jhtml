@@ -122,7 +122,11 @@
   <div class="comment">
     <div class="avatar">
       <a href="{{comment.author.get_absolute_url()}}" rel="author">
-        <img src="http://placekitten.com/62/62">
+	{% if comment.author.photo != "" %}
+        <img src="{{comment.author.photo_60.url}}">
+	{% else %}
+	<img src="{{STATIC_URL}}img/no_avatar.png">
+	{% endif %}
       </a>
     </div>
     <div class="inner">
