@@ -617,7 +617,7 @@ padding-bottom: .25em;
 .main_newspaper_block > a {
 	display: block;
 	text-align: right;
-	padding: .25em 0em 0em 0em;
+	padding: .25em 0em .5em 0em;
 }
 
 .main_newspaper_block h6 {
