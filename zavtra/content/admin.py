@@ -58,15 +58,19 @@ class NewsAdminForm(forms.ModelForm):
   cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072, help_text=u'Если заполнено -- новость считается событием')
 
 
-
 class WodAdminForm(forms.ModelForm):
   class Meta:
     model = Wod
   title = forms.CharField(label=u'Слово', widget=TextInput(attrs={'style': 'width: 760px'}))
   subtitle = forms.CharField(label=u'Заголовок', widget=TextInput(attrs={'style': 'width: 760px'}))
-  cover_source = forms.ImageField(label=u'Обложка')
+  cover_source = forms.ImageField(label=u'Обложка', required=False)
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
+  def clean(self):
+    data = self.cleaned_data
+    if data['status'] == Article.STATUS.ready and data['cover_source'] is None:
+      raise forms.ValidationError(u'Обложка пустая, невозможно сменить статус на "Готово к публикации"')
+    return data
 
 class VideoArticleForm(forms.ModelForm):
   class Meta:
