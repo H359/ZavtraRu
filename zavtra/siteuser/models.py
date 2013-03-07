@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 from django.db import models
+from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import AbstractBaseUser
 
@@ -81,6 +82,12 @@ class User(OpenGraphMixin, AbstractBaseUser):
   @property
   def username(self):
     return self.email
+
+  @property
+  def occurences(self):
+    return Article.published.filter(
+      Q(authors__in = [self]) |  Q(expert_comments__expert = self)
+    )
 
   @property
   def latest_article(self):
