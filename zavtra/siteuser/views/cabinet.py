@@ -89,7 +89,7 @@ class CabinetAuthorsSubscriptionsView(ListView):
     return context
 
   def get_queryset(self):
-    return User.columnists.filter(readees__reader = self.request.user)
+    return User.objects.filter(level__gt = 0, readees__reader = self.request.user)
 
 
 class CabinetPostArticleView(TemplateView, FormView):
