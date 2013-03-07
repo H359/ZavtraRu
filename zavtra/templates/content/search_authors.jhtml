@@ -44,7 +44,7 @@
                 </div>
                 <div class="span5 article-header-container">
                   <span>
-                    <a href="{{object.get_absolute_url()}}">{{object.articles_count|get_plural("статья,статьи,статей")}}, {{object.expert_comments.count()|get_plural("экспертная оцена,экспертных оценки,экспертных оценок")}}, {{object.comments_count|get_plural("комментарий,комментария,комментариев")}}
+                    <a href="{{object.get_absolute_url()}}">{{object.articles_count|get_plural("статья,статьи,статей")}}, {{object.expert_comments.count()|get_plural("экспертная оцена,экспертных оценки,экспертных оценок")}}, {{object.comments.count()|get_plural("комментарий,комментария,комментариев")}}
                     </a>
                   </span>
                 </div>
