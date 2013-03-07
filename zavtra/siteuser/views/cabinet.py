@@ -50,7 +50,7 @@ class CabinetArticlesView(FilteredArticlesView):
 
   def get_queryset(self):
     qs = super(CabinetArticlesView, self).get_queryset()
-    return qs.filter(
+    return qs.distinct().filter(
       Q(authors__in = [self.request.user]) | Q(expert_comments__expert = self.request.user)
     )
 
