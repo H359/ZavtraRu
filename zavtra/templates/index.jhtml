@@ -421,7 +421,7 @@
               </h5>
             </div>
             <div class="main_newspaper_block right_align">
-              {% for article in gazette[1:6] %}
+              {% for article in gazette[1:] %}
               <h4>
                 <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.title}}</a>
               </h4>
