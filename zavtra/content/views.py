@@ -282,24 +282,26 @@ class SearchView(ListView):
     
     # process form
     self.form = SearchForm(self.request.GET)
+    tokens = q.split(' ')
+    usearch = []
+    for token in tokens:
+      usearch.append(
+        Q(first_name__icontains = token) | Q(last_name__icontains = token) |
+        Q(resume__icontains = token) | Q(bio__icontains = token)
+      )
+    user_subq = reduce(lambda x,y: x | y, usearch)
     if self.form.is_valid():
       data = self.form.cleaned_data
       q = data['query']
       if self.category != 'authors':
-        qs = qs.search(query=q, rank_field='rank')
+        qs = qs.search(query=u' | '.join(tokens), rank_field='rank')
         if data['start']:
           qs = qs.filter(published_at__gte = data['start'])
         if data['end']:
           qs = qs.filter(published_at__lte = data['end'])
-        self.found_authors = User.objects.filter(level__gt = 0).filter(
-          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-          Q(resume__icontains = q) | Q(bio__icontains = q)
-        )
+        self.found_authors = User.objects.filter(level__gt = 0).filter(user_subq)
       else:
-        qs = qs.filter(level__gt = 0).filter(
-          Q(first_name__icontains = q) | Q(last_name__icontains = q) |
-          Q(resume__icontains = q) | Q(bio__icontains = q)
-        )
+        qs = qs.filter(level__gt = 0).filter(user_subq)
     
     # pack params for GET reuse
     self.form_data = {}
