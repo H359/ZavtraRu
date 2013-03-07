@@ -276,7 +276,7 @@ class SearchView(ListView):
     self.found_authors = []
 
     if self.category == 'authors':
-      qs = User.columnists.annotate(articles_count = Count('articles'))
+      qs = User.objects.annotate(level__gt = 0, articles_count = Count('articles'))
     else:
       qs = Article.searcher
     
@@ -291,12 +291,12 @@ class SearchView(ListView):
           qs = qs.filter(published_at__gte = data['start'])
         if data['end']:
           qs = qs.filter(published_at__lte = data['end'])
-        self.found_authors = User.columnists.filter(
+        self.found_authors = User.object.filter(level__gt = 0).filter(
           Q(first_name__icontains = q) | Q(last_name__icontains = q) |
           Q(resume__icontains = q) | Q(bio__icontains = q)
         )
       else:
-        qs = qs.filter(
+        qs = qs.filter(level__gt = 0).filter(
           Q(first_name__icontains = q) | Q(last_name__icontains = q) |
           Q(resume__icontains = q) | Q(bio__icontains = q)
         )
@@ -311,7 +311,7 @@ class SearchView(ListView):
       qs = qs.filter(rubric=Rubric.fetch_rubric('wod'))
     elif self.category == 'events':
       qs = qs.filter(rubric=Rubric.fetch_rubric('novosti'))
-    if self.category == 'authors':
+    elif self.category == 'authors':
       return qs.all()
     else:
       return qs.select_related().prefetch_related('authors', 'topics').\

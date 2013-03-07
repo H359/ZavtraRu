@@ -17,7 +17,7 @@ class HomeView(TemplateView):
     now = datetime.now()
     morning = (now if now.hour >= 7 else now - oneday).replace(hour=7, minute=0, second=0, microsecond=0)
     news_date_range = (morning, morning + oneday)
-    print morning, morning + oneday
+    #print morning, morning + oneday
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
                         order_by('-selected_at').\
@@ -48,6 +48,7 @@ class HomeView(TemplateView):
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
+               order_by('-selected_at').\
                select_related().all()[0:6],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
              defer('content').select_related()
