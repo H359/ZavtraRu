@@ -20,7 +20,7 @@
   <div class="row">
     <div class="span4 offset1">
       <div id="person_statistics">
-        <span class="mediumtext bold">Публикаций:</span> {{object.articles.count()}}
+        <span class="mediumtext bold">Публикаций:</span> {{page_obj.paginator.num_pages}}
         <br>
         <span class="mediumtext bold">Получено комментариев:</span> {{object.received_comments.count()}}
       </div>
