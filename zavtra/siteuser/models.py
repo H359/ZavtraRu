@@ -85,8 +85,9 @@ class User(OpenGraphMixin, AbstractBaseUser):
 
   @property
   def occurences(self):
+    from content.models import Article
     return Article.published.filter(
-      Q(authors__in = [self]) |  Q(expert_comments__expert = self)
+      Q(authors__in = [self]) | Q(expert_comments__expert = self)
     )
 
   @property
