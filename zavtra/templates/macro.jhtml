@@ -73,9 +73,9 @@
       </div>
     </div>
     {% endif %}
-    {% for l in range(0, rubric['items']|length, 3) %}
+    {% for l in range(0, rubric['items']|length, 2) %}
     <div class="row">
-      {% for article in rubric['items'][l:l+3] %}
+      {% for article in rubric['items'][l:l+2] %}
       <div class="span{{12 // loop.length}}">
         <div class="article-content side_shadows">
           <section>
