@@ -291,7 +291,7 @@ class SearchView(ListView):
           qs = qs.filter(published_at__gte = data['start'])
         if data['end']:
           qs = qs.filter(published_at__lte = data['end'])
-        self.found_authors = User.object.filter(level__gt = 0).filter(
+        self.found_authors = User.objects.filter(level__gt = 0).filter(
           Q(first_name__icontains = q) | Q(last_name__icontains = q) |
           Q(resume__icontains = q) | Q(bio__icontains = q)
         )
