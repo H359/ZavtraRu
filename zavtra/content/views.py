@@ -282,17 +282,17 @@ class SearchView(ListView):
     
     # process form
     self.form = SearchForm(self.request.GET)
-    tokens = q.split(' ')
-    usearch = []
-    for token in tokens:
-      usearch.append(
-        Q(first_name__icontains = token) | Q(last_name__icontains = token) |
-        Q(resume__icontains = token) | Q(bio__icontains = token)
-      )
-    user_subq = reduce(lambda x,y: x | y, usearch)
     if self.form.is_valid():
       data = self.form.cleaned_data
       q = data['query']
+      tokens = q.split(' ')
+      usearch = []
+      for token in tokens:
+        usearch.append(
+          Q(first_name__icontains = token) | Q(last_name__icontains = token) |
+          Q(resume__icontains = token) | Q(bio__icontains = token)
+        )
+      user_subq = reduce(lambda x,y: x | y, usearch)
       if self.category != 'authors':
         qs = qs.search(query=u' | '.join(tokens), rank_field='rank')
         if data['start']:
