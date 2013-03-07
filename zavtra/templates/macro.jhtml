@@ -46,7 +46,7 @@
           </div>
           <div class="article-text">
             <p class="article-paragraph">
-              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
+              <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags|nl2br}}</a>
             </p>
           </div>
         </article>
@@ -101,7 +101,7 @@
               </div>
               <div class="article-text">
                 <p class="article-paragraph">
-                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags}}</a>
+                  <a href="{{article.get_absolute_url()}}" class="black black_link no_unedrline">{{article.announce|striptags|nl2br}}</a>
                 </p>
               </div>
             </article>
@@ -137,7 +137,7 @@
             <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
           </a>
         </div>
-        <div class="text">{{comment.comment}}</div>
+        <div class="text">{{comment.comment|nl2br}}</div>
       </div>
     </div>
   </div>
