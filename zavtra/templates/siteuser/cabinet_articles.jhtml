@@ -141,7 +141,7 @@
                   <div>
                     <br><h4>Экспертные оценки:</h4><br>
                     {% for comment in article.expert_comments.all() %}
-                    <a href="{{comment.expert.get_absolute_url()}}">{{comment.expert}}</a>{% if not loop.last %}, {% endif %}
+                    <a href="{{comment.expert.get_absolute_url()}}" class="inline-block">{{comment.expert}}</a>{% if not loop.last %}, {% endif %}
                     {% endfor %}
                   </div>
                   {% endif %}
