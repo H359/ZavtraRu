@@ -164,8 +164,7 @@
                 <h6 class="beige">Экспертные оценки:</h6>
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
-                  <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>
-                  {% if not loop.last %}, {% endif %}
+                  <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>{% if not loop.last %}, {% endif %}
                   {% endfor %}
                 </span>
               </div>

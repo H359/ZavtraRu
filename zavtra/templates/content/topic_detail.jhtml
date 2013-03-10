@@ -83,7 +83,7 @@
                                 <a href="{{object.get_absolute_url()}}" class="block mediumtext dark">{{object.rubric.title}} &ndash; {{object.published_at|ru_date("%d %B %Y")}}</a>
                               </div>
                               {% if object.topics.count() > 0 %}
-                              <div class="span2 right_align">
+                              <div class="{% if object.cover_source != "" %}span2{% else %}span4_5{% endif %} right_align">
                                 {% for t in object.topics.all() %}<span class="label label-info mediumtext"><a href="{{t.get_absolute_url()}}" class="white white_link baseline_align">{{t.title}}</a></span>{% endfor %}
                               </div>
                               {% endif %}
