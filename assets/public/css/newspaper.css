@@ -1894,7 +1894,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_new .inner_blogentry_header {
-	height: 6em;
+	min-height: 3em;
 	margin-left: 7em;
 	margin-top: .75em;
 }
