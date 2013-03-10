@@ -131,9 +131,9 @@
               </div>
             </div>
             {% endif %}
-            <div class="span5">
+            <div class="{% if article.cover_source != "" %}span5{% else %}span8{% endif %}">
               <div class="row">
-                <div class="span5 news-text">
+                <div class="{% if article.cover_source != "" %}span5{% else %}span8{% endif %} news-text">
                   <a href="{{article.get_absolute_url()}}" class="no_underline"
                     <p class="news-paragraph">{{article.announce|striptags}}</p>
                   </a>
