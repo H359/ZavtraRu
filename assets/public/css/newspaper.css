@@ -1574,6 +1574,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 
 .newspaper_review_rubric .span5, .newspaper_review_rubric .span4, .newspaper_review_rubric .span3 {
 	padding: .5em 1em .5em 1.5em;
+	padding: .5em 1em .5em 1em\0/; /* IE8 */
 }
 
 .newspaper_review_rubric h2 {
