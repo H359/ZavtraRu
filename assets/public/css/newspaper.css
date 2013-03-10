@@ -1890,7 +1890,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry .inner_blogentry_header {
-	height: 4.75em;
+	min-height: 2.5em;
 }
 
 .inner_blogentry_new .inner_blogentry_header {
@@ -1905,9 +1905,8 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 }
 
 .inner_blogentry_statistics {
-	position: absolute;
 	bottom: 0.25em;
-	right: .75em;
+	padding-right: .75em;
 	text-align: right;
 	padding-top: .5em;
 }
