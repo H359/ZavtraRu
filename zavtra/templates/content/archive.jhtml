@@ -65,14 +65,20 @@
         </div>
       </div>
     </div>
+    {% if number %}
+    {% set issue = issues.get(relative_number=number) %}
+    {% else %}
+    {% set issue = issues.latest('published_at') %}
+    {% set number = issue.relative_number %}
+    {% endif %}
     <div class="row">
       <div class="span10 offset1">
         <div class="center_align big_padding_vertical archive_selector">
-          {% for issue in issues.all() %}
-          {% if issue.relative_number == number %}
-          <span class="archive_selector_selected">{{issue.relative_number}} ({{issue.absolute_number}})</span>
+          {% for iissue in issues.all() %}
+          {% if iissue.relative_number == number %}
+          <span class="archive_selector_selected">{{iissue.relative_number}} ({{iissue.absolute_number}})</span>
           {% else %}
-          <a href="{{url('content.view.archive')}}?number={{issue.relative_number}}&{{built_attrs}}">{{issue.relative_number}} ({{issue.absolute_number}})</a>
+          <a href="{{url('content.view.archive')}}?number={{iissue.relative_number}}&{{built_attrs}}">{{iissue.relative_number}} ({{iissue.absolute_number}})</a>
           {% endif %}
           {% endfor %}
         </div>
@@ -80,22 +86,17 @@
     </div>
     <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
     <div class="row">
-      {% if number %}
-      {% set issue = issues.get(relative_number=number) %}
-      {% else %}
-      {% set issue = issues.latest('published_at') %}
-      {% endif %}
       {% set objects = issue.gazette %}
       <div class="span10 offset1">
         <div class="row">
           <div class="span10">
             <div class="rubric-header">
-              <h3>Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</h3>
+              <h3><a href="{{issue.get_absolute_url()}}">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</a></h3>
             </div>
             {% if issue.illustration != "" %}
             <div class="text-over-image">
               <div class="padding_one">
-                <img src="{{issue.archive_box.url}}" id="newspaper_illustration">
+                <a href="{{issue.get_absolute_url()}}"><img src="{{issue.archive_box.url}}" id="newspaper_illustration"></a>
               </div>
               <div class="text-bottom right_align x-margin-one">
                 <span class="white bottom_align">
