@@ -1,9 +1,9 @@
 {% macro render_navigation(prefix="", suffix="", path="") %}
 <span class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="/content/issue/">Газета</a></span>
-<span class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('content.view.events')}}">События</a></span>
-<span class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="/content/rubric/wod/">Слово Дня</a></span>
-<span class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('content.view.community')}}">Статьи</a></span>
-<span class="{% if path.startswith('/content/issue/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('siteuser.view.authors')}}">Авторы</a></span>
+<span class="{% if path.startswith('/content/events/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('content.view.events')}}">События</a></span>
+<span class="{% if path.startswith('/content/rubric/wod/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="/content/rubric/wod/">Слово Дня</a></span>
+<span class="{% if path.startswith('/content/community/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('content.view.community')}}">Статьи</a></span>
+<span class="{% if path.startswith('/authors/') %}nav_item_selected {% endif %}{{prefix}}nav_item{{suffix}}"><a href="{{url('siteuser.view.authors')}}">Авторы</a></span>
 {% endmacro %}
 
 {% macro render_zeitung_rubric(joined, rubrics, with_title=True) %}
