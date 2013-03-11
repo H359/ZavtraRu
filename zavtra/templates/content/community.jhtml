@@ -112,14 +112,14 @@ $().ready(function() {
                         </div>
                         <div class="inner_blogentry_header">
                           <a class="header" href="{{object.get_absolute_url()}}">{{object.title}}</a>
-                          <div class="inner_blogentry_statistics">
-                            <a href="{{object.get_absolute_url()}}">
-                              <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
-                            </a>
-                            <a href="{{object.get_absolute_url()}}">
-                              <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
-                            </a>
-                          </div>
+                        </div>
+                        <div class="inner_blogentry_statistics">
+                          <a href="{{object.get_absolute_url()}}">
+                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
+                          </a>
+                          <a href="{{object.get_absolute_url()}}">
+                            <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                          </a>
                         </div>
                       </div>
                       {% endfor %}
@@ -150,14 +150,14 @@ $().ready(function() {
                         </div>
                         <div class="inner_blogentry_header">
                           <a class="header" href="{{object.get_absolute_url()}}">{{object.title}}</a>
-                          <div class="inner_blogentry_statistics">
-                            <a href="{{object.get_absolute_url()}}">
-                              <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
-                            </a>
-                            <a href="{{object.get_absolute_url()}}">
-                              <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
-                            </a>
-                          </div>
+                        </div>
+                        <div class="inner_blogentry_statistics">
+                          <a href="{{object.get_absolute_url()}}">
+                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
+                          </a>
+                          <a href="{{object.get_absolute_url()}}">
+                            <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
+                          </a>
                         </div>
                       </div>
                       {% endfor %}

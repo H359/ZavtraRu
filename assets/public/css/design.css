@@ -685,13 +685,13 @@ padding-bottom: .25em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	padding-top: 1em;
+	/*padding-top: 1em;*/
 }
 
 .main_blog_entry {
 	position: relative;
 	padding: 0em 0em 0em .75em;
-	margin: 0em 0em 1em 0em;
+	margin: 0em 0em 1.5em 0em;
 	border-left: 1px solid #DDD;
 	border-right: 1px solid #BBB;
 	border-bottom: 1px solid #BBB;
@@ -715,7 +715,7 @@ padding-bottom: .25em;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	position: relative;
-	background-image: url('../pic/line_transparent_gray.png');
+	background-image: url('/static/img/line_transparent_gray.png');
 	background-size: contain;
 	background-repeat: repeat-y;
 	background-position: right;

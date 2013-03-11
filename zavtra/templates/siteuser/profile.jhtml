@@ -37,7 +37,7 @@
               <div class="span2 person_navigation" {% if part == 'profile' %}id="person_navigation_selected"{% endif %}>
                 <a {% if part != 'profile' %}href="{{object.get_absolute_url()}}"{% endif %} title="Об участнике">Об участнике</a>
               </div>
-              <div class="span2 person_navigation" {% if part == 'articles' %}id="person_navigation_selected"{% endif %}>
+              <div class="span2_5 person_navigation" {% if part == 'articles' %}id="person_navigation_selected"{% endif %}>
                 <a {% if part != 'articles' %}href="{{object.get_articles_url()}}"{% endif %} title="Публикации">Публикации ({{object.occurences.count()}})</a>
               </div>
               <div class="span2 person_navigation" {% if part == 'comments' %}id="person_navigation_selected"{% endif %}>
@@ -50,8 +50,6 @@
       <div id="person_pic" class="span4">
         {% if object.photo != "" %}
         <img src="{{object.photo_225.url}}">
-        {% else %}
-        <img src="{{STATIC_URL}}img/no_avatar.png">
         {% endif %}
       </div>
     </div>
