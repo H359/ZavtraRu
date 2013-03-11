@@ -601,7 +601,7 @@ abc {
 	padding: 1em;
 }
 
-.sub_nav_item {
+.sub_nav_item a {
 	font-family: 'Open Sans', sans-serif;
 	font-size: .95em;
 	line-height: 1.25em;
@@ -610,7 +610,7 @@ abc {
 	padding-right: 1em;
 }
 
-.sub_nav_item:hover {
+.sub_nav_item a:hover {
 	color: #DDD;
 	text-decoration: none;
 }
