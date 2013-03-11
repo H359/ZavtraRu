@@ -278,16 +278,12 @@
       <div class="row">
         <div class="span9">
           <div class="span4">
-            <div class="span4">
-              <div class="main_box_frame">
-      					<div class="relative main_box_header">
-  								<h4 class="white inline">
-  									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
-  								</h4>
-  							</div>
-  						</div>
-            </div>
-            <div class="span4">
+            <div class="main_box_frame">
+    					<div class="relative main_box_header">
+								<h4 class="white inline">
+									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
+								</h4>
+							</div>
               <div class="main_blog_entries_container">
                 {% for article in blogs %}
                 <div class="main_blog_entry">
