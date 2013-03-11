@@ -381,7 +381,7 @@ padding-bottom: .25em;
 	bottom: 0;
 	padding: .25em .5em;
 	background: #444\0/; /* IE8 */
-	background: rgba(66, 66, 66, 0.975);
+	background: rgba(66, 66, 66, 0.9);
 }
 
 .text-over-image .text-bottom a, .text-over-image .text-top a {
