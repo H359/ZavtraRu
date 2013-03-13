@@ -2859,6 +2859,10 @@ li.empty span.large {
     box-sizing: border-box;
 }
 
+.spec_list h4 {
+	padding: .5em;
+}
+
 .spec_entry_content {
 	padding: 1.5em 0em;
 }

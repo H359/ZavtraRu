@@ -684,7 +684,7 @@ padding-bottom: .25em;
 
 .main_blog_entries_container {
 	background-color: #DDD;
-	margin: 0em .75em 1.5em .75em;
+	margin: 0em 0em 1.5em 0em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
