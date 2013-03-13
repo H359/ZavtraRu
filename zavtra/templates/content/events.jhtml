@@ -145,18 +145,18 @@ $().ready(function() {
                           </div>
                         </div>
                         <div class="row">
+                          {% if article.cover_source %}
                           <div class="span3">
-                            {% if article.cover_source %}
                             <div class="news-illustration-container">
                               <a href="{{article.get_absolute_url()}}">
                                 <img src="{{article.cover_for_eventbox.url}}" class="news-illustration">
                               </a>
                             </div>
-                            {% endif %}
                           </div>
-                          <div class="span5">
+                          {% endif %}
+                          <div class="{% if article.cover_source %}span5{% else %}span8{% endif %}">
                             <div class="row">
-                              <div class="span5 news-text">
+                              <div class="{% if article.cover_source %}span5{% else %}span8{% endif %} news-text">
                                 <p class="news-paragraph">
                                   <a href="{{article.get_absolute_url()}}" class="black black_link no_underline">{{article.announce|striptags}}</a>
                                 </p>

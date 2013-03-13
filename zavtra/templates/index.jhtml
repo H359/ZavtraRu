@@ -9,9 +9,9 @@
       <div class="row">
         <div class="span4_5">
           <div id="main_header_links">
-            <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
-            <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
             <a class="main_header_link" href="/content/archive/">Архив Завтра</a>
+            <a class="main_header_link" href="http://dentv.ru">День ТВ</a>
+            <a class="main_header_link" href="http://zavtra.ru/denlit/">День Литературы</a>
           </div>
           <img src="{{STATIC_URL}}img/red_line_gradient.png" class="block">
         </div>
@@ -164,8 +164,7 @@
                 <h6 class="beige">Экспертные оценки:</h6>
                 <span class="block center_align">
                   {% for expert_comment in wod.expert_comments.all() %}
-                  <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>
-                  {% if not loop.last %}, {% endif %}
+                  <a href="{{expert_comment.expert.get_absolute_url()}}" class="person_name">{{expert_comment.expert}}</a>{% if not loop.last %}, {% endif %}
                   {% endfor %}
                 </span>
               </div>
@@ -279,16 +278,12 @@
       <div class="row">
         <div class="span9">
           <div class="span4">
-            <div class="span4">
-              <div class="main_box_frame">
-      					<div class="relative main_box_header">
-  								<h4 class="white inline">
-  									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
-  								</h4>
-  							</div>
-  						</div>
-            </div>
-            <div class="span4">
+            <div class="main_box_frame">
+    					<div class="relative main_box_header">
+								<h4 class="white inline">
+									<a href="/authors/" class="gray gray_link">Авторские Страницы</a>
+								</h4>
+							</div>
               <div class="main_blog_entries_container">
                 {% for article in blogs %}
                 <div class="main_blog_entry">
