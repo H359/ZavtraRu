@@ -58,7 +58,8 @@
             <div class="row">
               <div class="span8 offset1">
                 <div class="row">
-                  {% if object.cover_source != "" %}
+                {% if object.show_icon %}
+		  {% if object.cover_source != "" %}
                   <div class="span4">
                     <div class="article-page-illustration">
                       <img src="{{MEDIA_URL}}{{object.cover_source}}">
@@ -76,6 +77,7 @@
                   {% endif %}
                   {% endif %}
                   {% endif %}
+                {% endif %}
                   <div class="span4">
                     <div class="row">
                       {% if object.subtitle != "" %}

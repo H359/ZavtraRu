@@ -350,7 +350,7 @@
                     <div class="accordion-inner">
                       {% if article.cover_source != "" %}
                       <div class="center_align big_padding_vertical">
-                        <img src="{{article.cover_for_topbar.url}}" class="img-polaroid main_special_project_img">
+                        <img src="{{article.inside_article_cover.url}}" class="img-polaroid main_special_project_img">
                       </div>
                       <p>{{article.announce|striptags}}</p>
                       <h5 class="right_align average_padding_vertical">

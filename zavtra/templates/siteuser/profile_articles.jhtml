@@ -25,7 +25,7 @@
         <span class="mediumtext bold">Получено комментариев:</span> {{object.received_comments.count()}}
       </div>
     </div>
-    {% if request.user and request.user.is_authenticated() %}
+    {% if request.user and request.user.is_authenticated() and request.user.id != object.id %}
     <div class="span4" id="person_actions">
       {% if request.user.readers.filter(author=object).count() == 0 %}
       <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}" class="subscribe_button"><span>Подписаться</span></a>

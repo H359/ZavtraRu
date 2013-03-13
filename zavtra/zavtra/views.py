@@ -47,8 +47,9 @@ class HomeView(TemplateView):
       'selected_articles': selected_articles,
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
-               filter(selected_at__lte = now).exclude(pk__in = selected_articles).\
-               order_by('-selected_at').\
+               filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi')).\
+               exclude(pk__in = selected_articles).\
+               order_by('-selected_at').
                select_related().all()[0:6],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
              defer('content').select_related()

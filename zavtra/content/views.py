@@ -351,4 +351,4 @@ class SpecProjectView(DetailView):
 
 
 def current_issue_redirect(request):
-  return redirect(Issue.objects.latest('published_at'))
+  return redirect(Issue.published.latest('published_at'))
