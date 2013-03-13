@@ -40,6 +40,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   })
   rating = models.IntegerField(editable=False, default=0)
   topics = models.ManyToManyField(Topic, verbose_name=u'Темы', blank=True, related_name='articles')
+  show_icon = models.BooleanField(verbose_name=u'Показывать иконку внутри статьи?', default=True)
 
   # TODO: remove after migration
   gazetted = models.BooleanField(default=False, editable=False)
