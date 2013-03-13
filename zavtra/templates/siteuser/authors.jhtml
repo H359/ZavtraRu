@@ -150,9 +150,9 @@
                       <div class="author-actions">
                         {% if request.user and request.user.is_authenticated() %}
                         {% if object.id in user_reads %}
-                        <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}{% if letter %}?letter={{letter}}{% endif %}">Отписаться</a>
+                        <a href="{{object.get_unsubscribe_url()}}?next={{request.path|e}}&{{request.META.QUERY_STRING}}">Отписаться</a>
                         {% else %}
-                        <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}{% if letter %}?letter={{letter}}{% endif %}" class="author_link">Подписаться</a>
+                        <a href="{{object.get_subscribe_url()}}?next={{request.path|e}}&{{request.META.QUERY_STRING}}" class="author_link">Подписаться</a>
                         {% endif %}
                         {% endif %}
                         <a href="{{object.get_articles_url()}}" class="author_link">Статьи ({{object.articles.count()}})</a>
