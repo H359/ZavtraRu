@@ -19,6 +19,8 @@ class Comment(models.Model):
   objects = models.Manager()
   enabled = ActiveManager()
 
+  class Meta:
+    ordering = ['created_at']
 
 def recalc_count(sender, instance, *args, **kwargs):
   Article.objects.filter(id=instance.article.id).update(
