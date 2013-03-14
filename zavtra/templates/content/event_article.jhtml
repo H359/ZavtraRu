@@ -90,8 +90,24 @@
                   {% endfor %}
                 </div>
               </div>
+            </div>
+            <div class="row">
+              <div class="span6 offset1">
+                <div class="article-page-statistics">
+                  {% if object.from_zeitung %}
+                  <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
+                  {% endif %}
+                  <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+                  <span class="article-statistic">
+                    <i class="icon-eye-open"> </i>{{object.views_count}}
+                  </span>
+                  <span class="article-statistic">
+                    <i class="icon-comment"> </i>{{object.comments_count}}
+                  </span>
+                </div>
+              </div>
               {% if object.topics.count() > 0 %}
-              <div class="span2 right_align article_category_list">
+              <div class="span2 right_align">
                 {% for topic in object.topics.all() %}
                 <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
                 {% endfor %}
@@ -107,27 +123,13 @@
                       <img src="{{object.inside_article_cover.url}}">
                     </div>
                   </div>
-                  {% endif %}
                   <div class="span4">
-                    <div class="row">
-                      {% if object.subtitle != "" %}
-                      <div class="span4">
-                        <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
-                      </div>
-                      {% endif %}
-                      <div class="span4 article-page-statistics">
-                        {% if object.from_zeitung %}
-                        <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
-                        {% endif %}
-                        <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
-                        <span class="article-statistic">
-                          <i class="icon-eye-open"> </i>{{object.views_count}}
-                        </span>
-                        <span class="article-statistic">
-                          <i class="icon-comment"> </i>{{object.comments_count}}
-                        </span>
-                      </div>
-                    </div>
+                  {% else %}
+                  <div class="span4 offset4">
+                  {% endif %}
+                  {% if object.subtitle != "" %}
+                    <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
+                  {% endif %}
                   </div>
                 </div>
               </div>
