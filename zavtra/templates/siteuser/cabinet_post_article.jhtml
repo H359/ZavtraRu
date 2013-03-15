@@ -7,10 +7,10 @@
   <div class="span10 offset1 person_cab_content">
     <div class="row">
       <div class="span10">
-        <div class="module_header rubric-header">
+        {#<div class="module_header rubric-header">
           <h4 class="inline">Правила публикации:</h4>
         </div>
-        <div id="text_area">текст</div>
+        <div id="text_area">текст</div>#}
         <div class="module_header rubric-header">
           <h4 class="inline">Новая статья:</h4>
         </div>
