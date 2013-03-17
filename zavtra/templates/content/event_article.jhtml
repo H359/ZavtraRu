@@ -10,23 +10,16 @@
 <div class="container12">
   <div class="bordered_clean">
     <div class="row">
-      <div class="span12">
-        <div class="section-header">
-          <h2 class="inline top_align">Сегодня</h2>
-        </div>
-      </div>
-    </div>
-    <div class="row">
       {% for article in object.rubric.articles.exclude(cover_source = "")[0:5] %}
       <div class="span2_4">
         <div class="news_selection_item">
-          <div class="text-over-image">
+          <div>
             <a href="{{article.get_absolute_url()}}">
               <img src="{{article.cover_for_main_selection.url}}" class="news_selection_item_img_small">
-              <div class="text-bottom white">
-                <span class="mediumtext">{{article.title}}</span>
-              </div>
             </a>
+          </div>
+          <div class="selection_item_header">
+            <span class="mediumtext">{{article.title}}</span>
           </div>
           <div class="selection_item_statistics">
             <a href="{{article.get_absolute_url()}}" class="smalltext">{{article.published_at|ru_date("%d/%m/%Y")}}</a>
