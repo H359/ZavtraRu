@@ -21,12 +21,12 @@
     <div class="row" id="newspaper_issues">
       {% for article in related %}
       <div class="span2_4">
-        <div class="text-over-image newspaper_selection_item{% if article.id == object.id %} newspaper_selection_item_selected{% endif %}">
+        <div class="newspaper_selection_item{% if article.id == object.id %} newspaper_selection_item_selected{% endif %}">
           {% if article.id != object.id %}<a href="{{article.get_absolute_url()}}">{% endif %}
             {% if article.cover_source != "" %}
             <img src="{{article.cover_for_topbar.url}}" class="newspaper_selection_item_img">
             {% endif %}
-            <div class="text-bottom white">
+            <div class="item_selection_header">
               <span class="largetext bold">{{article.title}}</span>
               <br>
               <span class="mediumtext">{{article.published_at|ru_date("%d %B")}}</span>
