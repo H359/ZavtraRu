@@ -55,92 +55,81 @@
         </div>
       </div>
     </div>
-  </div>
-  {#
-  <div class="row">
-    <div class="span12">
-      <div id="inner_subjects">
-        {% for topic in top_topics %}
-        <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  #}
-  <div class="row">
-    <div class="span12">
-      <div class="row">
-        <div class="offset1 span10 article_background">
-          <article>
-            <div class="row">
-              <div class="span6 offset1">
-                <header>
-                  <h1 class="article-page-main-header article-header">{{object.title}}</h1>
-                </header>
-                <div class="article-page-author-name">
-                  {% for author in object.authors.all() %}
-                  <a rel="author" href="{{author.get_absolute_url()}}" class="dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+    <div class="row">
+      <div class="span12">
+        <div class="row">
+          <div class="offset1 span10 article_background">
+            <article>
+              <div class="row">
+                <div class="span6 offset1">
+                  <header>
+                    <h1 class="article-page-main-header article-header">{{object.title}}</h1>
+                  </header>
+                  <div class="article-page-author-name">
+                    {% for author in object.authors.all() %}
+                    <a rel="author" href="{{author.get_absolute_url()}}" class="dark dark_link">{{author}}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span6 offset1">
+                  <div class="article-page-statistics">
+                    {% if object.from_zeitung %}
+                    <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
+                    {% endif %}
+                    <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+                    <span class="article-statistic">
+                      <i class="icon-eye-open"> </i>{{object.views_count}}
+                    </span>
+                    <span class="article-statistic">
+                      <i class="icon-comment"> </i>{{object.comments_count}}
+                    </span>
+                  </div>
+                </div>
+                {% if object.topics.count() > 0 %}
+                <div class="span2 right_align">
+                  {% for topic in object.topics.all() %}
+                  <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
                   {% endfor %}
                 </div>
+                {% endif %}
               </div>
-            </div>
-            <div class="row">
-              <div class="span6 offset1">
-                <div class="article-page-statistics">
-                  {% if object.from_zeitung %}
-                  <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
-                  {% endif %}
-                  <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
-                  <span class="article-statistic">
-                    <i class="icon-eye-open"> </i>{{object.views_count}}
-                  </span>
-                  <span class="article-statistic">
-                    <i class="icon-comment"> </i>{{object.comments_count}}
-                  </span>
-                </div>
-              </div>
-              {% if object.topics.count() > 0 %}
-              <div class="span2 right_align">
-                {% for topic in object.topics.all() %}
-                <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-            <div class="row">
-              <div class="span8 offset1">
-                <div class="row">
-                  {% if object.show_icon and object.cover_source != "" %}
-                  <div class="span4">
-                    <div class="article-page-illustration">
-                      <img src="{{object.inside_article_cover.url}}">
+              <div class="row">
+                <div class="span8 offset1">
+                  <div class="row">
+                    {% if object.show_icon and object.cover_source != "" %}
+                    <div class="span4">
+                      <div class="article-page-illustration">
+                        <img src="{{object.inside_article_cover.url}}">
+                      </div>
+                    </div>
+                    <div class="span4">
+                    {% else %}
+                    <div class="span4 offset4">
+                    {% endif %}
+                    {% if object.subtitle != "" %}
+                      <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
+                    {% endif %}
                     </div>
                   </div>
-                  <div class="span4">
-                  {% else %}
-                  <div class="span4 offset4">
-                  {% endif %}
-                  {% if object.subtitle != "" %}
-                    <span class="article-page-main-subheader article-header">{{object.subtitle}}</span>
-                  {% endif %}
-                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
-            </div>
-            <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
-          </article>
-        </div>
-      </div>
-      <div class="row">
-        <div class="span10 offset1">
-          <div id="comments-section" class="rubric-header no_margin">
-            <h3 class="inline">Комментарии ({{object.comments_count}}):</h3>
-            <a href="#" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
+              <div class="row">
+                <div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
+              </div>
+              <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
+            </article>
           </div>
-          <div>{{render_comments(request, object, csrf_token)}}</div>
+        </div>
+        <div class="row">
+          <div class="span10 offset1">
+            <div id="comments-section" class="rubric-header no_margin">
+              <h3 class="inline">Комментарии ({{object.comments_count}}):</h3>
+              <a href="#" class="jump_to_comment article-page-leave-comment">оставить комментарий</a>
+            </div>
+            <div>{{render_comments(request, object, csrf_token)}}</div>
+          </div>
         </div>
       </div>
     </div>
