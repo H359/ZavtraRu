@@ -172,10 +172,10 @@
           </div>
         </div>
       </div>
+      {% if latest_news|length > 0 %}
       <div class="row">
         <div class="span9">
           <div id="main_news_box">
-            {% if latest_news|length > 0 %}
             <div id="main_news_box_header">
               <h3>
                 <a href="/content/events/" class="no_underline"><span class="main_header_category middle_align">Коротко:</span></a>
@@ -195,10 +195,10 @@
                 {% endif %}
               </div>
             </div>
-            {% endif %}
           </div>
         </div>
       </div>
+      {% endif %}
       <div class="row" id="navigation_holder">
         <div class="span9" id="navigation_block">
           <div id="main_navigation">{{render_navigation("", " nav_item_border")}}</div>
