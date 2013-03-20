@@ -21,11 +21,11 @@
             <div class="btn-group dropdown">
               <a class="btn btn-success dropdown-toggle baseline_align" href="#" data-toggle="dropdown">Рубрикатор<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                {% for rubric in gazette_rubrics %}
+                {% for rubric in gazette_rubrics %}{% if rubric.in_rubricator %}
                 <li>
                   <a href="{{rubric.get_absolute_url()}}"><h5>{{rubric.title}}</h5></a>
                 </li>
-                {% endfor %}
+                {% endif %}{% endfor %}
               </ul>
             </div>
           </div>
@@ -36,7 +36,7 @@
       <div class="span12">
         <div class="center_align big_padding_vertical archive_selector">
           <span class="archive_selector_category">Год:</span>
-          {% for year in range(1996, now.year + 1) %}
+          {% for year in range(now.year, 1995, -1) %}
           {% if year == selected_year %}
           <span class="archive_selector_selected">{{year}}</span>
           {% else %}

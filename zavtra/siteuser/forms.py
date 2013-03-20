@@ -2,21 +2,31 @@
 from django import forms
 from django.forms import widgets
 
+from tinymce.widgets import TinyMCE
+
 from siteuser.models import User
 from content.models import Article
 
+mce_attrs = {
+    'plugins': "table,paste,searchreplace",
+    'imagemanager_contextmenu': False,
+    'theme': "simple",
+    'skin': 'o2k7',
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
 
 class ArticleForm(forms.ModelForm):
   class Meta:
     model = Article
     exclude = (
       'rubric', 'status', 'type', 'published_at', 'selected_at', 
-      'authors', 'topics', 'cover_source', 'announce'
+      'authors', 'topics', 'cover_source', 'announce', 'show_icon'
     )
     widgets = {
       'title': widgets.TextInput(attrs={'id': 'add_header'}),
       'subtitle': widgets.TextInput(attrs={'id': 'add_subheader'}),
-      'content': widgets.Textarea(attrs={'id': 'add_text'})
+      'content': TinyMCE(attrs={'id': 'add_text'}, mce_attrs=mce_attrs)
     }
 
 
