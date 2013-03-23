@@ -24,7 +24,6 @@
           <div class="selection_item_statistics">
             <a href="{{article.get_absolute_url()}}" class="smalltext">{{article.published_at|ru_date("%d/%m/%Y")}}</a>
             <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/comment.png"></a> {{article.comments_count}}</span>
-            <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/views.png"></a> {{article.views_count}}</span>
            </div>
         </div>
       </div>
@@ -79,9 +78,6 @@
                     <span class="article-statistic">&laquo;Завтра&raquo; &ndash; №{{object.issue_number}}</span>
                     {% endif %}
                     <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
-                    <span class="article-statistic">
-                      <i class="icon-eye-open"> </i>{{object.views_count}}
-                    </span>
                     <span class="article-statistic">
                       <i class="icon-comment"> </i>{{object.comments_count}}
                     </span>

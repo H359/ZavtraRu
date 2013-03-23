@@ -92,11 +92,6 @@
               <div class="span5 article-statistics">
                 <span class="article-statistic">
                   <a href="{{fresh_article.get_absolute_url()}}">
-                    <i class="icon-eye-open"> </i> {{fresh_article.views_count|get_plural("просмотр,просмотра,просмотров")}}
-                  </a>
-                </span>
-                <span class="article-statistic">
-                  <a href="{{fresh_article.get_absolute_url()}}">
                     <i class="icon-comment"> </i> {{fresh_article.comments_count|get_plural("комментарий,комментария,комментариев")}}
                   </a>
                 </span>
