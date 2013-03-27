@@ -115,9 +115,6 @@ $().ready(function() {
                         </div>
                         <div class="inner_blogentry_statistics">
                           <a href="{{object.get_absolute_url()}}">
-                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
-                          </a>
-                          <a href="{{object.get_absolute_url()}}">
                             <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
                           </a>
                         </div>
@@ -152,9 +149,6 @@ $().ready(function() {
                           <a class="header" href="{{object.get_absolute_url()}}">{{object.title}}</a>
                         </div>
                         <div class="inner_blogentry_statistics">
-                          <a href="{{object.get_absolute_url()}}">
-                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
-                          </a>
                           <a href="{{object.get_absolute_url()}}">
                             <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
                           </a>
@@ -197,11 +191,6 @@ $().ready(function() {
                         <span class="mediumtext">
                           <a href="{{object.get_absolute_url()}}">
                             <img src="{{STATIC_URL}}img/comment.png"> {{object.comments_count}}
-                          </a>
-                        </span>
-                        <span class="mediumtext">
-                          <a href="{{object.get_absolute_url()}}">
-                            <img src="{{STATIC_URL}}img/views.png"> {{object.views_count}}
                           </a>
                         </span>
                       </div>

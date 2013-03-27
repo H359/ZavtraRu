@@ -109,6 +109,7 @@ class CabinetPostArticleView(TemplateView, FormView):
       #messages.info(request, u'Запрос на публикацию статьи отправлен редактору')
       instance = form.save(commit=False)
       instance.rubric = Rubric.fetch_rubric('blogi')
+      instance.status = Article.STATUS.ready 
       instance.save()
       instance.authors.add(request.user)
       return redirect('siteuser.view.cabinet_articles')
