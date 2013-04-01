@@ -245,12 +245,12 @@
         <div class="span9">
           <div class="main_editor_container">
             <div class="main_editor_message">
-	      <img src="http://zavtra.ru/media/cache/authors/fefe_photo_90.png" class="main_editor_message_img">
+	      <img src="http://zavtra.ru/static/img/no_avatar.png" class="main_editor_message_img">
               <div class="main_editor_message_text">
                 <h5 style="font-size: 1.25em">
                   <a href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
                 </h5>
-		<h5 class="right_align dar"><a href="http://zavtra.ru/authors/user/1836/articles/" class="no_underline">Андрей Фефелов</a></h5>
+		<!--<h5 class="right_align dar"><a href="http://zavtra.ru/authors/user/1836/articles/" class="no_underline">Андрей Фефелов</a></h5>-->
               </div>
             </div>
           </div>
