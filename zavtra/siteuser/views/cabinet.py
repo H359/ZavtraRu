@@ -9,7 +9,7 @@ from django.db.models import Q
 from base import FilteredArticlesView
 from siteuser.forms import UserInfoForm, ArticleForm
 from siteuser.models import User
-from content.models import Rubric
+from content.models import Rubric, Article
 
 
 class CabinetView(TemplateView, FormView):
