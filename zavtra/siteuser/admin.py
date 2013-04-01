@@ -5,6 +5,8 @@ from siteuser.models import User
 
 
 class UserAdmin(admin.ModelAdmin):
+  list_display = ('email', 'first_name', 'last_name', 'date_joined', 'level', 'allow_login')
+  list_filter = ('level', 'allow_login') 
   search_fields = ('last_name', 'email')
   exclude = ('password',)
 
