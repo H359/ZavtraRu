@@ -13,18 +13,18 @@
       {% for article in object.rubric.articles.exclude(cover_source = "")[0:5] %}
       <div class="span2_4">
         <div class="news_selection_item">
-          <div>
+          <div class="text-over-image">
             <a href="{{article.get_absolute_url()}}">
               <img src="{{article.cover_for_main_selection.url}}" class="news_selection_item_img_small">
+              <div class="text-bottom white">
+                <span class="mediumtext">{{article.title}}</span>
+              </div>
             </a>
-          </div>
-          <div class="selection_item_header">
-            <span class="mediumtext">{{article.title}}</span>
           </div>
           <div class="selection_item_statistics">
             <a href="{{article.get_absolute_url()}}" class="smalltext">{{article.published_at|ru_date("%d/%m/%Y")}}</a>
-            <span class="smalltext"><a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/comment.png"></a> {{article.comments_count}}</span>
-           </div>
+            <a href="{{article.get_absolute_url()}}"><img src="{{STATIC_URL}}img/comment.png"> {{article.comments_count}}</a>
+          </div>
         </div>
       </div>
       {% endfor %}

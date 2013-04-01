@@ -39,7 +39,7 @@
               <div class="span3">
                 <div id="author_search_box">
                   <form action="." method="get">
-                    <input type="search" name="query" {% if query %}value="{{query}}"{% endif %} placeholder="Поиск по фамилии автора...">
+                    <input type="search" name="query" {% if query %}value="{{query}}"{% endif %} placeholder="Поиск по имени...">
                     <button class="trans-button" type="submit"><i class="icon-search icon-white middle_align"> </i></buton>
                   </form>
                 </div>
