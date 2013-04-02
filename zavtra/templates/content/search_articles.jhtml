@@ -87,6 +87,9 @@
                 </div>
               </div>
             </div>
+	    <div class="row">
+              <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
+	    </div>
             <div class="row">
               <div class="span{{span}} article-text">
                 <a href="{{object.get_absolute_url()}}" class="no_underline">
