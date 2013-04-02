@@ -58,14 +58,14 @@
                       <i class="icon-comment"> </i>{{object.comments_count}}
                     </span>
                   </div>
-                  {% if object.topics.count() > 0 %}
-                  <div class="span2 right_align">
-                    {% for topic in object.topics.all() %}
-                    <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
                 </div>
+                {% if object.topics.count() > 0 %}
+                <div class="span2 right_align">
+                  {% for topic in object.topics.all() %}
+                  <span class="label label-info mediumtext"><a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic.title}}</a></span>
+                  {% endfor %}
+                </div>
+                {% endif %}
               </div>
               <div class="row">
                 <div class="span8 offset1">

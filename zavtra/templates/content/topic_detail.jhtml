@@ -91,7 +91,9 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="span{{span}} article-text">{{object.announce}}</div>
+                          <div class="span{{span}} article-text">
+                            <a href="{{object.get_absolute_url()}}">{{object.announce}}</a>
+                          </div>
                         </div>
                         <div class="row">
                           <div class="span{{span}} article-statistics">
