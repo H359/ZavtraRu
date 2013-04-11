@@ -117,6 +117,7 @@
       {% for topic in top_topics %}
       <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
       {% endfor %}
+      <a href="/about/" class="subject_nav_item">О нас</a>
     </div>
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>

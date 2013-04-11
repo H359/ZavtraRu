@@ -77,7 +77,7 @@
             <img src="{{issue.zeitung_box.url}}" id="newspaper_illustration">
             <div class="text-bottom right_align x-margin-one">
               <span class="white bottom_align">
-                <h4 class="inline"><a href="#full-zhivotov" title="Открыть большое изображение" data-toggle="modal"><i class="icon-white icon-zoom-in middle_align"> </i>&nbsp;&laquo;{{articles[0].title}}&raquo;, Геннадий Животов</a></h4>
+                <h4 class="inline"><a href="#full-zhivotov" title="Открыть большое изображение" data-toggle="modal"><i class="icon-white icon-zoom-in middle_align"> </i>&nbsp;&laquo;{% if issue.illustration_text is not none %}{{issue.illustration_text}}{% else %}{{articles[0].title}}{% endif %}&raquo;, Геннадий Животов</a></h4>
               </span>
             </div>
           </div>
@@ -88,7 +88,7 @@
     <div class="modal hide fade" data-width="{{issue.illustration.width}}" id="full-zhivotov">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>{{articles[0].title}}</h3>
+        <h3>{% if issue.illustration_text is not none %}{{issue.illustration_text}}{% else %}{{articles[0].title}}{% endif %}</h3>
       </div>
       <div class="modal-body">
         <img src="{{MEDIA_URL}}{{issue.illustration}}">
