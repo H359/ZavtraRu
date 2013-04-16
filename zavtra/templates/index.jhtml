@@ -239,7 +239,7 @@ render_navigation %} {% block page_header %}
 							<div class="main_editor_message_header">
 								<h3>
 									<a href="{{editorial.get_absolute_url()}}" class="no_underline">
-										<span class="main_header_category middle_align top_align">{{editorial.rubric.title}}</span>
+										<span class="main_header_category middle_align top_align">{{editorial.title}}</span>
 									</a>
 								</h3>
 							</div>
