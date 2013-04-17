@@ -21,7 +21,7 @@
     <link href="{{STATIC_URL}}css/bootstrap-modal.css" rel="stylesheet" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    <script src="http://zavtra.ru/static/tiny_mce/tiny_mce.js"></script>
+    <script src="{{STATIC_URL}}tiny_mce/tiny_mce.js"></script>
     <script>
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-27628875-1']);
@@ -117,6 +117,7 @@
       {% for topic in top_topics %}
       <a href="{{topic.get_absolute_url()}}" class="subject_nav_item">{{topic.title}}</a>
       {% endfor %}
+      <a href="/about/" class="subject_nav_item">О нас</a>
     </div>
     {% endblock %}
     <div id="page">{% block page_content %}{% endblock %}</div>

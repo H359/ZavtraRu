@@ -53,4 +53,4 @@ class AuthorsView(ListView):
       query = self.request.GET.get('letter', u'А')
       self.letter = query
       fopts = Q(last_name__istartswith=query)
-    return User.objects.filter(level__gte = 0).filter(fopts)
+    return User.objects.filter(level__gt = 0).filter(fopts)

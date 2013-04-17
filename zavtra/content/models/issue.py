@@ -14,6 +14,14 @@ class Issue(models.Model):
   relative_number = models.PositiveIntegerField(verbose_name=u'Номер (относительный)')
   published_at = models.DateField(verbose_name=u'Дата выхода')
   illustration = models.ImageField(upload_to='zhivotov', verbose_name=u'Иллюстрация Животова')
+  illustration_text = models.CharField(
+    verbose_name=u'Подпись к иллюстрации',
+    help_text=u'Если пустое, то будет взят заголовок передовицы.',
+    max_length=128,
+    blank=True,
+    null=True,
+    default=None
+  )
 
   objects = models.Manager()
   published = PublishedManager()
@@ -36,10 +44,10 @@ class Issue(models.Model):
     from article import Article
     issue_rubrics = list(self.issue_rubrics.select_related().all())
     articles = Article.objects.filter(
-      published_at__year = self.published_at.year,
-      published_at__month = self.published_at.month,
-      published_at__day = self.published_at.day,
-      rubric__in = [x.rubric for x in issue_rubrics]
+      published_at__year=self.published_at.year,
+      published_at__month=self.published_at.month,
+      published_at__day=self.published_at.day,
+      rubric__in=[x.rubric for x in issue_rubrics]
     ).prefetch_related('authors').select_related().defer('content')
     rubric_positions = {r.rubric_id: r.position for r in issue_rubrics}
     return sorted(articles, key=lambda a: rubric_positions[a.rubric_id])
@@ -49,11 +57,11 @@ class Issue(models.Model):
     from article import Article
     issue_rubrics = list(self.issue_rubrics.select_related().all())
     articles = Article.objects.filter(
-      models.Q(selected_at__isnull = False) | models.Q(rubric = Rubric.fetch_rubric('peredovitsa')),
-      published_at__year = self.published_at.year,
-      published_at__month = self.published_at.month,
-      published_at__day = self.published_at.day,
-      rubric__in = [x.rubric for x in issue_rubrics]
+      models.Q(selected_at__isnull=False) | models.Q(rubric=Rubric.fetch_rubric('peredovitsa')),
+      published_at__year=self.published_at.year,
+      published_at__month=self.published_at.month,
+      published_at__day=self.published_at.day,
+      rubric__in=[x.rubric for x in issue_rubrics]
     ).prefetch_related('authors').select_related().defer('content').\
     order_by('selected_at')
     def keyer(a):

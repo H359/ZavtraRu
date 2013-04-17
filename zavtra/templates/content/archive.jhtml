@@ -101,7 +101,7 @@
               <div class="text-bottom right_align x-margin-one">
                 <span class="white bottom_align">
                   <i class="icon-white icon-zoom-in"> </i>
-                  <h4 class="inline"><a href="#full-zhivotov" title="Открыть большое изображение" data-toggle="modal">{{objects[0].title}}</a></h4>
+                  <h4 class="inline"><a href="#full-zhivotov" title="Открыть большое изображение" data-toggle="modal">{% if issue.illustration_text is not none %}{{issue.illustration_text}}{% else %}{{objects[0].title}}{% endif %}</a></h4>
                 </span>
               </div>
             </div>

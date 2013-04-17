@@ -1,4 +1,4 @@
-git+git://github.com/django/django.git#egg=django
+django>=1.5
 git+git://github.com/django-mptt/django-mptt.git#egg=django-mptt
 djorm-ext-core
 djorm-ext-expressions
@@ -12,3 +12,7 @@ django-jinja
 psycopg2
 South==0.7.6
 django-model-utils
+django-tinymce
+django-filebrowser
+PIL
+pytils

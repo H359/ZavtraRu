@@ -121,7 +121,7 @@
 <li id="comment-{{comment.id}}">
   <div class="comment">
     <div class="avatar">
-      <a href="{{comment.author.get_absolute_url()}}" rel="author">
+      <a href="{{comment.author.get_absolute_url()}}" rel="author" name="comment-{{comment.id}}">
 	{% if comment.author.photo != "" %}
         <img src="{{comment.author.photo_60.url}}">
 	{% else %}
@@ -132,8 +132,8 @@
     <div class="inner">
       <div class="body clearfixer">
         <div class="author">
-          <a href="{{comment.author.get_absolute_url()}}" class="comment-author-name">{{comment.author}}</a>
-          <a href="#" class="comment-time">
+          <a href="{{comment.author.get_absolute_url()}}#comment-{{comment.id}}" class="comment-author-name">{{comment.author}}</a>
+          <a href="{{comment.article.get_absolute_url()}}#comment-{{comment.id}}" class="comment-time">
             <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
           </a>
         </div>

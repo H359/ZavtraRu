@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
 
-from content.views import ArticleView, RubricView, IssueView,\
-                          ArchiveView, EventsView, TopicView,\
-                          CommunityView, ArticleVoteView, SearchView,\
+from content.views import ArticleView, RubricView, IssueView, \
+                          ArchiveView, EventsView, TopicView, \
+                          CommunityView, ArticleVoteView, SearchView, \
                           SpecProjectsView, SpecProjectView
 
 
