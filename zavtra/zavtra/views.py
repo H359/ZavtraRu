@@ -26,8 +26,6 @@ class HomeView(TemplateView):
       editorial = Article.editorial.select_related().\
                   prefetch_related('authors').\
                   latest('published_at')
-      if len(editorial.authors.all()) != 1:
-        editorial = None
     except Article.DoesNotExist:
       editorial = None
     try:
