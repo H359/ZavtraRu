@@ -234,12 +234,10 @@ render_navigation %} {% block page_header %}
 				<div class="span9">
 					<div class="main_editor_container">
 						<div class="main_editor_message">
-							{%- set author = editorial.authors.all()[0] -%} {#<img
-								src="{{author.photo_90.url}}" class="main_editor_message_img">#}
 							<div class="main_editor_message_header">
 								<h3>
 									<a href="{{editorial.get_absolute_url()}}" class="no_underline">
-										<span class="main_header_category middle_align top_align">{{editorial.rubric.title}}</span>
+										<span class="main_header_category middle_align top_align">{{editorial.title}}</span>
 									</a>
 								</h3>
 							</div>
@@ -247,9 +245,6 @@ render_navigation %} {% block page_header %}
 								<h4>
 									<a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.announce}}</a>
 								</h4>
-								<h5 class="right_align dark">
-									<a href="{{author.get_absolute_url()}}" class="no_underline">{{author}}</a>
-								</h5>
 							</div>
 						</div>
 					</div>
@@ -392,6 +387,32 @@ render_navigation %} {% block page_header %}
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="span4">
+					<div class="main_box_frame">
+
+<div id="yandex_ad_R-82666-2"></div>
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-82666-2",
+                renderTo: "yandex_ad_R-82666-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="span4">
 			{% set issue = issue_qs.latest('published_at') %}
@@ -476,7 +497,7 @@ render_navigation %} {% block page_header %}
 			</div>
 			<div class="row">
 				<div class="span4">
-					{% set video = video_qs.latest('published_at') %}
+					{% for video in video_qs.order_by('-published_at')[0:3] %}
 					<div class="main_box_frame">
 						<div class="relative main_box_header">
 							<h5>
@@ -519,32 +540,7 @@ render_navigation %} {% block page_header %}
 							<a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span4">
-					<div class="main_box_frame">
-						<!-- R-82666-1 Яндекс.RTB-блок  -->
-						<div id="yandex_ad_R-82666-1"></div>
-						<script type="text/javascript">
-	    		(function(w, d, n, s, t) {
-	        		w[n] = w[n] || [];
-	        		w[n].push(function() {
-	            		Ya.Context.AdvManager.render({
-	                		blockId: "R-82666-1",
-	                		renderTo: "yandex_ad_R-82666-1",
-	                		async: true
-	            		});
-	        		});
-	        		t = d.getElementsByTagName("script")[0];
-	        		s = d.createElement("script");
-	        		s.type = "text/javascript";
-	        		s.src = "//an.yandex.ru/system/context.js";
-	        		s.async = true;
-	        		t.parentNode.insertBefore(s, t);
-	    		})(this, this.document, "yandexContextAsyncCallbacks");
-				</script>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
