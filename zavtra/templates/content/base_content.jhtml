@@ -27,10 +27,36 @@
 {% endblock %}
 
 {% block foot %}
+<script type="text/javascript">
+    (function(w, d, n, s, t) {
+        w[n] = w[n] || [];
+        w[n].push(function() {
+            Ya.Context.AdvManager.render({
+                blockId: "R-82666-2",
+                renderTo: "yandex_ad_R-82666-2",
+                async: true
+            });
+        });
+        t = d.getElementsByTagName("script")[0];
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.src = "//an.yandex.ru/system/context.js";
+        s.async = true;
+        t.parentNode.insertBefore(s, t);
+    })(this, this.document, "yandexContextAsyncCallbacks");
+</script>
 <script type="text/javascript">stLight.options({publisher:"f2e120ce-c7c8-479f-accc-b5d2d34e2555"});</script>
 {#
   <script>stLight.options({headerTitle:"Поделиться",publisher:"f2e120ce-c7c8-479f-accc-b5d2d34e2555",doNotHash:false, doNotCopy:false,hashAddressBar:false,st_title:"{{object.title|e}}"});</script>
 <script>var options={"publisher":"f2e120ce-c7c8-479f-accc-b5d2d34e2555","position":"left","ad":{"visible":false,"openDelay":5,"closeDelay":0},"chicklets":{"items":["vkontakte","twitter","livejournal","googleplus","facebook"]}};var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
 </script>
 #}
+{% endblock %}
+
+{% block advertising %}
+<div class="row">
+	<div class="offset1 span10">
+		<div id="yandex_ad_R-82666-2"></div>
+	</div>
+</div>
 {% endblock %}

@@ -94,6 +94,7 @@
             </article>
           </div>
         </div>
+        {% block advertising %}{{super()}}{% endblock %}
         <div class="row">
           <div class="span10 offset1">
             <div id="comments-section" class="rubric-header no_margin">

@@ -386,31 +386,37 @@ render_navigation %} {% block page_header %}
 						{% endif %}
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="span4">
-					<div class="main_box_frame">
-
-<div id="yandex_ad_R-82666-2"></div>
-<script type="text/javascript">
-    (function(w, d, n, s, t) {
-        w[n] = w[n] || [];
-        w[n].push(function() {
-            Ya.Context.AdvManager.render({
-                blockId: "R-82666-2",
-                renderTo: "yandex_ad_R-82666-2",
-                async: true
-            });
-        });
-        t = d.getElementsByTagName("script")[0];
-        s = d.createElement("script");
-        s.type = "text/javascript";
-        s.src = "//an.yandex.ru/system/context.js";
-        s.async = true;
-        t.parentNode.insertBefore(s, t);
-    })(this, this.document, "yandexContextAsyncCallbacks");
-</script>
-					</div>
+				<div class="span9">
+					<!-- Яндекс.Директ -->
+					<div id="yandex_ad"></div>
+					<script type="text/javascript">
+					(function(w, d, n, s, t) {
+					    w[n] = w[n] || [];
+					    w[n].push(function() {
+					        Ya.Direct.insertInto(82666, "yandex_ad", {
+					            site_charset: "utf-8",
+					            ad_format: "direct",
+					            font_size: 1,
+					            type: "horizontal",
+					            limit: 4,
+					            title_font_size: 3,
+					            site_bg_color: "FFFFFF",
+					            header_bg_color: "FEEAC7",
+					            title_color: "0000CC",
+					            url_color: "006600",
+					            text_color: "000000",
+					            hover_color: "0066FF",
+					            favicon: true
+					        });
+					    });
+					    t = d.documentElement.firstChild;
+					    s = d.createElement("script");
+					    s.type = "text/javascript";
+					    s.src = "http://an.yandex.ru/system/context.js";
+					    s.setAttribute("async", "true");
+					    t.insertBefore(s, t.firstChild);
+					})(window, document, "yandex_context_callbacks");
+					</script>				
 				</div>
 			</div>
 		</div>
