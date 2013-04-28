@@ -5,7 +5,6 @@
 {% block page_style %}newspaper{% endblock %}
 
 {% block page_content %}
-{% set object_list = object_list|list %}
 <div class="container12">
 	<div class="bordered_spec">
 		<div class="row">
@@ -16,29 +15,15 @@
 							<a href="/">Главная</a>
 							<span class="divider">/</span>
 						</li>
-						<li class="active">Спецпроекты</li>
+						<li>
+							<a href="/content/special-projects/">Спецпроекты</a>
+							<span class="divider">/</span>
+						</li>
+						<li class="active">{{object.title}}</li>
 					</ul>
-					<div class="section_header_button">
-						{% if page_obj.has_previous() %}
-						<a href="?page={{page_obj.previous_page_number()}}" title="Предыдущая страница"><img src="{{STATIC_URL}}img/arrow_circle_left.png" class="calendar_navigation_img_1"></a>
-						{% endif %}
-						<h4 class="inline top_align average_padding_horizontal">
-							{% set start = object_list[0].date %}
-							{% set end = object_list[-1].date %}
-							{% if start.month == end.month %}
-							{{start|ru_date("%B %Y", inflected=False)}}
-							{% else %}
-							{{start|ru_date("%B %Y", inflected=False)}} &mdash; {{end|ru_date("%B %Y", inflected=False)}} 
-							{% endif %}
-						</h4>
-						{% if page_obj.has_next() %}
-						<a href="?page={{page_obj.next_page_number()}}" title="Следующая страница"><img src="{{STATIC_URL}}img/arrow_circle_right.png" class="calendar_navigation_img_1"></a>
-						{% endif %}
-					</div>
 				</div>
 			</div>
 		</div>
-		{% for object in object_list %}
 		<div class="row spec_entry_header">
 			<div class="span12">
 				<h1><span class="dark">{{object.date|ru_date("%d %B")}}</span> &ndash; {{object.title}}</h1>
@@ -92,8 +77,6 @@
 				<div class="spec_entry_intro_text">{{vrez.announce | nl2br}}</div>
 			</div>
 		</div>
-		{% endfor %}
-		{{pagination(request, page_obj)}}
 	</div>
 </div>
 {% endblock %}
