@@ -285,6 +285,7 @@ render_navigation %} {% block page_header %}
 							</div>
 							<div class="main_article_name">
 								<h6>{{article.title}}</h6>
+								<div>{{article.subtitle}}</div>
 							</div>
 						</div>
 					</div>

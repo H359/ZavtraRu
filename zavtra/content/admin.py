@@ -61,7 +61,7 @@ class ColumnAdminForm(forms.ModelForm):
   class Meta:
     model = Column
   title = forms.CharField(label=u'Заголовок', max_length=20, widget=TextInput(attrs={'class': 'vTextField'}))
-  subtitle = forms.CharField(label=u'Подзаголовок', max_length=50, widget=TextInput(attrs={'class': 'vTextField'}), required=False)
+  subtitle = forms.CharField(label=u'Подзаголовок', max_length=50, widget=TextInput(attrs={'class': 'vTextField'}))
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
   cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
 
