@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
                            DailyQuote, WodCite, SpecialProject
-from content.proxies import News, Wod, Video, Columns, Editorial
+from content.proxies import News, Wod, Video, Column, Editorial
 
 
 mce_attrs = {
@@ -55,6 +55,13 @@ class ArticleAdminForm(forms.ModelForm):
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
   cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
+
+
+class ColumnAdminForm(forms.ModelForm):
+  class Meta:
+    model = Column
+  title = forms.CharField(label=u'Заголовок', max_length=20, widget=TextInput(attrs={'class': 'vTextField'}))
+  subtitle = forms.CharField(label=u'Подзаголовок', max_length=50, widget=TextInput(attrs={'class': 'vTextField'}))
 
 
 class NewsAdminForm(forms.ModelForm):
@@ -167,7 +174,7 @@ class ColumnsAdmin(admin.ModelAdmin):
   list_editable = ('selected_at',)
   search_fields = ('title',)
   raw_id_fields = ('authors', 'topics')
-  form = ArticleAdminForm
+  form = ColumnAdminForm
   autocomplete_lookup_fields = {
     'm2m': ['authors', 'topics']
   }
@@ -235,7 +242,7 @@ admin.site.register(News, NewsAdmin)
 admin.site.register(Wod, WodAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
-admin.site.register(Columns, ColumnsAdmin)
+admin.site.register(Column, ColumnsAdmin)
 admin.site.register(Editorial, EditorialAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Issue, IssueAdmin)

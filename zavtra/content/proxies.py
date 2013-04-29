@@ -24,7 +24,7 @@ class Video(Article):
     verbose_name_plural = u'Видео'
 
 
-class Columns(Article):
+class Column(Article):
   class Meta:
     proxy = True
     verbose_name = u'Колонка колумниста'

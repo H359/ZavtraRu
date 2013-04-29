@@ -27,7 +27,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   TYPES = Choices(('text', u'Текст'), ('video', u'Видео'))
 
   rubric = models.ForeignKey(Rubric, verbose_name=u'Рубрика', related_name='articles')
-  subtitle = models.CharField(max_length=50, verbose_name=u'Подзаголовок', blank=True)
+  subtitle = models.CharField(max_length=1024, verbose_name=u'Подзаголовок', blank=True)
   status = models.CharField(choices=STATUS, default=STATUS.draft, max_length=20, verbose_name=u'Статус')
   type = models.CharField(choices=TYPES, default=TYPES.text, max_length=20, verbose_name=u'Тип содержимого')
   published_at = models.DateTimeField(verbose_name=u'Время публикации', default=lambda: datetime.now())
