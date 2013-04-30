@@ -168,6 +168,7 @@
       {% endfor %}
     </div>
   </div>
+  {% block advertising %}{{super()}}{% endblock %}
   <div class="row">
     <div class="offset1_5 span9">
       <div id="comments-section" class="rubric-header no_margin">

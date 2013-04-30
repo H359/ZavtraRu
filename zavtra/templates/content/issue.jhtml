@@ -62,9 +62,11 @@
             </li>
             <li class="active">Выпуск №{{issue.relative_number}} ({{issue.absolute_number}}) &ndash; {{issue.published_at|ru_date("%d %B %Y")}}</li>
           </ul>
+          {% if issue.published_at.year >= 2013 %}
           <div class="section_header_button">
             <a href="{{issue.get_pdf_link()}}" class="btn btn-danger baseline_align">Скачать PDF</a>
           </div>
+	  {% endif %}
         </div>
       </div>
     </div>

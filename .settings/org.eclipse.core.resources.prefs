@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//zavtra/comments/models.py=utf-8
+encoding//zavtra/content/forms.py=utf-8
+encoding//zavtra/content/models/article.py=utf-8
+encoding//zavtra/content/models/issue.py=utf-8
+encoding//zavtra/content/models/specialproject.py=utf-8
+encoding//zavtra/content/proxies.py=utf-8
+encoding//zavtra/content/views.py=utf-8
+encoding//zavtra/siteuser/forms.py=utf-8
+encoding//zavtra/siteuser/models.py=utf-8
+encoding//zavtra/zavtra/settings.py=utf-8
