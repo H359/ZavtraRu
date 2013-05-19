@@ -75,7 +75,7 @@
 							{% endfor %}
 							<div class="spec-statistics">
 								<span class="article-statistic">
-									<a href="{{article.get_absolute_url()}}">
+									<a href="{{article.get_absolute_url()}}#comments">
 										<i class="icon-comment"></i> {{article.comments_count}}
 									</a>
 								</span>

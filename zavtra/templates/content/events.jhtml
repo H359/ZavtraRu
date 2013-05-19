@@ -127,7 +127,7 @@ $().ready(function() {
                             </header>
                             <span class="article-statistic dark">{{article.published_at|ru_date("%d %B %Y")}}</span>
                             <span class="article-statistic">
-                              <a href="{{article.get_absolute_url()}}">
+                              <a href="{{article.get_absolute_url()}}#comments">
                                 <i class="icon-comment"> </i> {{article.comments_count}}
                               </a>
                             </span>

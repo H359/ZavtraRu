@@ -319,7 +319,7 @@ render_navigation %} {% block page_header %}
 										</h5>
 										<div class="main_blog_entry_statistics">
 											<i class="icon-comment"> </i> <span class="smalltext">
-												<a href="{{article.get_absolute_url()}}"
+												<a href="{{article.get_absolute_url()}}#comments"
 												class="dark dark_link">{{article.comments_count}}</a>
 											</span>
 										</div>
@@ -532,7 +532,7 @@ render_navigation %} {% block page_header %}
 								<div id="main_video_selected_header_stats">
 									<i class="icon-white icon-comment"> </i> <span
 										class="smalltext"><a
-										href="{{video.get_absolute_url()}}" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
+										href="{{video.get_absolute_url()}}#comments" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
 								</div>
 								<div id="main_video_selected_header_restriction">
 									<span class="smalltext beige">18+</span>

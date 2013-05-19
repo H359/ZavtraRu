@@ -98,7 +98,7 @@
                         <div class="row">
                           <div class="span{{span}} article-statistics">
                             <span class="article-statistic">
-                              <a href="{{object.get_absolute_url()}}">
+                              <a href="{{object.get_absolute_url()}}#comments">
                                 <i class="icon-comment"> </i> {{object.comments_count}}
                               </a>
                             </span>

@@ -64,7 +64,7 @@
           {% endfor %}
           <div class="right_align">
             <span class="article-statistic">
-              <a href="{{object.get_absolute_url()}}" class="jump_to_comment">
+              <a href="{{object.get_absolute_url()}}#comments" class="jump_to_comment">
                 <i class="icon-comment"> </i>{{object.comments_count}}
               </a>
             </span>
