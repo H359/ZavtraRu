@@ -2867,69 +2867,6 @@ li.empty span.large {
 /* search - end */
 
 /* spec page */
-.main_spec_frame {
-	margin: .75em .75em 1.5em .75em;
-	background-color: #EEE;
-	border-top: 1px solid #999;
-	border-left: 1px solid #BBB;
-	border-right: 1px solid #BBB;
-	border-bottom: 1px solid #BBB;
-}
-
-.main_box_header {
-	padding: .25em .75em;
-	margin-bottom: 2em;
-	background-color: #555;
-}
-
-.main_box_footer {
-	background-color: #CCC;
-	padding: .25em .75em;
-}
-
-.main_special_project_img {
-	height: 10em;
-}
-
-.spec_list {
-	padding: 1em 2em;
-	text-align: center;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.spec_list h4 {
-	padding: .5em;
-}
-
-.spec_entry_content {
-	padding: 1.5em 0em;
-}
-
-.spec_header_text {
-	margin-left: 2em;
-}
-
-.spec_entry_text {
-	margin-left: 2em;
-}
-
-.spec_statistics {
-	margin-left: 2em;
-}
-
-.spec-subject-container {
-	line-height: 1.5em;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.spec_entry_img {
-	padding: .5em 0em 1em 2em;
-}
-
 .spec_entry_header div {
 	margin: 1em 2em 1em 2em;
 }
@@ -2979,6 +2916,8 @@ li.empty span.large {
 	margin: .25em 0em;
 	text-align: right;
 }
+
+/* spec page - end */
 
 /* spec page - end */
 
