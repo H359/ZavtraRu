@@ -55,4 +55,4 @@ class ProfileCommentsView(ListView):
 
   def get_queryset(self):
     self.user = get_object_or_404(User, pk=self.kwargs['pk'])
-    return Comment.enabled.filter(author=self.user).order_by('-created_at')
+    return Comment.enabled.select_related().filter(author=self.user).order_by('-created_at')

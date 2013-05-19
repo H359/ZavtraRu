@@ -22,7 +22,7 @@
       <div class="comments">
         <div class="content">
           <ul id="comments" class="unstyled">
-            {% for comment in object_list %}{{render_comment(comment)}}{% endfor %}
+            {% for comment in object_list %}{{render_comment(comment, with_link=True)}}{% endfor %}
           </ul>
         </div>
       </div>

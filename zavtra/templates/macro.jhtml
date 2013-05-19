@@ -117,16 +117,16 @@
 </div>
 {% endmacro %}
 
-{% macro render_comment(comment) %}
+{% macro render_comment(comment, with_link=False) %}
 <li id="comment-{{comment.id}}">
   <div class="comment">
     <div class="avatar">
       <a href="{{comment.author.get_absolute_url()}}" rel="author" name="comment-{{comment.id}}">
-	{% if comment.author.photo != "" %}
-        <img src="{{comment.author.photo_60.url}}">
-	{% else %}
-	<img src="/static/img/no_avatar.png">
-	{% endif %}
+	       {% if comment.author.photo != "" %}
+         <img src="{{comment.author.photo_60.url}}">
+	       {% else %}
+	       <img src="/static/img/no_avatar.png">
+	       {% endif %}
       </a>
     </div>
     <div class="inner">
@@ -135,8 +135,12 @@
           <a href="{{comment.author.get_absolute_url()}}#comment-{{comment.id}}" class="comment-author-name">{{comment.author}}</a>
           <a href="{{comment.article.get_absolute_url()}}#comment-{{comment.id}}" class="comment-time">
             <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
+            {% if with_link %}
+            <br>&laquo;<strong>{{comment.article.title}}</strong>&raquo;
+            {% endif %}
           </a>
         </div>
+        {% if with_link %}<br>{% endif %}
         <div class="text">{{comment.comment|nl2br}}</div>
       </div>
     </div>
