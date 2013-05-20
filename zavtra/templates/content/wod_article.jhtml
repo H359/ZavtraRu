@@ -27,8 +27,8 @@
             <img src="{{article.cover_for_topbar.url}}" class="newspaper_selection_item_img">
             {% endif %}
             <div class="selection_item_header">
-              {#<span class="largetext bold">{{article.title}}</span>
-              <br>#}
+              <span class="largetext bold">{{article.title}}</span>
+              <br>
               <span class="mediumtext">{{article.published_at|ru_date("%d %B")}}</span>
             </div>
           {% if article.id != object.id %}</a>{% endif %}
@@ -77,7 +77,8 @@
       <div class="text-over-image y-margin-one">
         <img src="{{object.inside_wod_article_cover.url}}" id="newspaper_illustration">
         <div class="text-top">
-          <a href="#" rel="facebox" class="bottom_align"><h3 class="inline x-margin-thrqtr">{{object.published_at|ru_date("%d/%m/%Y")}}</h3><h1 class="inline">{{object.title}}</h1></a>
+          <a href="#" rel="facebox" class="bottom_align"><h3 class="inline x-margin-thrqtr">{{object.published_at|ru_date("%d/%m/%Y")}}</h3><h1 class="inline">{{object.title}}</h1>
+          </a>
         </div>
       </div>
       <div>
@@ -95,11 +96,13 @@
     <div class="offset1_5 span9 y-margin-two">
       <article>
         <div class="row">
+          {#
           <div class="span6">
             <header>
               <h1 class="article-page-main-header article-header">{{object.title}}</h1>
             </header>
           </div>
+          #}
           {% if object.topics.count() > 0 %}
           <div class="span3 right_align article_category_list">
             {% for topic in object.topics.all() %}
