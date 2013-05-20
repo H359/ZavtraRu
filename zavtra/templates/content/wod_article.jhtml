@@ -27,8 +27,8 @@
             <img src="{{article.cover_for_topbar.url}}" class="newspaper_selection_item_img">
             {% endif %}
             <div class="selection_item_header">
-              <span class="largetext bold">{{article.title}}</span>
-              <br>
+              {#<span class="largetext bold">{{article.title}}</span>
+              <br>#}
               <span class="mediumtext">{{article.published_at|ru_date("%d %B")}}</span>
             </div>
           {% if article.id != object.id %}</a>{% endif %}
