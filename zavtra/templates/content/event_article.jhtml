@@ -118,7 +118,6 @@
             </article>
           </div>
         </div>
-        {% block advertising %}{{super()}}{% endblock %}
         <div class="row">
           <div class="span10 offset1">
             <div id="comments-section" class="rubric-header no_margin">
@@ -127,6 +126,7 @@
             <div>{{render_comments(request, object, csrf_token)}}</div>
           </div>
         </div>
+        {% block advertising %}{{super()}}{% endblock %}
       </div>
     </div>
   </div>
