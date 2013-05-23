@@ -146,7 +146,8 @@ body {
 }
 
 .nav_item_selected {
-	background-color: #656565;
+	/*background-color: #656565;*/
+	background-color: rgb(90, 100, 120);
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;

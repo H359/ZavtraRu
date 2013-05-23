@@ -8,7 +8,7 @@ render_navigation %} {% block page_header %}
 					<div id="main_header_links">
 						<a class="main_header_link" href="/content/archive/">Архив
 							Завтра</a> <a class="main_header_link" href="http://dentv.ru">День
-							ТВ</a> <a class="main_header_link" href="http://zavtra.ru/denlit/">День
+							ТВ</a> <a class="main_header_link" href="http://denlit.at.ua/">День
 							Литературы</a>
 					</div>
 					<img src="{{STATIC_URL}}img/red_line_gradient.png" class="block">
