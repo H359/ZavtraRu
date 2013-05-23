@@ -226,7 +226,7 @@ body {
 	color: #444;
 	height: 2.5em;
 	line-height: 2.5em;
-	z-index: 1;
+	/*z-index: 1;*/
 }
 
 .section-header h4 {
@@ -1520,7 +1520,7 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	color: #FFF;
 	min-height: 2.25em;
 	position: relative;
-	z-index: 2;
+	/*z-index: 2;*/
 }
 
 .page-module-article {
