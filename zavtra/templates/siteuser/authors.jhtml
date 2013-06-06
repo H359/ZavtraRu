@@ -155,7 +155,7 @@
                         {% endif %}
                         {% endif %}
                         <a href="{{object.get_articles_url()}}" class="author_link">Статьи ({{object.articles.count()}})</a>
-                        <a href="{{object.get_absolute_url()}}" class="author_link">Профиль учатсника</a>
+                        <a href="{{object.get_absolute_url()}}" class="author_link">Профиль участника</a>
                       </div>
                     </div>
                   </div>

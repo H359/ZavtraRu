@@ -19,6 +19,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
     (1, 'trusted',   u'Доверенный'),
     (2, 'columnist', u'Колумнист'),
     (3, 'staff',     u'Сотрудник'),
+    (4, 'system',    u'Системный'),
   )
 
   email = models.EmailField(max_length=254, unique=True)  

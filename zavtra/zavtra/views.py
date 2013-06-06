@@ -20,6 +20,7 @@ class HomeView(TemplateView):
     #print morning, morning + oneday
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
+                        exclude(authors__level = User.USER_LEVELS.system).\
                         order_by('-selected_at').\
                         select_related()[0:6]
     try:
@@ -46,11 +47,16 @@ class HomeView(TemplateView):
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi')).\
-               exclude(pk__in = selected_articles).\
+               exclude(pk__in = selected_articles, authors__level = User.USER_LEVELS.system).\
                order_by('-selected_at').
                select_related().all()[0:6],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
-             defer('content').select_related()
+             defer('content').select_related(),
+      'system_blogs': Article.published.prefetch_related('authors').defer('content').\
+		      filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level = User.USER_LEVELS.system).\
+		      exclude(pk__in = selected_articles).\
+		      order_by('-selected_at').
+		      select_related().all()[0:4],
     }
     return context
 
