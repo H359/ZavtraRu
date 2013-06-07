@@ -46,7 +46,7 @@ class HomeView(TemplateView):
       'selected_articles': selected_articles,
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
-               filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors_level__lt = User.USER_LEVELS.system).\
+               filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level__lt = User.USER_LEVELS.system).\
                exclude(pk__in = selected_articles).\
                order_by('-selected_at').
                select_related().all()[0:6],
