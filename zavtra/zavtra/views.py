@@ -46,8 +46,8 @@ class HomeView(TemplateView):
       'selected_articles': selected_articles,
       'video_qs': Article.published.filter(type = Article.TYPES.video),
       'blogs': Article.published.prefetch_related('authors').defer('content').\
-               filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi')).\
-               exclude(pk__in = selected_articles, authors__level = User.USER_LEVELS.system).\
+               filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors_level__lt = User.USER_LEVELS.system).\
+               exclude(pk__in = selected_articles).\
                order_by('-selected_at').
                select_related().all()[0:6],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
@@ -56,7 +56,7 @@ class HomeView(TemplateView):
 		      filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level = User.USER_LEVELS.system).\
 		      exclude(pk__in = selected_articles).\
 		      order_by('authors__id', '-selected_at').\
-          distinct('authors__id').\
+        	      distinct('authors__id').\
 		      select_related().all()[0:4],
     }
     return context
