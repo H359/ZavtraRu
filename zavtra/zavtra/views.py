@@ -4,6 +4,7 @@ from random import choice
 from datetime import datetime
 
 from django.views.generic import TemplateView
+from django.shortcuts import render
 
 from content.models import Article, Rubric, Issue, DailyQuote, SpecialProject
 from siteuser.models import User
@@ -62,4 +63,6 @@ class HomeView(TemplateView):
     return context
 
 home = HomeView.as_view()
-view404 = TemplateView.as_view(template_name='404.jhtml')
+
+def view404(request):
+  return render(request, '404.jhtml', {}, content_type='text/html')

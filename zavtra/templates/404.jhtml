@@ -32,6 +32,7 @@
         <div class="span8 offset2">
           <h2 class="four_o_four_text">К сожалению, запрашивая Вами страница не найдена.</h2>
           <h5 class="four_o_four_text">Возможно, она была перемещена. Попробуйте воспользоваться формой поиска и найти её новый адрес.</h5>
+          <img src="{{STATIC_URL}}/img/Poo.jpg">
         </div>
       </div>
     </div>

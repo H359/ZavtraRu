@@ -24,5 +24,6 @@ handler404 = 'zavtra.views.view404'
 
 if settings.DEBUG:
   urlpatterns += patterns('',
+    #url('^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url('^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
   )

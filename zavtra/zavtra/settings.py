@@ -63,7 +63,7 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://zavtra.ru/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -148,9 +148,6 @@ INSTALLED_APPS = (
     'comments',
 )
 
-if DEBUG:
-    INSTALLED_APPS += ('devserver',)
-
 #CUSTOM_USER_MODEL = 'siteuser.User'
 AUTH_USER_MODEL = 'siteuser.User'
 LOGIN_REDIRECT_URL = '/'
@@ -175,6 +172,7 @@ GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 OVERWRITE_EXISTING = False
 
 INTERNAL_IPS = ('127.0.0.1',)
+ALLOWED_HOSTS = ('localhost', 'zavtra.ru')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -189,18 +187,23 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        }
+    },
     'handlers': {
-        'mail_admins': {
+        'console': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         }
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['console'],
             'level': 'ERROR',
-            'propagate': True,
+            'propagate': True
         },
     }
 }
