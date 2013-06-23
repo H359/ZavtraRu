@@ -204,3 +204,7 @@ body .modal-backdrop.fade.in {
   width: 5em;
   margin-right: 2em;
 }
+
+.article-page-content p img {
+  width: 600px;
+}

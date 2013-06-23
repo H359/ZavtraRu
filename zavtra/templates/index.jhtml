@@ -538,7 +538,7 @@ render_navigation %} {% block page_header %}
 			</div>
 			<div class="row">
 				<div class="span4">
-					{% for video in video_qs.order_by('-published_at')[0:3] %}
+					{% for video in video_qs.order_by('-published_at')[0:4] %}
 					<div class="main_box_frame">
 						<div class="relative main_box_header">
 							<h5>

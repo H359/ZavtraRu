@@ -32,14 +32,6 @@
             </div>
           </div>
           <div class="row">
-            <div class="span8 offset2">
-              <div class="search_dates inline_block">
-                <div><span>с</span>{{form.start}}</div>
-                <div><span>по</span>{{form.end}}</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
             <div class="span8 offset2 search_categories">
               {% set root_search = url('content.view.search') %}
               <span class="search_category{% if category is none %} search_category_selected{% endif %}"><a href="{{root_search}}?{{page_suffix}}">везде</a></span>

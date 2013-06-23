@@ -302,10 +302,12 @@ class SearchView(ListView):
             user_subq = reduce(lambda x, y: x | y, usearch)
             if self.category != 'authors':
                 qs = qs.search(query=u' | '.join(tokens), rank_field='rank')
+                """
                 if data['start']:
                     qs = qs.filter(published_at__gte=data['start'])
                 if data['end']:
                     qs = qs.filter(published_at__lte=data['end'])
+                """
             self.found_authors = User.objects.filter(level__gt=0).\
                                  filter(user_subq)
         else:

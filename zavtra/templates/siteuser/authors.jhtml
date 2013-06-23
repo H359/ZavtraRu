@@ -87,7 +87,7 @@
                               <span>
                                 <a href="{{object.get_absolute_url()}}">
                                   {{object.articles.count()|get_plural("статья,статьи,статей")}}, 
-                                  {{object.expert_comments.count()|get_plural("экспертная оцена,экспертных оценки,экспертных оценок")}}, {{object.comments.count()|get_plural("комментарий,комментария,комментариев")}}
+                                  {{object.expert_comments.count()|get_plural("экспертная оценка,экспертных оценки,экспертных оценок")}}, {{object.comments.count()|get_plural("комментарий,комментария,комментариев")}}
                                 </a>
                               </span>
                             </div>

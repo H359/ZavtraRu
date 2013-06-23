@@ -67,5 +67,5 @@ class SearchForm(forms.Form):
         required=False,
         widget=widgets.TextInput(attrs={'class': 'search-query2'})
     )
-    start = forms.DateField(label=u'с', widget=SelectDateWidget, required=False)
-    end = forms.DateField(label=u'по', widget=SelectDateWidget, required=False)
+    #start = forms.DateField(label=u'с', widget=SelectDateWidget, required=False)
+    #end = forms.DateField(label=u'по', widget=SelectDateWidget, required=False)

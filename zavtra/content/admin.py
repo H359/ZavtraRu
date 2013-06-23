@@ -91,6 +91,7 @@ class WodAdminForm(forms.ModelForm):
 class VideoArticleForm(forms.ModelForm):
   class Meta:
     model = Video
+  announce = forms.CharField(label=u'Заголово 511', max_length=150, widget=TextInput(attrs={'style': 'width: 760px'}))
   content = forms.CharField(label=u'Ссылка на YouTube/День-ТВ', widget=TextInput(attrs={'style': 'width: 760px'}))
 
 
