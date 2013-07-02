@@ -29,8 +29,6 @@
             <span class="bold person_uppercase_name">{{object.first_name}}</span>
             <br>
             <span class="bold person_uppercase_name">{{object.last_name}}</span>
-            <br>
-            <span class="white person_regalii">{{object.resume}}</span>
           </div>
           <div class="span7 offset1 person_navigation_container">
             <div class="row">

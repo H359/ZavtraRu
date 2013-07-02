@@ -8,7 +8,7 @@ class UserAdmin(admin.ModelAdmin):
   list_display = ('email', 'first_name', 'last_name', 'date_joined', 'level', 'allow_login')
   list_filter = ('level', 'allow_login') 
   search_fields = ('last_name', 'email')
-  exclude = ('password',)
+  exclude = ('password', 'resume')
 
   """
   def save_model(self, request, obj, form, change):

@@ -57,8 +57,7 @@ class HomeView(TemplateView):
 		      filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level = User.USER_LEVELS.system).\
 		      exclude(pk__in = selected_articles).\
 		      order_by('authors__id', '-selected_at').\
-        	      distinct('authors__id').\
-		      select_related().all()[0:4],
+		      select_related().all()[0:7],
     }
     return context
 
