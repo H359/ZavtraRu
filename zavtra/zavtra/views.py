@@ -56,8 +56,8 @@ class HomeView(TemplateView):
       'system_blogs': Article.published.prefetch_related('authors').defer('content').\
 		      filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level = User.USER_LEVELS.system).\
 		      exclude(pk__in = selected_articles).\
-		      order_by('authors__id', '-selected_at').\
-		      select_related().all()[0:7],
+		      order_by('-selected_at').\
+		      select_related().all()[0:6],
     }
     return context
 
