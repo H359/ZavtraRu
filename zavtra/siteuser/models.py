@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractBaseUser
 
 from model_utils import Choices
 from siteuser.managers import UserManager, ColumnistsManager
-from imagekit.models import ImageSpec
+from imagekit.models import ImageSpecField as ImageSpec
 from imagekit.processors.resize import ResizeToFit, ResizeToFill
 
 from zavtra.utils import OpenGraphMixin
@@ -37,10 +37,10 @@ class User(OpenGraphMixin, AbstractBaseUser):
   objects = UserManager()
   columnists = ColumnistsManager()
 
-  photo_90 = ImageSpec([ResizeToFill(90, 90)], image_field='photo')
-  photo_60 = ImageSpec([ResizeToFill(60, 60)], image_field='photo')
-  photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], image_field='photo')
-  photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], image_field='photo')
+  photo_90 = ImageSpec([ResizeToFill(90, 90)], source='photo')
+  photo_60 = ImageSpec([ResizeToFill(60, 60)], source='photo')
+  photo_152 = ImageSpec([ResizeToFill(152, 152, 'c')], source='photo')
+  photo_225 = ImageSpec([ResizeToFill(225, 169, 'b')], source='photo')
 
   def __unicode__(self):
     names = filter(lambda w: len(w) > 0, [self.first_name, self.last_name])

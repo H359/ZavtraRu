@@ -20,10 +20,10 @@ urlpatterns = patterns('',
     url(r'^about/$', TemplateView.as_view(template_name='static/about.jhtml'), name='about-us'),
 )
 
-handler404 = 'zavtra.views.view404'
+#handler404 = 'zavtra.views.view404'
 
 if settings.DEBUG:
   urlpatterns += patterns('',
-    #url('^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url('^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    #url('^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
   )

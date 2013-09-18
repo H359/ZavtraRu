@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils.html import strip_tags
 
 from model_utils import Choices
-from imagekit.models import ImageSpec
+from imagekit.models import ImageSpecField as ImageSpec
 from imagekit.processors.resize import ResizeToFill
 from imagekit.processors.crop import Crop, Anchor
 from djorm_pgfulltext.models import SearchManager
@@ -70,16 +70,16 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   )
 
   # thumbs
-  main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], image_field='cover_source', format='JPEG')
-  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='cover_source', format='JPEG')
-  cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], image_field='cover_source', format='JPEG')
+  main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], source='cover_source', format='JPEG')
+  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], source='cover_source', format='JPEG')
+  cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], source='cover_source', format='JPEG')
   #cover_for_main_selection = ImageSpec([ResizeToFill(140, 128)], image_field='cover_source', format='JPEG')
-  cover_for_main_selection = ImageSpec([ResizeToFill(203, 152)], image_field='cover_source')
-  inside_article_cover = ImageSpec([ResizeToFill(345, 259)], image_field='cover_source', format='JPEG')
-  inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 675)], image_field='cover_source', format='JPEG')
-  cover_for_wodlist = ImageSpec([ResizeToFill(390, 292)], image_field='cover_source', format='JPEG')
-  cover_for_topbar = ImageSpec([ResizeToFill(150, 79)], image_field='cover_source', format='JPEG')
-  cover_for_video = ImageSpec([Crop(640, 360, anchor=Anchor.BOTTOM), ResizeToFill(246, 184)], image_field='cover_source', format='JPEG')
+  cover_for_main_selection = ImageSpec([ResizeToFill(203, 152)], source='cover_source')
+  inside_article_cover = ImageSpec([ResizeToFill(345, 259)], source='cover_source', format='JPEG')
+  inside_wod_article_cover =  ImageSpec([ResizeToFill(900, 675)], source='cover_source', format='JPEG')
+  cover_for_wodlist = ImageSpec([ResizeToFill(390, 292)], source='cover_source', format='JPEG')
+  cover_for_topbar = ImageSpec([ResizeToFill(150, 79)], source='cover_source', format='JPEG')
+  cover_for_video = ImageSpec([Crop(640, 360, anchor=Anchor.BOTTOM), ResizeToFill(246, 184)], source='cover_source', format='JPEG')
 
   def __unicode__(self):
     return u'%s' % self.title

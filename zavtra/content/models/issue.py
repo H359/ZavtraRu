@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from imagekit.models import ImageSpec
+from imagekit.models import ImageSpecField as ImageSpec
 from imagekit.processors.resize import ResizeToFill
 from imagekit.processors.crop import Crop
 
@@ -26,11 +26,11 @@ class Issue(models.Model):
   objects = models.Manager()
   published = PublishedManager()
 
-  gazette_box = ImageSpec([ResizeToFill(278, 121)], image_field='illustration')
-  zeitung_box = ImageSpec([ResizeToFill(870, 385)], image_field='illustration')
-  archive_box = ImageSpec([ResizeToFill(750, 300)], image_field='illustration')
-  inside_article_cover = ImageSpec([ResizeToFill(345, 345)], image_field='illustration')
-  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], image_field='illustration')
+  gazette_box = ImageSpec([ResizeToFill(278, 121)], source='illustration')
+  zeitung_box = ImageSpec([ResizeToFill(870, 385)], source='illustration')
+  archive_box = ImageSpec([ResizeToFill(750, 300)], source='illustration')
+  inside_article_cover = ImageSpec([ResizeToFill(345, 345)], source='illustration')
+  cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], source='illustration')
 
   class Meta:
     ordering = ['-published_at']
