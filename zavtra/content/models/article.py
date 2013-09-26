@@ -73,6 +73,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], source='cover_source', format='JPEG')
   cover_for_sidebar = ImageSpec([ResizeToFill(200, 150)], source='cover_source', format='JPEG')
   cover_for_eventbox = ImageSpec([ResizeToFill(200, 200)], source='cover_source', format='JPEG')
+  cover_for_block = ImageSpec([ResizeToFill(90, 90)], source='cover_source', format='JPEG')
   #cover_for_main_selection = ImageSpec([ResizeToFill(140, 128)], image_field='cover_source', format='JPEG')
   cover_for_main_selection = ImageSpec([ResizeToFill(203, 152)], source='cover_source')
   inside_article_cover = ImageSpec([ResizeToFill(345, 259)], source='cover_source', format='JPEG')
