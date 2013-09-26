@@ -270,7 +270,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						<div class="carousel-inner">
 							{% for quote in quotes %}
 							<blockquote class="quote item{% if loop.first %} active{% endif %}">
-								<a style="background: white" href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
+								<a style="background: white !important; line-height: 1.5em !important;" href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
 							</blockquote>
 							{% endfor %}
 						</div>
