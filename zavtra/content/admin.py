@@ -8,7 +8,8 @@ from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
                            WodCite, SpecialProject, ExtractedQuote,\
                            Panoram
-from content.proxies import News, Wod, Video, Column, Editorial
+from content.proxies import News, Wod, Video, Column, Editorial,\
+                            Announcement
 
 
 mce_attrs = {
