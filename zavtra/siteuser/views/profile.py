@@ -12,7 +12,7 @@ from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
 
 class ProfileView(DetailView):
   template_name = 'siteuser/profile_author.jhtml'
-  queryset = User.objects.filter(level__gt = 0).prefetch_related('readees','readers').all()
+  queryset = User.objects.prefetch_related('readees','readers').all()
 
   def get_context_data(self, **kwargs):
     context = super(ProfileView, self).get_context_data(**kwargs)

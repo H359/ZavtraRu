@@ -17,6 +17,7 @@
 
 {% block content %}
 <div class="span10 offset1" id="person_content">
+  {% if object.level > 0 %}
   <div class="row">
     <div class="span4 offset1">
       <div id="person_statistics">
@@ -171,5 +172,10 @@
   <div class="row">
     <div class="span8 offset1">{{pagination(request, page_obj, filters_suffix)}}</div>
   </div>
+  {% else %}
+  <div class="row">
+    <div class="span8 offset1">Пользователь не имеет авторской страницы.</div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
