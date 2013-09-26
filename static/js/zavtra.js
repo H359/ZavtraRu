@@ -82,6 +82,9 @@ $(document).ready(function(){
 		$('#video-modal').empty().append(video).modal();
 		return false;
 	});
+	console.log(window.location.path);
+
+	//collectPictures();
 });
 
 $(window).on('resize', checkSizes);

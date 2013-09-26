@@ -205,6 +205,96 @@ body .modal-backdrop.fade.in {
   margin-right: 2em;
 }
 
-.article-page-content p img {
-  width: 600px;
+.image-incut {
+  float: right;
+  width: 180px;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+blockquote.quote {
+  box-shadow: 0px 2px 12px 1px #777;
+  -moz-box-shadow: 0px 2px 12px 1px #777;
+  -webkit-box-shadow: 0px 2px 12px 1px #777;
+  padding: 1em;
+  border-left: 10px solid #eee;
+}
+
+span.match {
+  background: yellow;
+}
+
+.panoram {
+  height: 120px;
+}
+
+.panoram .span9 {
+  position: absolute;
+}
+
+.panoram .arrow {
+  position: relative;
+  top: 0;
+  height: 100px;
+  width: 210px;
+  background: #88b7d5;
+}
+
+.panoram .arrow:after, .panoram .arrow:before {
+  left: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.panoram .arrow:after {
+ /*border-left-color: #88b7d5;*/
+  border-left-color: rgba(0,0,0,0.5);
+  border-width: 50px;
+  top: 50%;
+  margin-top: -50px;
+}
+
+.panoram .arrow:before {
+  /*
+  border-left-color: #c2e1f5;
+  */
+  border-width: 56px;
+  top: 50%;
+  margin-top: -56px;
+}
+
+.panoram .arrow.item-1 {
+  left: 0;
+  z-index: 5;
+}
+
+.panoram .arrow.item-2 {
+  left: 210px;
+  top: -100px;
+  z-index: 4;
+}
+
+.panoram .arrow.item-3 {
+  left: 420px;
+  top: -200px;
+  z-index: 3;
+}
+
+.panoram .arrow h5 {
+  position: relative;
+  display: inline-block;
+  top: 75px;
+  left: 20px;
+  padding: 5px 10px 0 10px;
+  background: #555;
+  border-left: 25px;
+}
+
+.panoram .arrow h5 a {
+  color: white;
 }

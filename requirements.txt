@@ -14,5 +14,7 @@ South==0.7.6
 django-model-utils
 django-tinymce
 django-filebrowser
-PIL
+Pillow
 pytils
+django-haystack
+pyelasticsearch
