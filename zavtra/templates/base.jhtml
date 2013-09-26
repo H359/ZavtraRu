@@ -22,7 +22,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <script src="{{STATIC_URL}}tiny_mce/tiny_mce.js"></script>
-    <script src="http://vkontakte.ru/js/api/openapi.js" type="text/javascript" charset="windows-1251"></script>
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?101"></script>
     <script>
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-27628875-1']);
