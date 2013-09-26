@@ -28,9 +28,11 @@
             </li>
             <li class="active">{{rubric.title}}</li>
           </ul>
+          {#
           <div class="pull-right">
             <a href="{{url('siteuser.view.publish_article')}}?rubric={{rubric.id}}" class="btn btn-success"><span>Опубликовать статью</span></a>
           </div>
+          #}
         </div>
       </div>
     </div>
