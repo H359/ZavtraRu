@@ -268,7 +268,7 @@
         {% endif %}
       </a>
     {% else %}
-      {% if object.cover != "" %}
+      {% if object.cover_source != "" %}
       <img src="{{object.cover_for_block.url}}" width="90" height="90">
       {% endif %}
     {% endif %}
