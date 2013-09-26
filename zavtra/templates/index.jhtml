@@ -310,7 +310,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 							<div id="vk_like"></div>
 						</div>
 						<script type="text/javascript">
-							VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "400", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
+							VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
 						</script>
 					</div>
 					<div class="span5">
