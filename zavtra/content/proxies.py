@@ -36,3 +36,10 @@ class Editorial(Article):
     proxy = True
     verbose_name = u'Объявление в колонке редактора'
     verbose_name_plural = u'Объявления в колонке редактора'
+
+
+class Announcement(Article):
+  class Meta:
+    proxy = True
+    verbose_name = u'Объявление'
+    verbose_name_plural = u'Объявления'

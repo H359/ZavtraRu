@@ -190,6 +190,20 @@ class ColumnsAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class AnnouncementAdmin(admin.ModelAdmin):
+  exclude = ('rubric', 'authors', 'topic')
+  list_display = ('title', 'status', 'published_at', 'selected_at')
+  list_editable = ('selected_at',)
+  search_fields = ('title',)
+
+  def queryset(self, request):
+    return Article.objects.filter(rubric__slug='announcements')
+
+  def save_model(self, request, obj, form, change):
+    obj.rubric = Rubric.fetch_rubric('announcements')
+    obj.save()
+
+
 class EditorialAdmin(admin.ModelAdmin):
   exclude = ('rubric', 'selected_at',)
   list_display = ('title', 'status', 'published_at')
@@ -253,6 +267,7 @@ admin.site.register(Wod, WodAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Column, ColumnsAdmin)
+admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(Editorial, EditorialAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Issue, IssueAdmin)
