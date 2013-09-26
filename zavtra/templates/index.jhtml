@@ -253,15 +253,16 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 			{% endif %}
 			#}
 			{% if panorams|length > 0 %}
-			<div class="row panoram">
-				<div class="span9">
+			<div class="row">
 				{% for panoram in panorams %}
-					<div class="arrow item-{{loop.index}}" style="background: url('/media/{{panoram.image}}')">
-						<h5><a href="#">{{panoram.title}}</a></h5>
-					</div>
-				{% endfor %}
+				<div class="span3" style="background: url('/media/{{panoram.image}}'); height: 100px;">
+					<h3 style="position:relative;top:80px;background:#555;padding:0 2px;">
+						<a style="color:white" href="{{panoram.get_absolute_url()}}">{{panoram.title}}</a>
+					</h3>
 				</div>
+				{% endfor %}
 			</div>
+			<br>
 			{% endif %}
 			<div class="row">
 				<div class="span9">

@@ -1,0 +1,88 @@
+{% extends "base.jhtml" %}
+
+{% from "macro.jhtml" import pagination, render_navigation %}
+
+{% block navigation %}{{render_navigation()}}{% endblock %}
+
+{% block page_style %}newspaper{% endblock %}
+
+{% block page_content %}
+<div class="container12">
+  <div class="bordered">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <h2 class="inline top_align">Газета &laquo;Завтра&raquo;</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bordered">
+    <div class="row">
+      <div class="span12">
+        <div class="section-header">
+          <ul class="breadcrumb inline">
+            <li>
+              <a href="/">Главная</a>
+              <span class="divider">/</span>
+            </li>
+            <li class="active">Панорама &laquo;{{panoram.title}}&raquo;</li>
+          </ul>
+          {% if request.user.is_authenticated() and request.user.level > 0 %}
+          <div class="pull-right">
+            <a href="{{url('siteuser.view.publish_article')}}?panoram={{panoram.id}}" class="btn btn-success"><span>Опубликовать статью</span></a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span12">
+      {% for object in object_list %}
+        <div class="article-content side_shadows">
+          <section>
+            <article>
+              {% if object.cover_source != "" %}
+              <div class="article-illustration-container">
+                <a href="{{object.get_absolute_url()}}">
+                  <img src="{{object.cover_for_sidebar.url}}" class="article-illustration">
+                </a>
+              </div>
+              {% endif %}
+              <div class="article-header-container">
+                <header>
+                  <h2 class="article-header">
+                    <a href="{{object.get_absolute_url()}}">{{object.title}}</a>
+                  </h2>
+                </header>
+              </div>
+              <div class="article-author">
+                {% for author in object.authors.all() %}
+                  <a href="{{author.get_absolute_url()}}" rel="author">{{author}}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+              <div class="article-text">
+                <p class="article-paragraph">
+                  <a href="{{object.get_absolute_url()}}" class="black black_link no_unedrline">{{object.announce|striptags|nl2br}}</a>
+                </p>
+              </div>
+            </article>
+            <div class="article-statistics">
+              <span class="article-statistic">
+                <a href="{{object.get_absolute_url()}}">
+                  <i class="icon-comment"></i>
+                  {{object.comments_count|get_plural("комментарий,комментария,комментариев")}}
+                </a>
+              </span>
+            </div>
+          </section>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">{{pagination(request, page_obj)}}</div>
+  </div>
+</div>
+{% endblock %}

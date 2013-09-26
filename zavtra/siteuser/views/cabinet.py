@@ -9,7 +9,7 @@ from django.db.models import Q
 from base import FilteredArticlesView
 from siteuser.forms import UserInfoForm, ArticleForm
 from siteuser.models import User
-from content.models import Rubric, Article
+from content.models import Rubric, Article, Panoram
 
 
 class CabinetView(TemplateView, FormView):
@@ -106,16 +106,15 @@ class CabinetPostArticleView(TemplateView, FormView):
   def post(self, request, *args, **kwargs):
     form = ArticleForm(request.POST)
     if form.is_valid():
-      #messages.info(request, u'Запрос на публикацию статьи отправлен редактору')
       instance = form.save(commit=False)
-      try:
-        instance.rubric = Rubric.objects.filter(is_public=True).\
-                          get(id=request.GET['rubric'])
-      except (KeyError, Rubric.DoesNotExist):
-        instance.rubric = Rubric.fetch_rubric('blogi')
+      instance.rubric = Rubric.fetch_rubric('blogi')
       instance.status = Article.STATUS.ready 
       instance.save()
       instance.authors.add(request.user)
+      if 'panoram' in request.GET:
+        panoram = Panoram.objects.get(id=request.GET.get('panoram'))
+        for topic in panoram.topics.all():
+          instance.topics.add(topic)
       return redirect('siteuser.view.cabinet_articles')
     return self.return_form(form)
 

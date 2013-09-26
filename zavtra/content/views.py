@@ -14,7 +14,7 @@ from zavtra.utils import oneday
 
 from content.models import Article, Rubric, Topic, \
                            Issue, RubricInIssue, ArticleVote, \
-                           SpecialProject
+                           SpecialProject, Panoram
 from siteuser.models import User
 from django.http.response import Http404
 
@@ -152,7 +152,7 @@ class RubricView(ListView):
     self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
     # return self.rubric.articles.order_by('-published_at').all()
     return Article.published.filter(rubric=self.rubric).select_related().\
-           prefetch_related('expert_comments__expert')
+           prefetch_related('expert_comments__expert', 'authors')
 
   def get_context_data(self, **kwargs):
     context = super(RubricView, self).get_context_data(**kwargs)
@@ -311,3 +311,21 @@ class SpecProjectView(DetailView):
 
 def current_issue_redirect(request):
   return redirect(Issue.published.latest('published_at'))
+
+
+class PanoramView(ListView):
+  paginate_by = 15
+  paginator_class = DiggPaginator
+  template_name = 'content/panoram_articles.jhtml'
+
+  def get_queryset(self):
+    self.panoram = get_object_or_404(Panoram, slug=self.kwargs['slug'])
+    return Article.published.filter(topics__in=self.panoram.topics.all()).\
+           distinct().\
+           prefetch_related('authors').\
+           select_related()
+
+  def get_context_data(self, **kwargs):
+    context = super(PanoramView, self).get_context_data(**kwargs)
+    context['panoram'] = self.panoram
+    return context
