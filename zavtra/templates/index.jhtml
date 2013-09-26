@@ -303,7 +303,18 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 			<div class="row">
 				<div class="span9">
 					<div class="span4">
-						{{ render_articlest_list_block("Авторские страницы", "/authors/", blogs) }}
+						{{render_articlest_list_block("Авторские страницы", "/authors/", blogs)}}
+						<div class="main_box_frame">
+							<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+							<div id="vk_like"></div>
+						</div>
+						<script type="text/javascript">
+  						VK.init({
+    						apiId: 3899278,
+    						onlyWidgets: true
+  						});
+  						VK.Widgets.Like('vk_like', {width: 278});
+						</script>
 					</div>
 					<div class="span5">
 						{% if spec_project is not none %}
@@ -358,6 +369,8 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						{% if blocks.announcements|length > 0 %}
 						{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
 						{% endif %}
+						<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 						<!-- Яндекс.Директ -->
 						<div id="yandex_ad"></div>
 						<script type="text/javascript">
