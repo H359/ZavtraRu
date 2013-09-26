@@ -57,6 +57,23 @@ function switchMainTabs(which) {
 	}
 }
 
+var collectPictures = function(){
+	var page = $('#page .article-page-content'),
+			modal = $('#lightbox-modal'),
+			body = modal.find('.modal-body'),
+			imgs = page.find('img')
+						 .attr('width', null).attr('height', null),
+			holder = $('<div class="image-incut"></div>');
+	page.prepend(holder);
+	holder.prepend(imgs.addClass('image-incut'));
+	imgs.click(function(){
+		body.empty();
+		body.append('<img width="560" src="' + $(this).attr('src') + '">');
+		modal.modal();
+	});
+	//lightbox-modal
+}
+
 $(document).ready(function(){
 	checkSizes();
 	$('.section_header_button_datepicker').on('click', function(){
@@ -82,9 +99,7 @@ $(document).ready(function(){
 		$('#video-modal').empty().append(video).modal();
 		return false;
 	});
-	console.log(window.location.path);
-
-	//collectPictures();
+	if (/^\/content\/view/.test(window.location.pathname)) collectPictures();
 });
 
 $(window).on('resize', checkSizes);
