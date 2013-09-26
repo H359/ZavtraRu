@@ -365,8 +365,6 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						{% if blocks.announcements|length > 0 %}
 						{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
 						{% endif %}
-						<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
-						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 						<!-- Яндекс.Директ -->
 						<div id="yandex_ad"></div>
 						<script type="text/javascript">
@@ -527,6 +525,8 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						</div>
 					</div>
 					{% endfor %}
+					<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 				</div>
 			</div>
 		</div>
