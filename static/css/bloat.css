@@ -48,7 +48,7 @@ body .modal-backdrop.fade.in {
 }
 
 #events .item {
-  height: 20.5em;
+  height: 21.3em;
 }
 
 #events .item a {
@@ -63,7 +63,7 @@ body .modal-backdrop.fade.in {
 #events .item h4 {
   padding: 1.75em .75em .25em .75em;
   background-color: #444;
-  height: 5em;
+  height: 6em;
 }
 
 #events .carousel-indicators {
