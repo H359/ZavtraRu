@@ -57,19 +57,19 @@ class Issue(models.Model):
     from article import Article
     issue_rubrics = list(self.issue_rubrics.select_related().all())
     articles = Article.objects.filter(
-      models.Q(selected_at__isnull=False) | models.Q(rubric=Rubric.fetch_rubric('peredovitsa')),
+      models.Q(selected_at__isnull=False) |
+      models.Q(rubric=Rubric.fetch_rubric('peredovitsa')),
       published_at__year=self.published_at.year,
       published_at__month=self.published_at.month,
       published_at__day=self.published_at.day,
       rubric__in=[x.rubric for x in issue_rubrics]
-    ).prefetch_related('authors').select_related().defer('content').\
-    order_by('selected_at')
+    ).prefetch_related('authors').select_related().defer('content')
     def keyer(a):
       if a.is_peredovitsa:
         return 1
       else:
         return a.selected_at.toordinal()
-    return sorted(list(articles), key=keyer)
+    return sorted(list(articles.order_by('selected_at')), key=keyer)
 
   @models.permalink
   def get_absolute_url(self):

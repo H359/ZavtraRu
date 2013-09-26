@@ -29,8 +29,8 @@ class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
         exclude = (
-            'rubric', 'status', 'type', 'published_at', 'selected_at',
-            'authors', 'topics', 'cover_source', 'announce', 'show_icon'
+            'status', 'type', 'published_at', 'selected_at', 'rubric',
+            'authors', 'topics', 'cover_source', 'show_icon'
         )
         widgets = {
             'title': widgets.TextInput(attrs={'id': 'add_header'}),

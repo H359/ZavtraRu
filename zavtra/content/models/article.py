@@ -9,9 +9,6 @@ from model_utils import Choices
 from imagekit.models import ImageSpecField as ImageSpec
 from imagekit.processors.resize import ResizeToFill
 from imagekit.processors.crop import Crop, Anchor
-from djorm_pgfulltext.models import SearchManager
-from djorm_pgfulltext.fields import VectorField
-from djorm_expressions.models import ExpressionManager
 
 from base import TitledSluggedModel
 from managers import *
@@ -50,10 +47,11 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   views_count = models.PositiveIntegerField(editable=False, default=0)
   _issue = models.IntegerField(editable=False, default=-1)
 
-  search_index = VectorField()
+  #search_index = VectorField()
 
   # not mapped stuff
-  objects = ExpressionManager()
+  #objects = ExpressionManager()
+  objects = models.Manager()
   published = PublishedManager()
   events = EventsManager()
   news = NewsManager()
@@ -62,12 +60,14 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   columns = ColumnsManager()
   editorial = EditorialManager()
 
+  """
   searcher = SearchManager(
     fields = (('title', 'A'), ('subtitle', 'B'), ('content', 'C')),
     config = 'pg_catalog.russian',
     search_field = 'search_index',
     auto_update_search_field = True
   )
+  """
 
   # thumbs
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], source='cover_source', format='JPEG')
@@ -192,6 +192,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   @staticmethod
   def autocomplete_search_fields():
     return ("id__iexact", "title__icontains",)
+
 
 class ArticleVote(models.Model):
   article = models.ForeignKey(Article, related_name='votes')

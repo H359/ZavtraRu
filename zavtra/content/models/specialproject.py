@@ -18,3 +18,14 @@ class SpecialProject(TitledSluggedModel):
   @models.permalink
   def get_absolute_url(self):
     return ('content.view.special_project', (), {'slug': self.slug})
+
+  @staticmethod
+  def get_current():
+    res = None
+    try:
+      res = SpecialProject.objects.prefetch_related('articles').\
+            filter(date__lte = datetime.now().date()).\
+            latest('date')
+    except SpecialProject.DoesNotExist:
+      pass
+    return res

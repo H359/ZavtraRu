@@ -6,11 +6,18 @@ from django.core.cache import cache
 from django_jinja.base import Library
 from django.utils.datastructures import SortedDict
 import jinja2
+from haystack.utils import Highlighter
 from pytils.dt import ru_strftime, distance_of_time_in_words
 from pytils.numeral import get_plural as _get_plural
 from content.models import Issue
 
 register = Library()
+
+
+@register.filter
+@jinja2.contextfilter
+def highlight(ctx, v, q):
+  return Highlighter(q, html_tag='span', css_class='match').highlight(v)
 
 @register.filter
 @jinja2.contextfilter

@@ -108,7 +108,11 @@ class CabinetPostArticleView(TemplateView, FormView):
     if form.is_valid():
       #messages.info(request, u'Запрос на публикацию статьи отправлен редактору')
       instance = form.save(commit=False)
-      instance.rubric = Rubric.fetch_rubric('blogi')
+      try:
+        instance.rubric = Rubric.objects.filter(is_public=True).\
+                          get(id=request.GET['rubric'])
+      except (KeyError, Rubric.DoesNotExist):
+        instance.rubric = Rubric.fetch_rubric('blogi')
       instance.status = Article.STATUS.ready 
       instance.save()
       instance.authors.add(request.user)

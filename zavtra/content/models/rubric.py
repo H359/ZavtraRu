@@ -7,7 +7,8 @@ from zavtra.utils import cached
 
 
 class Rubric(TitledSluggedModel):
-  in_rubricator = models.BooleanField(default=True, verbose_name=u'Включать в рубрикатор')
+  in_rubricator = models.BooleanField(default=False, verbose_name=u'Включать в рубрикатор')
+  is_public = models.BooleanField(default=False)
 
   def __unicode__(self):
     return u'%s' % self.title

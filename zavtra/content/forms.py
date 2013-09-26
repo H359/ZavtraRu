@@ -58,14 +58,3 @@ class SelectDateWidget(widgets.Widget):
         s = widgets.Select(choices=choices)
         select_html = s.render(field % name, val, local_attrs)
         return select_html
-
-
-class SearchForm(forms.Form):
-    query = forms.CharField(
-        max_length=64,
-        label=u'Запрос',
-        required=False,
-        widget=widgets.TextInput(attrs={'class': 'search-query2'})
-    )
-    #start = forms.DateField(label=u'с', widget=SelectDateWidget, required=False)
-    #end = forms.DateField(label=u'по', widget=SelectDateWidget, required=False)

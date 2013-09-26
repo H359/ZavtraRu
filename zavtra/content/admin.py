@@ -6,7 +6,8 @@ from tinymce.widgets import TinyMCE
 
 from content.models import Rubric, Issue, RubricInIssue,\
                            ExpertComment, Topic, Article,\
-                           DailyQuote, WodCite, SpecialProject
+                           WodCite, SpecialProject, ExtractedQuote,\
+                           Panoram
 from content.proxies import News, Wod, Video, Column, Editorial
 
 
@@ -223,19 +224,26 @@ class IssueAdmin(admin.ModelAdmin):
   inlines = [RubricInIssueAdminInline]
 
 
-class DailyQuoteAdmin(admin.ModelAdmin):
-  list_display = ('day', 'quote', 'source',)
-  raw_id_fields = ('source',)
-  autocomplete_lookup_fields = {
-    'fk': ['source']
-  }
-
-
 class SpecialProjectAdmin(admin.ModelAdmin):
   list_display = ('title', 'date')
   raw_id_fields = ('articles',)
   autocomplete_lookup_fields = {
     'm2m': ['articles']
+  }
+
+
+class ExtractedQuoteAdmin(admin.ModelAdmin):
+  list_display = ('source', 'created_at')
+  raw_id_fields = ('source',)
+  related_lookup_fields = {
+    'fk': ['source']
+  }
+
+
+class PanoramAdmin(admin.ModelAdmin):
+  raw_id_fields = ('topics',)
+  autocomplete_lookup_fields = {
+    'm2m': ['topics']
   }
 
 
@@ -248,5 +256,6 @@ admin.site.register(Column, ColumnsAdmin)
 admin.site.register(Editorial, EditorialAdmin)
 admin.site.register(Rubric, RubricAdmin)
 admin.site.register(Issue, IssueAdmin)
-admin.site.register(DailyQuote, DailyQuoteAdmin)
 admin.site.register(SpecialProject, SpecialProjectAdmin)
+admin.site.register(ExtractedQuote, ExtractedQuoteAdmin)
+admin.site.register(Panoram, PanoramAdmin)

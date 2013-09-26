@@ -26,7 +26,7 @@
           <div class="row">
             <div class="span8 offset2">
               <h2 class="middle_align inline">Поиск:</h2>
-              {{form.query}}
+              <input type="text" name="q" value="{{q}}">
               <button class="trans-button" type="submit"><i class="icon-search icon-white middle_align"> </i>
               </button>
             </div>
@@ -34,11 +34,9 @@
           <div class="row">
             <div class="span8 offset2 search_categories">
               {% set root_search = url('content.view.search') %}
-              <span class="search_category{% if category is none %} search_category_selected{% endif %}"><a href="{{root_search}}?{{page_suffix}}">везде</a></span>
-              <span class="search_category{% if category == 'authors' %} search_category_selected{% endif %}"><a href="{{root_search}}authors/?query={{form.data.query}}">авторы</a></span>
-              <span class="search_category{% if category == 'articles' %} search_category_selected{% endif %}"><a href="{{root_search}}articles/?{{page_suffix}}">статьи</a></span>
-              <span class="search_category{% if category == 'wod' %} search_category_selected{% endif %}"><a href="{{root_search}}wod/?{{page_suffix}}">слова дней</a></span>
-              <span class="search_category{% if category == 'events' %} search_category_selected{% endif %}"><a href="{{root_search}}events/?{{page_suffix}}">события</a></span>
+              <span class="search_category{% if category is none %} search_category_selected{% endif %}"><a href="{{root_search}}?q={{q}}">везде</a></span>
+              <span class="search_category{% if category == 'wod' %} search_category_selected{% endif %}"><a href="{{root_search}}wod/?q={{q}}">слова дней</a></span>
+              <span class="search_category{% if category == 'events' %} search_category_selected{% endif %}"><a href="{{root_search}}events/?q={{q}}">события</a></span>
             </div>
           </div>
         </div>
@@ -54,11 +52,7 @@
           <h3>Результаты:</h3>
         </div>
       </div>
-      {% if category == 'authors' %}
-      {% include "content/search_authors.jhtml" %}
-      {% else %}
       {% include "content/search_articles.jhtml" %}
-      {% endif %}
     </div>
   </div>
 </div>

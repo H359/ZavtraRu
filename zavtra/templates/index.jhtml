@@ -1,5 +1,5 @@
 {% extends "base.jhtml" %} {% from "macro.jhtml" import
-render_navigation %} {% block page_header %}
+render_navigation, render_articlest_list_block %} {% block page_header %}
 <div class="container">
 	<div class="row">
 		<div class="span4_5">
@@ -50,7 +50,7 @@ render_navigation %} {% block page_header %}
 					<div id="main_header_search">
 						<form action="/content/search/" method="get" class="navbar-search">
 							<div id="main_search_form">
-								<input class="search-query" type="search" name="query"
+								<input class="search-query" type="search" name="q"
 									placeholder="поиск...">
 							</div>
 							<div id="main_search_image">
@@ -106,8 +106,8 @@ render_navigation %} {% block page_header %}
 		</div>
 	</div>
 </div>
-{% endblock %} {% block page_content %} {% cached 60
-'hardcore-index-cache' %}
+{% endblock %}
+{% block page_content %}
 <div class="container">
 	<div class="row">
 		<div class="span9">
@@ -194,8 +194,7 @@ render_navigation %} {% block page_header %}
 									class="main_header_category middle_align">Коротко:</span></a>
 							</h3>
 						</div>
-						<div id="main_news_box_content"
-							class="carousel slide carousel-slow">
+						<div id="main_news_box_content" class="carousel slide carousel-slow">
 							<div class="carousel-inner">
 								{% for item in latest_news[0:3] %}
 								<div class="item{% if loop.first %} active{% endif %}">
@@ -229,6 +228,7 @@ render_navigation %} {% block page_header %}
 					</div>
 				</div>
 			</div>
+			{#
 			{% if editorial is not none %}
 			<div class="row">
 				<div class="span9">
@@ -250,25 +250,33 @@ render_navigation %} {% block page_header %}
 					</div>
 				</div>
 			</div>
-			{% endif %} {% if quote is not none %}
+			{% endif %}
+			#}
+			{% if panorams|length > 0 %}
+			<div class="row panoram">
+				<div class="span9">
+				{% for panoram in panorams %}
+					<div class="arrow item-{{loop.index}}" style="background: url('/media/{{panoram.image}}')">
+						<h5><a href="#">{{panoram.title}}</a></h5>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+			{% endif %}
 			<div class="row">
 				<div class="span9">
-					<div class="main_editor_container">
-						<div class="main_editor_message">
-							<img src="http://zavtra.ru/static/img/no_avatar.png"
-								class="main_editor_message_img">
-							<div class="main_editor_message_text">
-								<h5 style="font-size: 1.25em">
-									<a href="{{quote.source.get_absolute_url()}}"
-										class="no_underline">{{quote.quote}}</a>
-								</h5>
-								<!--<h5 class="right_align dar"><a href="http://zavtra.ru/authors/user/1836/articles/" class="no_underline">Андрей Фефелов</a></h5>-->
-							</div>
+					<div class="carousel slide carousel-slow">
+						<div class="carousel-inner">
+							{% for quote in quotes %}
+							<blockquote class="quote item{% if loop.first %} active{% endif %}">
+								<a href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
+								<small><a href="{{quote.source.get_absolute_url()}}">&laquo;{{quote.source.title}}&raquo;</a></small>
+							</blockquote>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
 			</div>
-			{% endif %}
 			<div class="row">
 				{% for article in selected_articles %}
 				<div class="span3">
@@ -295,84 +303,7 @@ render_navigation %} {% block page_header %}
 			<div class="row">
 				<div class="span9">
 					<div class="span4">
-						<div class="main_box_frame">
-							<div class="relative main_box_header">
-								<h4 class="white inline">
-									<a href="/authors/" class="gray gray_link">Авторские
-										Страницы</a>
-								</h4>
-							</div>
-							<div class="main_blog_entries_container">
-								{% for article in blogs %}
-								<div class="main_blog_entry">
-									<div class="main_blog_entry_date_box">
-										<span class="main_blog_entry_date_content">
-											{{article.published_at|ru_dt_distance}} </span>
-									</div>
-									<div class="main_blog_entry_box">
-										{% for author in article.authors.all() %} <a
-											href="{{author.get_absolute_url()}}" class="person_name">
-											{{author}} </a>{% if not loop.last %}, {% endif %} {% endfor %}
-										<h5>
-											<a href="{{article.get_absolute_url()}}"
-												class="black black_link"> {{article.title}} </a>
-										</h5>
-										<div class="main_blog_entry_statistics">
-											<i class="icon-comment"> </i> <span class="smalltext">
-												<a href="{{article.get_absolute_url()}}#comments"
-												class="dark dark_link">{{article.comments_count}}</a>
-											</span>
-										</div>
-									</div>
-									<div class="main_person_pic_small">
-										{% set authors = article.authors.all()|list %} {% if
-										authors|length > 0 %} {% set author = article.authors.all()[0]
-										%} <a href="{{author.get_absolute_url()}}"> {% if
-											author.photo != "" %} <img src="{{author.photo_90.url}}">
-											{% else %} <img src="{{STATIC_URL}}img/no_avatar.png">
-											{% endif %}
-										</a> {% endif %}
-									</div>
-								</div>
-								{% endfor %}
-							</div>
-							{% if system_blogs|length > 0 %}
-							<div class="main_blog_entries_container">
-								{% for article in system_blogs %}
-								<div class="main_blog_entry">
-									<div class="main_blog_entry_date_box">
-										<span class="main_blog_entry_date_content">
-											{{article.published_at|ru_dt_distance}} </span>
-									</div>
-									<div class="main_blog_entry_box">
-										{% for author in article.authors.all() %} <a
-											href="{{author.get_absolute_url()}}" class="person_name">
-											{{author}} </a>{% if not loop.last %}, {% endif %} {% endfor %}
-										<h5>
-											<a href="{{article.get_absolute_url()}}"
-												class="black black_link"> {{article.title}} </a>
-										</h5>
-										<div class="main_blog_entry_statistics">
-											<i class="icon-comment"> </i> <span class="smalltext">
-												<a href="{{article.get_absolute_url()}}#comments"
-												class="dark dark_link">{{article.comments_count}}</a>
-											</span>
-										</div>
-									</div>
-									<div class="main_person_pic_small">
-										{% set authors = article.authors.all()|list %} {% if
-										authors|length > 0 %} {% set author = article.authors.all()[0]
-										%} <a href="{{author.get_absolute_url()}}"> {% if
-											author.photo != "" %} <img src="{{author.photo_90.url}}">
-											{% else %} <img src="{{STATIC_URL}}img/no_avatar.png">
-											{% endif %}
-										</a> {% endif %}
-									</div>
-								</div>
-								{% endfor %}
-							</div>
-							{% endif %}
-						</div>
+						{{ render_articlest_list_block("Авторские страницы", "/authors/", blogs) }}
 					</div>
 					<div class="span5">
 						{% if spec_project is not none %}
@@ -420,6 +351,12 @@ render_navigation %} {% block page_header %}
 								</h5>
 							</div>
 						</div>
+						{% endif %}
+						{% if blocks.izborskyclub|length > 0 %}
+						{{ render_articlest_list_block("Изборский клуб", blocks.izborskyclub[0].rubric.get_absolute_url(), blocks.izborskyclub, True) }}
+						{% endif %}
+						{% if blocks.announcements|length > 0 %}
+						{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
 						{% endif %}
 						<!-- Яндекс.Директ -->
 						<div id="yandex_ad"></div>
@@ -532,11 +469,14 @@ render_navigation %} {% block page_header %}
 									материалы выпуска</a>&nbsp;&bull;&nbsp; <a href="/content/archive/"
 									class="dark dark_link">Архив</a>
 							</h5>
-						</div>
+						</div>						
 					</div>
 				</div>
 			</div>
 			<div class="row">
+				{% if blocks.letters|length > 0 %}
+				{{ render_articlest_list_block("Письма в редакцию", blocks.letters[0].rubric.get_absolute_url(), blocks.letters, True) }}
+				{% endif %}
 				<div class="span4">
 					{% for video in video_qs.order_by('-published_at')[0:4] %}
 					<div class="main_box_frame">
@@ -584,4 +524,4 @@ render_navigation %} {% block page_header %}
 	</div>
 </div>
 <div id="video-modal" class="modal hide fade" data-width="760"></div>
-{% endcached %} {% endblock %}
+{% endblock %}

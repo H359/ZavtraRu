@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'imagekit',
     'south',
     'django_jinja',
@@ -165,6 +166,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'skin': "o2k7",
     'language': "ru"
 }
+
 TINYMCE_SPELLCHECKER = True
 GRAPPELLI_ADMIN_TITLE = u'Газета &laquo;Завтра&raquo;'
 AUTOCOMPLETE_LIMIT = 20
@@ -173,6 +175,15 @@ OVERWRITE_EXISTING = False
 
 INTERNAL_IPS = ('127.0.0.1',)
 ALLOWED_HOSTS = ('localhost', 'zavtra.ru')
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+        'TIMEOUT': 60
+    }
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
