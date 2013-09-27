@@ -41,7 +41,7 @@
       {% for object in object_list %}
         <div class="article-content side_shadows">
           <section>
-            <article>
+            <article class="clearfix">
               {% if object.cover_source != "" %}
               <div class="article-illustration-container">
                 <a href="{{object.get_absolute_url()}}">
