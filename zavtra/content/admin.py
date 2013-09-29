@@ -192,7 +192,7 @@ class ColumnsAdmin(admin.ModelAdmin):
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
-  exclude = ('rubric', 'authors', 'topic')
+  exclude = ('rubric', 'authors', 'topics')
   list_display = ('title', 'status', 'published_at', 'selected_at')
   list_editable = ('selected_at',)
   search_fields = ('title',)
