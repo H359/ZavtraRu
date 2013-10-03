@@ -1135,6 +1135,7 @@ article p {
 
 .comment-time {
 	display: block;
+	text-align: right;
 	float: right;
 	color: #555;
 	font-size: .8em;
