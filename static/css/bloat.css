@@ -313,3 +313,8 @@ span.match {
     padding: 0;
     margin-bottom: 0.5em;
 }
+
+#events .carousel-control.left, #events .carousel-control.right {
+    top: 207px;
+}
+
