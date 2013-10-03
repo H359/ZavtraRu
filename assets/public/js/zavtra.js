@@ -82,14 +82,12 @@ var collectPictures = function(){
 	holder.magnificPopup({
 		delegate: 'a',
 		type:'image',
-		gallery: {
-			enabled: true,
-			navigateByImgClick: true
-		}
+		gallery: { enabled: true }
 	});
 }
 
 $.extend(true, $.magnificPopup.defaults, {
+	tClose: 'Закрыть',
 	tLoading: 'Загрузка...',
 	gallery: {
   	tPrev: 'Пред.',
