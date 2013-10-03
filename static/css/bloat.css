@@ -298,3 +298,18 @@ span.match {
 .panoram .arrow h5 a {
   color: white;
 }
+
+.main_spec_frame .accordion-inner {
+    padding: 0;
+}
+
+.main_spec_frame .accordion-inner p {
+    padding: 0 15px;
+}
+
+.img-full-size {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin-bottom: 0.5em;
+}
