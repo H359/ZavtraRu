@@ -101,7 +101,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				<div class="span5">
 					<div id="footer_text">
 						<p>Сайт может содержать контент не предназначенный для лиц моложе 16 лет.</p>
-						<p>В случае технических проблем пишите на <a href="mailto:web@zavtra.ru">web@zavtra.ru</p>
+						<p>В случае технических проблем пишите на <a href="mailto:web@zavtra.ru">web@zavtra.ru</a></p>
 					</div>
 				</div>
 			</div>
