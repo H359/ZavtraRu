@@ -331,10 +331,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 										class="accordion-body collapse{% if loop.first %} in{% endif %}">
 										<div class="accordion-inner">
 											{% if article.cover_source != "" %}
-											<div class="center_align big_padding_vertical">
-												<img src="{{article.inside_article_cover.url}}"
-													class="img-full-size main_special_project_img">
-											</div>
+											<img src="{{article.inside_article_cover.url}}" class="img-full-size main_special_project_img">
 											<p>{{article.announce|striptags}}</p>
 											<h5 class="right_align average_padding_vertical">
 												<a href="{{article.get_absolute_url()}}"
