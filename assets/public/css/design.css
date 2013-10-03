@@ -817,13 +817,19 @@ padding-bottom: .25em;
 }
 
 #footer_text{
-	font-size: .8em;
+	font-size: .9em;
 	line-height: 1.25em;
 	color: white;
 	margin: 0em 1em;
 }
 
+#footer_text p {
+    text-indent: 0;
+}
 
+#footer_text a {
+    color: blue;
+}
 
 /* common font-related */
 .white {
