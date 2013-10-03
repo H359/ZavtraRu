@@ -693,8 +693,9 @@ padding-bottom: .25em;
 
 .main_blog_entry {
 	position: relative;
-	padding: 0em 0em 0em .75em;
+	/*padding: 0em 0em 0em .75em;*/
 	/*margin: 0em 0em 1.5em 0em;*/
+	padding: 0;
 	margin: 0;
 	border-left: 1px solid #DDD;
 	border-right: 1px solid #BBB;
