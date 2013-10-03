@@ -80,6 +80,7 @@ var collectPictures = function(){
 	//lightbox-modal
 	*/
 	holder.magnificPopup({
+		delegate: 'a',
 		type:'image',
 		modal: true,
 		gallery: {
