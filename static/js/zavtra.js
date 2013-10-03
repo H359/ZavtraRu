@@ -66,7 +66,8 @@ var collectPictures = function(){
 			holder = $('<div class="image-incut"></div>');
 	page.prepend(holder);
 	imgs.each(function(){
-		var a = $('<a href="' + this.src + '"></a>');
+		var a = $('<a></a>');
+		a.attr('href',  this.src);
 		a.append($(this));
 		holder.prepend(a);
 	}).addClass('image-incut');
@@ -78,7 +79,7 @@ var collectPictures = function(){
 	});
 	//lightbox-modal
 	*/
-	imgs.magnificPopup({
+	holder.magnificPopup({
 		type:'image',
 		modal: true,
 		gallery: {
