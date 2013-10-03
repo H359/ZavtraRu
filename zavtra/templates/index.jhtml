@@ -128,9 +128,10 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 								<div id="main_event_selection_bg"></div>
 								<div id="events" class="carousel slide carousel-fast">
 									<ol class="carousel-indicators">
-										{% for i in range(0, 8) %}
+										{% for i in range(0, 7) %}
 										<li data-target="#events" data-slide-to="{{i}}" {% if
-											loop.first %} class="active"{% endif %}></li> {% endfor %}
+											loop.first %} class="active"{% endif %}></li>
+										{% endfor %}
 									</ol>
 									<div class="carousel-inner">
 										{% for event in events %}
