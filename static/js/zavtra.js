@@ -65,13 +65,27 @@ var collectPictures = function(){
 						 .attr('width', null).attr('height', null),
 			holder = $('<div class="image-incut"></div>');
 	page.prepend(holder);
-	holder.prepend(imgs.addClass('image-incut'));
+	imgs.each(function(){
+		var a = $('<a href="' + this.src + '"></a>');
+		a.append($(this));
+		holder.prepend(a);
+	}).addClass('image-incut');
+	/*
 	imgs.click(function(){
 		body.empty();
 		body.append('<img width="560" src="' + $(this).attr('src') + '">');
 		modal.modal();
 	});
 	//lightbox-modal
+	*/
+	imgs.magnificPopup({
+		type:'image',
+		modal: true,
+		gallery: {
+			enabled: true,
+			navigateByImgClick: true
+		}
+	});
 }
 
 $(document).ready(function(){
