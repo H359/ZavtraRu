@@ -14,6 +14,7 @@ class SpecialProject(TitledSluggedModel):
     verbose_name = u'Спецпроект'
     verbose_name_plural = u'Спецпроекты'
     app_label = 'content'
+    ordering = ('-date',)
 
   @models.permalink
   def get_absolute_url(self):
