@@ -145,6 +145,8 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 											</h4>
 										</div>
 										{% endfor %}
+										<a class="carousel-control left" href="#events" data-slide="prev"></a>
+  									<a class="carousel-control right" href="#events" data-slide="next"></a>
 									</div>
 									<!--<a href="#events" class="carousel-control left" data-slide="prev"></a>
                   <a href="#events" class="carousel-control right" data-slide="next"></a>-->
