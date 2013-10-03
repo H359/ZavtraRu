@@ -82,13 +82,21 @@ var collectPictures = function(){
 	holder.magnificPopup({
 		delegate: 'a',
 		type:'image',
-		modal: true,
 		gallery: {
 			enabled: true,
 			navigateByImgClick: true
 		}
 	});
 }
+
+$.extend(true, $.magnificPopup.defaults, {
+	tLoading: 'Загрузка...',
+	gallery: {
+  	tPrev: 'Пред.',
+    tNext: 'След.',
+    tCounter: '%curr% из %total%'
+  }
+});
 
 $(document).ready(function(){
 	checkSizes();
