@@ -32,7 +32,7 @@
   <div class="row">
     <div class="span8 offset1">
       <div id="person_about">
-        <h3>О себе:</h3>
+        <h3>Информация:</h3>
         {{object.bio}}<br>
         <span class="largetext bold">Присоединился к сообществу</span> {{object.date_joined|ru_date("%d %B %Y")}}
       </div>
