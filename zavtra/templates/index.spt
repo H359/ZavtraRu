@@ -1,0 +1,10 @@
+#extends templates.base
+
+#def header
+  $super(index, self).header()
+  <div class="gsep"></div>
+#end def
+
+#def content
+  <h3><a href="#">События</a></h3>
+#end def

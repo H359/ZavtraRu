@@ -210,7 +210,7 @@
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap-modalmanager.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.magnific-popup.min.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.magnific-popup.js"></script>
     <script src="{{STATIC_URL}}js/zavtra.js"></script>
     <div style="display:none;"><script type="text/javascript"> 
     (function(w, c) { 
