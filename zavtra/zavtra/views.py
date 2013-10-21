@@ -4,7 +4,7 @@ from random import choice
 from datetime import datetime
 
 from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from content.models import Article, Rubric, Issue,\
                            SpecialProject, ExtractedQuote, Panoram
@@ -54,3 +54,10 @@ home = HomeView.as_view()
 
 def view404(request):
   return render(request, '404.jhtml', {}, content_type='text/html')
+
+def old_redirect(request, year, abs_number, num):
+  try:
+    issue = Issue.objects.get(published_at__year=year, absolute_number=abs_number)
+  except:
+    return redirect('/')
+  return redirect(issue)
