@@ -21,6 +21,7 @@ class HomeView(TemplateView):
     news_date_range = (morning, morning + oneday)
     selected_articles = Article.columns.defer('content').\
                         prefetch_related('authors').\
+                        exclude(selected_at=None).\
                         order_by('-selected_at').\
                         select_related()[0:6]
     blocks = {}
