@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^admin/filebrowser/', include(site.urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about/$', TemplateView.as_view(template_name='static/about.jhtml'), name='about-us'),
-    url(r'^cgi/veil/data/zavtra/(?P<year>[0-9]+)/(?P<abs_number>[0-9]+)/(?P<num>[0-9]+)\.html', 'zavtra.view.old_redirect'),
+    url(r'^cgi/veil/data/zavtra/(?P<year>[0-9]+)/(?P<abs_number>[0-9]+)/(?P<num>[0-9]+)\.html', 'zavtra.views.old_redirect'),
 )
 
 #handler404 = 'zavtra.views.view404'
