@@ -110,6 +110,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 </div>
 {% endblock %}
 {% block page_content %}
+
 <div class="container">
 	<div class="row">
 		<div class="span9">
@@ -233,36 +234,15 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 					</div>
 				</div>
 			</div>
-			{#
-			{% if editorial is not none %}
-			<div class="row">
-				<div class="span9">
-					<div class="main_editor_container">
-						<div class="main_editor_message">
-							<div class="main_editor_message_header">
-								<h3>
-									<a href="{{editorial.get_absolute_url()}}" class="no_underline">
-										<span class="main_header_category middle_align top_align">{{editorial.title}}</span>
-									</a>
-								</h3>
-							</div>
-							<div class="main_editor_message_text">
-								<h4>
-									<a href="{{editorial.get_absolute_url()}}" class="no_underline">{{editorial.announce}}</a>
-								</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{% endif %}
-			#}
 			{% if panorams|length > 0 %}
-			<div class="row">
+			<div class="row" id="panorams_holder">
 				{% for panoram in panorams %}
-				<div class="span3" style="background: url('/media/{{panoram.image}}'); height: 100px;">
-					<h3 style="position:relative;top:80px;background:#555;padding:0 2px;">
-						<a style="color:white" href="{{panoram.get_absolute_url()}}">{{panoram.title}}</a>
+				<div class="span3">
+					<a href="{{panoram.get_absolute_url()}}">
+						<img src="{{panoram.main_page_image.url}}" width="200" height="150">
+					</a>
+					<h3>
+						<a href="{{panoram.get_absolute_url()}}">{{panoram.title}}</a>
 					</h3>
 				</div>
 				{% endfor %}
@@ -413,7 +393,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						</a>
 						<div id="main_newspaper_img">
 							{% if issue.illustration != "" %} <a href="/content/issue/"><img
-								src="{{issue.gazette_box.url}}"></a> {% endif %}
+								src="{{issue.gazette_box.url}}" width="278" height="121"></a> {% endif %}
 						</div>
 						{% set gazette = issue.gazette_selected %}
 						<div class="main_box_header">
