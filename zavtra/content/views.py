@@ -231,7 +231,7 @@ class CommunityView(ListView):
         self.newest = []
       else:
         self.newest = []
-    qs = qs.exclude(pk__in=[w.pk for w in self.newest])
+      qs = qs.exclude(pk__in=[w.pk for w in self.newest])
     if 'year' in self.request.GET and \
        'month' in self.request.GET and \
        'day' in self.request.GET:
