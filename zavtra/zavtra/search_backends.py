@@ -28,5 +28,6 @@ class CustomElasticBackend(ElasticsearchSearchBackend):
     }
   }
 
+
 class CustomElasticSearchEngine(ElasticsearchSearchEngine):
     backend = CustomElasticBackend
