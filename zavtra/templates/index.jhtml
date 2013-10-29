@@ -371,7 +371,6 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 								<a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a>
 							</div>
 						</div>
-						{% endfor %}
 
 						<!-- Яндекс.Директ -->
 						<div id="yandex_ad"></div>
