@@ -220,13 +220,14 @@ div.quote {
   padding: 1em;
   border-left: 10px solid #eee;
   background-color: #4A0909;
+  height: 70px;
 }
 
 div.quote a {
  color:white;
 }
 
-div.quote a.active {
+div.quote.active a {
     background-color: transparent !important;
 }
 
