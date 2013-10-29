@@ -226,6 +226,10 @@ div.quote a {
  color:white;
 }
 
+div.quote a.active {
+    background-color: transparent !important;
+}
+
 span.match {
   background: yellow;
 }
