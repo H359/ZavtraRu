@@ -61,10 +61,11 @@ var collectPictures = function(){
 	var page = $('#page .article-page-content'),
 			thmb = $('#page .article-page-illustration img'),
 			imgs = page.find('img');
-	var carousel = $("<div class='carousel slide'></div>");
+	var carousel = $("<div id='article-images-slider' class='carousel slide'></div>");
 	var inner = $("<div class='carousel-inner'></div>");
 	page.prepend(carousel);
 	carousel.append(inner);
+	inner.css({height: '400px'});
 	var appender = function(k,v){
 		var row = $("<div class='item'></div>");
 		inner.append(row);
@@ -73,6 +74,12 @@ var collectPictures = function(){
 	};
 	imgs.each(appender);
 	thmb.each(appender);
+	carousel.append(
+		$("<a href='#article-images-slider' data-slide='prev'>&lsaquo;</a>")
+	);
+	carousel.append(
+		$("<a href='#article-images-slider' data-slide='next'>&rsaquo;</a>")
+	);
 	carousel.carousel();
 }
 
