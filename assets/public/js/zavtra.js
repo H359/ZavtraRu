@@ -65,12 +65,14 @@ var collectPictures = function(){
 	var inner = $("<div class='carousel-inner'></div>");
 	page.prepend(carousel);
 	carousel.append(inner);
-	imgs.each(function(k,v){
+	var appender = function(k,v){
 		var row = $("<div class='item'></div>");
 		inner.append(row);
 		row.append($(v));
 		if (k == 0) row.addClass('active');
-	});
+	};
+	imgs.each(appender);
+	thmb.each(appender);
 	carousel.carousel();
 }
 
