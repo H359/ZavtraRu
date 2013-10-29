@@ -334,12 +334,45 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 							</div>
 						</div>
 						{% endif %}
-						{% if blocks.izborskyclub|length > 0 %}
-						{{ render_articlest_list_block("Изборский клуб", blocks.izborskyclub[0].rubric.get_absolute_url(), blocks.izborskyclub, True) }}
-						{% endif %}
-						{% if blocks.announcements|length > 0 %}
-						{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
-						{% endif %}
+
+						{% set video = video_qs.order_by('-published_at')[0] %}
+						<div class="main_box_frame">
+							<div class="relative main_box_header">
+								<h5>
+									<a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a>
+								</h5>
+							</div>
+							<div id="main_video_selected">
+								<div id="main_video_selected_media">
+									<a href="{{video.get_absolute_url()}}" class="no_underline" data-video-source="{{video.source}}">
+										{% if video.cover_source != "" %}
+										<img src="{{video.cover_for_video.url}}" id="main_video_selected_video">
+										{% else %}
+										<img src="{{video.external_image}}" id="main_video_selected_video">
+										{% endif %}
+									</a>
+								</div>
+								<div id="main_video_selected_header_bg"></div>
+								<div id="main_video_selected_header">
+									<h6>
+										<a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="white white_link">{{video.title}}</a>
+									</h6>
+									<div id="main_video_selected_header_stats">
+										<i class="icon-white icon-comment"> </i>
+										<span class="smalltext"><a
+										href="{{video.get_absolute_url()}}#comments" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
+									</div>
+									<div id="main_video_selected_header_restriction">
+										<span class="smalltext beige">18+</span>
+									</div>
+								</div>
+							</div>
+							<div id="main_video_selected_description_container">
+								<a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a>
+							</div>
+						</div>
+						{% endfor %}
+
 						<!-- Яндекс.Директ -->
 						<div id="yandex_ad"></div>
 						<script type="text/javascript">
@@ -459,56 +492,21 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				{% if blocks.letters|length > 0 %}
 				{{ render_articlest_list_block("Письма в редакцию", blocks.letters[0].rubric.get_absolute_url(), blocks.letters, True) }}
 				{% endif %}
-				<div class="span4">
-					{% for video in video_qs.order_by('-published_at')[0:3] %}
-					<div class="main_box_frame">
-						<div class="relative main_box_header">
-							<h5>
-								<a href="{{video.get_absolute_url()}}"
-									data-video-source="{{video.source}}" class="gray gray_link">Видео</a>
-							</h5>
-						</div>
-						<div id="main_video_selected">
-							<div id="main_video_selected_media">
-								<a href="{{video.get_absolute_url()}}" class="no_underline"
-									data-video-source="{{video.source}}"> {% if
-									video.cover_source != "" %} <img
-									src="{{video.cover_for_video.url}}"
-									id="main_video_selected_video"> {% else %} <img
-									src="{{video.external_image}}" id="main_video_selected_video">
-									{% endif %}
-								</a>
-							</div>
-							<div id="main_video_selected_header_bg"></div>
-							<div id="main_video_selected_header">
-								<h6>
-									<a href="{{video.get_absolute_url()}}"
-										data-video-source="{{video.source}}" class="white white_link">{{video.title}}</a>
-								</h6>
-								<div id="main_video_selected_header_stats">
-									<i class="icon-white icon-comment"> </i> <span
-										class="smalltext"><a
-										href="{{video.get_absolute_url()}}#comments" class="gray gray_link">{{video.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
-								</div>
-								<div id="main_video_selected_header_restriction">
-									<span class="smalltext beige">18+</span>
-								</div>
-							</div>
-						</div>
-						<div id="main_video_selected_description_container">
-							<a href="{{video.get_absolute_url()}}">{{video.announce|striptags}}</a>
-						</div>
-					</div>
-					{% endfor %}
-					<div class="main_box_frame">
-							<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-							<div id="vk_like"></div>
-					</div>
-					<script type="text/javascript">
-						VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
-					</script>
-					<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
-						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				{% if blocks.izborskyclub|length > 0 %}
+				{{ render_articlest_list_block("Изборский клуб", blocks.izborskyclub[0].rubric.get_absolute_url(), blocks.izborskyclub, True) }}
+				{% endif %}
+				{% if blocks.announcements|length > 0 %}
+				{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
+				{% endif %}
+				<div class="main_box_frame">
+						<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+						<div id="vk_like"></div>
+				</div>
+				<script type="text/javascript">
+					VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
+				</script>
+				<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 				</div>
 			</div>
 		</div>
