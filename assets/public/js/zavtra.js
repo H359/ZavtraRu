@@ -63,24 +63,26 @@ var collectPictures = function(){
 			imgs = page.find('img');
 	var carousel = $("<div id='article-images-slider' class='carousel slide'></div>");
 	var inner = $("<div class='carousel-inner'></div>");
-	page.prepend(carousel);
-	carousel.append(inner);
-	inner.css({height: '400px'});
-	var appender = function(k,v){
+	if (imgs.length > 0) {
+	    page.prepend(carousel);
+	    carousel.append(inner);
+	    inner.css({height: '400px'});
+	    var appender = function(k,v){
 		var row = $("<div class='item'></div>");
 		inner.append(row);
 		row.append($(v));
 		if (k == 0) row.addClass('active');
-	};
-	imgs.each(appender);
-	thmb.each(appender);
-	carousel.append(
+	    };
+	    imgs.each(appender);
+	    thmb.each(appender);
+	    carousel.append(
 		$("<a href='#article-images-slider' class='carousel-control left' data-slide='prev'>&lsaquo;</a>")
-	);
-	carousel.append(
+	    );
+	    carousel.append(
 		$("<a href='#article-images-slider' class='carousel-control right' data-slide='next'>&rsaquo;</a>")
-	);
-	carousel.carousel();
+	    );
+	    carousel.carousel();
+	}
 }
 
 $(document).ready(function(){
