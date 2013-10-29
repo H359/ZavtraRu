@@ -59,42 +59,20 @@ function switchMainTabs(which) {
 
 var collectPictures = function(){
 	var page = $('#page .article-page-content'),
-			modal = $('#lightbox-modal'),
-			body = modal.find('.modal-body'),
-			imgs = page.find('img')
-						 .attr('width', null).attr('height', null),
-			holder = $('<div class="image-incut"></div>');
-	page.prepend(holder);
-	imgs.each(function(){
-		var a = $('<a></a>');
-		a.attr('href',  this.src);
-		a.append($(this));
-		holder.prepend(a);
-	}).addClass('image-incut');
-	/*
-	imgs.click(function(){
-		body.empty();
-		body.append('<img width="560" src="' + $(this).attr('src') + '">');
-		modal.modal();
+			thmb = $('#page .article-page-illustration img'),
+			imgs = page.find('img');
+	var carousel = $("<div class='carousel slide'></div>");
+	var inner = $("<div class='carousel-inner'></div>");
+	page.prepend(carousel);
+	carousel.append(inner);
+	imgs.each(function(k,v){
+		var row = $("<div class='item'></div>");
+		inner.append(row);
+		row.append($(v));
+		if (k == 0) row.addClass('active');
 	});
-	//lightbox-modal
-	*/
-	holder.magnificPopup({
-		delegate: 'a',
-		type:'image',
-		gallery: { enabled: true }
-	});
+	carousel.carousel();
 }
-
-$.extend(true, $.magnificPopup.defaults, {
-	tClose: 'Закрыть',
-	tLoading: 'Загрузка...',
-	gallery: {
-  	tPrev: 'Пред.',
-    tNext: 'След.',
-    tCounter: '%curr% из %total%'
-  }
-});
 
 $(document).ready(function(){
 	checkSizes();
