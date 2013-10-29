@@ -434,7 +434,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 									class="gray gray_link">{{gazette[0].rubric.title}}</a>
 							</h5>
 						</div>
-						<div class="main_newspaper_block">
+						<div class="main_newspaper_block" style="height:445px">
 							<h4 class="right_align">
 								<a href="{{gazette[0].get_absolute_url()}}"
 									class="black black_link">{{gazette[0].title}}</a>
