@@ -75,10 +75,10 @@ var collectPictures = function(){
 	imgs.each(appender);
 	thmb.each(appender);
 	carousel.append(
-		$("<a href='#article-images-slider' data-slide='prev'>&lsaquo;</a>")
+		$("<a href='#article-images-slider' class='carousel-control left' data-slide='prev'>&lsaquo;</a>")
 	);
 	carousel.append(
-		$("<a href='#article-images-slider' data-slide='next'>&rsaquo;</a>")
+		$("<a href='#article-images-slider' class='carousel-control right' data-slide='next'>&rsaquo;</a>")
 	);
 	carousel.carousel();
 }
