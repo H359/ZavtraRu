@@ -371,6 +371,9 @@ span.match {
   background-color: #eee;
   color: #555;
   margin: 15px 40px;
+  height: 250px;
+  max-height: 250px;
+  overflow: hidden;
 }
 
 .blocks-content .text a {
