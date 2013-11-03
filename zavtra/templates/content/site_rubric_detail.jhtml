@@ -42,12 +42,24 @@
         <div class="article-content side_shadows">
           <section>
             <article class="clearfix">
+              {% if object.type == 'video' %}
+              <div class="article-illustration-container">
+                <a href="{{object.get_absolute_url()}}">
+                  {% if object.cover_source != "" %}
+                  <img src="{{object.cover_for_video.url}}">
+                  {% else %}
+                  <img src="{{object.external_image}}">
+                  {% endif %}
+                </a>
+              </div>
+              {% else %}
               {% if object.cover_source != "" %}
               <div class="article-illustration-container">
                 <a href="{{object.get_absolute_url()}}">
                   <img src="{{object.cover_for_sidebar.url}}" class="article-illustration">
                 </a>
               </div>
+              {% endif %}
               {% endif %}
               <div class="article-header-container">
                 <header>

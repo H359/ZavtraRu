@@ -234,6 +234,19 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="span9">
+					<div class="carousel slide carousel-slow">
+						<div class="carousel-inner">
+							{% for quote in quotes %}
+							<div class="quote item{% if loop.first %} active{% endif %}">
+								<a style="font-weight: 700;line-height: 1.5em !important;" href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
 			{% if panorams|length > 0 %}
 			<div class="row" id="panorams_holder">
 				{% for panoram in panorams %}
@@ -249,19 +262,6 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 			</div>
 			<br>
 			{% endif %}
-			<div class="row">
-				<div class="span9">
-					<div class="carousel slide carousel-slow">
-						<div class="carousel-inner">
-							{% for quote in quotes %}
-							<div class="quote item{% if loop.first %} active{% endif %}">
-								<a style="font-weight: 700;line-height: 1.5em !important;" href="{{quote.source.get_absolute_url()}}" class="no_underline">{{quote.quote}}</a>
-							</div>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				{% for article in selected_articles %}
 				<div class="span3">
@@ -339,7 +339,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						<div class="main_box_frame">
 							<div class="relative main_box_header">
 								<h5>
-									<a href="{{video.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a>
+									<a href="{{video.rubric.get_absolute_url()}}" data-video-source="{{video.source}}" class="gray gray_link">Видео</a>
 								</h5>
 							</div>
 							<div id="main_video_selected">
@@ -434,7 +434,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 									class="gray gray_link">{{gazette[0].rubric.title}}</a>
 							</h5>
 						</div>
-						<div class="main_newspaper_block" style="height:445px">
+						<div class="main_newspaper_block" style="height:459px">
 							<h4 class="right_align">
 								<a href="{{gazette[0].get_absolute_url()}}"
 									class="black black_link">{{gazette[0].title}}</a>
@@ -488,15 +488,66 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				</div>
 			</div>
 			<div class="row">
+				<div class="main_box_frame blocks">
 				{% if blocks.letters|length > 0 %}
-				{{ render_articlest_list_block("Письма в редакцию", blocks.letters[0].rubric.get_absolute_url(), blocks.letters, True) }}
-				{% endif %}
-				{% if blocks.izborskyclub|length > 0 %}
-				{{ render_articlest_list_block("Изборский клуб", blocks.izborskyclub[0].rubric.get_absolute_url(), blocks.izborskyclub, True) }}
+					<div class="sep">
+						<h3>Письма в редакцию</h3>
+						<img src="{{STATIC_URL}}img/letters.png">
+						<div class="blocks-content carousel slide carousel-fast">
+							<div class="dots left"></div>
+							<div class="carousel-inner">
+								{% for obj in blocks.letters %}
+								<div class="item text {% if loop.first %}active{% endif %}">
+									{{obj.announce}}
+									<a href="{{obj.get_absolute_url()}}">читать полностью</a>
+								</div>
+								{% endfor %}
+								</div>
+							<div class="dots right"></div>
+						</div>
+					</div>
 				{% endif %}
 				{% if blocks.announcements|length > 0 %}
-				{{ render_articlest_list_block("Объявления", blocks.announcements[0].rubric.get_absolute_url(), blocks.announcements, True) }}
+					<div class="sep">
+						<h3>Объявления</h3>
+						<img src="{{STATIC_URL}}img/announcements.png">
+						<div class="blocks-content">
+							<div class="dots left"></div>
+							<div class="carousel slide carousel-fast">
+								<div class="carousel-inner">
+									{% for obj in blocks.announcements %}
+									<div class="item text {% if loop.first %}active{% endif %}">
+										{{obj.announce}}
+										<a href="{{obj.get_absolute_url()}}">читать полностью</a>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="dots right"></div>
+						</div>
+					</div>
 				{% endif %}
+				{% if blocks.izborskyclub|length > 0 %}
+					<div class="izbor">
+						<img src="{{STATIC_URL}}img/izbor.png">
+						<div class="blocks-content">
+							<h3>Изборский клуб</h3>
+							<div class="dots"></div>
+							<div class="carousel slide carousel-fast">
+								<div class="carousel-inner">
+									{% for obj in blocks.izborskyclub %}
+									<div class="item text {% if loop.first %}active{% endif %}">
+										{{obj.announce}}
+										<a href="{{obj.get_absolute_url()}}">читать полностью</a>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				</div>
+
 				<div class="main_box_frame">
 						<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
 						<div id="vk_like"></div>

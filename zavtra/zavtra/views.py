@@ -26,7 +26,7 @@ class HomeView(TemplateView):
                         select_related()[0:6]
     blocks = {}
     for b in ['announcements', 'letters', 'izborskyclub']:
-      blocks[b] = list(Article.published.filter(rubric__slug = b)[0:1])
+      blocks[b] = list(Article.published.filter(rubric__slug = b)[0:3])
     context = {
       'issue_qs': Issue.published.prefetch_related('issue_rubrics'),
       'quotes': ExtractedQuote.objects.all()[0:5],

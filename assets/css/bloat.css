@@ -328,3 +328,97 @@ span.match {
     top: 207px;
 }
 
+.blocks {
+  background-color: #eee;
+}
+
+.blocks .sep {
+  border-bottom: 1px solid #c8c8c8;
+}
+
+.blocks h3 {
+  font-weight: 400;
+  text-transform: uppercase;
+  padding: 0.25em;
+}
+
+.blocks .blocks-content {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.blocks-content .dots {
+  position: absolute;
+  display: block;
+  background-image: url('/static/img/dots.png');
+  width: 20px;
+  height: 4px;
+  z-index: 5;
+}
+
+.blocks-content .dots.left {
+  left: 10px;
+  top: 10px;
+}
+
+.blocks-content .dots.right {
+  right: 10px;
+  bottom: 10px;
+}
+
+.blocks-content .text {
+  background-color: #eee;
+  color: #555;
+  margin: 15px 40px;
+}
+
+.blocks-content .text a {
+  display: block;
+  text-align: right;
+  color: #510202;
+}
+
+.izbor {
+  background-color: #510202;
+  overflow: hidden;
+  zoom: 1;
+}
+
+.blocks .izbor h3 {
+  color: #fffec3;
+  font-weight: 700;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 40px;
+}
+
+.izbor .blocks-content img {
+  display: block;
+  float: left;
+}
+
+.blocks .izbor .blocks-content {
+  position: static;
+  display: block;
+  float: right;
+  width: 170px;
+}
+
+.blocks .izbor .blocks-content .dots {
+  position: static;
+}
+
+.blocks .izbor .blocks-content .text {
+  background-color: transparent;
+  color: #fff;
+  padding: 5px 10px 10px 0;
+}
+
+.blocks .izbor .blocks-content .text a {
+  background-color: transparent !important;
+  color: #fffec3;
+}
+
+.izbor .blocks-content .dots {
+  background-image: url('/static/img/dots-yellow.png');
+}
