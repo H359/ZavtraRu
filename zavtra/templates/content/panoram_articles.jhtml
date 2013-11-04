@@ -30,7 +30,7 @@
           </ul>
           {% if request.user.is_authenticated() and request.user.level > 0 %}
           <div class="pull-right">
-            <a href="{{url('siteuser.view.publish_article')}}?panoram={{panoram.id}}" class="btn btn-success"><span>Опубликовать статью</span></a>
+            <a href="{{url('siteuser.view.publish_article')}}?panoram={{panoram.id}}" class="btn btn-success"><span>Опубликовать</span></a>
           </div>
           {% endif %}
         </div>
