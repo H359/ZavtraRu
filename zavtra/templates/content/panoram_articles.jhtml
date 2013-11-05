@@ -61,7 +61,7 @@
           <section>
             <article>
               {% if object.type == 'video' %}
-              <div class="article-illustration-container">
+              <div class="article-illustration-container clearfix">
                 <a href="{{object.get_absolute_url()}}">
                   {% if object.cover_source != "" %}
                   <img src="{{object.cover_for_video.url}}">
