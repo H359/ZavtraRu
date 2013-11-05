@@ -249,6 +249,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 			</div>
 			{% if panorams|length > 0 %}
 			<div class="row" id="panorams_holder">
+				<h1><a href="/content/panoram/">Панорама</a></h1>
 				{% for panoram in panorams %}
 				<div class="span3">
 					<a href="{{panoram.get_absolute_url()}}">
