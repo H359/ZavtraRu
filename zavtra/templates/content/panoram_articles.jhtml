@@ -57,11 +57,11 @@
     <div class="row">
       <div class="span12">
       {% for object in object_list %}
-        <div class="article-content side_shadows">
+        <div class="article-content side_shadows clearfix">
           <section>
             <article>
               {% if object.type == 'video' %}
-              <div class="article-illustration-container clearfix">
+              <div class="article-illustration-container">
                 <a href="{{object.get_absolute_url()}}">
                   {% if object.cover_source != "" %}
                   <img src="{{object.cover_for_video.url}}">
