@@ -325,7 +325,14 @@ body {
 	margin: 0em -22.25em .75em -3.75em\0/;/* IE8 */
 	padding-left: 2.5em;
 	padding-left: 4.5em\0/;/* IE8 */
-	padding-top: .75em;
+}
+
+#panorams_holder h1 {
+	padding-bottom: .5em;
+}
+
+#panorams_holder h1 a {
+	font-weight: 700;
 }
 
 #main_subjects a, #panorams_holder a {
