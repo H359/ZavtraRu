@@ -491,9 +491,9 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				<div class="main_box_frame blocks">
 				{% if blocks.letters|length > 0 %}
 					<div class="sep">
-						<h3>Письма в редакцию</h3>
-						<img src="{{STATIC_URL}}img/letters.png">
-						<div class="blocks-content carousel slide carousel-fast">
+						<h3><a href="{{blocks.letters[0].rubric.get_absolute_url()}}">Письма в редакцию</a></h3>
+						<a href="{{blocks.letters[0].rubric.get_absolute_url()}}"><img src="{{STATIC_URL}}img/letters.png"></a>
+						<div class="blocks-content carousel slide carousel-slow">
 							<div class="dots left"></div>
 							<div class="carousel-inner">
 								{% for obj in blocks.letters %}
@@ -509,11 +509,11 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				{% endif %}
 				{% if blocks.announcements|length > 0 %}
 					<div class="sep">
-						<h3>Объявления</h3>
-						<img src="{{STATIC_URL}}img/announcements.png">
+						<h3><a href="{{blocks.announcements[0].rubric.get_absolute_url()}}">Объявления</a></h3>
+						<a href="{{blocks.announcements[0].rubric.get_absolute_url()}}"><img src="{{STATIC_URL}}img/announcements.png"></a>
 						<div class="blocks-content">
 							<div class="dots left"></div>
-							<div class="carousel slide carousel-fast">
+							<div class="carousel slide carousel-slow">
 								<div class="carousel-inner">
 									{% for obj in blocks.announcements %}
 									<div class="item text {% if loop.first %}active{% endif %}">
@@ -529,11 +529,11 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				{% endif %}
 				{% if blocks.izborskyclub|length > 0 %}
 					<div class="izbor">
-						<img src="{{STATIC_URL}}img/izbor.png">
+						<a href="{{blocks.izborskyclub[0].rubric.get_absolute_url()}}"><img src="{{STATIC_URL}}img/izbor.png"></a>
 						<div class="blocks-content">
-							<h3>Изборский клуб</h3>
+							<h3><a href="{{blocks.izborskyclub[0].rubric.get_absolute_url()}}">Изборский клуб</a></h3>
 							<div class="dots"></div>
-							<div class="carousel slide carousel-fast">
+							<div class="carousel slide carousel-slow">
 								<div class="carousel-inner">
 									{% for obj in blocks.izborskyclub %}
 									<div class="item text {% if loop.first %}active{% endif %}">

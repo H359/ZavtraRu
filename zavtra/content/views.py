@@ -318,6 +318,16 @@ def current_issue_redirect(request):
   return redirect(Issue.published.latest('published_at'))
 
 
+class PanoramIndexView(ListView):
+  paginate_by = 15
+  paginator_class = DiggPaginator
+  template_name = 'content/panorams_list.jhtml'
+  queryset = Panoram.objects.all().distinct().\
+             order_by('-topics__articles__comments__created_at')
+
+print PanoramIndexView.queryset.query
+
+
 class PanoramView(ListView):
   paginate_by = 15
   paginator_class = DiggPaginator

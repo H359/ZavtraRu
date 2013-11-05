@@ -40,6 +40,10 @@
               <a href="/">Главная</a>
               <span class="divider">/</span>
             </li>
+            <li>
+              <a href="/content/panoram/">Панорамы</a>
+              <span class="divider">/</span>
+            </li>
             <li class="active">Панорама &laquo;{{panoram.title}}&raquo;</li>
           </ul>
           {% if request.user.is_authenticated() and request.user.level > 0 %}

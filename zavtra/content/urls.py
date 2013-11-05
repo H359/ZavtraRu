@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
 
-from content.views import ArticleView, RubricView, IssueView, \
-                          ArchiveView, EventsView, TopicView, \
-                          CommunityView, ArticleVoteView, SearchView, \
-                          SpecProjectsView, SpecProjectView, PanoramView
+from content.views import ArticleView, RubricView, IssueView,\
+                          ArchiveView, EventsView, TopicView,\
+                          CommunityView, ArticleVoteView, SearchView,\
+                          SpecProjectsView, SpecProjectView, PanoramView,\
+                          PanoramIndexView
 
 
 urlpatterns = patterns('',
@@ -13,6 +14,7 @@ urlpatterns = patterns('',
   url(r'^view/(?P<slug>[^/]+)/$', ArticleView.as_view(), name='content.view.article'),
   url(r'^vote/(?P<slug>[^/]+)/(?P<vote>(up|down)+)/$', ArticleVoteView.as_view(), name='content.view.article_vote'),
   url(r'^rubric/(?P<slug>[^/]+)/$', RubricView.as_view(), name='content.view.rubric'),
+  url(r'^panoram/$', PanoramIndexView.as_view(), name='content.view.panorams'),
   url(r'^panoram/(?P<slug>[^/]+)/$', PanoramView.as_view(), name='content.view.panoram'),
   url(r'^events/$', EventsView.as_view(), name='content.view.events'),
   url(r'^events/(?P<date>[0-9]{4}-[0-9]{1,2}-[0-9]{1,2})/$', EventsView.as_view()),
