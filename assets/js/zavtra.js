@@ -74,7 +74,7 @@ var collectPictures = function(){
 		if (k == 0) row.addClass('active');
 	    };
 	    imgs.each(appender);
-	    thmb.each(appender);
+	    thmb.hide();
 	    carousel.append(
 		$("<a href='#article-images-slider' class='carousel-control left' data-slide='prev'>&lsaquo;</a>")
 	    );
