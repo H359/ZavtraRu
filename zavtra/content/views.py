@@ -322,10 +322,7 @@ class PanoramIndexView(ListView):
   paginate_by = 15
   paginator_class = DiggPaginator
   template_name = 'content/panorams_list.jhtml'
-  queryset = Panoram.objects.all().distinct().\
-             order_by('-topics__articles__comments__created_at')
-
-print PanoramIndexView.queryset.query
+  queryset = Panoram.objects.all()
 
 
 class PanoramView(ListView):
