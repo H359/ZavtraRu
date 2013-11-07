@@ -537,21 +537,18 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 							<h3><a href="{{blocks.izborskyclub[0].rubric.get_absolute_url()}}">Изборский клуб</a></h3>
 							<div class="dots"></div>
 						</div>
-						<div class="carousel slide carousel-slow">
-							<div class="carousel-inner">
-								{% for obj in blocks.izborskyclub %}
-								<div class="item text {% if loop.first %}active{% endif %}">
-									<div class="text-holder">
-										<h4>{{obj.title}}</h4>
-										<br>
-										{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5><br>{% endif %}
-										{{obj.announce}}
-									</div>
-									<a href="{{obj.get_absolute_url()}}">читать полностью</a>
-								</div>
-								{% endfor %}
+						{% for obj in blocks.izborskyclub[0:1] %}
+						<div class="item text {% if loop.first %}active{% endif %}">
+							<div class="text-holder">
+								<h4>{{obj.title}}</h4>
+								<br>
+								{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5><br>{% endif %}
+								{{obj.announce}}
 							</div>
+							<a href="{{obj.get_absolute_url()}}">читать полностью</a>
+							<br>
 						</div>
+						{% endfor %}
 					</div>
 				{% endif %}
 				</div>
