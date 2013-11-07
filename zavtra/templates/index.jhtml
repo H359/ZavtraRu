@@ -541,7 +541,11 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 							<div class="carousel-inner">
 								{% for obj in blocks.izborskyclub %}
 								<div class="item text {% if loop.first %}active{% endif %}">
-									<div class="text-holder">{{obj.announce}}</div>
+									<div class="text-holder">
+										<h4>{{obj.title}}</h4>
+										{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5>{% endif %}
+										{{obj.announce}}
+									</div>
 									<a href="{{obj.get_absolute_url()}}">читать полностью</a>
 								</div>
 								{% endfor %}
