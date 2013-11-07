@@ -501,6 +501,9 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 							<div class="carousel-inner">
 								{% for obj in blocks.letters %}
 								<div class="item text {% if loop.first %}active{% endif %}">
+									<h4>{{obj.title}}</h4>
+									<br>
+									{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5><br>{% endif %}
 									{{obj.announce}}
 									<a href="{{obj.get_absolute_url()}}">читать полностью</a>
 								</div>
@@ -520,6 +523,9 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 								<div class="carousel-inner">
 									{% for obj in blocks.announcements %}
 									<div class="item text {% if loop.first %}active{% endif %}">
+										<h4>{{obj.title}}</h4>
+										<br>
+										{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5><br>{% endif %}
 										{{obj.announce}}
 										<a href="{{obj.get_absolute_url()}}">читать полностью</a>
 									</div>
