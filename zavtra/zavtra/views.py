@@ -44,7 +44,7 @@ class HomeView(TemplateView):
                exclude(pk__in = selected_articles).\
                exclude(rubric__slug__in = blocks.keys()).\
                order_by('-selected_at').
-               select_related().all()[0:9],
+               select_related().all()[0:15],
       'wod_qs': Article.wod.prefetch_related('expert_comments', 'expert_comments__expert').\
                 defer('content').select_related()
     }
