@@ -219,13 +219,15 @@ div.quote {
   -webkit-box-shadow: 0px 2px 12px 1px #777;
   padding: 1em;
   border-left: 10px solid #eee;
-  background-color: #4A0909;
+  /* background-color: #4A0909; */
   height: 70px;
 }
 
+/*
 div.quote a {
  color:white;
 }
+*/
 
 div.quote.active a {
     background-color: transparent !important;
@@ -389,10 +391,13 @@ span.match {
 }
 
 .blocks .izbor h3 {
-  color: #fffec3;
   font-weight: 700;
   border-bottom: 1px solid #fff;
   margin-bottom: 40px;
+}
+
+.blocks .izbor h3 a {
+  color: #fffec3;
 }
 
 .izbor .blocks-content img {
@@ -411,15 +416,21 @@ span.match {
   position: static;
 }
 
-.blocks .izbor .blocks-content .text {
+.blocks .izbor .text {
   background-color: transparent;
   color: #fff;
-  padding: 5px 10px 10px 0;
 }
 
-.blocks .izbor .blocks-content .text a {
+.blocks .izbor .text .text-holder {
+  padding: 10px;
+}
+
+.blocks .izbor .text a {
   background-color: transparent !important;
   color: #fffec3;
+  display: block;
+  text-align: right;
+  margin-right: 10px;
 }
 
 .izbor .blocks-content .dots {
