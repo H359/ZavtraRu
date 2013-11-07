@@ -543,7 +543,8 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 								<div class="item text {% if loop.first %}active{% endif %}">
 									<div class="text-holder">
 										<h4>{{obj.title}}</h4>
-										{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5>{% endif %}
+										<br>
+										{% if obj.subtitle %}<h5>{{obj.subtitle}}</h5><br>{% endif %}
 										{{obj.announce}}
 									</div>
 									<a href="{{obj.get_absolute_url()}}">читать полностью</a>
