@@ -280,9 +280,10 @@ class SearchView(ListView):
   def get_queryset(self):
     self.category = self.kwargs.get('category')
     self.q = self.prepare_query(self.request.GET.get('q', ''))
-    qs = SearchQuerySet().filter(content = AutoQuery(self.q)).\
-         models(Article).\
-         order_by('-pub_date')
+    #qs = SearchQuerySet().filter(content = AutoQuery(self.q)).\
+    #     models(Article).\
+    #     order_by('-pub_date')
+    qs = Article.published.filter(title__icontains=self.q)
     if self.category is not None:
       qs = qs.filter(rubric=self.category)
     return qs
