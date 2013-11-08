@@ -67,7 +67,7 @@ body {
 .main_header_link {
 	color: #FFF;
 	font-size: .8em;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-family: Helvetica, sans-serif\0/;/* IE8 */
 	padding-right: 1em;
 }
@@ -84,7 +84,7 @@ body {
 .main_header_login_text {
 	color: #FFF;
 	text-rendering: optimizelegibility;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-family: Helvetica, sans-serif\0/;/* IE8 */
 	font-size: .8em;
 	font-weight: 700;
@@ -93,7 +93,7 @@ body {
 .main_header_login_link {
 	color: #DDD;
 	font-size: .8em;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-family: Helvetica, sans-serif\0/;/* IE8 */
 	padding: .25em;
 	text-decoration: underline;
@@ -195,7 +195,7 @@ body {
 }
 
 .nav_item a {
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-family: 'Helvetica', sans-serif\0/;
 	font-size: 1.1em;
 	font-weight: 800;
@@ -348,7 +348,7 @@ body {
 
 
 .subject_nav_item {
-	font-family: 'PT Sans', Tahoma;
+	font-family: 'Open Sans', Tahoma;
 	font-size: .8em;
 	padding-right: 1em;
 	font-weight: bold;
@@ -472,7 +472,7 @@ padding-bottom: .25em;
 	height: 1.75em;
 	width: 13.5em;
 	color: #B4C3D7;
-	font-family: 'PT Sans';
+	font-family: 'Open Sans';
 	text-align: center;
 }
 
@@ -837,7 +837,7 @@ padding-bottom: .25em;
 }
 
 .sub_nav_item a {
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-size: .95em;
 	line-height: 1.25em;
 	color: white;
@@ -1058,7 +1058,7 @@ h4,
 h5,
 h6 {
 	margin: 0px;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-family: Helvetica, sans-serif\0/; /* IE8 */
 	font-weight: 700;
 }
