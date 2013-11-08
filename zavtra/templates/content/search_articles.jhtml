@@ -84,7 +84,7 @@
       </article>
     </section>
     <img src="{{STATIC_URL}}img/gradient_grayscale_line.png" class="onepxline">
-    {% endif %}{% endfor %}
+    {% endfor %}
     {{pagination(request, page_obj, '&amp;q=%s' % q)}}
     {% endif %}
   </div>
