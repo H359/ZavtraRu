@@ -41,7 +41,7 @@ body {
 .main_header_link {
 	color: #FFF;
 	font-size: .8em;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'PT Sans', sans-serif;
 	padding-right: 1em;
 }
 
@@ -56,7 +56,7 @@ body {
 .main_header_login_text {
 	color: #FFF;
 	text-rendering: optimizelegibility;
-	font-family: 'Open Sans', san-serif;
+	font-family: 'PT Sans', san-serif;
 	font-size: .8em;
 	font-weight: 700;
 }
@@ -64,7 +64,7 @@ body {
 .main_header_login_link {
 	color: #DDD;
 	font-size: .8em;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'PT Sans', sans-serif;
 	padding: .25em;
 	text-decoration: underline;
 	font-weight: 400;
@@ -135,7 +135,7 @@ body {
 }
 
 .nav_item a {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'PT Sans', sans-serif;
 	font-family: 'Helvetica', sans-serif\0/;
 	font-size: 1.1em;
 	font-weight: 800;
@@ -625,7 +625,7 @@ abc {
 }
 
 .sub_nav_item a {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'PT Sans', sans-serif;
 	font-size: .95em;
 	line-height: 1.25em;
 	color: white;
@@ -868,7 +868,7 @@ h4,
 h5,
 h6 {
 	margin: 0px;
-	font-family: 'Open Sans', san-serif;
+	font-family: 'PT Sans', san-serif;
 	font-family: 'Helvetica', san-serif\0/;
 	font-weight: 700;
 }
@@ -1556,11 +1556,11 @@ background-image: url(http://zavtra.ru/static/js/markitup/sets/markdown/images/l
 	min-height: 1.5em;
 	border-bottom: 1px solid #BBB;
 	text-align: center;
-	font-family: 'Open Sans', Tahoma;
+	font-family: 'PT Sans', Tahoma;
 }
 
 a.subject_nav_item, span.subject_nav_item {
-	font-family: 'Open Sans', Tahoma;
+	font-family: 'PT Sans', Tahoma;
 	font-size: .85em;
 	padding-right: 1.25em;
 	font-weight: 700;
@@ -1675,7 +1675,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	font-weight: 600;
 	color: #CCC;
 	font-size: 1em;
-	font-family: 'Open Sans', Tahoma;
+	font-family: 'PT Sans', Tahoma;
 	line-height: 1.4em;
 }
 
@@ -2111,7 +2111,7 @@ td.highlight a {background: #99dd73 url(bg.png) 50% 50% repeat-x !important;  bo
 	height: 1.75em;
 	width: 13.5em;
 	color: #EEE;
-	font-family: 'Open Sans';
+	font-family: 'PT Sans';
 	text-align: center;
 }
 

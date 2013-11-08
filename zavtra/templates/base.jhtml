@@ -13,7 +13,8 @@
     {%- endif -%}
     <title>{% block page_title %}Завтра &mdash; еженедельная газета{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <!-- link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css" -->
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/bootstrap_zavtra.css" rel="stylesheet" type="text/css">
     <link href="{{STATIC_URL}}css/{% block page_style %}design{% endblock %}.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
