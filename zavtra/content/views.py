@@ -285,7 +285,7 @@ class SearchView(ListView):
     #     order_by('-pub_date')
     qs = Article.published.filter(title__icontains=self.q)
     if self.category is not None:
-      qs = qs.filter(rubric=self.category)
+      qs = qs.filter(rubric__slug=self.category)
     return qs
 
   def get_context_data(self, **kwargs):
