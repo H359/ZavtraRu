@@ -22,17 +22,17 @@
       </article>
     </section>
     {% else %}
-    {% for object in object_list %}{% if object.object is not none %}
+    {% for object in object_list %}
     <section>
       <article>
         <div class="row">
-          {% set has_cover = object.object.cover_source != "" %}
+          {% set has_cover = object.cover_source != "" %}
           {% set span = 8 %}
           {% if has_cover %}
           {% set span = 5 %}
           <div class="span3">
             <div class="article-illustration-container">
-              <a href="{{object.object.get_absolute_url()}}" title="{{object.object.title|e}}"><img src="{{object.object.inside_article_cover.url}}"></a>
+              <a href="{{object.get_absolute_url()}}" title="{{object.title|e}}"><img src="{{object.inside_article_cover.url}}"></a>
             </div>
           </div>
           {% endif %}
@@ -41,7 +41,7 @@
               <div class="span{{span}} article-header-container">
                 <header>
                   <h2 class="article-header">
-                    <a href="{{object.object.get_absolute_url()}}">{{object.object.title|highlight(q)}}</a>
+                    <a href="{{object.get_absolute_url()}}">{{object.title|highlight(q)}}</a>
                   </h2>
                 </header>
               </div>
@@ -50,11 +50,11 @@
               <div class="span{{span}} article-header-statistics">
                 <div class="row">
                   <div class="span{% if has_cover %}3{% else %}6{% endif %}">
-                    <span class="block dark mediumtext">{{object.object.rubric.title}}</span>
+                    <span class="block dark mediumtext">{{object.rubric.title}}</span>
                   </div>
                   <div class="span2 right_align">
                     <div class="article-header-subjects">
-                      {% for topic in object.object.topics.all() %}
+                      {% for topic in object.topics.all() %}
                       <span class="label label-info mediumtext">
                         <a href="{{topic.get_absolute_url()}}" class="white white_link baseline_align">{{topic}}</a>
                       </span>
@@ -65,18 +65,18 @@
               </div>
             </div>
 	          <div class="row">
-              <span class="article-statistic dark">{{object.object.published_at|ru_date("%d %B %Y")}}</span>
+              <span class="article-statistic dark">{{object.published_at|ru_date("%d %B %Y")}}</span>
 	          </div>
             <div class="row">
               <div class="span{{span}} article-text">
-                <a href="{{object.object.get_absolute_url()}}" class="no_underline">
-                 <p class="article-paragraph">{{object.object.content|striptags|highlight(q)}}</p>
+                <a href="{{object.get_absolute_url()}}" class="no_underline">
+                 <p class="article-paragraph">{{object.content|striptags|highlight(q)}}</p>
                 </a>
               </div>
             </div>
             <div class="row">
               <div class="span{{span}} article-statistics">
-                <span class="article-statistic"><a href="{{object.object.get_absolute_url()}}#comments"><i class="icon-comment"></i> {{object.object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
+                <span class="article-statistic"><a href="{{object.get_absolute_url()}}#comments"><i class="icon-comment"></i> {{object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></span>
               </div>
             </div>
           </div>
