@@ -68,9 +68,14 @@ var collectPictures = function(){
 	    carousel.append(inner);
 	    inner.css({height: '400px'});
 	    var appender = function(k,v){
-		var row = $("<div class='item'></div>");
+		var row = $("<div class='item'></div>"),
+		    img = $(v);
 		inner.append(row);
-		row.append($(v));
+		row.append(img);
+		if (img.attr('alt')) {
+		    var alt = $("<div class='carousel-caption'>"+(img.attr('alt'))+"</div>");
+		    row.append(alt);
+		}
 		if (k == 0) row.addClass('active');
 	    };
 	    imgs.each(appender);
