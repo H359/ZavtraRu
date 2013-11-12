@@ -572,7 +572,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 		</div>
 	</div>
 	<div class="row">
-		<div class="span12" id="RTBDIV_1169">
+		<div style="text-align:center" id="RTBDIV_1169">
     	<div id="RTBPL_1169">
       	<a href="http://rtbsystem.com/ru/advertiser/request">Добавить рекламное объявление</a>
       </div>
