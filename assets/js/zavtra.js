@@ -73,7 +73,7 @@ var collectPictures = function(){
 		inner.append(row);
 		row.append(img);
 		if (img.attr('alt')) {
-		    var alt = $("<div class='carousel-caption'>"+(img.attr('alt'))+"</div>");
+		    var alt = $("<div class='carousel-caption'><h4>"+(img.attr('alt'))+"</h4><p></p></div>");
 		    row.append(alt);
 		}
 		if (k == 0) row.addClass('active');
