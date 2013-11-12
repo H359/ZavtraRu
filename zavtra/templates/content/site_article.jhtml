@@ -94,6 +94,8 @@
             </article>
           </div>
         </div>
+        <div class="row"><div class="span10 offset1">{% block rtb %}{{super()}}{% endblock %}</div>
+        </div>
         <div class="row">
           <div class="span10 offset1">
             <div id="comments-section" class="rubric-header no_margin">

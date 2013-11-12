@@ -171,6 +171,7 @@
       {% endfor %}
     </div>
   </div>
+  <div class="row"><div class="span10 offset1">{% block rtb %}{{super()}}{% endblock %}</div>
   <div class="row">
     <div class="offset1_5 span9">
       <div id="comments-section" class="rubric-header no_margin">
