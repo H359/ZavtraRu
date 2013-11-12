@@ -31,7 +31,7 @@ class HomeView(TemplateView):
       'issue_qs': Issue.published.prefetch_related('issue_rubrics'),
       'quotes': ExtractedQuote.objects.all()[0:5],
       'events': Article.events.select_related().defer('content')[0:8],
-      'panorams': list(Panoram.objects.all()[0:3]),
+      'panorams': list(Panoram.objects.filter(on_main=True)[0:3]),
       'latest_news': Article.news.defer('content').\
                      filter(published_at__range = news_date_range).\
                      order_by('-selected_at', '-published_at')[0:4],
