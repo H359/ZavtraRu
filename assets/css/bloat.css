@@ -434,3 +434,7 @@ span.match {
 .izbor .blocks-content .dots {
   background-image: url('/static/img/dots-yellow.png');
 }
+
+.last {
+  clear: both;
+}

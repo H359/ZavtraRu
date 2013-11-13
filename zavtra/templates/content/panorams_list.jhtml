@@ -31,7 +31,7 @@
     </div>
     <div class="row spec_entry_header">
       {% for object in object_list %}
-      <div class="span3">
+      <div class="span3 {% if loop.index is divisibleby 3 %}last{% endif %}">
         <a href="{{object.get_absolute_url()}}"><img src="{{object.main_page_image.url}}"></a>
         <h1><a href="{{object.get_absolute_url()}}">&laquo;{{object.title}}&raquo;</a></h1>
       </div>
