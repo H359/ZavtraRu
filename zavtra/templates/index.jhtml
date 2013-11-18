@@ -517,7 +517,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				{% if blocks.announcements|length > 0 %}
 					<div class="sep">
 						<h3><a href="{{blocks.announcements[0].rubric.get_absolute_url()}}">Объявления</a></h3>
-						<a href="{{blocks.announcements[0].rubric.get_absolute_url()}}"><img src="{{STATIC_URL}}img/announcements.png"></a>
+						<a href="{{blocks.announcements[0].rubric.get_absolute_url()}}"><img src="{{STATIC_URL}}img/announcements.jpg"></a>
 						<div class="blocks-content">
 							<div class="dots left"></div>
 							<div class="carousel slide carousel-slow">
