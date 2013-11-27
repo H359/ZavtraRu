@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'haystack',
+    #'haystack',
     'imagekit',
     'south',
     'django_jinja',
