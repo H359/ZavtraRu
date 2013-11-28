@@ -636,8 +636,8 @@ padding-bottom: .25em;
 }
 
 .main_newspaper_block {
-	height: 370px;
-	overflow: hidden;
+	/*height: 370px;
+	overflow: hidden;*/
 }
 
 .main_newspaper_block, #main_video_selected, #main_video_selected_description_container {
