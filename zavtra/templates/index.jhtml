@@ -560,17 +560,23 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				{% endif %}
 				</div>
 				<div class="main_box_frame">
-						<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-						<div id="vk_like"></div>
-				</div>
-				<script type="text/javascript">
-					VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
-				</script>
+					<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+					<div id="vk_like"></div>
+					<div id="smi2adblock_75133"><a href="http://smi2.ru/">Новости СМИ2</a></div>
+					<script type="text/javascript" charset="utf-8">
+						(function() {
+							var sc = document.createElement('script'); sc.type = 'text/javascript'; sc.async = true;
+						  sc.src = 'http://js.smi2.ru/data/js/75133.js'; sc.charset = 'utf-8';
+						  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sc, s);
+						}());
+					</script>
+					<script type="text/javascript">
+						VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
+					</script>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row" style="margin: 0 auto">
+		<div class="row" style="margin: 0 auto">
 		<!-- Soloway TopLine/728x90 code START-->
 		<script language="javascript" type="text/javascript"><!--
 		(function(L){if(typeof(ar_cn)=="undefined")ar_cn=1;
