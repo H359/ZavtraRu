@@ -5,6 +5,7 @@ from content.views import ArticleView, RubricView, IssueView,\
                           CommunityView, ArticleVoteView, SearchView,\
                           SpecProjectsView, SpecProjectView, PanoramView,\
                           PanoramIndexView
+from content.feeds import EventsFeed
 
 
 urlpatterns = patterns('',
@@ -23,5 +24,6 @@ urlpatterns = patterns('',
   url(r'^search/$', SearchView.as_view(), name='content.view.search'),
   url(r'^search/(?P<category>(articles|wod|events|authors))/$', SearchView.as_view()),
   url(r'^special-projects/$', SpecProjectsView.as_view(), name='content.view.special_projects'),
-  url(r'^special-projects/(?P<slug>[^/]+)/$', SpecProjectView.as_view(), name='content.view.special_project')
+  url(r'^special-projects/(?P<slug>[^/]+)/$', SpecProjectView.as_view(), name='content.view.special_project'),
+  url(r'^events-feed/$', EventsFeed())
 )
