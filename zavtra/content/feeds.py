@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.contrib.syndication.views import Feed
 from django.utils import feedgenerator
-from django.utils.html import strip_tags
+from django.utils.html import remove_tags
 from content.models import Article
 
 
@@ -36,6 +36,10 @@ class EventsFeed(Feed):
   link = 'http://zavtra.ru/'
   description = u'Газета "Завтра"'
 
+  TAGS = """
+  p div span b strong iframe em i a img table tr td thead tbody tfoot th br hr
+  """
+
   def items(self):
     return Article.common_news.select_related()[0:15]
 
@@ -43,12 +47,12 @@ class EventsFeed(Feed):
     return item.title
 
   def item_description(self, item):
-    return strip_tags(item.announce)
+    return item.announce
 
   def item_pubdate(self, item):
     return item.published_at
 
   def item_extra_kwargs(self, item):
     return {
-      'content': strip_tags(item.content),
+      'content': remove_tags(item.content, self.TAGS)
     }
