@@ -293,6 +293,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						{{render_articlest_list_block("Авторские страницы", "/authors/", blogs)}}
 						<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						<iframe src="http://smi2.ru/data/iframes/gen.v.php?ag=0&bl=75134&h=300&w=300" width="300" height="300" frameborder="0" vspace="0" hspace="0" scrolling="no" marginwidth="0" marginheight="0"></iframe>
 					</div>
 					<div class="span5">
 						{% if spec_project is not none %}
