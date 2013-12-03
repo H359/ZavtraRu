@@ -291,8 +291,10 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				<div class="span9">
 					<div class="span4">
 						{{render_articlest_list_block("Авторские страницы", "/authors/", blogs)}}
-						<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
-						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						<div>
+							<a class="twitter-timeline" href="https://twitter.com/ZavtraRu" data-widget-id="383183522032140288">Твиты пользователя @ZavtraRu</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						</div>
 						<div id="smi2adblock_75134"><a href="http://smi2.ru/">Новости СМИ2</a></div>
 						<script type="text/javascript" charset="utf-8">
 						  (function() {
