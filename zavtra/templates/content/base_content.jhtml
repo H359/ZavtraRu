@@ -71,17 +71,22 @@
 
 
 {% block rtb %}
-<div id="RTBDIV_1171" style="margin: 0 auto">
-  <div id="RTBPL_1171">
-    <a href="http://rtbsystem.com/ru/advertiser/request">Добавить рекламное объявление</a>
-  </div>
+<div style="margin: 0 auto">
+  <!-- Soloway TopLine/728x90 code START-->
+  <script language="javascript" type="text/javascript"><!--
+  (function(L){if(typeof(ar_cn)=="undefined")ar_cn=1;
+  var S='setTimeout(function(e){if(!self.CgiHref){document.close();e=parent.document.getElementById("ar_container_"+ar_bnum);e.parentNode.removeChild(e);}},3000);',
+    j=' type="text/javascript"',t=0,D=document,n=ar_cn;L+=escape(D.referrer||'unknown')+'&rnd='+Math.round(Math.random()*999999999);
+  function _(){if(t++<100){var F=D.getElementById('ar_container_'+n);
+    if(F){try{var d=F.contentDocument||(window.ActiveXObject&&window.frames['ar_container_'+n].document);
+    if(d){d.write('<sc'+'ript'+j+'>var ar_bnum='+n+';'+S+'<\/sc'+'ript><sc'+'ript'+j+' src="'+L+'"><\/sc'+'ript>');t=0}
+    else setTimeout(_,100);}catch(e){try{F.src="javascript:{document.write('<sc'+'ript"+j+">var ar_bnum="+n+"; document.domain=\""
+    +D.domain+"\";"+S+"<\/sc'+'ript>');document.write('<sc'+'ript"+j+" src=\""+L+"\"><\/sc'+'ript>');}";return}catch(E){}}}else setTimeout(_,100);}}
+  D.write('<div style="visibility:hidden;height:0px;left:-1000px;position:absolute;"><iframe id="ar_container_'+ar_cn
+    +'" width=1 height=1 marginwidth=0 marginheight=0 scrolling=no frameborder=0><\/iframe><\/div><div id="ad_ph_'+ar_cn
+    +'" style="display:none;"><\/div>');_();ar_cn++;
+  })('http://ad.adriver.ru/cgi-bin/erle.cgi?sid=195520&target=blank&bt=43&tail256=');
+  //--></script>
+  <!-- Soloway TopLine/728x90 code END -->
 </div>
-<script type="text/javascript">
-  if (document.getElementById('RTBDIV_1171')) {
-    var RtbSystemDate = new Date();
-    document.write('<scr'+'ipt type="text/javascript" async '
-      +'src="http://code.rtbsystem.com/1171.js?t='+RtbSystemDate.getYear()+RtbSystemDate.getMonth()
-      +RtbSystemDate.getDay()+RtbSystemDate.getHours() + '" charset="utf-8" ></scr'+'ipt>');
-  }
-</script>
 {% endblock %}
