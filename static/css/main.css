@@ -1,0 +1,101 @@
+/* line 202, sprites/*.png */
+.sprites-sprite, #logo {
+  background: url('/static/img/sprites-sd07b268262.png') no-repeat;
+}
+
+/* line 6, ../../styles/main.scss */
+body, body > header ul {
+  margin: 0;
+}
+
+/* line 10, ../../styles/main.scss */
+body > header ul {
+  padding: 0;
+}
+
+/* line 14, ../../styles/main.scss */
+#logo {
+  display: block;
+}
+
+/* line 18, ../../styles/main.scss */
+body > header ul li {
+  display: inline;
+}
+
+/* line 22, ../../styles/main.scss */
+body > header nav, body > section {
+  width: 1022px;
+  margin: 0 auto;
+}
+
+/* line 28, ../../styles/main.scss */
+body > header ul:first-child a {
+  color: white;
+}
+
+/* line 32, ../../styles/main.scss */
+body > header ul:first-child a {
+  text-decoration: none;
+}
+
+/* line 36, ../../styles/main.scss */
+body > header ul:first-child a {
+  font-weight: 700;
+}
+
+/* line 39, ../../styles/main.scss */
+body {
+  background-color: #dfdfdf;
+  color: black;
+  font-size: 15px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* line 1, ../../styles/parts/_header.scss */
+body > header {
+  background-color: #4a0909;
+  border-bottom: 1px solid #555;
+}
+/* line 5, ../../styles/parts/_header.scss */
+body > header nav {
+  padding: .75em 0;
+}
+/* line 10, ../../styles/parts/_header.scss */
+body > header ul {
+  float: right;
+}
+/* line 15, ../../styles/parts/_header.scss */
+body > header ul a {
+  color: #ddd;
+  font-size: .8em;
+}
+/* line 20, ../../styles/parts/_header.scss */
+body > header ul:first-child {
+  float: left;
+}
+/* line 25, ../../styles/parts/_header.scss */
+body > header ul:first-child a {
+  padding-right: 1em;
+}
+
+/* line 36, ../../styles/parts/_header.scss */
+.gsep {
+  background-color: #444;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #333;
+  height: 3.75em;
+}
+
+/* line 43, ../../styles/parts/_header.scss */
+#logo {
+  background-position: -417px 0;
+  width: 278px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+/* line 1, ../../styles/parts/_page.scss */
+body > section {
+  background-color: white;
+}

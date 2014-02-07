@@ -30,6 +30,7 @@
       </div>
     </div>
     <div class="row spec_entry_header">
+      <p><br>Приветствуем наших авторов в разделе «Панорама»! Эта рубрика создана для обмена информацией и даёт Вам уникальную возможность в режиме онлайн размещать на главной странице сайта Ваши тексты, а также цитаты и ссылки других авторов, взятые из открытых источников. Основные требования – придерживаться заданной темы и соблюдать правила общения на сайте <a href="http://zavtra.ru">zavtra.ru</a>.</p>
       {% for object in object_list %}
       <div class="span3 {% if loop.index0 is divisibleby 3 %}last{% endif %}">
         <a href="{{object.get_absolute_url()}}"><img src="{{object.main_page_image.url}}"></a>
