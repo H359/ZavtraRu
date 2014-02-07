@@ -194,6 +194,12 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   def autocomplete_search_fields():
     return ("id__iexact", "title__icontains",)
 
+  def split_votes(self):
+    result = ([], [])
+    for vote in self.votes.select_related('user').all():
+      result[0 if vote.vote > 0 else 1].append(vote)
+    return result
+
 
 class ArticleVote(models.Model):
   article = models.ForeignKey(Article, related_name='votes')
