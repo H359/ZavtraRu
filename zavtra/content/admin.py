@@ -202,6 +202,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
   list_display = ('title', 'status', 'published_at', 'selected_at')
   list_editable = ('selected_at',)
   search_fields = ('title',)
+  form = AnnouncementAdminForm
 
   def queryset(self, request):
     return Article.objects.filter(rubric__slug='announcements')
