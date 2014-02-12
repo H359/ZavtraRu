@@ -191,6 +191,12 @@ class ColumnsAdmin(admin.ModelAdmin):
     obj.save()
 
 
+class AnnouncementAdminForm(forms.ModelForm):
+  class Meta:
+    model = Article
+  content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
+
+
 class AnnouncementAdmin(admin.ModelAdmin):
   exclude = ('rubric', 'authors', 'topics')
   list_display = ('title', 'status', 'published_at', 'selected_at')
