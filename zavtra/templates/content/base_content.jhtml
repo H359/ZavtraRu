@@ -4,18 +4,8 @@
 <div class="offset1 span4">
   {% set votes = object.split_votes() %}
   {% if votes[0]|length > 0 %}
-  <p>Этот материал нравится:
-  {% for vote in votes[0] %}{{vote.user}}{% if not loop.last %}, {% endif %}
-  {% endfor %}
-  </p>
-  {% endif %}
-  {% if votes[1]|length > 0 %}
-  <p>Этот материал не нравится:
-  {% for vote in votes[1] %}
-  {{vote.user}}{% if not loop.last %}, {% endif %}
-  {% endfor %}
-  </p>
-  {% endif %}
+  <p>Этот материал нравится {{votes[0]|length|get_plural("пользователю,пользователям,пользователям")}}</p>{% endif %}
+  {% if votes[1]|length > 0 %}<p>Этот материал не нравится {{votes[1]|length|get_plural("пользователю,пользователям,пользователям")}}</p>{% endif %}
   {% if request.user and request.user.is_authenticated() %}
   {#
   <h6 class="big_padding_vertical">Оценить:</h6>
