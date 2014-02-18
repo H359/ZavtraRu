@@ -16,6 +16,5 @@ django-tinymce
 django-filebrowser
 Pillow
 pytils
-sphinxapi
 django-sphinx
 pyelasticsearch

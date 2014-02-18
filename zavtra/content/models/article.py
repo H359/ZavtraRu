@@ -9,6 +9,7 @@ from model_utils import Choices
 from imagekit.models import ImageSpecField as ImageSpec
 from imagekit.processors.resize import ResizeToFill
 from imagekit.processors.crop import Crop, Anchor
+from djangosphinx import SphinxSearch
 
 from base import TitledSluggedModel
 from managers import *
@@ -68,6 +69,16 @@ class Article(OpenGraphMixin, TitledSluggedModel):
     auto_update_search_field = True
   )
   """
+
+  search = SphinxSearch(
+    index='zavtra',
+    weights={
+      'title': 100,
+      'subtitle': 75,
+      'content': 50
+    },
+    rankmode='SPH_RANK_PROXIMITY'
+  )
 
   # thumbs
   main_cover_for_wod = ImageSpec([ResizeToFill(428, 321)], source='cover_source', format='JPEG')

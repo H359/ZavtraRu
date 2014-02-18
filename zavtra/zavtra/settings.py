@@ -147,9 +147,10 @@ INSTALLED_APPS = (
     'filebrowser',
     'tinymce',
     'comments',
-    #'djangosphinx'
+    'djangosphinx'
 )
 SPHINX_API_VERSION = 0x119
+SPHINX_PORT = 9312
 
 #CUSTOM_USER_MODEL = 'siteuser.User'
 AUTH_USER_MODEL = 'siteuser.User'
