@@ -6,7 +6,7 @@ from pytils.dt import MONTH_NAMES
 from django.views.generic import DetailView, ListView, TemplateView, RedirectView
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Max, Min, Q, Count, F
-from haystack.query import SearchQuerySet, AutoQuery
+#from haystack.query import SearchQuerySet, AutoQuery
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator, \
                              ExtendedQuerySetDiggPaginator as ExtendedDiggPaginator
