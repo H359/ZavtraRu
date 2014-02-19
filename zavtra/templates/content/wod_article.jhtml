@@ -138,7 +138,7 @@
             </div>
             {% endfor %}
             {% endif %}
-            {{object.render_content()}}
+            {{object.render_content()|safe}}
           </div>
         </div>
         <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>

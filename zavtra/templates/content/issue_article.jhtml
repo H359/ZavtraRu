@@ -88,7 +88,7 @@ page_content %}
 								</div>
 							</div>
 							<div class="row">
-								<div class="offset1 span8 article-page-content">{{object.render_content()}}</div>
+								<div class="offset1 span8 article-page-content">{{object.render_content()|safe}}</div>
 							</div>
 							<div class="row">{% block social_block %}{{super()}}{%
 								endblock %}</div>
