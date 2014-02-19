@@ -162,7 +162,7 @@
         </div>
         <div class="wod_opinion_text">
           <a href="{{expert_comment.expert.get_absolute_url()}}" class="wod_opinion-author-name">{{expert_comment.expert}}</a>
-          {{expert_comment.comment|nl2br}}
+          {{expert_comment.comment|nl2br|safe}}
         </div>
       </div>
       {% if not loop.last %}
