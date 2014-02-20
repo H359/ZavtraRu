@@ -55,7 +55,7 @@ def ru_date(ctx, value, format=u'%d %B %Y г', inflected=True):
 @register.filter
 @jinja2.contextfilter
 def nl2br(ctc, value):
-  return u'<br>'.join(value.split('\n'))
+  return jinja2.Markup(u'<br>'.join(value.split('\n')))
 
 @register.filter
 @jinja2.contextfilter
