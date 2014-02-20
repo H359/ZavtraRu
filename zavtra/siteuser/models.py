@@ -80,6 +80,9 @@ class User(OpenGraphMixin, AbstractBaseUser):
     # stub
     return self.is_staff
 
+  def get_short_name(self):
+    return ' '.join([self.first_name, self.last_name])
+
   @property
   def username(self):
     return self.email
