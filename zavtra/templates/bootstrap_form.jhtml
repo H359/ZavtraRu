@@ -4,7 +4,7 @@
   <label class="control-label" for="{{field.auto_id}}">{{field.label|safe}}</label>
 </div>
 {% for error in field.errors %}<div class="alert alert-warning">{{error|safe}}</div>{% endfor %}
-{{field}}
+{{field|safe}}
 {% else %}
 <div class="control-group{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
   {% if field.field.widget.__class__.__name__.lower() == "checkboxinput" %}
@@ -16,7 +16,7 @@
   {% else %}
   <label class="control-label" for="{{field.auto_id}}">{{field.label|safe}}</label>
   <div class="controls">
-    {{field}}
+    {{field|safe}}
     {% for error in field.errors %}
     <span class="help-inline">{{error|safe}}</span>
     {% endfor %}
