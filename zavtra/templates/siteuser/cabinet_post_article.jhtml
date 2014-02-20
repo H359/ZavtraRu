@@ -21,7 +21,7 @@
           {% endfor %}
           {% endif %}
           <form class="form-horizontal" action=".{% if request.GET.panoram %}?panoram={{request.GET.panoram}}{% endif %}" method="post">
-            {{render_form(form)}}
+            {{render_form(form)|safe}}
             <div class="control-group">
               <div class="controls">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
