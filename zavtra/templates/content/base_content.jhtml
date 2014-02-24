@@ -79,6 +79,7 @@
 
 
 {% block rtb %}
+{#
 <div style="margin: 0 auto">
   <!-- Soloway TopLine/728x90 code START-->
   <script language="javascript" type="text/javascript"><!--
@@ -97,4 +98,5 @@
   //--></script>
   <!-- Soloway TopLine/728x90 code END -->
 </div>
+#}
 {% endblock %}

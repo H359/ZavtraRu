@@ -572,6 +572,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 				<div class="main_box_frame">
 					<div class="fb-like-box" data-href="https://www.facebook.com/zavtraru" data-width="278" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
 					<div id="vk_like"></div>
+					{#
 					<div id="smi2adblock_75133"><a href="http://smi2.ru/">Новости СМИ2</a></div>
 					<script type="text/javascript" charset="utf-8">
 						(function() {
@@ -580,12 +581,14 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sc, s);
 						}());
 					</script>
+					#}
 					<script type="text/javascript">
 						VK.Widgets.Group("vk_like", {mode: 0, width: "278", height: "270", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 32969466);
 					</script>
 				</div>
 			</div>
 		</div>
+		{#
 		<div class="row" style="margin: 0 auto">
 		<!-- Soloway TopLine/728x90 code START-->
 		<script language="javascript" type="text/javascript"><!--
@@ -603,6 +606,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 		})('http://ad.adriver.ru/cgi-bin/erle.cgi?sid=195520&target=blank&bt=43&tail256=');
 		//--></script>
 		<!-- Soloway TopLine/728x90 code END -->
+		#}
 	</div>
 </div>
 <div id="video-modal" class="modal hide fade" data-width="760"></div>
