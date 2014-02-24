@@ -31,6 +31,7 @@
               </button>
             </div>
           </div>
+	  {#
           <div class="row">
             <div class="span8 offset2 search_categories">
               {% set root_search = url('content.view.search') %}
@@ -39,6 +40,7 @@
               <span class="search_category{% if category == 'events' %} search_category_selected{% endif %}"><a href="{{root_search}}events/?q={{q}}">события</a></span>
             </div>
           </div>
+	  #}
         </div>
       </div>
     </div>
