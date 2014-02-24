@@ -75,7 +75,8 @@ class Article(OpenGraphMixin, TitledSluggedModel):
     weights={
       'title': 100,
       'subtitle': 75,
-      'content': 50
+      'content': 50,
+      'authors': 30
     },
     rankmode='SPH_RANK_PROXIMITY'
   )
