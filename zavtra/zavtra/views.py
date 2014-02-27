@@ -37,7 +37,7 @@ class HomeView(TemplateView):
                      order_by('-selected_at', '-published_at')[0:4],
       'spec_project': SpecialProject.get_current(),
       'selected_articles': selected_articles,
-      'video_qs': Article.published.filter(type = Article.TYPES.video), #.filter(rubric__slug='zavtratv'),
+      'video_qs': Article.published.filter(type = Article.TYPES.video).filter(rubric__slug='zavtratv'),
       'blocks': blocks,
       'blogs': Article.published.prefetch_related('authors').defer('content').\
                filter(selected_at__lte = now, rubric = Rubric.fetch_rubric('blogi'), authors__level__lt = User.USER_LEVELS.system).\

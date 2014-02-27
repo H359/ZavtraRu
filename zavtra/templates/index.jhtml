@@ -351,7 +351,7 @@ render_navigation, render_articlest_list_block %} {% block page_header %}
 						</div>
 						{% endif %}
 
-						{% set video = video_qs.order_by('-published_at')[0] %}
+						{% set video = video_qs.latest('published_at') %}
 						<div class="main_box_frame">
 							<div class="relative main_box_header">
 								<h5>
