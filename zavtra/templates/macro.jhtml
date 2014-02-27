@@ -135,7 +135,6 @@
           <a href="{{comment.author.get_absolute_url()}}#comment-{{comment.id}}" class="comment-author-name">{{comment.author}}</a>
           <a href="{{comment.article.get_absolute_url()}}#comment-{{comment.id}}" class="comment-time">
             <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
-            VOTED - {{voted}}
             {% if with_link %}
             <br>&laquo;<strong>{{comment.article.title}}</strong>&raquo;
             {% endif %}
@@ -148,7 +147,7 @@
           <h6 class="big_padding_vertical">Оценить: </h6>
           <div class="btn-toolbar">
             <div class="btn-group">
-              <a href="/comments/vote/{{comment.id}}/up/" class="vote-plus btn btn-mini {% if  vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг комментария" class="btn btn-disabled btn-mini comment-rating">{{comment.rating}}</a><a href="/comments/vote/{{comment.id}}/down/" class="vote-minus btn btn-mini {% if vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
+              <a href="/comments/vote/{{comment.id}}/up/" class="vote-plus btn btn-mini {% if vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг комментария" class="btn btn-disabled btn-mini comment-rating">{{comment.rating}}</a><a href="/comments/vote/{{comment.id}}/down/" class="vote-minus btn btn-mini {% if vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
             </div>
           </div>
           {% endif %}

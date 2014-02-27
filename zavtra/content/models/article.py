@@ -183,7 +183,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
       votes = dict(user.comments_votes.filter(comment__in = comments).values_list('comment_id', 'vote'))
       return [(c, votes.get(c.id)) for c in comments]
     else:
-      return [(c, None) for c in comments]
+      return [(c, 0) for c in comments]
 
   def render_content(self, width=640, height=480):
     # TODO: cache rendered content?
