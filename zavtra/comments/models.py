@@ -22,11 +22,23 @@ class Comment(models.Model):
   class Meta:
     ordering = ['created_at']
 
+
+class CommentVote(models.Model):
+  comment = models.ForeignKey(Comment, related_name='comments_votes')
+  user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments_votes')
+  vote = models.SmallIntegerField(default=0)
+
+  def save(self, *args, **kwargs):
+    super(CommentVote, self).save(*args, **kwargs)
+    Comment.objects.filter(id=self.comment_id).update(
+      **CommentVote.objects.filter(comment=self.comment).aggregate(rating=models.Sum('vote'))
+    )
+
+
 def recalc_count(sender, instance, *args, **kwargs):
   Article.objects.filter(id=instance.article.id).update(
     comments_count = Comment.enabled.filter(article=instance.article).count()
   )
-  print Comment.enabled.filter(article=instance.article).count()
 
 post_save.connect(recalc_count, sender=Comment, dispatch_uid='comments.signals.post_save')
 pre_delete.connect(recalc_count, sender=Comment, dispatch_uid='comments.signals.pre_delete')

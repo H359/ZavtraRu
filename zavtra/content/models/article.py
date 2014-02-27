@@ -177,6 +177,14 @@ class Article(OpenGraphMixin, TitledSluggedModel):
       setattr(self, '__source_cached', source)
     return getattr(self, '__source_cached')
 
+  def get_voted_comments(self, user):
+    comments = list(self.comments.select_related('author').filter(active=True))
+    if user is not None:
+      votes = dict(user.comments_votes.filter(comment__in = comments).values_list('comment_id', 'vote'))
+      return [(c, votes.get(c.id)) for c in comments]
+    else:
+      return [(c, None) for c in comments]
+
   def render_content(self, width=640, height=480):
     # TODO: cache rendered content?
     if self.type == Article.TYPES.text:

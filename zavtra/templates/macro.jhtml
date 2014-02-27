@@ -117,7 +117,7 @@
 </div>
 {% endmacro %}
 
-{% macro render_comment(comment, with_link=False) %}
+{% macro render_comment(comment, with_voting, vote=None, with_link=False) %}
 <li id="comment-{{comment.id}}">
   <div class="comment">
     <div class="avatar">
@@ -135,13 +135,24 @@
           <a href="{{comment.author.get_absolute_url()}}#comment-{{comment.id}}" class="comment-author-name">{{comment.author}}</a>
           <a href="{{comment.article.get_absolute_url()}}#comment-{{comment.id}}" class="comment-time">
             <time datetime="{{comment.created_at}}">{{comment.created_at|ru_date("%d.%m.%Y %H:%M")}}</time>
+            VOTED - {{voted}}
             {% if with_link %}
             <br>&laquo;<strong>{{comment.article.title}}</strong>&raquo;
             {% endif %}
           </a>
         </div>
         {% if with_link %}<br>{% endif %}
-        <div class="text">{{comment.comment|nl2br}}</div>
+        <div class="text">
+          {{comment.comment|nl2br}}
+          {% if with_voting %}
+          <h6 class="big_padding_vertical">Оценить: </h6>
+          <div class="btn-toolbar">
+            <div class="btn-group">
+              <a href="/comments/vote/{{comment.id}}/up/" class="vote-plus btn btn-mini {% if  vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг комментария" class="btn btn-disabled btn-mini comment-rating">{{comment.rating}}</a><a href="/comments/vote/{{comment.id}}/down/" class="vote-minus btn btn-mini {% if vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
+            </div>
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -153,7 +164,7 @@
   <div class="content">
     <ul id="comments" class="unstyled">
       {% if object.comments_count > 0 %}
-      {% for comment in object.comments.select_related('author').filter(active=True) %}{{render_comment(comment)}}{% endfor %}
+      {% for comment, vote in object.get_voted_comments(request.user) %}{{render_comment(comment, request.user.is_authenticated(), vote)}}{% endfor %}
       {% endif %}
     </ul>
   </div>

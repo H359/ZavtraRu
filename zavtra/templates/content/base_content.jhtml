@@ -3,20 +3,13 @@
 {% block social_block %}
 <div class="offset1 span4">
   {% set votes = object.split_votes() %}
-  {% if votes[0]|length > 0 %}
-  <p>Этот материал нравится {{votes[0]|length|get_plural("пользователю,пользователям,пользователям")}}</p>{% endif %}
-  {% if votes[1]|length > 0 %}<p>Этот материал не нравится {{votes[1]|length|get_plural("пользователю,пользователям,пользователям")}}</p>{% endif %}
   {% if request.user and request.user.is_authenticated() %}
-  {#
   <h6 class="big_padding_vertical">Оценить:</h6>
   <div class="btn-toolbar">
     <div class="btn-group">
       <a href="/content/vote/{{object.slug|e}}/up/" class="vote-plus btn btn-mini {% if has_voted and vote.vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг статьи" class="btn btn-disabled btn-mini comment-rating">{{object.rating}}</a><a href="/content/vote/{{object.slug|e}}/down/" class="vote-minus btn btn-mini {% if has_voted and vote.vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
     </div>
   </div>
-  #}
-  <a href="/content/vote/{{object.slug|e}}/up/">Нравится</a>
-  <a href="/content/vote/{{object.slug|e}}/down/">Не нравится</a>
   {% endif %}
 </div>
 <div class="span4">
