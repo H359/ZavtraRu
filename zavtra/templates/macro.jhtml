@@ -159,60 +159,85 @@
 {% endmacro %}
 
 {% macro render_comments(request, object, token) %}
+<style>
+#disqus_thread { display: none; }
+#zavtra-comments { display: none; }
+#disqus_thread.active { display: block; }
+#zavtra-comments.active { display: block; }
+</style>
+<div id="comments-section" class="rubric-header no_margin">
+  <h3 class="inline"><a href="#zavtra-comments" data-toggle="tab" name="comments">{{object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></h3>
+  <h3 class="inline">/</h3>
+  <h3 class="inline"><a href="#disqus_thread" data-toggle="tab" name="disqus">Открытый форум</a></h3>
+</div>
 <div class="comments">
-  <div class="content">
-    <ul id="comments" class="unstyled">
-      {% if object.comments_count > 0 %}
-      {% for comment, vote in object.get_voted_comments(request.user) %}{{render_comment(comment, request.user.is_authenticated(), vote)}}{% endfor %}
-      {% endif %}
-    </ul>
-  </div>
-  {% if request.user and request.user.is_authenticated() and request.user.level > 0 %}
-  <div id="comment-form" class="clearfixer">
-    <div class="avatar">
-      <a href="#" rel="author">{% if request.user.photo != "" %}<img src="{{request.user.photo_60.url}}">{% else %}<img src="/static/img/no_avatar.png">{% endif %}</a>
+  <div id="zavtra-comments" class="active">
+    <div class="content">
+      <ul id="comments" class="unstyled">
+        {% if object.comments_count > 0 %}
+        {% for comment, vote in object.get_voted_comments(request.user) %}{{render_comment(comment, request.user.is_authenticated(), vote)}}{% endfor %}
+        {% endif %}
+      </ul>
     </div>
-    <form class="inner" method="post" action="{{url('comments.views.add')}}">
-      <fieldset class="body">
-        <h4>Ваш комментарий:</h4>
-        <div>
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{token}}">
-          <input type="hidden" name="next" value="{{request.path}}">
-          <input type="hidden" name="article" value="{{object.id}}">
-        </div>
-        <div class="clearfix">
-          <div class="input">
-            <div>
-              <div id="markItUpId_comment" class="markItUp">
-                <div class="markItUpContainer">
-                  <div class="markItUpHeader">
-                    <ul>
-                      <li class="markItUpButton markItUpButton1 ">
-                        <a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
-                      </li>
-                      <li class="markItUpButton markItUpButton2 ">
-                        <a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
-                      </li>
-                      <li class="markItUpButton markItUpButton3 ">
-                        <a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
-                      </li>
-                    </ul>
+    {% if request.user and request.user.is_authenticated() and request.user.level > 0 %}
+    <div id="comment-form" class="clearfixer">
+      <div class="avatar">
+        <a href="#" rel="author">{% if request.user.photo != "" %}<img src="{{request.user.photo_60.url}}">{% else %}<img src="/static/img/no_avatar.png">{% endif %}</a>
+      </div>
+      <form class="inner" method="post" action="{{url('comments.views.add')}}">
+        <fieldset class="body">
+          <h4>Ваш комментарий:</h4>
+          <div>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{token}}">
+            <input type="hidden" name="next" value="{{request.path}}">
+            <input type="hidden" name="article" value="{{object.id}}">
+          </div>
+          <div class="clearfix">
+            <div class="input">
+              <div>
+                <div id="markItUpId_comment" class="markItUp">
+                  <div class="markItUpContainer">
+                    <div class="markItUpHeader">
+                      <ul>
+                        <li class="markItUpButton markItUpButton1 ">
+                          <a href="" accesskey="B" title="Полужирный [Ctrl+B]">Полужирный</a>
+                        </li>
+                        <li class="markItUpButton markItUpButton2 ">
+                          <a href="" accesskey="I" title="Курсив [Ctrl+I]">Курсив</a>
+                        </li>
+                        <li class="markItUpButton markItUpButton3 ">
+                          <a href="" accesskey="L" title="Ссылка [Ctrl+L]">Ссылка</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
+                    <div class="markItUpFooter"></div>
                   </div>
-                  <textarea id="id_comment" rows="10" cols="30" name="comment" class="markItUpEditor"></textarea>
-                  <div class="markItUpFooter"></div>
                 </div>
               </div>
+              <span class="help-block"></span>
             </div>
-            <span class="help-block"></span>
           </div>
-        </div>
-        <div>
-          <input type="submit" class="btn btn-success pull-right" value="Отправить">
-        </div>
-      </fieldset>
-    </form>
+          <div>
+            <input type="submit" class="btn btn-success pull-right" value="Отправить">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'zavtraru';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Пожалуйста, включите поддержку JavaScript для просмотра <a href="http://disqus.com/?ref_noscript">комментариев сервиса Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">комментарии работают с помощью <span class="logo-disqus">Disqus</span></a>
+  </div>
 </div>
 {% endmacro %}
 

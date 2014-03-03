@@ -97,12 +97,7 @@
         <div class="row"><div class="span10 offset1">{% block rtb %}{{super()}}{% endblock %}</div>
         </div>
         <div class="row">
-          <div class="span10 offset1">
-            <div id="comments-section" class="rubric-header no_margin">
-              <h3 class="inline"><a name="comments">Комментарии</a> ({{object.comments_count}}):</h3>
-            </div>
-            <div>{{render_comments(request, object, csrf_token)}}</div>
-          </div>
+          <div class="span10 offset1">{{render_comments(request, object, csrf_token)}}</div>
         </div>
         {% block advertising %}{{super()}}{% endblock %}
       </div>
