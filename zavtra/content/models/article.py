@@ -179,7 +179,7 @@ class Article(OpenGraphMixin, TitledSluggedModel):
 
   def get_voted_comments(self, user):
     comments = list(self.comments.select_related('author').filter(active=True))
-    if user is not None:
+    if user.is_authenticated():
       votes = dict(user.comments_votes.filter(comment__in = comments).values_list('comment_id', 'vote'))
       return [(c, votes.get(c.id)) for c in comments]
     else:
