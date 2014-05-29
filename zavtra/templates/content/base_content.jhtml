@@ -7,7 +7,7 @@
   <h6 class="big_padding_vertical">Оценить:</h6>
   <div class="btn-toolbar">
     <div class="btn-group">
-      <a href="/content/vote/{{object.slug|e}}/up/" class="vote-plus btn btn-mini {% if has_voted and vote.vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Рейтинг статьи" class="btn btn-disabled btn-mini comment-rating">{{object.rating}}</a><a href="/content/vote/{{object.slug|e}}/down/" class="vote-minus btn btn-mini {% if has_voted and vote.vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
+      <a href="/content/vote/{{object.slug|e}}/up/" class="vote-plus btn btn-mini {% if has_voted and vote.vote == 1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-plus-sign"></i></a><a title="Голоса за" class="btn btn-disabled btn-mini comment-rating">{{votes[0]|length}}</a><a title="Голоса против" class="btn btn-disabled btn-mini comment-rating">{{votes[1]|length}}</a><a href="/content/vote/{{object.slug|e}}/down/" class="vote-minus btn btn-mini {% if has_voted and vote.vote == -1 %}btn-disabled{% else %}btn-primary{% endif %}"><i class="icon-white icon-minus-sign"></i></a>
     </div>
   </div>
   {% endif %}

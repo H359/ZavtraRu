@@ -9,6 +9,7 @@
 *.egg-info
 *.gz
 zavtra/static
+static
 dist
 build
 eggs

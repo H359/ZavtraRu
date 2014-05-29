@@ -165,10 +165,12 @@
 #disqus_thread.active { display: block; }
 #zavtra-comments.active { display: block; }
 </style>
-<div id="comments-section" class="rubric-header no_margin">
-  <h3 class="inline"><a href="#zavtra-comments" data-toggle="tab" name="comments">{{object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a></h3>
-  <h3 class="inline">/</h3>
-  <h3 class="inline"><a href="#disqus_thread" data-toggle="tab" name="disqus">Открытый форум</a></h3>
+<div id="comments-section" class="rubric-header no_margin clearfix">
+  <h3 class="inline" style="float:left">
+    <a href="#zavtra-comments" data-toggle="tab" name="comments">Комментарии:</a>
+    {#<a href="#zavtra-comments" data-toggle="tab" name="comments">{{object.comments_count|get_plural("комментарий,комментария,комментариев")}}</a>#}
+  </h3>
+  <h3 class="inline" style="float:right"><a href="#disqus_thread" data-toggle="tab" name="disqus">Полемика</a></h3>
 </div>
 <div class="comments">
   <div id="zavtra-comments" class="active">
@@ -266,9 +268,9 @@
 {% macro render_articlest_list_block_item(object, with_text=False) %}
 <div class="main_blog_entry">
   <div class="main_blog_entry_date_box">
-    <span class="main_blog_entry_date_content">
+    {#<span class="main_blog_entry_date_content">
     {{object.published_at|ru_dt_distance}}
-    </span>
+    </span>#}
   </div>
   <div class="main_blog_entry_box">
     {% for author in object.authors.all() %}
@@ -284,11 +286,11 @@
     {% if with_text %}
     <div>{{object.announce}}</div>
     {% endif %}
-    <div class="main_blog_entry_statistics">
-      <i class="icon-comment"> </i>
+    <div class="main_blog_entry_statistics"><br>
+      {#<i class="icon-comment"> </i>
       <span class="smalltext">
         <a href="{{object.get_absolute_url()}}#comments" class="dark dark_link">{{object.comments_count}}</a>
-      </span>
+      </span>#}
     </div>
   </div>
   <div class="main_person_pic_small">

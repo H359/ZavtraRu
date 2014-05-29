@@ -124,7 +124,7 @@
           </div>
           <div class="row">
             {% if article.type == 'video' %}
-            <div class="span8 news-text center_align">{{article.render_content(384,288)}}</div>
+            <div class="span8 news-text center_align">{{article.render_content(384,288)|safe}}</div>
             {% else %}
             {% if article.is_peredovitsa and article.issue is not none and article.issue.illustration != "" %}
             <div class="span3">
