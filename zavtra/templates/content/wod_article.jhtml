@@ -38,7 +38,7 @@
     </div>
   </div>
 {% endmacro %}
- 
+
 {% block page_content %}
 <div class="container12">
   {{plashka(object)}}
@@ -141,7 +141,6 @@
             {{object.render_content()|safe}}
           </div>
         </div>
-        <div class="row">{% block social_block %}{{super()}}{% endblock %}</div>
       </article>
     </div>
   </div>
@@ -170,6 +169,7 @@
       {% endif %}
       {% endfor %}
     </div>
+   <div class="row"><div class="offset1_5 span9 y-margin-two">{% block social_block %}{{super()}}{% endblock %}</div></div>
   </div>
   <div class="row"><div class="span10 offset1">{% block rtb %}{{super()}}{% endblock %}</div>
   <div class="row">
