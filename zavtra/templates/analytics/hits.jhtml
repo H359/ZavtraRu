@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://yandex.st/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>Фильтрация</h4>
+          <form class="form-inline">
+            <div class="form-group">
+              <label>Начало периода:</label>
+              <input type="date" name="start" class="form-control" value="{{start}}">
+            </div>
+            <div class="form-group">
+              <label>Конец периода:</label>
+              <input type="date" name="end" class="form-control" value="{{end}}">
+            </div>
+            <div class="form-group">
+              <label>Квантовать по:</label>
+              <div class="btn-group" data-toggle="buttons">
+                {% for q in quants %}
+                <label class="btn btn-primary{% if q[0]==quant %} active{% endif %}">
+                  <input type="radio" name="quant" value="{{q[0]}}">{{q[1]}}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Тип контента</label>
+              <select name="type" class="form-control">
+                <option value="">Все типы</option>
+                {% for t in types %}
+                <option value="{{t.id}}"{% if t==type %} selected{% endif %}>{{t.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-default">OK</button>
+          </form>
+        </div>
+        <div class="col-sm-12">
+          <h4>Данные</h4>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

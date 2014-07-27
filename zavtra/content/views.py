@@ -16,11 +16,15 @@ from content.models import Article, Rubric, Topic, \
                            Issue, RubricInIssue, ArticleVote, \
                            SpecialProject, Panoram
 from siteuser.models import User
+from analytics.mixins import HitTrackingMixin
 from django.http.response import Http404
 
 
-class EventsView(ListView):
+class EventsView(HitTrackingMixin, ListView):
   template_name = 'content/events.jhtml'
+
+  def get_hit_object(self, *args):
+    return Rubric.fetch_rubric('novosti')
 
   def get_date(self):
     self.dates = Article.common_news.aggregate(
@@ -83,7 +87,7 @@ class ArchiveView(TemplateView):
     return context
 
 
-class ArticleView(DetailView):
+class ArticleView(HitTrackingMixin, DetailView):
   @property
   def template_name(self):
     if self.object.rubric.id == Rubric.fetch_rubric('wod').id:
@@ -134,10 +138,17 @@ class ArticleView(DetailView):
     )
 
 
-class RubricView(ListView):
+class RubricView(HitTrackingMixin, ListView):
   paginate_by = 5
   paginator_class = DiggPaginator
   is_zeitung = False
+  __rubric = None
+
+  @property
+  def rubric(self):
+    if self.__rubric is None:
+      self.__rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
+    return self.__rubric
 
   @property
   def template_name(self):
@@ -148,8 +159,11 @@ class RubricView(ListView):
     else:
       return 'content/site_rubric_detail.jhtml'
 
+  def get_hit_object(self, *args):
+    return self.rubric
+
   def get_queryset(self):
-    self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
+    # self.rubric = get_object_or_404(Rubric, slug=self.kwargs['slug'])
     # return self.rubric.articles.order_by('-published_at').all()
     return Article.published.filter(rubric=self.rubric).select_related().\
            prefetch_related('expert_comments__expert', 'authors')
@@ -161,10 +175,20 @@ class RubricView(ListView):
     return context
 
 
-class TopicView(ListView):
+class TopicView(HitTrackingMixin, ListView):
   paginate_by = 15
   paginator_class = DiggPaginator
   template_name = 'content/topic_detail.jhtml'
+  __topic = None
+
+  @property
+  def topic(self):
+    if self.__topic is None:
+      self.__topic = get_object_or_404(Topic, slug = self.kwargs['slug'])
+    return self.__topic
+
+  def get_hit_object(self, *args):
+    return self.topic
 
   def get_context_data(self, **kwargs):
     context = super(TopicView, self).get_context_data(**kwargs)
@@ -174,22 +198,28 @@ class TopicView(ListView):
     return context
 
   def get_queryset(self):
-    self.topic = get_object_or_404(Topic, slug=self.kwargs['slug'])
     # return self.topic.articles.select_related().all()
     return Article.published.filter(topics__in=[self.topic]).\
            select_related().\
            prefetch_related('authors', 'topics')
 
 
-class IssueView(TemplateView):
+class IssueView(HitTrackingMixin, TemplateView):
   template_name = 'content/issue.jhtml'
+  __issue = None
+
+  @property
+  def issue(self):
+    if self.__issue is None:
+      self.__issue = Issue.published.get(published_at__year = self.kwargs['year'], relative_number = self.kwargs['issue'])
+    return self.__issue
+
+  def get_hit_object(self, *args):
+    return self.issue
 
   def get_context_data(self, **kwargs):
     context = super(IssueView, self).get_context_data(**kwargs)
-    context['issue'] = Issue.published.get(
-      published_at__year=self.kwargs['year'],
-      relative_number=self.kwargs['issue']
-    )
+    context['issue'] = self.issue
     related = []
     # TODO: this is nightmare...
     prev = list(reversed(Issue.published.filter(published_at__lt=context['issue'].published_at)[0:4]))
@@ -308,7 +338,7 @@ class SpecProjectsView(ListView):
            prefetch_related('articles', 'articles__topics')
 
 
-class SpecProjectView(DetailView):
+class SpecProjectView(HitTrackingMixin, DetailView):
   template_name = 'content/special_project.jhtml'
 
   def get_queryset(self):

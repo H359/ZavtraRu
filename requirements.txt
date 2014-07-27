@@ -8,7 +8,7 @@ django-grappelli
 django-imagekit
 django-redis-cache
 django-autoslug
-django-jinja
+django-jinja==0.23.1
 psycopg2
 South==0.7.6
 django-model-utils
@@ -18,3 +18,5 @@ Pillow
 pytils
 django-sphinx
 pyelasticsearch
+haystack==0.15
+django-haystack==2.1.0
