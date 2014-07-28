@@ -34,9 +34,8 @@
             <div class="form-group">
               <label>Тип контента</label>
               <select name="type" class="form-control">
-                <option value="">Все типы</option>
                 {% for t in types %}
-                <option value="{{t.id}}"{% if t==type %} selected{% endif %}>{{t.name}}</option>
+                <option value="{{t.id}}"{% if t.id==type %} selected{% endif %}>{{t.name}}</option>
                 {% endfor %}
               </select>
             </div>
@@ -45,6 +44,28 @@
         </div>
         <div class="col-sm-12">
           <h4>Данные</h4>
+          <table class="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <td>Объект</td>
+                {% for i in intervals %}
+                <td>{{i.strftime('%Y-%m-%d')}}</td>
+                {% endfor %}
+                <td>Всего за период</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in rows %}
+              <tr>
+                <td>{{r.object}}</td>
+                {% for i in intervals %}
+                <td>{{r.d.get(i, 0)}}</td>
+                {% endfor %}
+                <td>{{r.hits}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
