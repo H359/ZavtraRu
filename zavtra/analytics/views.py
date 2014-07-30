@@ -47,8 +47,8 @@ class HitsView(TemplateView):
         model     = self.types[ (i for i, v in enumerate(self.types) if v.id == typ_id).next() ].model_class()
         for o in model.objects.filter(pk__in = rows.keys()):
           rows[o.id]['object'] = o
-        cursor = connection.connection.cursor(name='stat_cursor', cursor_factory=DictCursor)
         if len(rows.keys()) > 0:
+          cursor = connection.connection.cursor(name='stat_cursor', cursor_factory=DictCursor)
           cursor.execute("SELECT COUNT(id) AS hits, object_id, " + self.quantizer(data['quant']) + " FROM analytics_hit " +\
                          "WHERE object_id IN (" + ','.join(map(str, rows.keys())) + ") " +\
                          "GROUP BY object_id, dt " +\
@@ -56,7 +56,7 @@ class HitsView(TemplateView):
           for x in cursor:
             intervals.add(x['dt'])
             rows[x['object_id']]['d'][x['dt']] = x['hits']
-        cursor.close()
+          cursor.close()
         return rows, intervals
 
     def get_context_data(self, **kwargs):
