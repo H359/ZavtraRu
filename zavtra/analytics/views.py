@@ -48,13 +48,14 @@ class HitsView(TemplateView):
         for o in model.objects.filter(pk__in = rows.keys()):
           rows[o.id]['object'] = o
         cursor = connection.connection.cursor(name='stat_cursor', cursor_factory=DictCursor)
-        cursor.execute("SELECT COUNT(id) AS hits, object_id, " + self.quantizer(data['quant']) + " FROM analytics_hit " +\
-                       "WHERE object_id IN (" + ','.join(map(str, rows.keys())) + ") " +\
-                       "GROUP BY object_id, dt " +\
-                       "ORDER BY dt")
-        for x in cursor:
-          intervals.add(x['dt'])
-          rows[x['object_id']]['d'][x['dt']] = x['hits']
+        if len(rows.leys()) > 0:
+          cursor.execute("SELECT COUNT(id) AS hits, object_id, " + self.quantizer(data['quant']) + " FROM analytics_hit " +\
+                         "WHERE object_id IN (" + ','.join(map(str, rows.keys())) + ") " +\
+                         "GROUP BY object_id, dt " +\
+                         "ORDER BY dt")
+          for x in cursor:
+            intervals.add(x['dt'])
+            rows[x['object_id']]['d'][x['dt']] = x['hits']
         cursor.close()
         return rows, intervals
 
@@ -62,12 +63,8 @@ class HitsView(TemplateView):
         data = dict(self.default_data, **{k: v for k, v in self.request.GET.iteritems() if len(v) > 0})
         data['type'] = int(data['type'])
         data['quant'] = int(data['quant'])
-	try:
-          with transaction.atomic():
+        with transaction.atomic():
             rows, intervals = self.populate_rows(data, self.get_rows(data))
-	except:
-	  rows = []
-          intervals = []
         context = {
           'quants': enumerate([x[0] for x in self.quants]),
           'types': self.types,
