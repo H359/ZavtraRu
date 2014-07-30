@@ -48,7 +48,7 @@ class HitsView(TemplateView):
         for o in model.objects.filter(pk__in = rows.keys()):
           rows[o.id]['object'] = o
         cursor = connection.connection.cursor(name='stat_cursor', cursor_factory=DictCursor)
-        if len(rows.leys()) > 0:
+        if len(rows.keys()) > 0:
           cursor.execute("SELECT COUNT(id) AS hits, object_id, " + self.quantizer(data['quant']) + " FROM analytics_hit " +\
                          "WHERE object_id IN (" + ','.join(map(str, rows.keys())) + ") " +\
                          "GROUP BY object_id, dt " +\
