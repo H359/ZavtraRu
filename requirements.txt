@@ -20,3 +20,4 @@ django-sphinx
 pyelasticsearch
 haystack==0.15
 django-haystack==2.1.0
+python-sql

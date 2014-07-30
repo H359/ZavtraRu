@@ -62,8 +62,12 @@ class HitsView(TemplateView):
         data = dict(self.default_data, **{k: v for k, v in self.request.GET.iteritems() if len(v) > 0})
         data['type'] = int(data['type'])
         data['quant'] = int(data['quant'])
-        with transaction.atomic():
-          rows, intervals = self.populate_rows(data, self.get_rows(data))
+	try:
+          with transaction.atomic():
+            rows, intervals = self.populate_rows(data, self.get_rows(data))
+	except:
+	  rows = []
+          intervals = []
         context = {
           'quants': enumerate([x[0] for x in self.quants]),
           'types': self.types,
