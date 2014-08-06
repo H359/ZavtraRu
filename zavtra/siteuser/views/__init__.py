@@ -5,7 +5,7 @@ from django.views.generic import ListView
 from django.db.models import Count, Q
 
 from zavtra.paginator import QuerySetDiggPaginator as DiggPaginator
-from siteuser.models import User, Reader
+from siteuser.models import User, Reader, GoldenAuthor
 from content.models import Article
 
 from profile import ProfileView, ProfileArticlesView, ProfileCommentsView
@@ -33,6 +33,8 @@ class AuthorsView(ListView):
     context = super(AuthorsView, self).get_context_data(**kwargs)
     context['alphabet'] = RU_ALPHABET
     context['most_commented'] = Article.get_most_commented()
+    if self.letter == u'А' and context['page_obj'].number == 1:
+      context['golden'] = list(GoldenAuthor.objects.select_related().all())
     if self.query is not None:
       context['query'] = self.query
     elif self.letter is not None:

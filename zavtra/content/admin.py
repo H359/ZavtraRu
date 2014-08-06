@@ -56,7 +56,7 @@ class ArticleAdminForm(forms.ModelForm):
   class Meta:
     model = Article
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=400000)
 
 
 class ColumnAdminForm(forms.ModelForm):
@@ -65,14 +65,14 @@ class ColumnAdminForm(forms.ModelForm):
   title = forms.CharField(label=u'Заголовок', max_length=20, widget=TextInput(attrs={'class': 'vTextField'}))
   subtitle = forms.CharField(label=u'Подзаголовок', max_length=50, widget=TextInput(attrs={'class': 'vTextField'}))
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=200000)
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=400000)
 
 class NewsAdminForm(forms.ModelForm):
   class Meta:
     model = News
   content = forms.CharField(label=u'Текст', widget=TinyMCE(attrs={'cols': 80, 'rows': 30}, mce_attrs=mce_attrs))
   selected_at = forms.DateTimeField(label=u'Выделить', required=False, help_text=u'Дата привязки')
-  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=131072, help_text=u'Если заполнено -- новость считается событием')
+  cover_source = RestrictedImageField(required=False, label=u'Обложка', max_upload_size=400000, help_text=u'Если заполнено -- новость считается событием')
 
 
 class WodAdminForm(forms.ModelForm):

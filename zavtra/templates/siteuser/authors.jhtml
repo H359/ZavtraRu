@@ -22,6 +22,24 @@
             </div>
           </div>
         </div>
+        {% if golden %}
+        <div class="row"><div class="span12"><div class="blogentries">
+        {% for r in golden|group_by(3) %}
+        <div class="blogentry_container">
+          {% for o in r %}
+          <div class="inner_blogentry">
+            <div class="inner_blogentry_author">
+              <a class="person_name largetext" href="{{o.user.get_absolute_url()}}">{{o.user}}</a>
+            </div>
+            <div class="inner_blogentry_author_pic">
+              <img src="{% if o.user.photo != '' %}{{o.user.photo_90.url}}{% else %}{{STATIC_URL}}img/no_avatar.png"{% endif %}">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        </div></div></div>
+        {% endif %}
         <div class="row">
           <div class="span12 person_search_bar">
             <div class="row">
@@ -86,7 +104,7 @@
                             <div class="span6 article-header-container">
                               <span>
                                 <a href="{{object.get_absolute_url()}}">
-                                  {{object.articles.count()|get_plural("статья,статьи,статей")}}, 
+                                  {{object.articles.count()|get_plural("статья,статьи,статей")}},
                                   {{object.expert_comments.count()|get_plural("экспертная оценка,экспертных оценки,экспертных оценок")}}, {{object.comments.count()|get_plural("комментарий,комментария,комментариев")}}
                                 </a>
                               </span>

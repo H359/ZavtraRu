@@ -22,7 +22,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
     (4, 'system',    u'Системный'),
   )
 
-  email = models.EmailField(max_length=254, unique=True)  
+  email = models.EmailField(max_length=254, unique=True)
   first_name = models.CharField(max_length=250, verbose_name=u'Имя')
   last_name = models.CharField(max_length=250, verbose_name=u'Фамилия')
   level = models.IntegerField(choices=USER_LEVELS, default=USER_LEVELS.ordinary)
@@ -129,14 +129,31 @@ class User(OpenGraphMixin, AbstractBaseUser):
 
   @models.permalink
   def get_comments_url(self):
-    return ('siteuser.view.profile_comments', (), {'pk': self.pk})    
+    return ('siteuser.view.profile_comments', (), {'pk': self.pk})
 
   @staticmethod
   def autocomplete_search_fields():
     return ("id__iexact", "last_name__icontains",)
+
+  class Meta:
+    verbose_name = u'Пользователь'
+    verbose_name_plural = u'Пользователи'
 
 
 class Reader(models.Model):
   reader = models.ForeignKey(User, related_name='readers')
   author = models.ForeignKey(User, related_name='readees')
   subscription_start = models.DateTimeField()
+
+
+class GoldenAuthor(models.Model):
+    user     = models.ForeignKey(User, related_name='golden_authors', verbose_name=u'Автор', limit_choices_to={'level__gte': 2}, unique=True)
+    position = models.PositiveSmallIntegerField(verbose_name=u'Позиция')
+
+    def __unicode__(self):
+        return unicode(self.user)
+
+    class Meta:
+        verbose_name = u'Золотой фонд'
+        verbose_name_plural = u'Золотой фонд'
+        ordering = ['position']
