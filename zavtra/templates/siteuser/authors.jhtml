@@ -24,15 +24,19 @@
         </div>
         {% if golden %}
         <div class="row"><div class="span12"><div class="blogentries">
-        {% for r in golden|group_by(3) %}
+        {% for r in golden|group_by(4) %}
         <div class="blogentry_container">
           {% for o in r %}
           <div class="inner_blogentry">
             <div class="inner_blogentry_author">
+              <br>
               <a class="person_name largetext" href="{{o.user.get_absolute_url()}}">{{o.user}}</a>
+              <br><br><br><br>
             </div>
             <div class="inner_blogentry_author_pic">
-              <img src="{% if o.user.photo != '' %}{{o.user.photo_90.url}}{% else %}{{STATIC_URL}}img/no_avatar.png"{% endif %}">
+              <a href="{{o.user.get_absolute_url()}}">
+                <img src="{% if o.user.photo != '' %}{{o.user.photo_90.url}}{% else %}{{STATIC_URL}}img/no_avatar.png"{% endif %}">
+              </a>
             </div>
           </div>
           {% endfor %}
