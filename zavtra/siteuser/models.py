@@ -138,6 +138,7 @@ class User(OpenGraphMixin, AbstractBaseUser):
   class Meta:
     verbose_name = u'Пользователь'
     verbose_name_plural = u'Пользователи'
+    ordering = ['last_name', 'first_name']
 
 
 class Reader(models.Model):
