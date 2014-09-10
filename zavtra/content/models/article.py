@@ -129,7 +129,10 @@ class Article(OpenGraphMixin, TitledSluggedModel):
   def issue(self):
     if not hasattr(self, '__issue_cache'):
       if self._issue > 0:
-        issue = Issue.published.get(id=self._issue)
+	try:
+          issue = Issue.published.get(id=self._issue)
+	except Issue.DoesNotExist:
+	  issue = None
       # early bailout for non-gazette articles
       elif self._issue == 0 or not self.rubric.from_zeitung:
         issue = None
