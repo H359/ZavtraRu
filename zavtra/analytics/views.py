@@ -30,6 +30,8 @@ def csv_view_data(year, month):
     """, (year, month))
     for x in cursor:
       ts = u','.join([t.title for t in Topic.objects.filter(articles__in = [x['object_id']])])
+      if len(ts) == 0:
+        ts = u'[без тематики]'
       yield writer.writerow((x['title'].encode('utf-8'), x['hits'], ts.encode('utf-8')))
 
 def csv_view(request, year, month):
