@@ -27,11 +27,10 @@ def csv_view_data(year, month):
       INNER JOIN content_article AS a ON a.id=h.object_id
       WHERE date_part('year', datetime) = %s AND date_part('month', datetime) = %s
       GROUP BY h.object_id, a.title
-      ORDER BY hits
     """, (year, month))
     for x in cursor:
       ts = u','.join([t.title for t in Topic.objects.filter(articles__in = [x['object_id']])])
       yield writer.writerow((x['title'].encode('utf-8'), x['hits'], ts.encode('utf-8')))
 
 def csv_view(request, year, month):
-  return StreamingHttpResponse(csv_view_data(year, month), content_type='text/plain')
+  return StreamingHttpResponse(csv_view_data(year, month), content_type='text/csv')
